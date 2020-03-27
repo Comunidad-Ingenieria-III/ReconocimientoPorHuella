@@ -37,6 +37,7 @@ CREATE TABLE `datos_persona` (
   `primerApellido` varchar(45) CHARACTER SET utf32 COLLATE utf32_spanish2_ci NOT NULL,
   `segundoApellido` varchar(45) CHARACTER SET utf32 COLLATE utf32_spanish2_ci DEFAULT NULL,
   `fechaNacimiento` varchar(45) COLLATE utf32_spanish_ci NOT NULL,
+  `direccion` varchar(50) COLLATE utf32_spanish_ci NOT NULL,
   `sexo` varchar(19) COLLATE utf32_spanish_ci NOT NULL,
   `alergicoA` varchar(255) COLLATE utf32_spanish_ci NOT NULL,
   `enfermedadSufre` varchar(255) COLLATE utf32_spanish_ci NOT NULL,
@@ -57,7 +58,6 @@ CREATE TABLE `datos_persona` (
 
 LOCK TABLES `datos_persona` WRITE;
 /*!40000 ALTER TABLE `datos_persona` DISABLE KEYS */;
-INSERT INTO `datos_persona` VALUES (234,'wwwwww','www','www','www','2020-03-25','Femenino','wwww','www','wwww',2,2),(1111,'Emiliano','','salazar','','2019-08-04','Masculino','','','',1,1),(22222,'Julian','','salazar','','1996-02-11','Masculino','No		','no	','soy Musico',1,1),(15327400,'Nelson','Giovanni','Salazar','Roldan','1973-08-26','Masculino','no','no','El Creador de Este Programa',1,1);
 /*!40000 ALTER TABLE `datos_persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +83,6 @@ CREATE TABLE `eps` (
 
 LOCK TABLES `eps` WRITE;
 /*!40000 ALTER TABLE `eps` DISABLE KEYS */;
-INSERT INTO `eps` VALUES (1,'Sura','cordoba',123),(2,'coomeva','pilarica',2345);
 /*!40000 ALTER TABLE `eps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,15 +94,15 @@ DROP TABLE IF EXISTS `familiar_paciente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `familiar_paciente` (
-  `idFamiliar` varchar(15) COLLATE utf32_spanish_ci NOT NULL,
-  `primerNombreFamiliar` varchar(45) COLLATE utf32_spanish_ci NOT NULL,
-  `segundoNombreFamiliar` varchar(45) COLLATE utf32_spanish_ci DEFAULT NULL,
-  `primerApellidoFamiliar` varchar(45) COLLATE utf32_spanish_ci NOT NULL,
-  `segundoApellidoFamiliar` varchar(45) COLLATE utf32_spanish_ci DEFAULT NULL,
-  `direccionFamiliar` varchar(35) COLLATE utf32_spanish_ci DEFAULT NULL,
-  `telefonoFamiliar` int(15) NOT NULL,
+  `idFamiliar` int(11) NOT NULL,
+  `nombre1` varchar(45) COLLATE utf32_spanish_ci NOT NULL,
+  `nombre2` varchar(45) COLLATE utf32_spanish_ci DEFAULT NULL,
+  `apellido1` varchar(45) COLLATE utf32_spanish_ci NOT NULL,
+  `apellido2` varchar(45) COLLATE utf32_spanish_ci DEFAULT NULL,
+  `direccion` varchar(35) COLLATE utf32_spanish_ci DEFAULT NULL,
+  `telefono` varchar(50) COLLATE utf32_spanish_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`idFamiliar`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,12 +122,14 @@ DROP TABLE IF EXISTS `persona_familiar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `persona_familiar` (
-  `idPersona` varchar(15) COLLATE utf32_spanish_ci NOT NULL,
-  `idFamiliar` varchar(15) COLLATE utf32_spanish_ci NOT NULL,
+  `idPersona` int(11) NOT NULL,
+  `idFamiliar` int(11) NOT NULL,
   `fechaIngreso` date NOT NULL,
   KEY `idPersona` (`idPersona`),
-  KEY `idFamiliar` (`idFamiliar`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
+  KEY `idFamiliar` (`idFamiliar`),
+  CONSTRAINT `persona_familiar_ibfk_1` FOREIGN KEY (`idPersona`) REFERENCES `datos_persona` (`idpersona`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `persona_familiar_ibfk_2` FOREIGN KEY (`idFamiliar`) REFERENCES `familiar_paciente` (`idFamiliar`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,7 +161,6 @@ CREATE TABLE `tipo_de_documento` (
 
 LOCK TABLES `tipo_de_documento` WRITE;
 /*!40000 ALTER TABLE `tipo_de_documento` DISABLE KEYS */;
-INSERT INTO `tipo_de_documento` VALUES (1,'Cedula'),(2,'Tarjeta de Identidad');
 /*!40000 ALTER TABLE `tipo_de_documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +180,7 @@ CREATE TABLE `usuario` (
   `username` varchar(45) COLLATE utf32_spanish_ci NOT NULL,
   `contrasena` longblob,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-25  6:16:37
+-- Dump completed on 2020-03-27 11:40:13
