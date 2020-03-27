@@ -123,7 +123,7 @@ public class ControladorDatosFamiliar implements Initializable {
     }
 
     @FXML
-    public void limpiarFormulario() {
+    public void limpiarFormulario() {//Este metodo deja vacios los campos del formulario
         tf_idfamiliar.setText("");
         tf_nombre1.setText("");
         tf_nombre2.setText("");
@@ -213,9 +213,9 @@ public class ControladorDatosFamiliar implements Initializable {
         } else {
 
             Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Pacientes - familiares");
+            msg.setTitle("Pacientes - Familiares");
             msg.setContentText("El familiar NO ha sido agregado correctamente");
-            msg.setHeaderText("Resultado");
+            msg.setHeaderText("REsult");
             msg.show();
         }
         limpiarFormulario();
