@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="consultas.pacientesatendidos.ControladorConsultas">
+   <children>
+      <Label layoutX="156.0" layoutY="30.0" prefHeight="39.0" prefWidth="389.0" text="Consulta Pacientes Atendidos">
+         <font>
+            <Font name="System Bold Italic" size="27.0" />
+         </font>
+      </Label>
+      <TableView layoutY="93.0" prefHeight="200.0" prefWidth="700.0">
+        <columns>
+          <TableColumn prefWidth="132.0" text="Tipo De Documento" />
+          <TableColumn prefWidth="124.0" text="Numero Documento" />
+            <TableColumn prefWidth="102.0" text="Primer Nombre" />
+            <TableColumn prefWidth="111.0" text="Segundo Nombre" />
+            <TableColumn prefWidth="108.0" text="Primer Apellido" />
+            <TableColumn prefWidth="116.0" text="Segundo Apellido" />
+        </columns>
+      </TableView>
+      <Button fx:id="bt_salir" layoutX="530.0" layoutY="327.0" mnemonicParsing="false" onAction="#cerraDatosFamiliar" text="Cerrar Consulta">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #CECEF6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
+   <children>
+      <Label alignment="CENTER" prefHeight="38.0" prefWidth="800.0" style="-fx-background-color: #2E64FE;" text="Datos Personales" textFill="#fbf9f9">
+         <font>
+            <Font name="System Bold Italic" size="26.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Label>
+      <Label layoutX="26.0" layoutY="84.0" prefHeight="20.0" prefWidth="159.0" text="Documento">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbxtipodocumento" layoutX="168.0" layoutY="82.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="26.0" layoutY="116.0" prefHeight="20.0" prefWidth="136.0" text="Número Documento" textFill="#323232">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="158.0" layoutY="118.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
+      <TextField fx:id="tf_idpersona" layoutX="168.0" layoutY="114.0" prefHeight="25.0" prefWidth="150.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></TextField>
+      <Label layoutX="26.0" layoutY="148.0" prefHeight="20.0" prefWidth="99.0" text="Primer Nombre">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="125.0" layoutY="150.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
+      <TextField fx:id="tf_primerNombre" layoutX="168.0" layoutY="145.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="26.0" layoutY="181.0" prefHeight="20.0" prefWidth="136.0" text="Segundo Nombre">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tf_segundoNombre" layoutX="168.0" layoutY="178.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="26.0" layoutY="211.0" prefHeight="20.0" prefWidth="99.0" text="Primer Apellido">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="125.0" layoutY="212.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
+      <TextField fx:id="tf_primerApellido" layoutX="168.0" layoutY="208.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="26.0" layoutY="242.0" prefHeight="20.0" prefWidth="136.0" text="Segundo Apellido">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tf_segundoApellido" layoutX="168.0" layoutY="240.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="26.0" layoutY="271.0" prefHeight="20.0" prefWidth="136.0" text="Fecha De Nacimiento">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="158.0" layoutY="273.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
+      <DatePicker fx:id="dp_fechaNacimiento" layoutX="168.0" layoutY="269.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="448.0" layoutY="86.0" prefHeight="20.0" prefWidth="76.0" text="Sexo">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox id="cbx" fx:id="cbxsexo" layoutX="545.0" layoutY="83.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="448.0" layoutY="120.0" prefHeight="20.0" prefWidth="90.0" text="EPS">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbxtipoeps" layoutX="544.0" layoutY="117.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="462.0" layoutY="191.0" prefHeight="20.0" prefWidth="142.0" text="Datos Familiar">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="28.0" layoutY="347.0" prefHeight="20.0" prefWidth="76.0" text="Alergico A:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="ta_alergicoA" layoutX="26.0" layoutY="366.0" prefHeight="38.0" prefWidth="513.0" />
+      <Label layoutX="26.0" layoutY="404.0" prefHeight="17.0" prefWidth="159.0" text="Enfermedad Que Sufre:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="ta_enfermedadSufre" layoutX="26.0" layoutY="424.0" prefHeight="38.0" prefWidth="513.0" />
+      <Label layoutX="23.0" layoutY="469.0" prefHeight="20.0" prefWidth="106.0" text="Observaciones:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="ta_observaciones" layoutX="26.0" layoutY="489.0" prefHeight="49.0" prefWidth="513.0" />
+      <Label layoutX="618.0" layoutY="327.0" prefHeight="20.0" prefWidth="99.0" text="Huella Digital">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="710.0" layoutY="328.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
+      <Button fx:id="bt_crear" layoutX="28.0" layoutY="550.0" mnemonicParsing="false" onAction="#btnNuevo_click" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #2E64FE;" text="Crear" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bt_consultar" layoutX="114.0" layoutY="550.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bt_modificar" layoutX="227.0" layoutY="550.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bt_inhabilitar" layoutX="327.0" layoutY="550.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #2E64FE;" text="Inhabilitar" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bt_cancelar" layoutX="436.0" layoutY="550.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bt_guardar" layoutX="546.0" layoutY="550.0" mnemonicParsing="false" onAction="#guardarPersona" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bt_salir" layoutX="656.0" layoutY="550.0" mnemonicParsing="false" onAction="#setCerrarFormularioPersonas" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #2E64FE;" text="Salir" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="bt_abrirformulariopersonafamiliar" layoutX="460.0" layoutY="218.0" mnemonicParsing="false" onAction="#abrirPersonaFamiliar" prefHeight="49.0" prefWidth="196.0" style="-fx-background-color: #2E64FE;" text="Ingresar Datos Familiar" textFill="#fff8f8">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font></Button>
+      <Label layoutX="100.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
+      <Label layoutX="480.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
+      <Label layoutX="474.0" layoutY="118.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
+      <TextArea layoutX="556.0" layoutY="348.0" prefHeight="190.0" prefWidth="200.0" />
+      <Label layoutX="28.0" layoutY="310.0" text="Direccion">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="91.0" layoutY="312.0" prefHeight="17.0" prefWidth="30.0" text="*" textFill="#d70c0c" />
+      <TextField fx:id="tf_direccion" layoutX="169.0" layoutY="305.0" prefHeight="25.0" prefWidth="207.0" />
+   </children>
+</AnchorPane>

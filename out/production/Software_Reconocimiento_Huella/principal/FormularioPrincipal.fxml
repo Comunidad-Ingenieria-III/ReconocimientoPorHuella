@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
+   <children>
+      <MenuBar prefHeight="40.0" prefWidth="800.0" styleClass="Button" stylesheets="@../Estilos.css">
+        <menus>
+            <Menu mnemonicParsing="false" text="Gestiones">
+              <items>
+                <MenuItem fx:id="mi_tipo_documeto" mnemonicParsing="false" onAction="#abrirTipoDocumento" text="Tipo Documento" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="mi_datos_persona" mnemonicParsing="false" onAction="#abrirDatosPersona" text="Datos Persona" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Datos Familiar" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#abrirEps" text="EPS" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#abriTipoTituloAcademico" text="Tipo Título Académico" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Institución Académica" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Cargo" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Personal Salud" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Institución de Referencia" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Medicamentos" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Procesos">
+            <items>
+              <MenuItem fx:id="mi_regisgtro_atencion" mnemonicParsing="false" onAction="#abrirRegistroAtencionPaciente" text="Registro de Atención" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Salidas">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Consultar Pacientes Atendidos" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Consultar Personal APH" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Consular Personal que Recibe el Paciente" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Consultar HIstoria de Atención" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Informe Novedad Paciente" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Informe Títulos Académicos Obtenidos" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Ubicación Paciente" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Herramientas">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Usario Y Contraseña" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Administración Perfil" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Administración Usuario" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Ayudas">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Acerca de" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Manual de Usuario" />
+              </items>
+            </Menu>
+        </menus>
+         <effect>
+            <InnerShadow choke="0.12" color="#4a1f1f" height="54.37" radius="22.792499999999997" width="38.8" />
+         </effect>
+      </MenuBar>
+      <AnchorPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" stylesheets="@../Estilos.css" />
+      <HBox prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #000000;">
+         <children>
+            <Label prefHeight="67.0" prefWidth="310.0" />
+            <Label prefHeight="63.0" prefWidth="288.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="302.0">
+               <graphic>
+                  <Button fx:id="bt_salir" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #000000;" text="Salir" textFill="#e8e8e8">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </graphic>
+            </Label>
+         </children>
+         <effect>
+            <InnerShadow choke="0.27" color="#2c2a2a" height="127.74" radius="44.0975" width="50.65" />
+         </effect>
+      </HBox>
+   </children>
+</VBox>

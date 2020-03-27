@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Informes.novedadatencionpaciente.ControladorInformeNovedadAtencion">
+   <children>
+      <Label layoutX="136.0" layoutY="27.0" text="Informe Novedad Atención Paciente">
+         <font>
+            <Font name="System Bold Italic" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="72.0" layoutY="141.0" text="Nombre Y Apellido:">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="248.0" layoutY="114.0" text="15327400">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="164.0" text="Fecha:">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="73.0" layoutY="283.0" text="Responsable Informe">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="bt_salir" layoutX="428.0" layoutY="344.0" mnemonicParsing="false" onAction="#cerrarInformeNovedadPaciente" text="Cerrar Informe">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="73.0" layoutY="88.0" prefHeight="20.0" prefWidth="82.0" text="Documento:">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="248.0" layoutY="88.0" prefHeight="20.0" prefWidth="160.0" text="Cedula de ciudadanía">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="73.0" layoutY="114.0" prefHeight="20.0" prefWidth="160.0" text="Numero Documento:">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="248.0" layoutY="141.0" text="Nelson Salazar">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="248.0" layoutY="164.0" text="25-01-2018">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="73.0" layoutY="190.0" text="Hora:">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="248.0" layoutY="190.0" text="10:30">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="72.0" layoutY="220.0" text="Descripción">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="71.0" layoutY="240.0" prefHeight="30.0" prefWidth="545.0" text="Paciente que despues de ser atendido por el personal, sufre caida de la camilla.">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="311.0" text="Cargo ">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="245.0" layoutY="283.0" text="Juan Estaban Lopera">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="245.0" layoutY="311.0" prefHeight="20.0" prefWidth="136.0" text="Tecnólogo en APH">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="71.0" layoutY="210.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

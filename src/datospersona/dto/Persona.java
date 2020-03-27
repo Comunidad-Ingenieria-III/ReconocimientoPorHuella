@@ -1,0 +1,213 @@
+package datospersona.dto;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import java.sql.Date;
+
+public class Persona {
+
+    private IntegerProperty idpersona;
+    private StringProperty primerNombre;
+    private StringProperty segundoNombre;
+    private StringProperty primerApellido;
+    private StringProperty segundoApellido;
+    private Date fechaNacimiento;
+    private StringProperty direccion;
+    private StringProperty sexo;
+    private StringProperty alergicoA;
+    private StringProperty enfermedadSufre;
+    private StringProperty observaciones;
+    private IntegerProperty tipoDocumento;
+    private IntegerProperty idEps;
+
+    public Persona() {
+    }
+
+    public Persona(int idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+                   Date fechaNacimiento, String direccion, String sexo, String alergicoA, String enfermedadSufre, String observaciones, int tipoDocumento, int idEps) {
+        this.idpersona = new SimpleIntegerProperty(idpersona);
+        this.primerNombre = new SimpleStringProperty(primerNombre);
+        this.segundoNombre = new SimpleStringProperty(segundoNombre);
+        this.primerApellido = new SimpleStringProperty(primerApellido);
+        this.segundoApellido = new SimpleStringProperty(segundoApellido);
+        this.fechaNacimiento = fechaNacimiento;
+        this.direccion = new SimpleStringProperty(direccion);
+        this.sexo = new SimpleStringProperty(sexo);
+        this.alergicoA = new SimpleStringProperty(alergicoA);
+        this.enfermedadSufre = new SimpleStringProperty(enfermedadSufre);
+        this.observaciones = new SimpleStringProperty(observaciones);
+        this.tipoDocumento = new SimpleIntegerProperty(tipoDocumento);
+        this.idEps = new SimpleIntegerProperty(idEps);
+    }
+
+    public int getIdpersona() {
+        return idpersona.get();
+    }
+
+    public IntegerProperty idpersonaProperty() {
+        return idpersona;
+    }
+
+    public void setIdpersona(int idpersona) {
+        this.idpersona.set(idpersona);
+    }
+
+    public String getPrimerNombre() {
+        return primerNombre.get();
+    }
+
+    public StringProperty primerNombreProperty() {
+        return primerNombre;
+    }
+
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre.set(primerNombre);
+    }
+
+    public String getSegundoNombre() {
+        return segundoNombre.get();
+    }
+
+    public StringProperty segundoNombreProperty() {
+        return segundoNombre;
+    }
+
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre.set(segundoNombre);
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido.get();
+    }
+
+    public StringProperty primerApellidoProperty() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido.set(primerApellido);
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido.get();
+    }
+
+    public StringProperty segundoApellidoProperty() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido.set(segundoApellido);
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    public String getDireccion(){
+        return direccion.get();
+    }
+    public void setDireccion(String direccion){
+        this.direccion.set(direccion);
+    }
+    public StringProperty direccion() {
+        return direccion;
+    }
+
+    public String getSexo() {
+        return sexo.get();
+    }
+
+    public StringProperty sexoProperty() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo.set(sexo);
+    }
+
+    public String getAlergicoA() {
+        return alergicoA.get();
+    }
+
+    public StringProperty alergicoAProperty() {
+        return alergicoA;
+    }
+
+    public void setAlergicoA(String alergicoA) {
+        this.alergicoA.set(alergicoA);
+    }
+
+    public String getEnfermedadSufre() {
+        return enfermedadSufre.get();
+    }
+
+    public StringProperty enfermedadSufreProperty() {
+        return enfermedadSufre;
+    }
+
+    public void setEnfermedadSufre(String enfermedadSufre) {
+        this.enfermedadSufre.set(enfermedadSufre);
+    }
+
+    public String getObservaciones() {
+        return observaciones.get();
+    }
+
+    public StringProperty observacionesProperty() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones.set(observaciones);
+    }
+
+    public int getTipoDocumento() {
+        return tipoDocumento.get();
+    }
+
+    public IntegerProperty tipoDocumetoProperty() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumeto(int tipoDocumento) {
+        this.tipoDocumento.set(tipoDocumento);
+    }
+
+    public int getidEps() {
+        return idEps.get();
+    }
+
+    public IntegerProperty getidEpsProperty() {
+        return idEps;
+    }
+
+    public void setgetidEps(int idEps) {
+        this.idEps.set(idEps);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "idpersona=" + idpersona +
+                ", primerNombre=" + primerNombre +
+                ", segundoNombre=" + segundoNombre +
+                ", primerApellido=" + primerApellido +
+                ", segundoApellido=" + segundoApellido +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", sexo=" + sexo +
+                ", alergicoA=" + alergicoA +
+                ", enfermedadSufre=" + enfermedadSufre +
+                ", observaciones=" + observaciones +
+                ", idTipoDocumeto=" + tipoDocumento +
+                ", idEps=" + idEps +
+                '}';
+    }
+}
