@@ -1,7 +1,6 @@
 package datospersona.formulariopersona;
 
-import com.digitalpersona.onetouch.DPFPGlobal;
-import com.digitalpersona.onetouch.DPFPTemplate;
+import com.digitalpersona.onetouch.*;
 import com.digitalpersona.onetouch.capture.DPFPCapture;
 import com.digitalpersona.onetouch.capture.event.*;
 import com.digitalpersona.onetouch.processing.DPFPEnrollment;
@@ -177,6 +176,59 @@ public class ControladorFormularioPersona implements Initializable {
                 });
             }
         });
+    }
+
+    public DPFPFeatureSet featuresinscripcion;
+    public DPFPFeatureSet featuresverificacion;
+
+    public void ProcesarCaptura(DPFPSample sample){
+// Procesar la muestra de la huella y crear un conjunto de características con el propósito de inscripción.
+        featuresinscripcion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
+
+// Procesar la muestra de la huella y crear un conjunto de características con el propósito de verificacion.
+        featuresverificacion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
+
+// Comprobar la calidad de la muestra de la huella y lo añade a su reclutador si es bueno
+        if (featuresinscripcion != null){
+            try{
+                System.out.println("Las Caracteristicas de la Huella han sido creada");
+                Reclutador.addFeatures(featuresinscripcion);// Agregar las caracteristicas de la huella a la plantilla a crear
+
+// Dibuja la huella dactilar capturada.
+                java.awt.Image image=CrearImagenHuella(sample);
+                DibujarHuella(image);
+
+                btnIdentificar.setEnabled(true);
+            }
+            catch (DPFPImageQualityException ex) {
+                System.err.println("Error: "+ex.getMessage());
+            }
+
+            finally {
+//EstadoHuellas();
+
+// Comprueba si la plantilla se ha creado.
+                switch(Reclutador.getTemplateStatus()){
+                    case TEMPLATE_STATUS_READY:    // informe de éxito y detiene  la captura de huellas
+                        stop();
+                        setTemplate(Reclutador.getTemplate());
+                        EnviarTexto("La Plantilla de la Huella ha Sido Creada, ya puede Verificarla");
+                        btnIdentificar.setEnabled(true);
+                        btnGuardar.setEnabled(true);
+                        btnGuardar.grabFocus();
+                        break;
+
+                    case TEMPLATE_STATUS_FAILED: // informe de fallas y reiniciar la captura de huellas
+                        Reclutador.clear();
+                        stop();
+//EstadoHuellas();
+                        setTemplate(null);
+                        JOptionPane.showMessageDialog(CapturaHuella.this, "La Plantilla de la Huella no pudo ser creada, Repita el Proceso", "Inscripcion de Huellas Dactilares", JOptionPane.ERROR_MESSAGE);
+                        start();
+                        break;
+                }
+            }
+        }
     }
 
     public void EnviarTexto(String string) {
