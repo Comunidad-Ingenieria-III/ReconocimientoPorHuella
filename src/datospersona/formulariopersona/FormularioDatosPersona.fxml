@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -8,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #CECEF6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #CECEF6;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
    <children>
       <Label alignment="CENTER" prefHeight="38.0" prefWidth="800.0" style="-fx-background-color: #2E64FE;" text="Datos Personales" textFill="#fbf9f9">
          <font>
@@ -180,7 +179,7 @@
       <Label layoutX="100.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
       <Label layoutX="480.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
       <Label layoutX="474.0" layoutY="118.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
-      <TextArea layoutX="556.0" layoutY="348.0" prefHeight="190.0" prefWidth="200.0" />
+      <TextArea fx:id="txtArea" layoutX="556.0" layoutY="348.0" prefHeight="190.0" prefWidth="200.0" />
       <Label layoutX="28.0" layoutY="310.0" text="Direccion">
          <font>
             <Font size="14.0" />

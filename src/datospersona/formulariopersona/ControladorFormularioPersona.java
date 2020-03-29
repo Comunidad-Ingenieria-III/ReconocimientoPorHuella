@@ -127,7 +127,7 @@ public class ControladorFormularioPersona implements Initializable {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         EnviarTexto("La Huella Digital ha sido Capturada");
-                        // ProcesarCaptura(e.getSample());
+                        ProcesarCaptura(e.getSample());
                     }
                 });
             }
@@ -186,7 +186,7 @@ public class ControladorFormularioPersona implements Initializable {
     }
 
     public void EnviarTexto(String string) {
-        System.out.println("esperemos que funione");
+        txtArea.appendText(string + "\n");
     }
 
     public void EstadoHuellas() {
