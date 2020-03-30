@@ -363,7 +363,6 @@ public class ControladorFormularioPersona implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
-            //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
             //((Node) (event.getSource())).getScene().getWindow().hide();
