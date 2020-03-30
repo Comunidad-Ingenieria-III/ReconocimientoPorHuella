@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
@@ -359,6 +360,7 @@ public class ControladorFormularioPersona implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("AP_Humana(Gestión Informe Titulos Académicos)");
             stage.setScene(new Scene(formulario_persona_familiar));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);
