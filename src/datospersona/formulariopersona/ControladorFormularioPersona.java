@@ -159,11 +159,11 @@ public class ControladorFormularioPersona implements Initializable {
             public void fingerTouched(final DPFPSensorEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        EnviarTexto("Coloca el Dedo sobre el Lector de Huella");
+                        EnviarTexto("El dedo ha sido colocado sobre el Lector de Huella");
                     }
                 });
             }
-
+                 
             @Override
             public void fingerGone(final DPFPSensorEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
@@ -174,15 +174,17 @@ public class ControladorFormularioPersona implements Initializable {
             }
         });
 
-        Lector.addErrorListener(new DPFPErrorAdapter() {
-            public void errorReader(final DPFPErrorEvent e) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        EnviarTexto("Error: " + e.getError());
-                    }
-                });
-            }
-        });
+        Lector.addErrorListener(new
+
+                                        DPFPErrorAdapter() {
+                                            public void errorReader(final DPFPErrorEvent e) {
+                                                SwingUtilities.invokeLater(new Runnable() {
+                                                    public void run() {
+                                                        EnviarTexto("Error: " + e.getError());
+                                                    }
+                                                });
+                                            }
+                                        });
     }
 
     public void EnviarTexto(String string) {
