@@ -76,42 +76,6 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     private FacadePersona facadepersona = new FacadePersona();
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        start();
-        Iniciar();
-        //buscarHuella();
-
-    }
-
-    @FXML
-    public Persona buscarPorHuella() {
-
-
-        int huella1 = Integer.parseInt(ta_huella.getText());
-
-        int identificacion = Integer.parseInt(tf_idpersonadps.getText());
-        String nombre = tf_primerNombredps.getText();
-        String nombre2 = tf_numerotelefonicofamiliar.getText();
-        String alergico = ta_alergicoA.getText();
-        String sufrode = ta_enfermedadSufre.getText();
-        String observaciones = ta_observaciones.getText();
-
-
-        Persona persona = new Persona(huella1, identificacion, nombre, nombre2, alergico, sufrode, observaciones);
-
-        return persona;
-    }
-
-    public void buscarHuella() {
-
-        int num = Integer.parseInt(ta_huella.getText());
-        facadepersona.buscarPersona(num);
-        JOptionPane.showMessageDialog(null, "Dato Encontrado", "INFORMACIÓN", 1);
-    }
-
     //Varible que permite iniciar el dispositivo de lector de huella conectado
     // con sus distintos metodos.
     private DPFPCapture Lector = DPFPGlobal.getCaptureFactory().createCapture();
@@ -127,6 +91,44 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     //Variable que para crear el template de la huella luego de que se hallan creado las caracteriticas
     // necesarias de la huella si no ha ocurrido ningun problema
     private DPFPTemplate template;
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        //start();
+        //Iniciar();
+        //buscarHuella();
+
+    }
+
+    /*@FXML
+    public Persona buscarPorHuella() {
+
+
+        //int huella1 = Integer.parseInt(ta_huella.getText());
+
+        int identificacion = Integer.parseInt(tf_idpersonadps.getText());
+        String nombre = tf_primerNombredps.getText();
+        String nombre2 = tf_numerotelefonicofamiliar.getText();
+        String alergico = ta_alergicoA.getText();
+        String sufrode = ta_enfermedadSufre.getText();
+        String observaciones = ta_observaciones.getText();
+
+
+        Persona persona = new Persona(identificacion, nombre, nombre2, alergico, sufrode, observaciones);
+
+        return persona;
+    }*/
+
+    public void buscarHuella() {
+
+        int num = Integer.parseInt(tf_idpersonadps.getText());
+        facadepersona.buscarPersona(num);
+        JOptionPane.showMessageDialog(null, "Dato Encontrado", "INFORMACIÓN", 1);
+    }
+
+
 
     protected void Iniciar() {
         Lector.addDataListener(new DPFPDataAdapter() {

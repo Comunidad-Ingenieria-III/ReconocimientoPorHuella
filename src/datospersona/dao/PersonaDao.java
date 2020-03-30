@@ -60,7 +60,7 @@ public class PersonaDao {
     public Persona buscarPorId(int idenpersona) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from datos_persona where huella1 = ?";
+            String sql = "select * from datos_persona where idpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idenpersona);
             rset = stmt.executeQuery();
@@ -79,7 +79,7 @@ public class PersonaDao {
                 persona.setEnfermedadSufre(rset.getString("enfermedadSufre"));
                 persona.setObservaciones(rset.getString("observaciones"));
                 //stmt.setBinaryStream(12,persona.getHuella());
-                stmt.setInt(13,persona.getHuella1());
+                //stmt.setInt(13,persona.getHuella1());
 
             }
         } catch (RuntimeException | SQLException e) {

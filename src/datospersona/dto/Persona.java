@@ -51,8 +51,8 @@ public class Persona {
         this.idEps = new SimpleIntegerProperty(idEps);
     }
 
-    public Persona(int huella1, int idpersona, String primerNombre, String segundoNombre, String alegicoA, String enfermedadSufre, String observaciones){
-        this.huella1 = new SimpleIntegerProperty(huella1);
+    public Persona(int idpersona, String primerNombre, String segundoNombre, String alegicoA, String enfermedadSufre, String observaciones){
+        //this.huella1 = new SimpleIntegerProperty(huella1);
         this.idpersona = new SimpleIntegerProperty(idpersona);
         this.primerNombre = new SimpleStringProperty(primerNombre);
         this.segundoNombre = new SimpleStringProperty(segundoNombre);
