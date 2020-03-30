@@ -163,7 +163,7 @@ public class ControladorFormularioPersona implements Initializable {
                     }
                 });
             }
-                 
+
             @Override
             public void fingerGone(final DPFPSensorEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
@@ -174,17 +174,15 @@ public class ControladorFormularioPersona implements Initializable {
             }
         });
 
-        Lector.addErrorListener(new
-
-                                        DPFPErrorAdapter() {
-                                            public void errorReader(final DPFPErrorEvent e) {
-                                                SwingUtilities.invokeLater(new Runnable() {
-                                                    public void run() {
-                                                        EnviarTexto("Error: " + e.getError());
-                                                    }
-                                                });
-                                            }
-                                        });
+        Lector.addErrorListener(new DPFPErrorAdapter() {
+            public void errorReader(final DPFPErrorEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("Error: " + e.getError());
+                    }
+                });
+            }
+        });
     }
 
     public void EnviarTexto(String string) {
