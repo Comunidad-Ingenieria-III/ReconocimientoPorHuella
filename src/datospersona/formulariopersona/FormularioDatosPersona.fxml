@@ -188,6 +188,5 @@
       <Label layoutX="91.0" layoutY="312.0" prefHeight="17.0" prefWidth="30.0" text="*" textFill="#d70c0c" />
       <TextField fx:id="tf_direccion" layoutX="169.0" layoutY="305.0" prefHeight="25.0" prefWidth="207.0" />
       <Button layoutX="631.0" layoutY="169.0" mnemonicParsing="false" onAction="#start" prefHeight="9.0" prefWidth="127.0" text="Capturar Huella" />
-      <Button layoutX="662.0" layoutY="219.0" mnemonicParsing="false" text="Guardar Huella" />
    </children>
 </AnchorPane>

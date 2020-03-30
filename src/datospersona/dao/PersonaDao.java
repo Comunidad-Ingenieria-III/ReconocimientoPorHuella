@@ -22,10 +22,10 @@ public class PersonaDao {
     private PreparedStatement stmt;
     private ResultSet rset;
 
-    /*public ObservableList<Persona> cargarPersona() {
+    public ObservableList<Persona> cargarPersona() {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from persona";
+            String sql = "select * from datos_persona";
             stmt = conn.prepareStatement(sql);//preparar consulta
             rset = stmt.executeQuery();//ejecutar la consulta y guardarla en la variabble rset
 
@@ -33,7 +33,7 @@ public class PersonaDao {
 
             while (rset.next()) {
 
-                persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
+                persona = new Persona();
 
                 persona.setIdpersona(rset.getInt("idpersona"));
                 persona.setPrimerNombre(rset.getString("primerNombre"));
@@ -45,6 +45,8 @@ public class PersonaDao {
                 persona.setAlergicoA(rset.getString("alergicoA"));
                 persona.setEnfermedadSufre(rset.getString("enfermedadSufre"));
                 persona.setObservaciones(rset.getString("observaciones"));
+                stmt.setBinaryStream(12,persona.getHuella());
+                stmt.setInt(13,persona.getHuella1());
 
                 personas.add(persona);
             }
@@ -58,13 +60,13 @@ public class PersonaDao {
     public Persona buscarPorId(int idenpersona) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from persona where idenpersona = ?";
+            String sql = "select * from datos_persona where idenpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idenpersona);
             rset = stmt.executeQuery();
 
             if (rset.next()) {
-                persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
+
 
                 persona.setIdpersona(rset.getInt("idpersona"));
                 persona.setPrimerNombre(rset.getString("primerNombre"));
@@ -76,6 +78,8 @@ public class PersonaDao {
                 persona.setAlergicoA(rset.getString("alergicoA"));
                 persona.setEnfermedadSufre(rset.getString("enfermedadSufre"));
                 persona.setObservaciones(rset.getString("observaciones"));
+                stmt.setBinaryStream(12,persona.getHuella());
+                stmt.setInt(13,persona.getHuella1());
 
             }
         } catch (RuntimeException | SQLException e) {
@@ -94,7 +98,7 @@ public class PersonaDao {
 
 
             if (rset.next()) {
-                persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
+                persona = new Persona();
 
                 persona.setIdpersona(rset.getInt("idpersona"));
                 persona.setPrimerNombre(rset.getString("primerNombre"));
@@ -113,7 +117,7 @@ public class PersonaDao {
             throw new RuntimeException("Error SQL - obtenerPorId()!");
         }
         return personas;
-    }*/
+    }
 
     public void agregarPersona(Persona persona) throws RuntimeException {
         try {
@@ -133,8 +137,8 @@ public class PersonaDao {
             stmt.setString(9, persona.getAlergicoA());
             stmt.setString(10, persona.getEnfermedadSufre());
             stmt.setString(11, persona.getObservaciones());
-            stmt.setBinaryStream(12,persona.getHuella());
-            stmt.setInt(13,persona.getHuella1());
+            stmt.setBinaryStream(12, persona.getHuella());
+            stmt.setInt(13, persona.getHuella1());
             stmt.setInt(14, persona.getTipoDocumento());
             stmt.setInt(15, persona.getidEps());
 
@@ -153,7 +157,7 @@ public class PersonaDao {
         try {
             int x = 0;
             conn = ConexionRoot.getConexion();
-            String sql = "update persona set idpersona = ?, primerNombre = ?, segundoNombre = ?, primerApellido = ?, segundoApellido = ?,"
+            String sql = "update datos_persona set idpersona = ?, primerNombre = ?, segundoNombre = ?, primerApellido = ?, segundoApellido = ?,"
                     + " fechaNacimiento = ?, sexo = ?, alergicoA = ?, enfermedadSufre = ?, observaciones = ? where idpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, persona.getIdpersona());
@@ -184,7 +188,7 @@ public class PersonaDao {
     public void eliminar(int idCliente) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from persona where idpersona = ?";
+            String sql = "delete from datos_persona where idpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idCliente);
 

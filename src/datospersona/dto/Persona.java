@@ -69,7 +69,6 @@ public class Persona {
     }
 
 
-
     public int getIdpersona() {
         return idpersona.get();
     }
@@ -137,12 +136,15 @@ public class Persona {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-    public String getDireccion(){
+
+    public String getDireccion() {
         return direccion.get();
     }
-    public void setDireccion(String direccion){
+
+    public void setDireccion(String direccion) {
         this.direccion.set(direccion);
     }
+
     public StringProperty direccion() {
         return direccion;
     }
