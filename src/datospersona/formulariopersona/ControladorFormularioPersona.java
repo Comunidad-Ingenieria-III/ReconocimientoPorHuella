@@ -13,7 +13,6 @@ import datospersona.dto.Persona;
 import datospersona.facade.FacadePersona;
 import eps.dto.DtoEps;
 import eps.facadeeps.FacadeEps;
-import huelladactilar.CapturaHuella;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +29,6 @@ import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
 import javax.swing.*;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -306,6 +304,33 @@ public class ControladorFormularioPersona implements Initializable {
 
     }
 
+
+    @FXML
+    private Persona crearPersona1() {
+
+        int idpersona = Integer.parseInt(tf_idpersona.getText());
+        String primerNombre = tf_primerNombre.getText();
+        String segundoNombre = tf_segundoNombre.getText();
+        String primerApellido = tf_primerApellido.getText();
+        String segundoApellido = tf_segundoApellido.getText();
+        Date fechaNacimiento = Date.valueOf(dp_fechaNacimiento.getValue());
+        String direccion = tf_direccion.getText();
+        String sexo = cbxsexo.getValue();
+        String alegicoA = ta_alergicoA.getText();
+        String enfermedadSufre = ta_enfermedadSufre.getText();
+        String observaciones = ta_observaciones.getText();
+        ByteArrayInputStream huella = new ByteArrayInputStream(template.serialize());
+        int huella1 = template.serialize().length;
+        int ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
+        int ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
+
+        Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
+                fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
+
+        return persona;
+
+    }
+
     @FXML
     public void iniciarCbxSexo() {
         ObservableList<String> items = FXCollections.observableArrayList();
@@ -418,13 +443,14 @@ public class ControladorFormularioPersona implements Initializable {
     private void guardarPersona(ActionEvent e) {
         //validar();
 
-        facadepersona.insertarPersona(crearPersona());
+        facadepersona.insertarPersona(crearPersona1());
         Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
         msg.setTitle("Pacientes - registro");
         msg.setContentText("El Paciente ha sido agregado correctamente");
         msg.setHeaderText("Resultado");
         msg.show();
         bt_crear.setDisable(false);
+        guardarHuella();
 
 
     }
@@ -469,18 +495,16 @@ public class ControladorFormularioPersona implements Initializable {
         }
     }
 
-    private void guardarHuella() {
+    public void guardarHuella() {
         int resultado;
         ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
         Integer tamañoHuella = template.serialize().length;
-        conn = null;
-        stmt = null;
-        rset = null;
+
         Persona empleado = null;
         try {
             conn = ConexionRoot.getConexion();
             stmt = conn.prepareStatement("select idpersona, huella, huella1 from datos_persona where idpersona= ?");
-            stmt.setInt(1, Integer.parseInt(tf_idpersona.getText()));
+            stmt.setInt(1, persona.getIdpersona());
             rset = stmt.executeQuery();
 
             if (rset.next()) {

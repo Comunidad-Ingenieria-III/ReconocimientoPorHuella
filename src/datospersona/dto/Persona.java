@@ -21,12 +21,34 @@ public class Persona {
     private StringProperty alergicoA;
     private StringProperty enfermedadSufre;
     private StringProperty observaciones;
+    private ByteArrayInputStream huella;
+    private IntegerProperty huella1;
     private IntegerProperty tipoDocumento;
     private IntegerProperty idEps;
-    private ByteArrayInputStream huella;
-    private ByteArrayInputStream huella1;
+
 
     public Persona() {
+    }
+
+    public Persona(int idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+                   Date fechaNacimiento, String direccion, String sexo, String alegicoA, String enfermedadSufre, String observaciones,
+                   ByteArrayInputStream huella, int huella1, int tipoDocumento, int idEps) {
+
+        this.idpersona = new SimpleIntegerProperty(idpersona);
+        this.primerNombre = new SimpleStringProperty(primerNombre);
+        this.segundoNombre = new SimpleStringProperty(segundoNombre);
+        this.primerApellido = new SimpleStringProperty(primerApellido);
+        this.segundoApellido = new SimpleStringProperty(segundoApellido);
+        this.fechaNacimiento = fechaNacimiento;
+        this.direccion = new SimpleStringProperty(direccion);
+        this.sexo = new SimpleStringProperty(sexo);
+        this.alergicoA = new SimpleStringProperty(alegicoA);
+        this.enfermedadSufre = new SimpleStringProperty(enfermedadSufre);
+        this.observaciones = new SimpleStringProperty(observaciones);
+        this.huella = huella;
+        this.huella1 = new SimpleIntegerProperty(huella1);
+        this.tipoDocumento = new SimpleIntegerProperty(tipoDocumento);
+        this.idEps = new SimpleIntegerProperty(idEps);
     }
 
     public Persona(int idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
@@ -45,6 +67,8 @@ public class Persona {
         this.tipoDocumento = new SimpleIntegerProperty(tipoDocumento);
         this.idEps = new SimpleIntegerProperty(idEps);
     }
+
+
 
     public int getIdpersona() {
         return idpersona.get();
@@ -169,6 +193,26 @@ public class Persona {
 
     public void setObservaciones(String observaciones) {
         this.observaciones.set(observaciones);
+    }
+
+    public ByteArrayInputStream getHuella() {
+        return huella;
+    }
+
+    public void setHuella(ByteArrayInputStream huella) {
+        this.huella = huella;
+    }
+
+    public int getHuella1() {
+        return huella1.get();
+    }
+
+    public IntegerProperty huella1Property() {
+        return huella1;
+    }
+
+    public void setHuella1(int huella1) {
+        this.huella1.set(huella1);
     }
 
     public int getTipoDocumento() {

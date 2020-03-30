@@ -22,7 +22,7 @@ public class PersonaDao {
     private PreparedStatement stmt;
     private ResultSet rset;
 
-    public ObservableList<Persona> cargarPersona() {
+    /*public ObservableList<Persona> cargarPersona() {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from persona";
@@ -33,7 +33,7 @@ public class PersonaDao {
 
             while (rset.next()) {
 
-                persona = new Persona();
+                persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
 
                 persona.setIdpersona(rset.getInt("idpersona"));
                 persona.setPrimerNombre(rset.getString("primerNombre"));
@@ -64,7 +64,7 @@ public class PersonaDao {
             rset = stmt.executeQuery();
 
             if (rset.next()) {
-                persona = new Persona();
+                persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
 
                 persona.setIdpersona(rset.getInt("idpersona"));
                 persona.setPrimerNombre(rset.getString("primerNombre"));
@@ -94,7 +94,7 @@ public class PersonaDao {
 
 
             if (rset.next()) {
-                persona = new Persona();
+                persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
 
                 persona.setIdpersona(rset.getInt("idpersona"));
                 persona.setPrimerNombre(rset.getString("primerNombre"));
@@ -113,7 +113,7 @@ public class PersonaDao {
             throw new RuntimeException("Error SQL - obtenerPorId()!");
         }
         return personas;
-    }
+    }*/
 
     public void agregarPersona(Persona persona) throws RuntimeException {
         try {
@@ -133,8 +133,11 @@ public class PersonaDao {
             stmt.setString(9, persona.getAlergicoA());
             stmt.setString(10, persona.getEnfermedadSufre());
             stmt.setString(11, persona.getObservaciones());
-            stmt.setInt(12, persona.getTipoDocumento());
-            stmt.setInt(13, persona.getidEps());
+            stmt.setBinaryStream(12,persona.getHuella());
+            stmt.setInt(13,persona.getHuella1());
+            stmt.setInt(14, persona.getTipoDocumento());
+            stmt.setInt(15, persona.getidEps());
+
 
             int rta = stmt.executeUpdate();
             if (rta != 1) {
