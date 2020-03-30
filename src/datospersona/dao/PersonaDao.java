@@ -60,7 +60,7 @@ public class PersonaDao {
     public Persona buscarPorId(int idenpersona) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from datos_persona where idenpersona = ?";
+            String sql = "select * from datos_persona where huella1 = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idenpersona);
             rset = stmt.executeQuery();
@@ -70,15 +70,15 @@ public class PersonaDao {
 
                 persona.setIdpersona(rset.getInt("idpersona"));
                 persona.setPrimerNombre(rset.getString("primerNombre"));
-                persona.setSegundoNombre(rset.getString("segundoNombre"));
-                persona.setPrimerApellido(rset.getString("primerApellido"));
-                persona.setSegundoApellido(rset.getString("segundoApellido"));
-                persona.setFechaNacimiento(rset.getDate("fechaNacimiento"));
-                persona.setSexo(rset.getString("sexo"));
+                //persona.setSegundoNombre(rset.getString("segundoNombre"));
+                //persona.setPrimerApellido(rset.getString("primerApellido"));
+                //persona.setSegundoApellido(rset.getString("segundoApellido"));
+                //persona.setFechaNacimiento(rset.getDate("fechaNacimiento"));
+                //persona.setSexo(rset.getString("sexo"));
                 persona.setAlergicoA(rset.getString("alergicoA"));
                 persona.setEnfermedadSufre(rset.getString("enfermedadSufre"));
                 persona.setObservaciones(rset.getString("observaciones"));
-                stmt.setBinaryStream(12,persona.getHuella());
+                //stmt.setBinaryStream(12,persona.getHuella());
                 stmt.setInt(13,persona.getHuella1());
 
             }

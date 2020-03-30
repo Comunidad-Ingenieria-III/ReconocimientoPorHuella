@@ -51,6 +51,17 @@ public class Persona {
         this.idEps = new SimpleIntegerProperty(idEps);
     }
 
+    public Persona(int huella1, int idpersona, String primerNombre, String segundoNombre, String alegicoA, String enfermedadSufre, String observaciones){
+        this.huella1 = new SimpleIntegerProperty(huella1);
+        this.idpersona = new SimpleIntegerProperty(idpersona);
+        this.primerNombre = new SimpleStringProperty(primerNombre);
+        this.segundoNombre = new SimpleStringProperty(segundoNombre);
+        this.alergicoA = new SimpleStringProperty(alegicoA);
+        this.enfermedadSufre = new SimpleStringProperty(enfermedadSufre);
+        this.observaciones = new SimpleStringProperty(observaciones);
+
+    }
+
     public Persona(int idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
                    Date fechaNacimiento, String direccion, String sexo, String alergicoA, String enfermedadSufre, String observaciones, int tipoDocumento, int idEps) {
         this.idpersona = new SimpleIntegerProperty(idpersona);
@@ -67,8 +78,6 @@ public class Persona {
         this.tipoDocumento = new SimpleIntegerProperty(tipoDocumento);
         this.idEps = new SimpleIntegerProperty(idEps);
     }
-
-
     public int getIdpersona() {
         return idpersona.get();
     }

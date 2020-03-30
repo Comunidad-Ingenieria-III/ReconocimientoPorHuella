@@ -1,6 +1,14 @@
 package registroAtencionPaciente.formularioregistroatencion;
 
+import com.digitalpersona.onetouch.*;
+import com.digitalpersona.onetouch.capture.DPFPCapture;
+import com.digitalpersona.onetouch.capture.event.*;
+import com.digitalpersona.onetouch.processing.DPFPEnrollment;
+import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
+import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
+import com.digitalpersona.onetouch.verification.DPFPVerification;
 import conexionBD.ConexionRoot;
+import datospersona.dto.Persona;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,16 +18,14 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import datospersona.facade.FacadePersona;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
+
+import javax.swing.*;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
 public class ContraladorRegistroAtencionPaciente implements Initializable {
 
-    @FXML
-    private ComboBox<DtoTipoDocumento> cbxtipodocumento = new ComboBox<>();
-    @FXML
-    private TextField tf_nombretipodocumento;
     @FXML
     private TextField tf_idpersonadps;
     @FXML
@@ -33,13 +39,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private DatePicker dp_fechaNacimiento;
     @FXML
-    private ComboBox<String> cbxsexo = new ComboBox<>();
-    @FXML
-    private ComboBox<String> cbxtipoeps = new ComboBox<>();
-    @FXML
     private TextField tf_nombreeps;
-    @FXML
-    private ComboBox<Integer> cbxdocumentoidentidadps = new ComboBox<>();
     @FXML
     private TextField tf_nombrefamiliar;
     @FXML
@@ -51,7 +51,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private TextArea ta_observaciones;
     @FXML
-    private ObservableList<Integer> listatipodocumento = FXCollections.observableArrayList();
+    private TextArea ta_huella;
     @FXML
     private Button bt_crear;
     @FXML
@@ -66,6 +66,9 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
+    @FXML
+    private Button bt_buscar_huella;
+
 
     private Connection conn;
     private PreparedStatement stmt;
@@ -77,44 +80,210 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        /*ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("Seleccione", "Masculino", "Femenino");
-        cbxsexo.setItems(items);
-        cbxsexo.getSelectionModel().selectFirst();
-
-        dp_fechaNacimiento.setValue(LocalDate.now());*/
-
-        //deshabilitarBotones();
-        // deshabilitarCampos();
-        //cargarTabla();
+        start();
+        Iniciar();
+        //buscarHuella();
 
     }
 
     @FXML
-    public void cargarTabla() {
+    public Persona buscarPorHuella() {
 
-        try {
-            conn = ConexionRoot.getConexion();
-            String sql = "select idTipoDocumento, nombreTipoDocumento from tipo_de_documento";
-            stmt = conn.prepareStatement(sql);
-            rset = stmt.executeQuery();
 
-            while (rset.next()) {
+        int huella1 = Integer.parseInt(ta_huella.getText());
 
-                int identificacion = rset.getInt("idpersona");
-                listatipodocumento.add(identificacion);
-                String nombre = rset.getString("nombreTipoDocumento");
+        int identificacion = Integer.parseInt(tf_idpersonadps.getText());
+        String nombre = tf_primerNombredps.getText();
+        String nombre2 = tf_numerotelefonicofamiliar.getText();
+        String alergico = ta_alergicoA.getText();
+        String sufrode = ta_enfermedadSufre.getText();
+        String observaciones = ta_observaciones.getText();
 
-                cbxdocumentoidentidadps.setItems(listatipodocumento);
-                tf_nombretipodocumento.setText(nombre);
 
+        Persona persona = new Persona(huella1, identificacion, nombre, nombre2, alergico, sufrode, observaciones);
+
+        return persona;
+    }
+
+    public void buscarHuella() {
+
+        int num = Integer.parseInt(ta_huella.getText());
+        facadepersona.buscarPersona(num);
+        JOptionPane.showMessageDialog(null, "Dato Encontrado", "INFORMACIÓN", 1);
+    }
+
+    //Varible que permite iniciar el dispositivo de lector de huella conectado
+    // con sus distintos metodos.
+    private DPFPCapture Lector = DPFPGlobal.getCaptureFactory().createCapture();
+
+    //Varible que permite establecer las capturas de la huellas, para determina sus caracteristicas
+    // y poder estimar la creacion de un template de la huella para luego poder guardarla
+    private DPFPEnrollment Reclutador = DPFPGlobal.getEnrollmentFactory().createEnrollment();
+
+    //Esta variable tambien captura una huella del lector y crea sus caracteristcas para auntetificarla
+    // o verificarla con alguna guardada en la BD
+    private DPFPVerification Verificador = DPFPGlobal.getVerificationFactory().createVerification();
+
+    //Variable que para crear el template de la huella luego de que se hallan creado las caracteriticas
+    // necesarias de la huella si no ha ocurrido ningun problema
+    private DPFPTemplate template;
+
+    protected void Iniciar() {
+        Lector.addDataListener(new DPFPDataAdapter() {
+            @Override
+            public void dataAcquired(final DPFPDataEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("La Huella Digital ha sido Capturada");
+                        ProcesarCaptura(e.getSample());
+                    }
+                });
+            }
+        });
+
+        Lector.addReaderStatusListener(new DPFPReaderStatusAdapter() {
+            @Override
+            public void readerConnected(final DPFPReaderStatusEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+
+                        EnviarTexto("El Sensor de Huella Digital esta Activado o Conectado");
+                    }
+                });
             }
 
-        } catch (RuntimeException |
-                SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
-        }
+            @Override
+            public void readerDisconnected(final DPFPReaderStatusEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("El Sensor de Huella Digital esta Desactivado o no Conectado");
+                    }
+                });
+            }
+        });
 
+        Lector.addSensorListener(new DPFPSensorAdapter() {
+            @Override
+            public void fingerTouched(final DPFPSensorEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("El dedo ha sido colocado sobre el Lector de Huella");
+                    }
+                });
+            }
+
+            @Override
+            public void fingerGone(final DPFPSensorEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("Retira el Dedo del Lector de Huella");
+                    }
+                });
+            }
+        });
+
+        Lector.addErrorListener(new DPFPErrorAdapter() {
+            public void errorReader(final DPFPErrorEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("Error: " + e.getError());
+                    }
+                });
+            }
+        });
+    }
+
+    public void EnviarTexto(String string) {
+        ta_huella.appendText(string + "\n");
+    }
+
+    public void EstadoHuellas() {
+        EnviarTexto("Muestra de Huellas Restantes para Guardar " + Reclutador.getFeaturesNeeded());
+    }
+
+    public void start() {
+        Lector.startCapture();
+        EnviarTexto("Utilizando el Lector de Huella Dactilar ");
+    }
+
+    public void stop() {
+        Lector.stopCapture();
+        EnviarTexto("No se está usando el Lector de Huella Dactilar ");
+    }
+
+    public DPFPTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(DPFPTemplate template) {
+        DPFPTemplate old = this.template;
+        this.template = template;
+    }
+
+    public void DibujarHuella(java.awt.Image image) {
+
+    }
+
+    public java.awt.Image CrearImagenHuella(DPFPSample sample) {
+        return DPFPGlobal.getSampleConversionFactory().createImage(sample);
+    }
+
+    public DPFPFeatureSet extraerCaracteristicas(DPFPSample sample, DPFPDataPurpose purpose) {
+        DPFPFeatureExtraction extractor = DPFPGlobal.getFeatureExtractionFactory().createFeatureExtraction();
+        try {
+            return extractor.createFeatureSet(sample, purpose);
+        } catch (DPFPImageQualityException e) {
+            return null;
+        }
+    }
+
+    public DPFPFeatureSet featuresinscripcion;
+    public DPFPFeatureSet featuresverificacion;
+
+    public void ProcesarCaptura(DPFPSample sample) {
+        // Procesar la muestra de la huella y crear un conjunto de características con el propósito de inscripción.
+        featuresinscripcion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
+
+        // Procesar la muestra de la huella y crear un conjunto de características con el propósito de verificacion.
+        featuresverificacion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
+
+        // Comprobar la calidad de la muestra de la huella y lo añade a su reclutador si es bueno
+        if (featuresinscripcion != null)
+            try {
+                System.out.println("Las Caracteristicas de la Huella han sido creada");
+                try {
+                    Reclutador.addFeatures(featuresinscripcion);// Agregar las caracteristicas de la huella a la plantilla a crear
+                } catch (DPFPImageQualityException e) {
+                    e.printStackTrace();
+                }
+
+                // Dibuja la huella dactilar capturada.
+                java.awt.Image image = CrearImagenHuella(sample);
+                DibujarHuella(image);
+
+                //btnVerificar.setEnabled(true);
+                //btnIdentificar.setEnabled(true);
+
+            } finally {
+                EstadoHuellas();
+                // Comprueba si la plantilla se ha creado.
+                switch (Reclutador.getTemplateStatus()) {
+                    case TEMPLATE_STATUS_READY:    // informe de éxito y detiene  la captura de huellas
+                        stop();
+                        setTemplate(Reclutador.getTemplate());
+                        EnviarTexto("Listo la huella ha sido cpaturada correctamente ahora puede guardarla");
+                        break;
+
+                    case TEMPLATE_STATUS_FAILED: // informe de fallas y reiniciar la captura de huellas
+                        Reclutador.clear();
+                        stop();
+                        EstadoHuellas();
+                        setTemplate(null);
+                        JOptionPane.showMessageDialog(null, "La Plantilla de la Huella no pudo ser creada, Repita el Proceso", "Inscripcion de Huellas Dactilares", JOptionPane.ERROR_MESSAGE);
+                        start();
+                        break;
+                }
+            }
     }
 
     /*@FXML
