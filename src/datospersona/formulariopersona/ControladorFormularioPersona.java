@@ -450,8 +450,6 @@ public class ControladorFormularioPersona implements Initializable {
         msg.setHeaderText("Resultado");
         msg.show();
         bt_crear.setDisable(false);
-        guardarHuella();
-
 
     }
 
@@ -495,7 +493,7 @@ public class ControladorFormularioPersona implements Initializable {
         }
     }
 
-    public void guardarHuella() {
+    /*public void guardarHuella() {
         int resultado;
         ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
         Integer tamañoHuella = template.serialize().length;
@@ -526,20 +524,20 @@ public class ControladorFormularioPersona implements Initializable {
                     guardarStmt2.setBinaryStream(1, datosHuella, tamañoHuella);
                     guardarStmt2.setInt(2, Integer.parseInt(tf_idpersona.getText()));
 
-//Ejecuta la sentencia
+                    //Ejecuta la sentencia
                     guardarStmt2.execute();
                     guardarStmt2.close();
                     JOptionPane.showMessageDialog(null, "Huella Guardada Correctament");
                 }
             } else if (!rset.next()) {
-//String nombre = JOptionPane.showInputDialog("Nombre y Apellidos:");
+            //String nombre = JOptionPane.showInputDialog("Nombre y Apellidos:");
                 try {
                     PreparedStatement guardarStmt = conn.prepareStatement("INSERT INTO datos_persona(huella, huella1) values(?, ?)");
 
                     guardarStmt.setBinaryStream(1, datosHuella, tamañoHuella);
                     guardarStmt.setBinaryStream(2, datosHuella, tamañoHuella);
 
-//Ejecuta la sentencia
+                    //Ejecuta la sentencia
                     guardarStmt.executeUpdate();
                     guardarStmt.close();
                 } catch (Exception ex) {
@@ -550,6 +548,6 @@ public class ControladorFormularioPersona implements Initializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
+    }*/
 }
 

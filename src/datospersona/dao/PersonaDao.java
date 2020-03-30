@@ -119,8 +119,8 @@ public class PersonaDao {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "insert into datos_persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido," +
-                    "fechaNacimiento, direccion, sexo, alergicoA, enfermedadSufre, observaciones, idTipoDocumento, idEps)"
-                    + " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "fechaNacimiento, direccion, sexo, alergicoA, enfermedadSufre, observaciones, huella, huella1, idTipoDocumento, idEps)"
+                    + " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
             stmt.setInt(1, persona.getIdpersona());
             stmt.setString(2, persona.getPrimerNombre());
