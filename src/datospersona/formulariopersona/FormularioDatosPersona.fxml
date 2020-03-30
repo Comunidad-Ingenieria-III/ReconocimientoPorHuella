@@ -94,20 +94,20 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="ta_alergicoA" layoutX="26.0" layoutY="366.0" prefHeight="38.0" prefWidth="513.0" />
+      <TextArea fx:id="ta_alergicoA" layoutX="26.0" layoutY="366.0" prefHeight="38.0" prefWidth="337.0" />
       <Label layoutX="26.0" layoutY="404.0" prefHeight="17.0" prefWidth="159.0" text="Enfermedad Que Sufre:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="ta_enfermedadSufre" layoutX="26.0" layoutY="424.0" prefHeight="38.0" prefWidth="513.0" />
+      <TextArea fx:id="ta_enfermedadSufre" layoutX="26.0" layoutY="424.0" prefHeight="38.0" prefWidth="337.0" />
       <Label layoutX="23.0" layoutY="469.0" prefHeight="20.0" prefWidth="106.0" text="Observaciones:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="ta_observaciones" layoutX="26.0" layoutY="489.0" prefHeight="49.0" prefWidth="513.0" />
-      <Label layoutX="618.0" layoutY="327.0" prefHeight="20.0" prefWidth="99.0" text="Huella Digital">
+      <TextArea fx:id="ta_observaciones" layoutX="26.0" layoutY="489.0" prefHeight="49.0" prefWidth="337.0" />
+      <Label layoutX="535.0" layoutY="320.0" prefHeight="20.0" prefWidth="99.0" text="Huella Digital">
          <font>
             <Font size="14.0" />
          </font>
@@ -179,7 +179,7 @@
       <Label layoutX="100.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
       <Label layoutX="480.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
       <Label layoutX="474.0" layoutY="118.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
-      <TextArea fx:id="txtArea" layoutX="556.0" layoutY="348.0" prefHeight="190.0" prefWidth="200.0" />
+      <TextArea fx:id="txtArea" layoutX="400.0" layoutY="348.0" prefHeight="190.0" prefWidth="356.0" />
       <Label layoutX="28.0" layoutY="310.0" text="Direccion">
          <font>
             <Font size="14.0" />
@@ -187,5 +187,6 @@
       </Label>
       <Label layoutX="91.0" layoutY="312.0" prefHeight="17.0" prefWidth="30.0" text="*" textFill="#d70c0c" />
       <TextField fx:id="tf_direccion" layoutX="169.0" layoutY="305.0" prefHeight="25.0" prefWidth="207.0" />
+      <Button layoutX="631.0" layoutY="169.0" mnemonicParsing="false" onAction="#start" prefHeight="9.0" prefWidth="127.0" text="Capturar Huella" />
    </children>
 </AnchorPane>

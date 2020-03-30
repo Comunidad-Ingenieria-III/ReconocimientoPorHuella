@@ -101,7 +101,7 @@ public class ControladorFormularioPersona implements Initializable {
         deshabilitarBotones();
         deshabilitarCampos();
         Iniciar();
-        start();
+        //start();
     }
 
     //Varible que permite iniciar el dispositivo de lector de huella conectado
@@ -138,7 +138,7 @@ public class ControladorFormularioPersona implements Initializable {
             public void readerConnected(final DPFPReaderStatusEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        System.out.println("el senson esta activado" + Lector);
+
                         EnviarTexto("El Sensor de Huella Digital esta Activado o Conectado");
                     }
                 });
@@ -159,7 +159,7 @@ public class ControladorFormularioPersona implements Initializable {
             public void fingerTouched(final DPFPSensorEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        EnviarTexto("El dedo ha sido colocado sobre el Lector de Huella");
+                        EnviarTexto("Coloca el Dedo sobre el Lector de Huella");
                     }
                 });
             }
@@ -168,7 +168,7 @@ public class ControladorFormularioPersona implements Initializable {
             public void fingerGone(final DPFPSensorEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        EnviarTexto("El dedo ha sido quitado del Lector de Huella");
+                        EnviarTexto("Retira el Dedo del Lector de Huella");
                     }
                 });
             }
@@ -344,7 +344,7 @@ public class ControladorFormularioPersona implements Initializable {
     private void habilitarBotones() {
         bt_crear.setDisable(true); //siempre ira deshabilitado
         bt_consultar.setDisable(true);
-        bt_cancelar.setDisable(true);
+        bt_cancelar.setDisable(false);
         bt_salir.setDisable(false);
         bt_guardar.setDisable(false);
         bt_modificar.setDisable(true);
