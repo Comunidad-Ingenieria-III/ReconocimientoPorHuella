@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.ByteArrayInputStream;
 import java.sql.Date;
 
 public class Persona {
@@ -22,6 +23,8 @@ public class Persona {
     private StringProperty observaciones;
     private IntegerProperty tipoDocumento;
     private IntegerProperty idEps;
+    private ByteArrayInputStream huella;
+    private ByteArrayInputStream huella1;
 
     public Persona() {
     }

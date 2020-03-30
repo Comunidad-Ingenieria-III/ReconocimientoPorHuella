@@ -7,6 +7,8 @@ import com.digitalpersona.onetouch.processing.DPFPEnrollment;
 import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
 import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
+import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
+import conexionBD.ConexionRoot;
 import datospersona.dto.Persona;
 import datospersona.facade.FacadePersona;
 import eps.dto.DtoEps;
@@ -27,6 +29,8 @@ import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
 import javax.swing.*;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -464,4 +468,64 @@ public class ControladorFormularioPersona implements Initializable {
             e.printStackTrace();
         }
     }
+
+    private void guardarHuella() {
+        int resultado;
+        ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
+        Integer tamañoHuella = template.serialize().length;
+        conn = null;
+        stmt = null;
+        rset = null;
+        Persona empleado = null;
+        try {
+            conn = ConexionRoot.getConexion();
+            stmt = conn.prepareStatement("select idpersona, huella, huella1 from datos_persona where idpersona= ?");
+            stmt.setInt(1, Integer.parseInt(tf_idpersona.getText()));
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                //Lee la plantilla de la base de datos
+                byte templateBuffer[] = rset.getBytes(2);
+                //Crea una nueva plantilla a partir de la guardada en la base de datos
+                DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
+                //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
+                setTemplate(referenceTemplate);
+                //Compara las caracteriticas de la huella recientemente capturda con la
+                // plantilla guardada al usuario especifico en la base de datos
+                DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
+
+                //compara las plantilas (actual vs bd)
+                if (result.isVerified()) {
+                    JOptionPane.showMessageDialog(null, "La huella ya existe, coloque un dedo diferente");
+                } else {
+                    PreparedStatement guardarStmt2 = conn.prepareStatement("update datos_persona set huella1=? where (idpersona=?)");
+                    guardarStmt2.setBinaryStream(1, datosHuella, tamañoHuella);
+                    guardarStmt2.setInt(2, Integer.parseInt(tf_idpersona.getText()));
+
+//Ejecuta la sentencia
+                    guardarStmt2.execute();
+                    guardarStmt2.close();
+                    JOptionPane.showMessageDialog(null, "Huella Guardada Correctament");
+                }
+            } else if (!rset.next()) {
+//String nombre = JOptionPane.showInputDialog("Nombre y Apellidos:");
+                try {
+                    PreparedStatement guardarStmt = conn.prepareStatement("INSERT INTO datos_persona(huella, huella1) values(?, ?)");
+
+                    guardarStmt.setBinaryStream(1, datosHuella, tamañoHuella);
+                    guardarStmt.setBinaryStream(2, datosHuella, tamañoHuella);
+
+//Ejecuta la sentencia
+                    guardarStmt.executeUpdate();
+                    guardarStmt.close();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+                JOptionPane.showMessageDialog(null, "Huella Guardada Correctamente");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }
+
