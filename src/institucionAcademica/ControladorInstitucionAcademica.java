@@ -172,6 +172,7 @@ public class ControladorInstitucionAcademica implements Initializable {
             msg.setHeaderText("Resultado");
             msg.show();
         }
+        limpiarFormulario();
 
     }
 

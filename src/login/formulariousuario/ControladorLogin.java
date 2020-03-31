@@ -11,11 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import login.daousuario.DaoUsuario;
@@ -63,12 +61,60 @@ public class ControladorLogin implements Initializable {
     private Button btnSalir;
     @FXML
     private Button btnConsultar;
-
+    @FXML
+    private Label lblContraseña;
+    @FXML
+    private Label lblUsuario;
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    btnEntrar.setDisable(true);
+
+    }
+
+
+    public void validarcampos(){
+        if (tf_Usuario.getText().isEmpty()){
+            lblUsuario.setText("Campo Requerido");
+        }else if (!tf_Usuario.getText().contains("@") || !tf_Usuario.getText().contains(".")){
+            lblUsuario.setText("Usuario invalido");
+        }else {
+            lblUsuario.setText("");
+        }
+
+
+        if (tf_Contrasena.getText().isEmpty()){
+            lblContraseña.setText("Campo Requerido");
+        }else{
+            lblContraseña.setText("");
+        }
+        if (tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty()){
+            btnEntrar.setDisable(true);
+        }else {
+            btnEntrar.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void validar(){
+       tf_Usuario.setOnKeyReleased(new EventHandler<KeyEvent>() {
+           @Override
+           public void handle(KeyEvent event) {
+              validarcampos();
+
+           }
+
+       });
+        tf_Contrasena.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarcampos();
+
+            }
+
+        });
 
     }
 
