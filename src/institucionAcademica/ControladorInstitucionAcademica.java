@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -74,7 +71,9 @@ public class ControladorInstitucionAcademica implements Initializable {
         colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
 
-
+        btnModificar.setDisable(true);
+        btnInhabilitar.setDisable(true);
+        btnGuardar.setDisable(true);
 
         manejarEventos();
     }
@@ -89,7 +88,8 @@ public class ControladorInstitucionAcademica implements Initializable {
                     txtDireccion.setText(newValue.getDireccion());
                     txtTelefono.setText(newValue.getTelefono());
 
-                    btnCrear.setDisable(true);
+                    btnCrear.setDisable(false);
+                    btnGuardar.setDisable(true);
                     btnModificar.setDisable(false);
                     btnInhabilitar.setDisable(false);
                 }
@@ -98,42 +98,109 @@ public class ControladorInstitucionAcademica implements Initializable {
         });//FIN DEL LISTENER
     }
 
-
-
-
-
-
-
-
     @FXML
-    public void limpiar() {
-        txtCodigo.setText("");
-        txtNombre.setText("");
+    public void guardarInstitucion() {
+        InstitucionAcademica institucionAcademica = new InstitucionAcademica(
+                txtCodigo.getText(),
+                txtNombre.getText(),
+                txtDireccion.getText(),
+                txtTelefono.getText()
+        );
+
+        int res = facade.agregar(institucionAcademica);
+
+        if (res == 1) {
+            instituciones.add(institucionAcademica);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion se ha agregado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        } else {
+
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("No se ha podido agregar la institucion");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        limpiarFormulario();
     }
 
     @FXML
-    private void habilitarBotones() {
-        btnCrear.setDisable(true); //siempre ira deshabilitado
-        btnConsultar.setDisable(true);
-        bntCancelar.setDisable(true);
-        btnSalir.setDisable(false);
+    public void modificarInstitucion() {
+        InstitucionAcademica institucionAcademica = new InstitucionAcademica(
+                txtCodigo.getText(),
+                txtNombre.getText(),
+                txtDireccion.getText(),
+                txtTelefono.getText()
+
+        );
+        int res = facade.modificar(institucionAcademica);
+        if (res == 1) {
+            instituciones.set(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex(), institucionAcademica);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion se ha modificado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }else{
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion No ha sido modificada");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        limpiarFormulario();
+    }
+
+    @FXML
+    public void eliminarInstitucion() {
+        int res = facade.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
+        if (res == 1) {
+            instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion se ha eliminado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }else{
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion No ha sido eliminada");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+
+    }
+
+
+    @FXML
+    public void limpiarFormulario() {
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtDireccion.setText("");
+        txtTelefono.setText("");
+        txtCodigo.requestFocus();
+
+        btnCrear.setDisable(false);
         btnGuardar.setDisable(false);
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
-        habilitarCampos();
     }
 
-    @FXML
-    private void deshabilitarBotones() {
-        btnCrear.setDisable(false); //siempre ira deshabilitado
-        btnConsultar.setDisable(false);
-        bntCancelar.setDisable(false);
-        btnSalir.setDisable(false);
-        btnGuardar.setDisable(true);
+   @FXML
+    public void cancelar(){
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtDireccion.setText("");
+        txtTelefono.setText("");
+        txtCodigo.requestFocus();
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
-
     }
+
 
     @FXML
     private void habilitarCampos() {

@@ -34,7 +34,7 @@ public class InstitucionAcademicaDAO {
                 institucionAcademica.setIdInstitucion(rset.getString("idInstitucion"));
                 institucionAcademica.setNombre(rset.getString("nombre"));
                 institucionAcademica.setDireccion(rset.getString("direccion"));
-                institucionAcademica.setDireccion(rset.getString("telefono"));
+                institucionAcademica.setTelefono(rset.getString("telefono"));
 
                 institucionAcademicaList.add(institucionAcademica);
             }
@@ -48,6 +48,60 @@ public class InstitucionAcademicaDAO {
     }
 
 
+    public int agregar(InstitucionAcademica institucionAcademica) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "insert into institucion_academica(idInstitucion, nombre, direccion, telefono) values(?, ?, ?, ?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, institucionAcademica.getIdInstitucion());
+            stmt.setString(2, institucionAcademica.getNombre());
+            stmt.setString(3, institucionAcademica.getDireccion());
+            stmt.setString(4, institucionAcademica.getTelefono());
+
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+            return 0;
+        }
+    } // Fin del método agregar()
+
+
+    public int modificar(InstitucionAcademica institucionAcademica) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "update institucion_academica set nombre = ?, direccion = ?, telefono = ?  where idInstitucion = ?";
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, institucionAcademica.getNombre());
+            stmt.setString(2, institucionAcademica.getDireccion());
+            stmt.setString(3, institucionAcademica.getTelefono());
+
+            stmt.setString(4, institucionAcademica.getIdInstitucion());
+
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+            return 0;
+        }
+    } // Fin del método modificar()
+
+
+    public int eliminar(String idInstitucion) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "delete from institucion_academica where idInstitucion = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idInstitucion);
+            return stmt.executeUpdate();
+        } catch (RuntimeException | SQLException e) {
+            System.out.println(e.toString());
+            return 0;
+        }
+    } // Fin del método eliminar()
 
 
 }
