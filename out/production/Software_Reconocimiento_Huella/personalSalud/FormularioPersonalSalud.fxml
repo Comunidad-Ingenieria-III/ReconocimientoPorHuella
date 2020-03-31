@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="545.0" prefWidth="830.0" style="-fx-background-color: #CECEF6;" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.formulariopersonalsalud.ControladorPersonalSalud">
+<AnchorPane prefHeight="545.0" prefWidth="830.0" style="-fx-background-color: #CECEF6;" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.ControladorPersonalSalud">
    <children>
       <Label alignment="CENTER" prefHeight="40.0" prefWidth="830.0" style="-fx-background-color: #2E2EFE;" text="Personal Salud" textFill="#f2f2f2">
          <font>

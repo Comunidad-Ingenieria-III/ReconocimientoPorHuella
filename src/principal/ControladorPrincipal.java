@@ -63,6 +63,9 @@ public class ControladorPrincipal implements Initializable {
     private MenuItem mi_datos_persona;
     @FXML
     private MenuItem mi_regisgtro_atencion;
+    @FXML
+    private MenuItem mnuInstitucionAcademica;
+
 
 
     @Override
@@ -196,10 +199,10 @@ public class ControladorPrincipal implements Initializable {
     @FXML
     private void abrirInstitucionAcademica(ActionEvent event) throws IOException {
         try {
-            Parent formulario_Institucion_Academica = FXMLLoader.load(getClass().getClassLoader().getResource("institucionAcademica/formularioinstitucionacademica/FormularioInstitucionAcademica.fxml"));
+            Parent formulario_Institucion_Academica = FXMLLoader.load(getClass().getClassLoader().getResource("institucionAcademica/FormularioInstitucionAcademica.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Institución Académica)");
-            stage.setScene(new Scene(formulario_Institucion_Academica, 500, 343));
+            stage.setScene(new Scene(formulario_Institucion_Academica));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);

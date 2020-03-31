@@ -8,7 +8,7 @@ public class FacadeInstitucionAcademica {
 InstitucionAcademicaDAO institucionAcademicaDAO = new InstitucionAcademicaDAO();
 
 
-    public List<InstitucionAcademica> obtenerTodosProductos() {
+    public List<InstitucionAcademica> obtenerTodasInstituciones() {
         return institucionAcademicaDAO.obtenerTodas();
     }
 }
