@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="343.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionreferencia.formularioinstitucionreferencia.ControladorInstitucionReferencia">
+<AnchorPane prefHeight="343.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionreferencia.ControladorInstitucionReferencia">
    <children>
       <Label alignment="CENTER" layoutY="1.0" prefHeight="43.0" prefWidth="500.0" style="-fx-background-color: #2E64FE;" text="Institución Referencia">
          <font>

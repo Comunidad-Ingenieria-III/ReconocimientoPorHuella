@@ -1,4 +1,4 @@
-package registroAtencionPaciente.formularioregistroatencion;
+package registroAtencionPaciente;
 
 import conexionBD.ConexionRoot;
 import javafx.collections.FXCollections;

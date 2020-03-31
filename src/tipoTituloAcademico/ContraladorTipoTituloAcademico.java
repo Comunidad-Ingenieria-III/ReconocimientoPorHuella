@@ -1,4 +1,4 @@
-package institucionAcademica.formularioinstitucionacademica;
+package tipoTituloAcademico;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,20 +7,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControladorInstitucionAcademica implements Initializable {
+public class ContraladorTipoTituloAcademico implements Initializable {
 
     @FXML
     private TextField tf_Tipo;
     @FXML
     private TextField tf_nombre1;
-    @FXML
-    private TextField tf_direccion;
-    @FXML
-    private TextField tf_telefono;
     @FXML
     private Button bt_crear;
     @FXML
@@ -75,22 +70,19 @@ public class ControladorInstitucionAcademica implements Initializable {
     @FXML
     private void habilitarCampos() {
         tf_Tipo.setDisable(false);
-        tf_nombre1.setDisable(false);
-        tf_direccion.setDisable(false);
-        tf_telefono.setDisable(false);
         tf_Tipo.requestFocus();
+        tf_nombre1.setDisable(false);
     }
 
     @FXML
     private void deshabilitarCampos() {
         tf_Tipo.setDisable(true);
         tf_nombre1.setDisable(true);
-        tf_direccion.setDisable(true);
-        tf_telefono.setDisable(true);
     }
 
+
     @FXML
-    private void cerrarInstitucionAcademica(ActionEvent event) {
+    private void cerrarTipoTituloAcademico(ActionEvent event) {
         Stage stage = (Stage) bt_salir.getScene().getWindow();
         stage.close();
     }
