@@ -51,9 +51,6 @@
     <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="JavaFxApplication" />
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -265,26 +262,26 @@
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1280.984@0.0.1366.728" timestamp="1580780913187" />
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1585592429672" />
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1585619604031">
+    <state width="661" height="179" key="GridCell.Tab.0.bottom" timestamp="1585775211367">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1323" height="167" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1280.984@0.0.1366.728" timestamp="1580871006146" />
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585619604031" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1585619604031">
+    <state width="661" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585775211367" />
+    <state width="661" height="179" key="GridCell.Tab.0.center" timestamp="1585775211367">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1323" height="167" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1280.984@0.0.1366.728" timestamp="1580871006145" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585619604031" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1585619604030">
+    <state width="661" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585775211367" />
+    <state width="661" height="179" key="GridCell.Tab.0.left" timestamp="1585775211367">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1323" height="167" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1280.984@0.0.1366.728" timestamp="1580871006144" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585619604030" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1585619604031">
+    <state width="661" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585775211367" />
+    <state width="661" height="179" key="GridCell.Tab.0.right" timestamp="1585775211367">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1323" height="167" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1280.984@0.0.1366.728" timestamp="1580871006145" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585619604031" />
+    <state width="661" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585775211367" />
     <state x="129" y="54" key="MergeDialog" timestamp="1585616563753">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
