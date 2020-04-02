@@ -7,6 +7,7 @@ import com.digitalpersona.onetouch.processing.DPFPEnrollment;
 import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
 import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
+import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import conexionBD.ConexionRoot;
 import datospersona.dto.Persona;
 import javafx.collections.FXCollections;
@@ -20,6 +21,7 @@ import datospersona.facade.FacadePersona;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -96,8 +98,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //start();
-        //Iniciar();
+        start();
+        Iniciar();
         //buscarHuella();
 
     }
@@ -288,6 +290,57 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             }
     }
 
+    @FXML
+    public void identificarHuella() throws IOException {
+
+        try{
+            //Establece los valores para la sentencia SQL
+            conn = ConexionRoot.getConexion();
+
+            //Obtiene todas las huellas de la bd
+            PreparedStatement identificarStmt = conn.prepareStatement("SELECT primerNombre, huella FROM datos_persona UNION ALL SELECT primerApellido, huella1 FROM datos_persona");
+            //Obtiene todas las huellas de la bd
+            ResultSet rsIdentificar = identificarStmt.executeQuery();
+
+            //Si se encuentra el nombre en la base de datos
+            //byte templateBuffer[] = null;
+            int i=0;
+            while(rsIdentificar.next()){
+                i++;
+                System.out.println("SQL:"+rsIdentificar.getString(1)+"\n");
+                System.out.println("Contador:"+i+"\n");
+
+                byte templateBuffer[] = rsIdentificar.getBytes("huella");
+                //Crea una nueva plantilla a partir de la guardada en la base de datos
+                DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
+                //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
+                setTemplate(referenceTemplate);
+
+                // Compara las caracteriticas de la huella recientemente capturda con la
+                // alguna plantilla guardada en la base de datos que coincide con ese tipo
+                DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
+
+                //compara las plantilas (actual vs bd)
+                //Si encuentra correspondencia dibuja el mapa
+                //e indica el nombre de la persona que coincidió.
+                if (result.isVerified()){
+                //crea la imagen de los datos guardado de las huellas guardadas en la base de datos
+                    JOptionPane.showMessageDialog(null, "Bienvenido "+rsIdentificar.getString("primerNombre"));
+                    return;
+                }
+            }
+            //Si no encuentra alguna huella que coincida lo indica con un mensaje
+            JOptionPane.showMessageDialog(null, "No existe ningún registro que coincida con la huella.");
+        }
+        catch (SQLException e) {
+            System.out.println("Se produjo el siguiente error: "+e.getMessage());
+            e.printStackTrace();
+        }
+        /*finally{
+        con.desconectar();
+        }*/
+    }
+
     /*@FXML
     public void limpiar() {
         tf_nombretipodocumento.setText("");
@@ -382,7 +435,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     }*/
 
     @FXML
-    private void setCerrarFormularioRegistroAtencion(ActionEvent event) {
+    private void setCerrarFormularioRegistroAtencion() {
         Stage stage = (Stage) bt_crear.getScene().getWindow();
         stage.close();
     }
