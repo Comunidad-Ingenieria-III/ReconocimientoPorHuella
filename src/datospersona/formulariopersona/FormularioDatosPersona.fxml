@@ -148,7 +148,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_guardar" layoutX="546.0" layoutY="550.0" mnemonicParsing="false" onAction="#guardarPersona" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
+      <Button fx:id="bt_guardar" layoutX="546.0" layoutY="550.0" mnemonicParsing="false" onAction="#guardarHuella" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

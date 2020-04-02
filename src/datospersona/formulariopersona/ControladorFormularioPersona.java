@@ -104,7 +104,7 @@ public class ControladorFormularioPersona implements Initializable {
         deshabilitarBotones();
         deshabilitarCampos();
         Iniciar();
-        //start();
+
     }
 
     //Varible que permite iniciar el dispositivo de lector de huella conectado
@@ -282,32 +282,59 @@ public class ControladorFormularioPersona implements Initializable {
     }
 
     @FXML
-    private Persona crearPersona() {
+    private void guardarHuella() {
+        int resultado;
+        ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
+        Integer tamañoHuella = template.serialize().length;
+        conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Persona persona = null;
+        try {
+            conn = ConexionRoot.getConexion();
+            stmt = conn.prepareStatement("select idpersona, huella, huella1 from datos_persona where idpersona= ?");
+            stmt.setInt(1, Integer.parseInt(tf_idpersona.getText()));
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                //Lee la plantilla de la base de datos
+                byte templateBuffer[] = rs.getBytes(2);
+                //Crea una nueva plantilla a partir de la guardada en la base de datos
+                DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
+                //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
+                setTemplate(referenceTemplate);
+                //Compara las caracteriticas de la huella recientemente capturda con la
+                // plantilla guardada al usuario especifico en la base de datos
+                DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
 
-        int idpersona = Integer.parseInt(tf_idpersona.getText());
-        String primerNombre = tf_primerNombre.getText();
-        String segundoNombre = tf_segundoNombre.getText();
-        String primerApellido = tf_primerApellido.getText();
-        String segundoApellido = tf_segundoApellido.getText();
-        Date fechaNacimiento = Date.valueOf(dp_fechaNacimiento.getValue());
-        String direccion = tf_direccion.getText();
-        String sexo = cbxsexo.getValue();
-        String alegicoA = ta_alergicoA.getText();
-        String enfermedadSufre = ta_enfermedadSufre.getText();
-        String observaciones = ta_observaciones.getText();
-        int ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
-        int ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
+                //compara las plantilas (actual vs bd)
+                if (result.isVerified()) {
+                    JOptionPane.showMessageDialog(null, "La huella ya existe, coloque un dedo diferente");
+                } else {
+                    PreparedStatement guardarStmt2 = conn.prepareStatement("update datos_persona set huella1=? where (idpersona=?)");
+                    guardarStmt2.setBinaryStream(1, datosHuella, tamañoHuella);
+                    guardarStmt2.setInt(2, Integer.parseInt(tf_idpersona.getText()));
 
-        Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
-                fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, ta_tipoDocumento, ta_idEps);
-
-        return persona;
-
+                    //Ejecuta la sentencia
+                    guardarStmt2.execute();
+                    guardarStmt2.close();
+                    JOptionPane.showMessageDialog(null, "Huella Guardada Correctament");
+                }
+            } else if (!rs.next()) {
+                //String nombre = JOptionPane.showInputDialog("Nombre y Apellidos:");
+                try {
+                    guardarPersona();
+                } catch (RuntimeException e) {
+                    throw new RuntimeException("Error SQL - Agregar()!");
+                }
+                JOptionPane.showMessageDialog(null, "Huella Guardada Correctamente");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
-
     @FXML
-    private Persona crearPersona1() {
+    private Persona crearPersona() {
 
         int idpersona = Integer.parseInt(tf_idpersona.getText());
         String primerNombre = tf_primerNombre.getText();
@@ -441,10 +468,10 @@ public class ControladorFormularioPersona implements Initializable {
     }
 
     @FXML
-    private void guardarPersona(ActionEvent e) {
+    private void guardarPersona() {
         //validar();
 
-        facadepersona.insertarPersona(crearPersona1());
+        facadepersona.insertarPersona(crearPersona());
         Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
         msg.setTitle("Pacientes - registro");
         msg.setContentText("El Paciente ha sido agregado correctamente");
@@ -475,80 +502,6 @@ public class ControladorFormularioPersona implements Initializable {
         stage.close();
     }
 
-    @FXML
-    private void abrirPersonaFamiliar(ActionEvent event) throws IOException {
 
-        try {
-            Parent formulario_persona_familiar = FXMLLoader.load(getClass().getClassLoader().getResource("datosFamiliar/formulariofamiliar/FormularioDatosFamiliar.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("AP_Humana(Gestión Informe Titulos Académicos)");
-            stage.setScene(new Scene(formulario_persona_familiar));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.getIcons().add(new Image("estrella_vida.jpg"));
-            stage.show();
-            //Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().hide();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*public void guardarHuella() {
-        int resultado;
-        ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
-        Integer tamañoHuella = template.serialize().length;
-
-        Persona empleado = null;
-        try {
-            conn = ConexionRoot.getConexion();
-            stmt = conn.prepareStatement("select idpersona, huella, huella1 from datos_persona where idpersona= ?");
-            stmt.setInt(1, persona.getIdpersona());
-            rset = stmt.executeQuery();
-
-            if (rset.next()) {
-                //Lee la plantilla de la base de datos
-                byte templateBuffer[] = rset.getBytes(2);
-                //Crea una nueva plantilla a partir de la guardada en la base de datos
-                DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
-                //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
-                setTemplate(referenceTemplate);
-                //Compara las caracteriticas de la huella recientemente capturda con la
-                // plantilla guardada al usuario especifico en la base de datos
-                DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
-
-                //compara las plantilas (actual vs bd)
-                if (result.isVerified()) {
-                    JOptionPane.showMessageDialog(null, "La huella ya existe, coloque un dedo diferente");
-                } else {
-                    PreparedStatement guardarStmt2 = conn.prepareStatement("update datos_persona set huella1=? where (idpersona=?)");
-                    guardarStmt2.setBinaryStream(1, datosHuella, tamañoHuella);
-                    guardarStmt2.setInt(2, Integer.parseInt(tf_idpersona.getText()));
-
-                    //Ejecuta la sentencia
-                    guardarStmt2.execute();
-                    guardarStmt2.close();
-                    JOptionPane.showMessageDialog(null, "Huella Guardada Correctament");
-                }
-            } else if (!rset.next()) {
-            //String nombre = JOptionPane.showInputDialog("Nombre y Apellidos:");
-                try {
-                    PreparedStatement guardarStmt = conn.prepareStatement("INSERT INTO datos_persona(huella, huella1) values(?, ?)");
-
-                    guardarStmt.setBinaryStream(1, datosHuella, tamañoHuella);
-                    guardarStmt.setBinaryStream(2, datosHuella, tamañoHuella);
-
-                    //Ejecuta la sentencia
-                    guardarStmt.executeUpdate();
-                    guardarStmt.close();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-                JOptionPane.showMessageDialog(null, "Huella Guardada Correctamente");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }*/
 }
 
