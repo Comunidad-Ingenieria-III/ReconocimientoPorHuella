@@ -58,7 +58,6 @@ public class ControladorTipoDocumento implements Initializable {
 
         tipoDocumentos = FXCollections.observableArrayList(facadeTipoDocumento.cargarTipoDocumento());
 
-
         tb_tipoDocumento.setItems(tipoDocumentos);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("idTipoDocumento"));
@@ -79,7 +78,7 @@ public class ControladorTipoDocumento implements Initializable {
             @Override
             public void changed(ObservableValue<? extends DtoTipoDocumento> observable, DtoTipoDocumento oldValue, DtoTipoDocumento newValue) {
                 if (newValue != null) {
-                    tf_Tipo.setText(String.valueOf(newValue.getIdTipoDocumento()));
+                    tf_Tipo.setText(newValue.getIdTipoDocumento());
                     tf_nombre1.setText(newValue.getNombreTipoDocumento());
 
                     bt_crear.setDisable(false);
@@ -92,17 +91,17 @@ public class ControladorTipoDocumento implements Initializable {
     }
 
     @FXML
-    public void guardarInstitucion() {
+    public void guardarTipoDocumento() {
 
-        DtoTipoDocumento tipoDocumento = new DtoTipoDocumento(
+        DtoTipoDocumento dtoTipoDocumento = new DtoTipoDocumento(
                 tf_Tipo.getText(),
                 tf_nombre1.getText()
         );
 
-        int res = facadeTipoDocumento.insertarTipoDocumento(tipoDocumento);
+        int res = facadeTipoDocumento.insertarTipoDocumento(dtoTipoDocumento);
 
         if (res == 1) {
-            tipoDocumentos.add(tipoDocumento);
+            tipoDocumentos.add(dtoTipoDocumento);
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
             msg.setTitle("Gestiones - Tipo de Documento");
             msg.setContentText("El Tipo de Documento se ha agregado");
@@ -121,14 +120,15 @@ public class ControladorTipoDocumento implements Initializable {
     }
 
     @FXML
-    public void modificarInstitucion() {
-        DtoTipoDocumento tipoDocumento = new DtoTipoDocumento(
+    public void modificarTipoDocumento() {
+
+        DtoTipoDocumento dtoTipoDocumento = new DtoTipoDocumento(
                 tf_Tipo.getText(),
                 tf_nombre1.getText()
         );
-        int res = facadeTipoDocumento.modificarTipoDocumeto(tipoDocumento);
+        int res = facadeTipoDocumento.modificarTipoDocumeto(dtoTipoDocumento);
         if (res == 1) {
-            tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), tipoDocumento);
+            tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), dtoTipoDocumento);
 
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
             msg.setTitle("Gestiones - Tipo de Documento");
@@ -146,9 +146,9 @@ public class ControladorTipoDocumento implements Initializable {
     }
 
     @FXML
-    public void eliminarInstitucion() {
+    public void eliminarTipoDocumento() {
 
-        int res = facadeTipoDocumento.eliminarTipoDocumento(tb_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento());
+        int res = facadeTipoDocumento.eliminarTipoDocumento(String.valueOf(tb_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento()));
         if (res == 1) {
             tipoDocumentos.remove(tb_tipoDocumento.getSelectionModel().getSelectedIndex());
             Alert msg = new Alert(Alert.AlertType.INFORMATION);

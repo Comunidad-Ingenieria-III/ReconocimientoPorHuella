@@ -84,13 +84,13 @@ public class DaoTipoDocumento {
         return dtotipodocumento;
     }
 
-    public int modificar(DtoTipoDocumento tipoDocumento) {
+    public int modificar(DtoTipoDocumento dtotipodocumento) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "update tipo_de_documento set nombreTipoDocumento = ?  where idTipoDocumento = ?";
             stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, dtotipodocumento.getNombreTipoDocumento());
+            stmt.setString(1, dtotipodocumento.getIdTipoDocumento());
 
             stmt.setString(2, dtotipodocumento.getNombreTipoDocumento());
 
@@ -109,7 +109,7 @@ public class DaoTipoDocumento {
             conn = ConexionRoot.getConexion();
             String sql = "delete from tipo_de_documento where idTipoDocumento = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, idTipoDocumento);
+            stmt.setInt(1, Integer.parseInt(idTipoDocumento));
             return stmt.executeUpdate();
         } catch (RuntimeException | SQLException e) {
             System.out.println(e.toString());

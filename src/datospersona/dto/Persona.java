@@ -23,7 +23,7 @@ public class Persona {
     private StringProperty observaciones;
     private ByteArrayInputStream huella;
     private IntegerProperty huella1;
-    private IntegerProperty tipoDocumento;
+    private StringProperty tipoDocumento;
     private IntegerProperty idEps;
 
 
@@ -32,7 +32,7 @@ public class Persona {
 
     public Persona(int idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
                    Date fechaNacimiento, String direccion, String sexo, String alegicoA, String enfermedadSufre, String observaciones,
-                   ByteArrayInputStream huella, int huella1, int tipoDocumento, int idEps) {
+                   ByteArrayInputStream huella, int huella1, String tipoDocumento, int idEps) {
 
         this.idpersona = new SimpleIntegerProperty(idpersona);
         this.primerNombre = new SimpleStringProperty(primerNombre);
@@ -47,11 +47,11 @@ public class Persona {
         this.observaciones = new SimpleStringProperty(observaciones);
         this.huella = huella;
         this.huella1 = new SimpleIntegerProperty(huella1);
-        this.tipoDocumento = new SimpleIntegerProperty(tipoDocumento);
+        this.tipoDocumento = new SimpleStringProperty(tipoDocumento);
         this.idEps = new SimpleIntegerProperty(idEps);
     }
 
-    public Persona(int idpersona, String primerNombre, String segundoNombre, String alegicoA, String enfermedadSufre, String observaciones){
+    public Persona(int idpersona, String primerNombre, String segundoNombre, String alegicoA, String enfermedadSufre, String observaciones) {
         //this.huella1 = new SimpleIntegerProperty(huella1);
         this.idpersona = new SimpleIntegerProperty(idpersona);
         this.primerNombre = new SimpleStringProperty(primerNombre);
@@ -62,22 +62,6 @@ public class Persona {
 
     }
 
-    public Persona(int idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
-                   Date fechaNacimiento, String direccion, String sexo, String alergicoA, String enfermedadSufre, String observaciones, int tipoDocumento, int idEps) {
-        this.idpersona = new SimpleIntegerProperty(idpersona);
-        this.primerNombre = new SimpleStringProperty(primerNombre);
-        this.segundoNombre = new SimpleStringProperty(segundoNombre);
-        this.primerApellido = new SimpleStringProperty(primerApellido);
-        this.segundoApellido = new SimpleStringProperty(segundoApellido);
-        this.fechaNacimiento = fechaNacimiento;
-        this.direccion = new SimpleStringProperty(direccion);
-        this.sexo = new SimpleStringProperty(sexo);
-        this.alergicoA = new SimpleStringProperty(alergicoA);
-        this.enfermedadSufre = new SimpleStringProperty(enfermedadSufre);
-        this.observaciones = new SimpleStringProperty(observaciones);
-        this.tipoDocumento = new SimpleIntegerProperty(tipoDocumento);
-        this.idEps = new SimpleIntegerProperty(idEps);
-    }
     public int getIdpersona() {
         return idpersona.get();
     }
@@ -226,15 +210,15 @@ public class Persona {
         this.huella1.set(huella1);
     }
 
-    public int getTipoDocumento() {
+    public String getTipoDocumento() {
         return tipoDocumento.get();
     }
 
-    public IntegerProperty tipoDocumetoProperty() {
+    public StringProperty tipoDocumentoProperty() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumeto(int tipoDocumento) {
+    public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento.set(tipoDocumento);
     }
 

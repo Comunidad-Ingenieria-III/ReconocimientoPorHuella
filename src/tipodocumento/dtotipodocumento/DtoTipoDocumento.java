@@ -7,12 +7,12 @@ import javafx.beans.property.StringProperty;
 
 public class DtoTipoDocumento {
 
-    private StringProperty idTipoDocumento = new SimpleStringProperty();
-    private StringProperty nombreTipoDocumento = new SimpleStringProperty();
+    private StringProperty idTipoDocumento;
+    private StringProperty nombreTipoDocumento;
 
     public DtoTipoDocumento(String idTipoDocumento, String nombreTipoDocumento) {
-        this.idTipoDocumento.set(idTipoDocumento);
-        this.nombreTipoDocumento.set(nombreTipoDocumento);
+        this.idTipoDocumento = new SimpleStringProperty(idTipoDocumento);
+        this.nombreTipoDocumento = new SimpleStringProperty(nombreTipoDocumento);
     }
 
     public DtoTipoDocumento() {

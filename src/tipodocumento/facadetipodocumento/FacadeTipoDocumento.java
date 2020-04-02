@@ -22,8 +22,8 @@ public class FacadeTipoDocumento {
         daotipodocumento.buscarPorId(idTipoDocumento);
     }
 
-    public int modificarTipoDocumeto(DtoTipoDocumento tipoDocumento) {
-        return daotipodocumento.modificar(tipoDocumento);
+    public int modificarTipoDocumeto(DtoTipoDocumento dtoTipoDocumento) {
+        return daotipodocumento.modificar(dtoTipoDocumento);
     }
 
     public int eliminarTipoDocumento(String tipoDocumento) {

@@ -77,10 +77,10 @@ public class ControladorPrincipal implements Initializable {
     private void abrirTipoDocumento(ActionEvent event) throws IOException {
         try {
             Parent formulario_tipo_documento;
-            formulario_tipo_documento = FXMLLoader.load(getClass().getClassLoader().getResource("tipodocumento/formulariotipodocumento/TipoDocumento.fxml"));
+            formulario_tipo_documento = FXMLLoader.load(getClass().getClassLoader().getResource("tipodocumento/formulariotipodocumento/FormularioTipoDocumento.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Tipo de Documento)");
-            stage.setScene(new Scene(formulario_tipo_documento, 500, 300));
+            stage.setScene(new Scene(formulario_tipo_documento, 981, 427));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);
