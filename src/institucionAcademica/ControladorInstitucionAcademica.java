@@ -101,6 +101,7 @@ public class ControladorInstitucionAcademica implements Initializable {
 
     @FXML
     public void guardarInstitucion() {
+
         InstitucionAcademica institucionAcademica = new InstitucionAcademica(
                 txtCodigo.getText(),
                 txtNombre.getText(),
