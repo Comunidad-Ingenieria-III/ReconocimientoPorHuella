@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -174,6 +175,27 @@ public class ControladorInstitucionAcademica implements Initializable {
         }
         limpiarFormulario();
 
+    }
+
+    public void validarCamposVacios(){
+        if (txtCodigo.getText().isEmpty()){
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("Debe ingresar todos los campos");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        }
+    }
+
+    @FXML
+    public void validarB(){
+        btnGuardar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                validarCamposVacios();
+            }
+        });
     }
 
 
