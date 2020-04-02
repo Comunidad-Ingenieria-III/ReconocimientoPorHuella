@@ -6,11 +6,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_47_bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_47_bin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/src/institucionAcademica/ControladorInstitucionAcademica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/institucionAcademica/ControladorInstitucionAcademica.java" afterDir="false" />
-=======
       <change beforePath="$PROJECT_DIR$/out/production/Software_Reconocimiento_Huella/META-INF/Software_Reconocimiento_Huella.kotlin_module" beforeDir="false" />
->>>>>>> origin/master
+      <change beforePath="$PROJECT_DIR$/src/institucionAcademica/ControladorInstitucionAcademica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/institucionAcademica/ControladorInstitucionAcademica.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,24 +72,6 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-<<<<<<< HEAD
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1585800447581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585800447581" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1585800447581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585800447581" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1585800447581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585800447581" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1585800447581">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585800447581" />
-=======
     <state x="275" y="22" key="#Project_Structure" timestamp="1585799181704">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -101,22 +80,21 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="389" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1585799175761" />
-    <state width="1323" height="171" key="GridCell.Tab.0.bottom" timestamp="1585799839092">
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1585801111929">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="171" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585799839092" />
-    <state width="1323" height="171" key="GridCell.Tab.0.center" timestamp="1585799839092">
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585801111929" />
+    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1585801111929">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="171" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585799839092" />
-    <state width="1323" height="171" key="GridCell.Tab.0.left" timestamp="1585799839092">
+    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585801111929" />
+    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1585801111929">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="171" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585799839092" />
-    <state width="1323" height="171" key="GridCell.Tab.0.right" timestamp="1585799839092">
+    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585801111929" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1585801111929">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="171" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585799839092" />
->>>>>>> origin/master
+    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585801111929" />
   </component>
 </project>
