@@ -379,7 +379,7 @@ public class ControladorFormularioPersona implements Initializable {
         bt_guardar.setDisable(false);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        bt_abrirformulariopersonafamiliar.setDisable(false);
+        //bt_abrirformulariopersonafamiliar.setDisable(false);
         habilitarCampos();
     }
 
@@ -392,7 +392,7 @@ public class ControladorFormularioPersona implements Initializable {
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        bt_abrirformulariopersonafamiliar.setDisable(true);
+        //bt_abrirformulariopersonafamiliar.setDisable(true);
     }
 
 
