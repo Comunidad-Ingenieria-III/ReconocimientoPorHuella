@@ -7,30 +7,30 @@ import javafx.beans.property.StringProperty;
 
 public class DtoEps {
 
-    private IntegerProperty idEps = new SimpleIntegerProperty();
+    private StringProperty idEps = new SimpleStringProperty();
     private StringProperty nombreEps = new SimpleStringProperty();
     private StringProperty direccionEps = new SimpleStringProperty();;
-    private IntegerProperty telEps = new SimpleIntegerProperty();
+    private StringProperty telEps = new SimpleStringProperty();
 
     public DtoEps() {
     }
 
-    public DtoEps(int idEps, String nombreEps, String direccionEps, int telEps) {
+    public DtoEps(String idEps, String nombreEps, String direccionEps, String telEps) {
         this.idEps.set(idEps);
         this.nombreEps.set(nombreEps);
         this.direccionEps.set(direccionEps);
         this.telEps.set(telEps);
     }
 
-    public int getIdEps() {
+    public String getIdEps() {
         return idEps.get();
     }
 
-    public IntegerProperty idEpsProperty() {
+    public StringProperty idEpsProperty() {
         return idEps;
     }
 
-    public void setIdEps(int idEps) {
+    public void setIdEps(String idEps) {
         this.idEps.set(idEps);
     }
 
@@ -58,15 +58,15 @@ public class DtoEps {
         this.direccionEps.set(direccionEps);
     }
 
-    public int gettelEps() {
+    public String getTelEps() {
         return telEps.get();
     }
 
-    public IntegerProperty telEpsProperty() {
+    public StringProperty telEpsProperty() {
         return telEps;
     }
 
-    public void settelEps(int telEps) {
+    public void setTelEps(String telEps) {
         this.telEps.set(telEps);
     }
 

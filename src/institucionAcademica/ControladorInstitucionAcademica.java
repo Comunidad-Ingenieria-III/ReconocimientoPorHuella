@@ -100,7 +100,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
     @FXML
-    public void guardarInstitucion() {
+    public void guardarEps() {
 
         InstitucionAcademica institucionAcademica = new InstitucionAcademica(
                 txtCodigo.getText(),
@@ -131,7 +131,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
     @FXML
-    public void modificarInstitucion() {
+    public void modificarEps() {
         InstitucionAcademica institucionAcademica = new InstitucionAcademica(
                 txtCodigo.getText(),
                 txtNombre.getText(),
@@ -158,7 +158,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
     @FXML
-    public void eliminarInstitucion() {
+    public void eliminarEps() {
         int res = facade.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
         if (res == 1) {
             instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
@@ -215,7 +215,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
    @FXML
-    public void cancelar(){
+    public void cancelarEps(){
         txtCodigo.setText("");
         txtNombre.setText("");
         txtDireccion.setText("");
@@ -225,26 +225,8 @@ public class ControladorInstitucionAcademica implements Initializable {
         btnInhabilitar.setDisable(true);
     }
 
-
     @FXML
-    private void habilitarCampos() {
-        txtCodigo.setDisable(false);
-        txtNombre.setDisable(false);
-        txtDireccion.setDisable(false);
-        txtTelefono.setDisable(false);
-        txtCodigo.requestFocus();
-    }
-
-    @FXML
-    private void deshabilitarCampos() {
-        txtCodigo.setDisable(true);
-        txtNombre.setDisable(true);
-        txtDireccion.setDisable(true);
-        txtTelefono.setDisable(true);
-    }
-
-    @FXML
-    private void cerrarInstitucionAcademica(ActionEvent event) {
+    private void cerrarEps(ActionEvent event) {
         Stage stage = (Stage) btnSalir.getScene().getWindow();
         stage.close();
     }
