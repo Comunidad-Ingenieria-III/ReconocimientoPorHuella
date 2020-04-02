@@ -298,7 +298,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             conn = ConexionRoot.getConexion();
 
             //Obtiene todas las huellas de la bd
-            PreparedStatement identificarStmt = conn.prepareStatement("SELECT primerNombre, huella FROM datos_persona UNION ALL SELECT primerApellido, huella1 FROM datos_persona");
+            PreparedStatement identificarStmt = conn.prepareStatement("SELECT primerNombre, primerApellido, huella FROM datos_persona" +
+                    " UNION ALL SELECT primerNombre, primerApellido, huella1 FROM datos_persona");
             //Obtiene todas las huellas de la bd
             ResultSet rsIdentificar = identificarStmt.executeQuery();
 
@@ -325,7 +326,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 //e indica el nombre de la persona que coincidió.
                 if (result.isVerified()){
                 //crea la imagen de los datos guardado de las huellas guardadas en la base de datos
-                    JOptionPane.showMessageDialog(null, "Bienvenido "+rsIdentificar.getString("primerNombre"));
+                    JOptionPane.showMessageDialog(null, "Me llamo: "+
+                            rsIdentificar.getString("primerNombre"));
                     return;
                 }
             }
