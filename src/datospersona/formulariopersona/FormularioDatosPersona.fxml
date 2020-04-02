@@ -84,11 +84,6 @@
          </font>
       </Label>
       <ComboBox fx:id="cbxtipoeps" layoutX="544.0" layoutY="117.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="462.0" layoutY="191.0" prefHeight="20.0" prefWidth="142.0" text="Datos Familiar">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
       <Label layoutX="28.0" layoutY="347.0" prefHeight="20.0" prefWidth="76.0" text="Alergico A:">
          <font>
             <Font size="14.0" />
@@ -169,13 +164,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_abrirformulariopersonafamiliar" layoutX="460.0" layoutY="218.0" mnemonicParsing="false" onAction="#abrirPersonaFamiliar" prefHeight="49.0" prefWidth="196.0" style="-fx-background-color: #2E64FE;" text="Ingresar Datos Familiar" textFill="#fff8f8">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="System Bold Italic" size="14.0" />
-         </font></Button>
       <Label layoutX="100.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
       <Label layoutX="480.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
       <Label layoutX="474.0" layoutY="118.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
@@ -187,6 +175,6 @@
       </Label>
       <Label layoutX="91.0" layoutY="312.0" prefHeight="17.0" prefWidth="30.0" text="*" textFill="#d70c0c" />
       <TextField fx:id="tf_direccion" layoutX="169.0" layoutY="305.0" prefHeight="25.0" prefWidth="207.0" />
-      <Button layoutX="631.0" layoutY="169.0" mnemonicParsing="false" onAction="#start" prefHeight="9.0" prefWidth="127.0" text="Capturar Huella" />
+      <Button layoutX="515.0" layoutY="230.0" mnemonicParsing="false" onAction="#start" prefHeight="9.0" prefWidth="127.0" text="Capturar Huella" />
    </children>
 </AnchorPane>
