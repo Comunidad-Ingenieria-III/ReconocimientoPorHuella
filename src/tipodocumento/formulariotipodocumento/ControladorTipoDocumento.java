@@ -132,7 +132,7 @@ public class ControladorTipoDocumento implements Initializable {
 
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
             msg.setTitle("Gestiones - Tipo de Documento");
-            msg.setContentText("No se ha podido Modificar El Tipo de Documento");
+            msg.setContentText("Se ha Modificado El Tipo de Documento");
             msg.setHeaderText("Resultado");
             msg.show();
         } else {

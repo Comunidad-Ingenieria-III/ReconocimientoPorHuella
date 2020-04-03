@@ -71,7 +71,7 @@ public class DaoEps {
     public int modificarEps(DtoEps dtoEps) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update eps set nombre = ?, direccion = ?, telefono = ?  where idEps = ?";
+            String sql = "update eps set nombreEps = ?, direccionEps = ?, telEps = ?  where idEps = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, dtoEps.getNombreEps());

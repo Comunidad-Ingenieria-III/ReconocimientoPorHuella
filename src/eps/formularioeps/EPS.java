@@ -140,7 +140,7 @@ public class EPS implements Initializable {
                 tf_Codigo.getText(),
                 tf_Nombre.getText(),
                 tf_Direccion.getText(),
-                tf_Direccion.getText()
+                tf_Telefono.getText()
 
         );
         int res = facadeEps.modificarEps(dtoEps);

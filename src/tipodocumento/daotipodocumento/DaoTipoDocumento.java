@@ -90,9 +90,9 @@ public class DaoTipoDocumento {
             String sql = "update tipo_de_documento set nombreTipoDocumento = ?  where idTipoDocumento = ?";
             stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, dtotipodocumento.getIdTipoDocumento());
+            stmt.setString(1, dtotipodocumento.getNombreTipoDocumento());
 
-            stmt.setString(2, dtotipodocumento.getNombreTipoDocumento());
+            stmt.setString(2, dtotipodocumento.getIdTipoDocumento());
 
 
             return stmt.executeUpdate();
