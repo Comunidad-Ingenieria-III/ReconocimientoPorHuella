@@ -11,14 +11,22 @@ public class FacadeEps {
     private  DaoEps daoeps = new DaoEps();
 
     public List<DtoEps> CargarEps(){
-        return daoeps.cargarTipoEps();
+        return daoeps.cargarEps();
     }
 
-    public void InsertarEps(DtoEps dtoEps){
-        daoeps.agregarEps(dtoEps);
+    public int insertarEps(DtoEps dtoEps){
+        return daoeps.agregarEps(dtoEps);
     }
 
-    public void buscarEps(int idEps){
+    public int modificarEps(DtoEps dtoEps){
+        return daoeps.modificarEps(dtoEps);
+    }
+
+    public int eliminarEps(String dtoEps){
+        return daoeps.eliminarEps(dtoEps);
+    }
+
+    public void buscarEps(String idEps){
         daoeps.buscarPorId(idEps);
     }
 }

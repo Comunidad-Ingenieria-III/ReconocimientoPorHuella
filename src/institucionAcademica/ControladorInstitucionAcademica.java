@@ -101,6 +101,7 @@ public class ControladorInstitucionAcademica implements Initializable {
 
     @FXML
     public void guardarInstitucion() {
+
         InstitucionAcademica institucionAcademica = new InstitucionAcademica(
                 txtCodigo.getText(),
                 txtNombre.getText(),
@@ -222,24 +223,6 @@ public class ControladorInstitucionAcademica implements Initializable {
         txtCodigo.requestFocus();
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
-    }
-
-
-    @FXML
-    private void habilitarCampos() {
-        txtCodigo.setDisable(false);
-        txtNombre.setDisable(false);
-        txtDireccion.setDisable(false);
-        txtTelefono.setDisable(false);
-        txtCodigo.requestFocus();
-    }
-
-    @FXML
-    private void deshabilitarCampos() {
-        txtCodigo.setDisable(true);
-        txtNombre.setDisable(true);
-        txtDireccion.setDisable(true);
-        txtTelefono.setDisable(true);
     }
 
     @FXML

@@ -39,7 +39,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private TextField tf_segundoApellidodps;
     @FXML
-    private DatePicker dp_fechaNacimiento;
+    private TextField tf_fechaNacimiento;
     @FXML
     private TextField tf_nombreeps;
     @FXML
@@ -298,8 +298,9 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             conn = ConexionRoot.getConexion();
 
             //Obtiene todas las huellas de la bd
-            PreparedStatement identificarStmt = conn.prepareStatement("SELECT primerNombre, primerApellido, huella FROM datos_persona" +
-                    " UNION ALL SELECT primerNombre, primerApellido, huella1 FROM datos_persona");
+            PreparedStatement identificarStmt = conn.prepareStatement("SELECT idpersona, primerNombre, fechaNacimiento, alergicoA," +
+                    "enfermedadSufre, observaciones, huella FROM datos_persona" +
+                    " UNION ALL SELECT idpersona, primerNombre, fechaNacimiento, alergicoA, enfermedadSufre, observaciones, huella1 FROM datos_persona");
             //Obtiene todas las huellas de la bd
             ResultSet rsIdentificar = identificarStmt.executeQuery();
 
@@ -328,6 +329,12 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 //crea la imagen de los datos guardado de las huellas guardadas en la base de datos
                     JOptionPane.showMessageDialog(null, "Me llamo: "+
                             rsIdentificar.getString("primerNombre"));
+                    tf_idpersonadps.setText(rsIdentificar.getString("idpersona"));
+                    tf_primerNombredps.setText(rsIdentificar.getString("primerNombre"));
+                    tf_fechaNacimiento.setText(rsIdentificar.getString("fechaNacimiento"));
+                    ta_alergicoA.setText(rsIdentificar.getString("alergicoA"));
+                    ta_enfermedadSufre.setText(rsIdentificar.getString("enfermedadSufre"));
+                    ta_observaciones.setText(rsIdentificar.getString("observaciones"));
                     return;
                 }
             }

@@ -1,7 +1,9 @@
 package tipodocumento.daotipodocumento;
 
 import conexionBD.ConexionRoot;
+import institucionAcademica.dto.InstitucionAcademica;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,12 +13,11 @@ import java.util.List;
 
 public class DaoTipoDocumento {
 
-    private DtoTipoDocumento dtotipodocumento;
-
     private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rset;
 
+    private DtoTipoDocumento dtotipodocumento;
     List<DtoTipoDocumento> dtotipodocumentos;
 
     public List<DtoTipoDocumento> cargarTipoDocumento() throws RuntimeException {
@@ -33,7 +34,7 @@ public class DaoTipoDocumento {
 
             while (rset.next()) {
                 dtotipodocumento = new DtoTipoDocumento();
-                dtotipodocumento.setIdTipoDocumento(rset.getInt("idTipoDocumento"));
+                dtotipodocumento.setIdTipoDocumento(rset.getString("idTipoDocumento"));
                 dtotipodocumento.setNombreTipoDocumento(rset.getString("nombreTipoDocumento"));
                 dtotipodocumentos.add(dtotipodocumento);
                 //System.out.println("archivos que van " + dtotipodocumentos);
@@ -46,21 +47,20 @@ public class DaoTipoDocumento {
         return dtotipodocumentos;
     }
 
-    public void agregarTipoDocumento(DtoTipoDocumento dtotipodocumento) throws RuntimeException {
+    public int agregarTipoDocumento(DtoTipoDocumento dtotipodocumento) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "insert into tipo_de_documento(idTipoDocumento, nombreTipoDocumento) values (?, ?)";
 
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
-            stmt.setInt(1, dtotipodocumento.getIdTipoDocumento());
+            stmt.setString(1, dtotipodocumento.getIdTipoDocumento());
             stmt.setString(2, dtotipodocumento.getNombreTipoDocumento());
 
-            int rta = stmt.executeUpdate();
-            if (rta != 1) {
-                throw new RuntimeException("Error al agregar!");
-            }
+            return stmt.executeUpdate();
+
         } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error SQL - Agregar()!");
+            System.out.println(e.toString());
+            return 0;
         }
     }
 
@@ -74,7 +74,7 @@ public class DaoTipoDocumento {
 
             if (rset.next()) {
 
-                dtotipodocumento.setIdTipoDocumento(rset.getInt("idTipoDocumento"));
+                dtotipodocumento.setIdTipoDocumento(rset.getString("idTipoDocumento"));
                 dtotipodocumento.setNombreTipoDocumento(rset.getString("nombreTipoDocumento"));
 
             }
@@ -83,6 +83,39 @@ public class DaoTipoDocumento {
         }
         return dtotipodocumento;
     }
+
+    public int modificar(DtoTipoDocumento dtotipodocumento) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "update tipo_de_documento set nombreTipoDocumento = ?  where idTipoDocumento = ?";
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, dtotipodocumento.getNombreTipoDocumento());
+
+            stmt.setString(2, dtotipodocumento.getIdTipoDocumento());
+
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+            return 0;
+        }
+    } // Fin del método modificar()
+
+
+    public int eliminar(String idTipoDocumento) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "delete from tipo_de_documento where idTipoDocumento = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, Integer.parseInt(idTipoDocumento));
+            return stmt.executeUpdate();
+        } catch (RuntimeException | SQLException e) {
+            System.out.println(e.toString());
+            return 0;
+        }
+    } // Fin del método eliminar()
 
 
 }

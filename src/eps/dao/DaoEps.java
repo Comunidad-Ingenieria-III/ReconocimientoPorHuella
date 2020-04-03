@@ -2,6 +2,7 @@ package eps.dao;
 
 import conexionBD.ConexionRoot;
 import eps.dto.DtoEps;
+import institucionAcademica.dto.InstitucionAcademica;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -21,7 +22,7 @@ public class DaoEps {
     private PreparedStatement stmt;
     private ResultSet rset;
 
-    public List<DtoEps> cargarTipoEps() throws RuntimeException {
+    public List<DtoEps> cargarEps() throws RuntimeException {
 
         try {
             conn = ConexionRoot.getConexion();
@@ -33,10 +34,10 @@ public class DaoEps {
 
             while (rset.next()) {
                 dtoeps = new DtoEps();
-                dtoeps.setIdEps(rset.getInt("idEps"));
+                dtoeps.setIdEps(rset.getString("idEps"));
                 dtoeps.setNombreEps(rset.getString("nombreEps"));
                 dtoeps.setdireccionEps(rset.getString("direccionEps"));
-                dtoeps.settelEps(rset.getInt("telEps"));
+                dtoeps.setTelEps(rset.getString("telEps"));
                 dtoepss.add(dtoeps);
 
             }
@@ -48,40 +49,74 @@ public class DaoEps {
         return dtoepss;
     }
 
-    public void agregarEps(DtoEps dtoEps) throws RuntimeException {
+    public int agregarEps(DtoEps dtoEps) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "insert into eps(idEps, nombreEps, direccionEps, telEps) values (?, ?, ?, ?)";
 
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
-            stmt.setInt(1, dtoEps.getIdEps());
+            stmt.setString(1, dtoEps.getIdEps());
             stmt.setString(2, dtoEps.getNombreEps());
             stmt.setString(3, dtoEps.getdireccionEps());
-            stmt.setInt(4, dtoEps.gettelEps());
+            stmt.setString(4, dtoEps.getTelEps());
 
-            int rta = stmt.executeUpdate();
-            if (rta != 1) {
-                throw new RuntimeException("Error al agregar!");
-            }
+            return stmt.executeUpdate();
+
         } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error SQL - Agregar()!");
+            System.out.println(e.toString());
+            return 0;
         }
     }
 
-    public DtoEps buscarPorId(int idEps) {
+    public int modificarEps(DtoEps dtoEps) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "update eps set nombreEps = ?, direccionEps = ?, telEps = ?  where idEps = ?";
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, dtoEps.getNombreEps());
+            stmt.setString(2, dtoEps.getdireccionEps());
+            stmt.setString(3, dtoEps.getTelEps());
+
+            stmt.setString(4, dtoEps.getIdEps());
+
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+            return 0;
+        }
+    } // Fin del método modificar()
+
+
+    public int eliminarEps(String idEps) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "delete from eps where idEps = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idEps);
+            return stmt.executeUpdate();
+        } catch (RuntimeException | SQLException e) {
+            System.out.println(e.toString());
+            return 0;
+        }
+    } // Fin del método eliminar()
+
+    public DtoEps buscarPorId(String idEps) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from eps where idEps = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, idEps);
+            stmt.setString(1, idEps);
             rset = stmt.executeQuery();
 
             if (rset.next()) {
 
-                dtoeps.settelEps(rset.getInt("idEps"));
+                dtoeps.setIdEps(rset.getString("idEps"));
                 dtoeps.setNombreEps(rset.getString("nombreEps"));
                 dtoeps.setdireccionEps(rset.getString("direccionEps"));
-                dtoeps.settelEps(rset.getInt("telEps"));
+                dtoeps.setTelEps(rset.getString("telEps"));
 
             }
         } catch (RuntimeException | SQLException e) {

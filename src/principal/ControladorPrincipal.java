@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -80,10 +81,10 @@ public class ControladorPrincipal implements Initializable {
     private void abrirTipoDocumento(ActionEvent event) throws IOException {
         try {
             Parent formulario_tipo_documento;
-            formulario_tipo_documento = FXMLLoader.load(getClass().getClassLoader().getResource("tipodocumento/formulariotipodocumento/TipoDocumento.fxml"));
+            formulario_tipo_documento = FXMLLoader.load(getClass().getClassLoader().getResource("tipodocumento/formulariotipodocumento/FormularioTipoDocumento.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Tipo de Documento)");
-            stage.setScene(new Scene(formulario_tipo_documento, 500, 300));
+            stage.setScene(new Scene(formulario_tipo_documento, 721, 427));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);
@@ -129,7 +130,7 @@ public class ControladorPrincipal implements Initializable {
             Parent formulario_EPS = FXMLLoader.load(getClass().getClassLoader().getResource("eps/formularioeps/FormularioEPS.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión EPS)");
-            stage.setScene(new Scene(formulario_EPS, 500, 343));
+            stage.setScene(new Scene(formulario_EPS, 981, 427));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);

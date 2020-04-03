@@ -2,11 +2,18 @@ package eps.formularioeps;
 
 import eps.dao.DaoEps;
 import eps.dto.DtoEps;
+import eps.facadeeps.FacadeEps;
+import institucionAcademica.dto.InstitucionAcademica;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -15,110 +22,217 @@ import java.util.ResourceBundle;
 
 public class EPS implements Initializable {
 
-    DaoEps daoeps = new DaoEps();
+    FacadeEps facadeEps = new FacadeEps();
 
     @FXML
-    private TextField tf_Tipo;
+    private TableView<DtoEps> tb_eps;
+
+
     @FXML
-    private TextField tf_nombre1;
+    private TableColumn<DtoEps, String> colId;
     @FXML
-    private TextField tf_direccion;
+    private TableColumn<DtoEps, String> colNombre;
     @FXML
-    private TextField tf_numtelefono;
+    private TableColumn<DtoEps, String> colDireccion;
     @FXML
-    private Button bt_crear;
+    private TableColumn<DtoEps, String> colTelefono;
+
+
     @FXML
-    private Button bt_consultar;
+    private TextField tf_Codigo;
     @FXML
-    private Button bt_cancelar;
+    private TextField tf_Nombre;
     @FXML
-    private Button bt_salir;
+    private TextField tf_Direccion;
     @FXML
-    private Button bt_guardar;
+    private TextField tf_Telefono;
     @FXML
-    private Button bt_modificar;
+    private Button bt_Crear;
     @FXML
-    private Button bt_inhabilitar;
+    private Button bt_Consultar;
+    @FXML
+    private Button bt_Cancelar;
+    @FXML
+    private Button bt_Salir;
+    @FXML
+    private Button bt_Guardar;
+    @FXML
+    private Button bt_Modificar;
+    @FXML
+    private Button bt_Inhabilitar;
+
+    private ObservableList<DtoEps> epss;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        deshabilitarBotones();
-        deshabilitarCampos();
+
+        epss = FXCollections.observableArrayList(facadeEps.CargarEps());
+
+
+        tb_eps.setItems(epss);
+
+        colId.setCellValueFactory(new PropertyValueFactory<>("idEps"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreEps"));
+        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionEps"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telEps"));
+
+        bt_Modificar.setDisable(true);
+        bt_Inhabilitar.setDisable(true);
+        bt_Guardar.setDisable(true);
+
+        manejarEventos();
+    }
+
+    public void manejarEventos() {
+        tb_eps.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DtoEps>() {
+            @Override
+            public void changed(ObservableValue<? extends DtoEps> observable, DtoEps oldValue, DtoEps newValue) {
+                if (newValue != null) {
+                    tf_Codigo.setText(newValue.getIdEps());
+                    tf_Nombre.setText(newValue.getNombreEps());
+                    tf_Direccion.setText(newValue.getdireccionEps());
+                    tf_Telefono.setText(newValue.getTelEps());
+
+                    bt_Crear.setDisable(false);
+                    bt_Guardar.setDisable(true);
+                    bt_Modificar.setDisable(false);
+                    bt_Inhabilitar.setDisable(false);
+                }
+
+            }
+        });//FIN DEL LISTENER
     }
 
     @FXML
-    private DtoEps crearEps() {
-        int idEps = Integer.parseInt(tf_Tipo.getText());
-        String nombreEps = tf_nombre1.getText();
-        String direccionEps = tf_direccion.getText();
-        int telEps = Integer.parseInt(tf_numtelefono.getText());
+    public void guardarEps() {
 
-        DtoEps dtoEps = new DtoEps(idEps, nombreEps, direccionEps, telEps);
-        return dtoEps;
+        DtoEps dtoEps = new DtoEps(
+                tf_Codigo.getText(),
+                tf_Nombre.getText(),
+                tf_Direccion.getText(),
+                tf_Telefono.getText()
+        );
+
+        int res = facadeEps.insertarEps(dtoEps);
+
+        if (res == 1) {
+            epss.add(dtoEps);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - EPS");
+            msg.setContentText("La EPS se ha agregado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        } else {
+
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - EPS Academicas");
+            msg.setContentText("No se ha podido agregar la EPS");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        limpiarFormulario();
     }
 
     @FXML
-    private void guardarEps(ActionEvent e) {
+    public void modificarEps() {
+        DtoEps dtoEps = new DtoEps(
+                tf_Codigo.getText(),
+                tf_Nombre.getText(),
+                tf_Direccion.getText(),
+                tf_Telefono.getText()
 
-        daoeps.agregarEps(crearEps());
-        JOptionPane.showMessageDialog(null, "El Registro Se Guardo con Exito", "INFORMACIÓN", 1);
-        //cargarTabla();
-        limpiar();
-        deshabilitarCampos();
-        deshabilitarBotones();
+        );
+        int res = facadeEps.modificarEps(dtoEps);
 
+        if (res == 1) {
+            epss.set(tb_eps.getSelectionModel().getSelectedIndex(), dtoEps);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - EPS");
+            msg.setContentText("La EPS se ha modificado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        } else {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - EPS");
+            msg.setContentText("La EPS No ha sido modificada");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        limpiarFormulario();
     }
 
     @FXML
-    public void limpiar() {
-        tf_Tipo.setText("");
-        tf_nombre1.setText("");
-    }
-
-    @FXML
-    private void habilitarBotones() {
-        bt_crear.setDisable(true); //siempre ira deshabilitado
-        bt_consultar.setDisable(true);
-        bt_cancelar.setDisable(true);
-        bt_salir.setDisable(false);
-        bt_guardar.setDisable(false);
-        bt_modificar.setDisable(true);
-        bt_inhabilitar.setDisable(true);
-        habilitarCampos();
-    }
-
-    @FXML
-    private void deshabilitarBotones() {
-        bt_crear.setDisable(false); //siempre ira deshabilitado
-        bt_consultar.setDisable(false);
-        bt_cancelar.setDisable(false);
-        bt_salir.setDisable(false);
-        bt_guardar.setDisable(true);
-        bt_modificar.setDisable(true);
-        bt_inhabilitar.setDisable(true);
+    public void eliminarEps() {
+        int res = facadeEps.eliminarEps(tb_eps.getSelectionModel().getSelectedItem().getIdEps());
+        if (res == 1) {
+            epss.remove(tb_eps.getSelectionModel().getSelectedIndex());
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - EPS");
+            msg.setContentText("La EPS se ha eliminado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        } else {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - EPS");
+            msg.setContentText("La EPS No ha sido eliminada");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        limpiarFormulario();
 
     }
 
-    @FXML
-    private void habilitarCampos() {
-        tf_Tipo.setDisable(false);
-        tf_nombre1.setDisable(false);
-        tf_direccion.setDisable(false);
-        tf_numtelefono.setDisable(false);
-        tf_Tipo.requestFocus();
+    public void validarCamposVacios() {
+        if (tf_Codigo.getText().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - EPS");
+            msg.setContentText("Debe ingresar todos los campos");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        }
     }
 
     @FXML
-    private void deshabilitarCampos() {
-        tf_Tipo.setDisable(true);
-        tf_nombre1.setDisable(true);
-        tf_direccion.setDisable(true);
-        tf_numtelefono.setDisable(true);
+    public void validarB() {
+        bt_Guardar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                validarCamposVacios();
+            }
+        });
+    }
+
+
+    @FXML
+    public void limpiarFormulario() {
+        tf_Codigo.setText("");
+        tf_Nombre.setText("");
+        tf_Direccion.setText("");
+        tf_Telefono.setText("");
+        tf_Codigo.requestFocus();
+
+        bt_Crear.setDisable(false);
+        bt_Guardar.setDisable(false);
+        bt_Modificar.setDisable(true);
+        bt_Inhabilitar.setDisable(true);
     }
 
     @FXML
-    private void salir(ActionEvent event) {
-        Stage stage = (Stage) bt_salir.getScene().getWindow();
+    public void cancelar() {
+        tf_Codigo.setText("");
+        tf_Nombre.setText("");
+        tf_Direccion.setText("");
+        tf_Telefono.setText("");
+        tf_Codigo.requestFocus();
+        bt_Modificar.setDisable(true);
+        bt_Inhabilitar.setDisable(true);
+    }
+
+    @FXML
+    private void cerarEps(ActionEvent event) {
+        Stage stage = (Stage) bt_Salir.getScene().getWindow();
         stage.close();
     }
 

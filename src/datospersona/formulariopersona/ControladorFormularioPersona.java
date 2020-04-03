@@ -349,8 +349,8 @@ public class ControladorFormularioPersona implements Initializable {
         String observaciones = ta_observaciones.getText();
         ByteArrayInputStream huella = new ByteArrayInputStream(template.serialize());
         int huella1 = template.serialize().length;
-        int ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
-        int ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
+        String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
+        String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
 
         Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
                 fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
@@ -387,12 +387,12 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setText("");
         tf_primerApellido.setText("");
         tf_segundoApellido.setText("");
-        dp_fechaNacimiento.setValue(null);
+        //dp_fechaNacimiento.setValue(null);
         tf_direccion.setText("");
         ta_alergicoA.setText("");
         ta_enfermedadSufre.setText("");
         ta_observaciones.setText("");
-        cbxsexo.setValue("");
+        //cbxsexo.setValue("");
         cbxtipoeps.setValue(null);
     }
 
@@ -400,21 +400,20 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private void habilitarBotones() {
         bt_crear.setDisable(true); //siempre ira deshabilitado
-        bt_consultar.setDisable(true);
+        bt_consultar.setDisable(false);
         bt_cancelar.setDisable(false);
         bt_salir.setDisable(false);
         bt_guardar.setDisable(false);
-        bt_modificar.setDisable(true);
-        bt_inhabilitar.setDisable(true);
-        //bt_abrirformulariopersonafamiliar.setDisable(false);
+        bt_modificar.setDisable(false);
+        bt_inhabilitar.setDisable(false);
         habilitarCampos();
     }
 
     @FXML
     private void deshabilitarBotones() {
         bt_crear.setDisable(false); //siempre ira deshabilitado
-        bt_consultar.setDisable(false);
-        bt_cancelar.setDisable(false);
+        bt_consultar.setDisable(true);
+        bt_cancelar.setDisable(true);
         bt_salir.setDisable(false);
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
