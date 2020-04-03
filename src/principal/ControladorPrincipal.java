@@ -224,6 +224,7 @@ public class ControladorPrincipal implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("MODULO DE CARGOS");
+            stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (IOException e) {
