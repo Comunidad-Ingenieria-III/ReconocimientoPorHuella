@@ -126,7 +126,7 @@ public class ControladorPrincipal implements Initializable {
             Parent formulario_EPS = FXMLLoader.load(getClass().getClassLoader().getResource("eps/formularioeps/FormularioEPS.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión EPS)");
-            stage.setScene(new Scene(formulario_EPS, 500, 343));
+            stage.setScene(new Scene(formulario_EPS, 981, 427));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);

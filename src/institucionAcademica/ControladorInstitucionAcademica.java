@@ -100,7 +100,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
     @FXML
-    public void guardarEps() {
+    public void guardarInstitucion() {
 
         InstitucionAcademica institucionAcademica = new InstitucionAcademica(
                 txtCodigo.getText(),
@@ -131,7 +131,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
     @FXML
-    public void modificarEps() {
+    public void modificarInstitucion() {
         InstitucionAcademica institucionAcademica = new InstitucionAcademica(
                 txtCodigo.getText(),
                 txtNombre.getText(),
@@ -158,7 +158,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
     @FXML
-    public void eliminarEps() {
+    public void eliminarInstitucion() {
         int res = facade.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
         if (res == 1) {
             instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
@@ -215,7 +215,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
    @FXML
-    public void cancelarEps(){
+    public void cancelar(){
         txtCodigo.setText("");
         txtNombre.setText("");
         txtDireccion.setText("");
@@ -226,7 +226,7 @@ public class ControladorInstitucionAcademica implements Initializable {
     }
 
     @FXML
-    private void cerrarEps(ActionEvent event) {
+    private void cerrarInstitucionAcademica(ActionEvent event) {
         Stage stage = (Stage) btnSalir.getScene().getWindow();
         stage.close();
     }

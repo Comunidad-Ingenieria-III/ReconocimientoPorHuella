@@ -350,7 +350,7 @@ public class ControladorFormularioPersona implements Initializable {
         ByteArrayInputStream huella = new ByteArrayInputStream(template.serialize());
         int huella1 = template.serialize().length;
         String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
-        int ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
+        String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
 
         Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
                 fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);

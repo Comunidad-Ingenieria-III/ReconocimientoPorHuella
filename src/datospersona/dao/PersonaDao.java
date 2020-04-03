@@ -140,7 +140,7 @@ public class PersonaDao {
             stmt.setBinaryStream(12, persona.getHuella());
             stmt.setInt(13, persona.getHuella1());
             stmt.setString(14, persona.getTipoDocumento());
-            stmt.setInt(15, persona.getidEps());
+            stmt.setString(15, persona.getIdEps());
 
 
             int rta = stmt.executeUpdate();

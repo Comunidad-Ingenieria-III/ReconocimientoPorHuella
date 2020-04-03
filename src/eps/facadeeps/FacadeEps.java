@@ -26,7 +26,7 @@ public class FacadeEps {
         return daoeps.eliminarEps(dtoEps);
     }
 
-    public void buscarEps(int idEps){
+    public void buscarEps(String idEps){
         daoeps.buscarPorId(idEps);
     }
 }

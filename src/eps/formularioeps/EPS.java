@@ -71,12 +71,12 @@ public class EPS implements Initializable {
 
         tb_eps.setItems(epss);
 
-        colId.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("idEps"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreEps"));
+        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionEps"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telEps"));
 
-        bt_Crear.setDisable(true);
+        bt_Modificar.setDisable(true);
         bt_Inhabilitar.setDisable(true);
         bt_Guardar.setDisable(true);
 
@@ -104,7 +104,7 @@ public class EPS implements Initializable {
     }
 
     @FXML
-    public void guardarInstitucion() {
+    public void guardarEps() {
 
         DtoEps dtoEps = new DtoEps(
                 tf_Codigo.getText(),
@@ -135,7 +135,7 @@ public class EPS implements Initializable {
     }
 
     @FXML
-    public void modificarInstitucion() {
+    public void modificarEps() {
         DtoEps dtoEps = new DtoEps(
                 tf_Codigo.getText(),
                 tf_Nombre.getText(),
@@ -163,7 +163,7 @@ public class EPS implements Initializable {
     }
 
     @FXML
-    public void eliminarInstitucion() {
+    public void eliminarEps() {
         int res = facadeEps.eliminarEps(tb_eps.getSelectionModel().getSelectedItem().getIdEps());
         if (res == 1) {
             epss.remove(tb_eps.getSelectionModel().getSelectedIndex());
@@ -231,7 +231,7 @@ public class EPS implements Initializable {
     }
 
     @FXML
-    private void cerrarInstitucionAcademica(ActionEvent event) {
+    private void cerarEps(ActionEvent event) {
         Stage stage = (Stage) bt_Salir.getScene().getWindow();
         stage.close();
     }

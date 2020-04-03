@@ -24,7 +24,7 @@ public class Persona {
     private ByteArrayInputStream huella;
     private IntegerProperty huella1;
     private StringProperty tipoDocumento;
-    private IntegerProperty idEps;
+    private StringProperty idEps;
 
 
     public Persona() {
@@ -32,7 +32,7 @@ public class Persona {
 
     public Persona(int idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
                    Date fechaNacimiento, String direccion, String sexo, String alegicoA, String enfermedadSufre, String observaciones,
-                   ByteArrayInputStream huella, int huella1, String tipoDocumento, int idEps) {
+                   ByteArrayInputStream huella, int huella1, String tipoDocumento, String idEps) {
 
         this.idpersona = new SimpleIntegerProperty(idpersona);
         this.primerNombre = new SimpleStringProperty(primerNombre);
@@ -48,10 +48,11 @@ public class Persona {
         this.huella = huella;
         this.huella1 = new SimpleIntegerProperty(huella1);
         this.tipoDocumento = new SimpleStringProperty(tipoDocumento);
-        this.idEps = new SimpleIntegerProperty(idEps);
+        this.idEps = new SimpleStringProperty(idEps);
     }
 
-    public Persona(int idpersona, String primerNombre, String segundoNombre, String alegicoA, String enfermedadSufre, String observaciones) {
+    public Persona(int idpersona, String primerNombre, String segundoNombre, String alegicoA, String enfermedadSufre,
+                   String observaciones) {
         //this.huella1 = new SimpleIntegerProperty(huella1);
         this.idpersona = new SimpleIntegerProperty(idpersona);
         this.primerNombre = new SimpleStringProperty(primerNombre);
@@ -222,18 +223,17 @@ public class Persona {
         this.tipoDocumento.set(tipoDocumento);
     }
 
-    public int getidEps() {
+    public String getIdEps() {
         return idEps.get();
     }
 
-    public IntegerProperty getidEpsProperty() {
+    public StringProperty idEpsProperty() {
         return idEps;
     }
 
-    public void setgetidEps(int idEps) {
+    public void setIdEps(String idEps) {
         this.idEps.set(idEps);
     }
-
 
     @Override
     public String toString() {
