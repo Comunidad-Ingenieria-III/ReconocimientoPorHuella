@@ -69,6 +69,7 @@ public class ControladorTipoDocumento implements Initializable {
         bt_guardar.setDisable(true);
 
         manejarEventos();
+        deshabilitarCampos();
 
     }
 
@@ -80,11 +81,12 @@ public class ControladorTipoDocumento implements Initializable {
                 if (newValue != null) {
                     tf_Tipo.setText(newValue.getIdTipoDocumento());
                     tf_nombre1.setText(newValue.getNombreTipoDocumento());
+                    tf_Tipo.requestFocus();
 
                     bt_crear.setDisable(false);
                     bt_guardar.setDisable(true);
-                    bt_modificar.setDisable(false);
-                    bt_inhabilitar.setDisable(false);
+                    bt_modificar.setDisable(true);
+                    bt_inhabilitar.setDisable(true);
                 }
             }
         });//FIN DEL LISTENER
@@ -192,12 +194,15 @@ public class ControladorTipoDocumento implements Initializable {
     public void limpiarFormulario() {
         tf_Tipo.setText("");
         tf_nombre1.setText("");
+        tf_Tipo.requestFocus();
 
 
         bt_crear.setDisable(false);
         bt_guardar.setDisable(false);
         bt_cancelar.setDisable(true);
         bt_inhabilitar.setDisable(true);
+
+        habilitarCampos();
     }
 
     @FXML

@@ -139,7 +139,7 @@ public class ControladorLogin implements Initializable {
                         "", JOptionPane.INFORMATION_MESSAGE);
                 stage.setScene(scene);
                 stage.show();
-
+                ((Node) (event.getSource())).getScene().getWindow().hide();
                 //al cerrar la ventana de Libros
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
