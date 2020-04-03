@@ -327,8 +327,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 //e indica el nombre de la persona que coincidió.
                 if (result.isVerified()){
                 //crea la imagen de los datos guardado de las huellas guardadas en la base de datos
-                    JOptionPane.showMessageDialog(null, "Me llamo: "+
-                            rsIdentificar.getString("primerNombre"));
+                    //JOptionPane.showMessageDialog(null, "Me llamo: "+
+                            //rsIdentificar.getString("primerNombre"));
                     tf_idpersonadps.setText(rsIdentificar.getString("idpersona"));
                     tf_primerNombredps.setText(rsIdentificar.getString("primerNombre"));
                     tf_fechaNacimiento.setText(rsIdentificar.getString("fechaNacimiento"));

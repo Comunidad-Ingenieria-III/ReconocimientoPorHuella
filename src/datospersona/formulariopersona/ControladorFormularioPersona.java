@@ -86,8 +86,6 @@ public class ControladorFormularioPersona implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
-    @FXML
-    private Button bt_abrirformulariopersonafamiliar;
 
     private Connection conn;
     private PreparedStatement stmt;
@@ -331,6 +329,10 @@ public class ControladorFormularioPersona implements Initializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        limpiar();
+        deshabilitarCampos();
+        deshabilitarBotones();
+       
     }
 
     @FXML
@@ -392,8 +394,9 @@ public class ControladorFormularioPersona implements Initializable {
         ta_alergicoA.setText("");
         ta_enfermedadSufre.setText("");
         ta_observaciones.setText("");
-        //cbxsexo.setValue("");
+        cbxsexo.setValue("");
         cbxtipoeps.setValue(null);
+        txtArea.setText("");
     }
 
 
@@ -418,7 +421,7 @@ public class ControladorFormularioPersona implements Initializable {
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        //bt_abrirformulariopersonafamiliar.setDisable(true);
+
     }
 
 
@@ -430,11 +433,13 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setDisable(false);
         tf_primerApellido.setDisable(false);
         tf_segundoApellido.setDisable(false);
+        tf_direccion.setDisable(false);
         cbxsexo.setDisable(false);
         cbxtipoeps.setDisable(false);
         ta_alergicoA.setDisable(false);
         ta_enfermedadSufre.setDisable(false);
         ta_observaciones.setDisable(false);
+        txtArea.setDisable(false);
         dp_fechaNacimiento.setDisable(false);
         cbxtipodocumento.requestFocus();
     }
@@ -447,12 +452,14 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setDisable(true);
         tf_primerApellido.setDisable(true);
         tf_segundoApellido.setDisable(true);
+        tf_direccion.setDisable(true);
         cbxtipoeps.setDisable(true);
         ta_alergicoA.setDisable(true);
         ta_enfermedadSufre.setDisable(true);
         ta_observaciones.setDisable(true);
         dp_fechaNacimiento.setDisable(true);
         cbxsexo.setDisable(true);
+        txtArea.setDisable(true);
 
     }
 
@@ -462,7 +469,6 @@ public class ControladorFormularioPersona implements Initializable {
         limpiar();
         habilitarCampos();
 
-        //habilitarBotones();
 
     }
 
