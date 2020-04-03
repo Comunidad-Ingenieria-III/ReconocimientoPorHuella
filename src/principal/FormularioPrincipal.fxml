@@ -37,7 +37,7 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="mnuInstitucionAcademica" mnemonicParsing="false" onAction="#abrirInstitucionAcademica" text="Institución Académica" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Cargo" />
+                  <MenuItem fx:id="mnuCargo" mnemonicParsing="false" onAction="#ventanaCargos" text="Cargo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Personal Salud" />
                   <SeparatorMenuItem mnemonicParsing="false" />
