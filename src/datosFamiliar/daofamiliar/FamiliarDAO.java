@@ -19,7 +19,7 @@ public class FamiliarDAO {
     private Familiar familiar;
     private List<Familiar> familiares;
 
-    public List<Familiar> lsitarTodos() {
+    public List<Familiar> listarTodos() {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from familiar_paciente";
@@ -31,7 +31,7 @@ public class FamiliarDAO {
             while (rset.next()) {
                 familiar = new Familiar();
 
-                familiar.setIdFamiliar(rset.getString("idFamiliar"));
+                familiar.setIdFamiliar(rset.getInt("idFamiliar"));
                 familiar.setPrimerNombre(rset.getString("nombre1"));
                 familiar.setSegundoNombre(rset.getString("nombre2"));
                 familiar.setPrimerApellido(rset.getString("apellido1"));
@@ -56,7 +56,7 @@ public class FamiliarDAO {
             String sql = "insert into familiar_paciente(idFamiliar, nombre1, nombre2, apellido1, apellido2, direccion, telefono)" +
                          " values(?, ?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, familiar.getIdFamiliar());
+            stmt.setInt(1, familiar.getIdFamiliar());
             stmt.setString(2, familiar.getPrimerNombre());
             stmt.setString(3, familiar.getSegundoNombre());
             stmt.setString(4, familiar.getPrimerApellido());
@@ -71,6 +71,47 @@ public class FamiliarDAO {
             return 0;
         }
     } // Fin del método agregar()
+
+    public int modificar(Familiar familiar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "update familiar_paciente set nombre1 = ?, nombre2 = ?, apellido1 = ?, apellido2 = ?, " +
+                    "set direccion = ?, telefono = ? where idFamiliar = ?";
+            stmt = conn.prepareStatement(sql);
+
+
+            stmt.setString(1, familiar.getPrimerNombre());
+            stmt.setString(2, familiar.getSegundoNombre());
+            stmt.setString(3, familiar.getPrimerApellido());
+            stmt.setString(4, familiar.getSegundoApellido());
+            stmt.setString(5, familiar.getDireccion());
+            stmt.setString(6, familiar.getTelFamiliar());
+
+            stmt.setInt(7, familiar.getIdFamiliar());
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int eliminar(int idFamiliar) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "delete from familiar_paciente where idFamiliar = ?";
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idFamiliar);
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 
 }

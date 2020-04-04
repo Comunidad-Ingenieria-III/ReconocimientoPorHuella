@@ -7,7 +7,7 @@ import javafx.beans.property.StringProperty;
 
 public class Familiar {
 
-    private StringProperty idFamiliar = new SimpleStringProperty();
+    private IntegerProperty idFamiliar = new SimpleIntegerProperty();
     private StringProperty primerNombre = new SimpleStringProperty();
     private StringProperty segundoNombre = new SimpleStringProperty();
     private StringProperty primerApellido = new SimpleStringProperty();
@@ -16,7 +16,7 @@ public class Familiar {
     private StringProperty telFamiliar = new SimpleStringProperty();
 
 
-    public Familiar(String idFamiliar, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+    public Familiar(int idFamiliar, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
                        String direccion, String telFamiliar) {
         this.idFamiliar.set(idFamiliar);
         this.primerNombre.set(primerNombre);
@@ -29,18 +29,18 @@ public class Familiar {
     }
 
     public Familiar() {
-        this("","","","","","","");
+        this(0,"","","","","","");
     }
 
-    public String getIdFamiliar() {
+    public int getIdFamiliar() {
         return idFamiliar.get();
     }
 
-    public StringProperty idFamiliarProperty() {
+    public IntegerProperty idFamiliarProperty() {
         return idFamiliar;
     }
 
-    public void setIdFamiliar(String idFamiliar) {
+    public void setIdFamiliar(int idFamiliar) {
         this.idFamiliar.set(idFamiliar);
     }
 

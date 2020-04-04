@@ -1,4 +1,4 @@
-package institucionAcademica;
+package institucionAcademica.formulario;
 
 import institucionAcademica.dao.FacadeInstitucionAcademica;
 import institucionAcademica.dto.InstitucionAcademica;
@@ -12,9 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -76,7 +78,10 @@ public class ControladorInstitucionAcademica implements Initializable {
         btnInhabilitar.setDisable(true);
         btnGuardar.setDisable(true);
 
+        deshabilitarBotones();
+        deshabilitarCampos();
         manejarEventos();
+        eventoCrear();
     }
 
     public void manejarEventos() {
@@ -89,14 +94,60 @@ public class ControladorInstitucionAcademica implements Initializable {
                     txtDireccion.setText(newValue.getDireccion());
                     txtTelefono.setText(newValue.getTelefono());
 
+
                     btnCrear.setDisable(false);
                     btnGuardar.setDisable(true);
                     btnModificar.setDisable(false);
                     btnInhabilitar.setDisable(false);
+                    habilitarCampos();
                 }
 
             }
         });//FIN DEL LISTENER
+    }
+
+    private void eventoCrear() {
+        btnCrear.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                limpiar();
+                habilitarCampos();
+                btnInhabilitar.setDisable(true);
+                btnModificar.setDisable(true);
+                btnGuardar.setDisable(false);
+            }
+        });
+    }
+
+    @FXML
+    private void eventoCancelar(){
+        bntCancelar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                limpiar();
+                txtCodigo.requestFocus();
+                btnModificar.setDisable(true);
+                btnInhabilitar.setDisable(true);
+            }
+        });
+    }
+
+    @FXML
+    private void eventoGuardar(){
+        btnGuardar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
+                        txtTelefono.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "DEBE LLENAR TODOS LOS CAMPOS",
+                            "ERROR AL INTENTAR GUARDAR", JOptionPane.ERROR_MESSAGE);
+
+                }else {
+                    guardarInstitucion();
+                }
+
+            }
+        });
     }
 
     @FXML
@@ -127,7 +178,7 @@ public class ControladorInstitucionAcademica implements Initializable {
             msg.setHeaderText("Resultado");
             msg.show();
         }
-        limpiarFormulario();
+        limpiar();
     }
 
     @FXML
@@ -154,7 +205,7 @@ public class ControladorInstitucionAcademica implements Initializable {
             msg.setHeaderText("Resultado");
             msg.show();
         }
-        limpiarFormulario();
+      limpiar();
     }
 
     @FXML
@@ -174,55 +225,44 @@ public class ControladorInstitucionAcademica implements Initializable {
             msg.setHeaderText("Resultado");
             msg.show();
         }
-        limpiarFormulario();
-
+       limpiar();
     }
 
-    public void validarCamposVacios(){
-        if (txtCodigo.getText().isEmpty()){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("Debe ingresar todos los campos");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
-        }
-    }
-
-    @FXML
-    public void validarB(){
-        btnGuardar.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                validarCamposVacios();
-            }
-        });
-    }
 
 
     @FXML
-    public void limpiarFormulario() {
+    private void habilitarCampos() {
+        txtCodigo.setDisable(false);
+        txtNombre.setDisable(false);
+        txtDireccion.setDisable(false);
+        txtTelefono.setDisable(false);
+        txtCodigo.requestFocus();
+    }
+    @FXML
+    private void deshabilitarBotones() {
+        btnCrear.setDisable(false); //siempre ira deshabilitado
+        btnConsultar.setDisable(false);
+        bntCancelar.setDisable(false);
+        btnSalir.setDisable(false);
+        btnGuardar.setDisable(true);
+        btnModificar.setDisable(true);
+        btnInhabilitar.setDisable(true);
+
+    }
+    @FXML
+    private void deshabilitarCampos() {
+        txtCodigo.setDisable(true);
+        txtNombre.setDisable(true);
+        txtDireccion.setDisable(true);
+        txtTelefono.setDisable(true);
+    }
+    @FXML
+    public void limpiar() {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtDireccion.setText("");
         txtTelefono.setText("");
-        txtCodigo.requestFocus();
-
-        btnCrear.setDisable(false);
-        btnGuardar.setDisable(false);
-        btnModificar.setDisable(true);
-        btnInhabilitar.setDisable(true);
-    }
-
-   @FXML
-    public void cancelar(){
-        txtCodigo.setText("");
-        txtNombre.setText("");
-        txtDireccion.setText("");
-        txtTelefono.setText("");
-        txtCodigo.requestFocus();
-        btnModificar.setDisable(true);
-        btnInhabilitar.setDisable(true);
+        bntCancelar.setDisable(false);
     }
 
     @FXML
