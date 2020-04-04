@@ -277,10 +277,10 @@ public class ControladorPrincipal implements Initializable {
     private void abrirMedicamentos(ActionEvent event) throws IOException {
 
         try {
-            Parent formulario_Medicamentos = FXMLLoader.load(getClass().getClassLoader().getResource("medicamento/formulariomedicamento/FormularioMedicamentos.fxml"));
+            Parent formulario_Medicamentos = FXMLLoader.load(getClass().getClassLoader().getResource("medicamento/formularioMedicamento/FormularioMedicamentos.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Medicamentos)");
-            stage.setScene(new Scene(formulario_Medicamentos, 500, 300));
+            stage.setScene(new Scene(formulario_Medicamentos));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);

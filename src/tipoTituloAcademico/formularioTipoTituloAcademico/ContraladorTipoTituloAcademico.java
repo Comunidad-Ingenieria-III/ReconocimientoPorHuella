@@ -1,4 +1,4 @@
-package medicamento;
+package tipoTituloAcademico.formularioTipoTituloAcademico;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,10 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControladorMedicamentos implements Initializable {
+public class ContraladorTipoTituloAcademico implements Initializable {
 
     @FXML
     private TextField tf_Tipo;
@@ -69,19 +70,19 @@ public class ControladorMedicamentos implements Initializable {
     @FXML
     private void habilitarCampos() {
         tf_Tipo.setDisable(false);
-        tf_nombre1.setDisable(false);
         tf_Tipo.requestFocus();
+        tf_nombre1.setDisable(false);
     }
 
     @FXML
     private void deshabilitarCampos() {
         tf_Tipo.setDisable(true);
         tf_nombre1.setDisable(true);
-
     }
 
+
     @FXML
-    private void cerrarMedicamentos(ActionEvent event) {
+    private void cerrarTipoTituloAcademico(ActionEvent event) {
         Stage stage = (Stage) bt_salir.getScene().getWindow();
         stage.close();
     }

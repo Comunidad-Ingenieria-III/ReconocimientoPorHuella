@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="427.0" prefWidth="981.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionAcademica.ControladorInstitucionAcademica">
+<AnchorPane prefHeight="427.0" prefWidth="981.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionAcademica.ControladorInstitucionAcademica">
    <children>
       <SplitPane dividerPositions="0.449438202247191" layoutX="2.0" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="427.0" prefWidth="981.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -143,7 +133,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="425.0" prefWidth="399.0">
                <children>
-                  <TableView fx:id="tbIinstitucionAcademica" layoutX="31.0" layoutY="70.0" prefHeight="425.0" prefWidth="537.0" snapToPixel="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tbIinstitucionAcademica" prefHeight="425.0" prefWidth="537.0" snapToPixel="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="colId" prefWidth="75.0" resizable="false" text="ID" />
                       <TableColumn fx:id="colNombre" prefWidth="138.0" resizable="false" text="Nombre" />
