@@ -85,6 +85,7 @@ public class ControladorInstitucionReferencia implements Initializable {
         btnCrear.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                limpiar();
                 habilitarCampos();
                 btnInhabilitar.setDisable(true);
                 btnModificar.setDisable(true);

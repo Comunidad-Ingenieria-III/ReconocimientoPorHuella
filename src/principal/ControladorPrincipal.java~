@@ -204,7 +204,7 @@ public class ControladorPrincipal implements Initializable {
     @FXML
     public void ventanaInstitucionAcademica(){
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("institucionAcademica/formulario/FormularioInstitucionAcademica.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("institucionAcademica/dto/FormularioInstitucionAcademica.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("MODULO INSTITUCIÓN ACADEMICA");

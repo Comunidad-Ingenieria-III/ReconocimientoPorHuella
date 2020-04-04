@@ -68,7 +68,7 @@ public class InstitucionReferenciaDAO {
     public int modificar(InstitucionReferencia institucionReferencia) {
         try {
         conn = ConexionRoot.getConexion();
-        String sql = "update institucion_referencia set nombre = ?, set direccion = ?, set telefono = ? where idInstiRefe = ?";
+        String sql = "update institucion_referencia set nombre = ?, direccion = ?, telefono = ? where idInstiRefe = ?";
         stmt = conn.prepareStatement(sql);
 
         stmt.setString(1, institucionReferencia.getNombre());

@@ -75,8 +75,8 @@ public class FamiliarDAO {
     public int modificar(Familiar familiar){
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update familiar_paciente set nombre1 = ?, set nombre2 = ?, set apellido1 = ?, set apellido2 = ?, " +
-                    "set direccion = ?, set telefono = ? where idFamiliar = ?";
+            String sql = "update familiar_paciente set nombre1 = ?, nombre2 = ?, apellido1 = ?, apellido2 = ?, " +
+                    "set direccion = ?, telefono = ? where idFamiliar = ?";
             stmt = conn.prepareStatement(sql);
 
 
