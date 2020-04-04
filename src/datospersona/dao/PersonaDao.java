@@ -110,7 +110,7 @@ public class PersonaDao {
                 persona.setAlergicoA(rset.getString("alergicoA"));
                 persona.setEnfermedadSufre(rset.getString("enfermedadSufre"));
                 persona.setObservaciones(rset.getString("observaciones"));
-                persona.setTipoDocumeto(rset.getInt("idTipoDocumento"));
+                persona.setTipoDocumento(rset.getString("idTipoDocumento"));
 
             }
         } catch (RuntimeException | SQLException e) {
@@ -139,8 +139,8 @@ public class PersonaDao {
             stmt.setString(11, persona.getObservaciones());
             stmt.setBinaryStream(12, persona.getHuella());
             stmt.setInt(13, persona.getHuella1());
-            stmt.setInt(14, persona.getTipoDocumento());
-            stmt.setInt(15, persona.getidEps());
+            stmt.setString(14, persona.getTipoDocumento());
+            stmt.setString(15, persona.getIdEps());
 
 
             int rta = stmt.executeUpdate();

@@ -8,7 +8,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
    <children>
-      <MenuBar prefHeight="40.0" prefWidth="800.0" styleClass="Button" stylesheets="@../Estilos.css">
+      <MenuBar prefHeight="80.0" prefWidth="800.0" styleClass="Button" stylesheets="@../Estilos.css">
         <menus>
             <Menu mnemonicParsing="false" text="Gestiones">
               <items>
@@ -16,19 +16,19 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="mi_datos_persona" mnemonicParsing="false" onAction="#abrirDatosPersona" text="Datos Persona" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Datos Familiar" />
+                  <MenuItem fx:id="mnuDatosFamiliar" mnemonicParsing="false" onAction="#abrirDatosFamiliar" text="Datos Familiar" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirEps" text="EPS" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#abriTipoTituloAcademico" text="Tipo Título Académico" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mnuInstitucionAcademica" mnemonicParsing="false" onAction="#abrirInstitucionAcademica" text="Institución Académica" />
+                  <MenuItem fx:id="mnuInstitucionAcademica" mnemonicParsing="false" onAction="#ventanaInstitucionAcademica" text="Institución Académica" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Cargo" />
+                  <MenuItem fx:id="mnuCargo" mnemonicParsing="false" onAction="#ventanaCargos" text="Cargo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Personal Salud" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Institución de Referencia" />
+                  <MenuItem fx:id="mnuInstitucionReferencia" mnemonicParsing="false" onAction="#ventanaInstitucionReferencia" text="Institución de Referencia" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirMedicamentos" text="Medicamentos" />
               </items>

@@ -16,67 +16,67 @@
    <children>
       <TableView fx:id="tblFamiliares" layoutY="343.0" prefHeight="252.0" prefWidth="789.0">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="114.0" resizable="false" text="id" />
-          <TableColumn fx:id="colNombre1" prefWidth="96.0" resizable="false" text="nombre1" />
-            <TableColumn fx:id="colNombre2" prefWidth="121.0" resizable="false" text="nombre2 " />
-            <TableColumn fx:id="colApellido1" prefWidth="113.0" resizable="false" text="apellido1" />
-            <TableColumn fx:id="colApellido2" prefWidth="117.0" resizable="false" text="apellido2" />
-            <TableColumn fx:id="colDireccion" prefWidth="135.0" resizable="false" text="direccion" />
-            <TableColumn fx:id="colTelefono" prefWidth="92.0" resizable="false" text="telefono" />
+          <TableColumn fx:id="colId" prefWidth="96.0" resizable="false" text="id" />
+          <TableColumn fx:id="colNombre1" prefWidth="114.0" resizable="false" text="Primer Nombre" />
+            <TableColumn fx:id="colNombre2" prefWidth="115.0" resizable="false" text="Segundo Nombre" />
+            <TableColumn fx:id="colApellido1" prefWidth="119.0" resizable="false" text="Primer Apellido" />
+            <TableColumn fx:id="colApellido2" prefWidth="117.0" resizable="false" text="Segundo Apellido" />
+            <TableColumn fx:id="colDireccion" prefWidth="135.0" resizable="false" text="Dirección" />
+            <TableColumn fx:id="colTelefono" prefWidth="92.0" resizable="false" text="Teléfono" />
         </columns>
       </TableView>
-      <Label alignment="CENTER" layoutX="47.0" layoutY="6.0" prefHeight="36.0" prefWidth="479.0" style="-fx-background-color: #2E2EFE;" text="Datos Familiar" textFill="#f2f2f2">
+      <Label alignment="CENTER" prefHeight="36.0" prefWidth="800.0" style="-fx-background-color: #2E2EFE;" text="Datos Familiar" textFill="#f2f2f2">
          <font>
             <Font name="System Bold Italic" size="19.0" />
          </font>
       </Label>
       <Label layoutX="182.0" layoutY="61.0" text="*" textFill="#f80707" />
-      <Label layoutX="14.0" layoutY="61.0" prefHeight="20.0" prefWidth="166.0" text="Documento De Identidad" textFill="#1e1d1d">
+      <Label layoutX="120.0" layoutY="55.0" prefHeight="20.0" prefWidth="166.0" text="Documento De Identidad" textFill="#1e1d1d">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_idfamiliar" layoutX="14.0" layoutY="81.0" prefHeight="25.0" prefWidth="177.0" />
+      <TextField fx:id="tf_idfamiliar" layoutX="120.0" layoutY="75.0" prefHeight="25.0" prefWidth="130.0" />
       <Label layoutX="121.0" layoutY="112.0" text="*" textFill="#f80707" />
-      <Label layoutX="14.0" layoutY="114.0" prefHeight="20.0" prefWidth="103.0" text="Primer Nombre">
+      <Label layoutX="120.0" layoutY="108.0" prefHeight="20.0" prefWidth="103.0" text="Primer Nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_nombre1" layoutX="15.0" layoutY="134.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="212.0" layoutY="114.0" prefHeight="20.0" prefWidth="166.0" text="Segundo Nombre">
+      <TextField fx:id="tf_nombre1" layoutX="121.0" layoutY="128.0" prefHeight="25.0" prefWidth="130.0" />
+      <Label layoutX="341.0" layoutY="54.0" prefHeight="20.0" prefWidth="166.0" text="Segundo Nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_nombre2" layoutX="212.0" layoutY="134.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="15.0" layoutY="167.0" prefHeight="20.0" prefWidth="115.0" text="Primer Apellido">
+      <TextField fx:id="tf_nombre2" layoutX="341.0" layoutY="74.0" prefHeight="25.0" prefWidth="130.0" />
+      <Label layoutX="121.0" layoutY="161.0" prefHeight="20.0" prefWidth="115.0" text="Primer Apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="123.0" layoutY="167.0" text="*" textFill="#f80707" />
-      <TextField fx:id="tf_apellido1" layoutX="15.0" layoutY="187.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="212.0" layoutY="167.0" prefHeight="20.0" prefWidth="149.0" text="Segundo Apellido">
+      <Label layoutX="233.0" layoutY="112.0" text="*" textFill="#f80707" />
+      <TextField fx:id="tf_apellido1" layoutX="121.0" layoutY="181.0" prefHeight="25.0" prefWidth="130.0" />
+      <Label layoutX="342.0" layoutY="104.0" prefHeight="20.0" prefWidth="149.0" text="Segundo Apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_apellido2" layoutX="212.0" layoutY="187.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="15.0" layoutY="228.0" prefHeight="20.0" prefWidth="166.0" text="Dirección">
+      <TextField fx:id="tf_apellido2" layoutX="341.0" layoutY="128.0" prefHeight="25.0" prefWidth="130.0" />
+      <Label layoutX="121.0" layoutY="216.0" prefHeight="20.0" prefWidth="166.0" text="Dirección">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_direccion" layoutX="15.0" layoutY="248.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="212.0" layoutY="228.0" prefHeight="20.0" prefWidth="166.0" text="Numero Telefónico">
+      <TextField fx:id="tf_direccion" layoutX="120.0" layoutY="236.0" prefHeight="25.0" prefWidth="166.0" />
+      <Label layoutX="342.0" layoutY="159.0" prefHeight="20.0" prefWidth="166.0" text="Numero Telefónico">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="339.0" layoutY="226.0" text="*" textFill="#f80707" />
-      <TextField fx:id="tf_numtelefono" layoutX="212.0" layoutY="248.0" prefHeight="25.0" prefWidth="166.0" />
-      <Button fx:id="bt_crear" layoutX="23.0" layoutY="289.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Nuevo" textFill="WHITE">
+      <Label layoutX="468.0" layoutY="161.0" text="*" textFill="#f80707" />
+      <TextField fx:id="tf_numtelefono" layoutX="343.0" layoutY="180.0" prefHeight="25.0" prefWidth="103.0" />
+      <Button fx:id="bt_crear" layoutX="120.0" layoutY="283.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Crear" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -84,7 +84,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_consultar" layoutX="130.0" layoutY="289.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
+      <Button fx:id="bt_consultar" layoutX="251.0" layoutY="283.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -92,7 +92,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_cancelar" layoutX="250.0" layoutY="289.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
+      <Button fx:id="bt_cancelar" layoutX="375.0" layoutY="283.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -100,7 +100,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_salir" layoutX="378.0" layoutY="289.0" mnemonicParsing="false" onAction="#cerraDatosFamiliar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Salir" textFill="WHITE">
+      <Button fx:id="bt_salir" layoutX="498.0" layoutY="283.0" mnemonicParsing="false" onAction="#cerraDatosFamiliar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Salir" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -108,7 +108,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_guardar" layoutX="386.0" layoutY="132.0" mnemonicParsing="false" onAction="#guardarFamiliar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
+      <Button fx:id="bt_guardar" layoutX="531.0" layoutY="136.0" mnemonicParsing="false" onAction="#guardarFamiliar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -116,15 +116,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_modificar" layoutX="386.0" layoutY="172.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
+      <Button fx:id="bt_modificar" layoutX="531.0" layoutY="180.0" mnemonicParsing="false" onAction="#modificarFamiliar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="bt_inhabilitar" layoutX="386.0" layoutY="220.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Inhabilitar" textFill="WHITE">
+      <Button fx:id="bt_inhabilitar" layoutX="531.0" layoutY="232.0" mnemonicParsing="false" onAction="#eliminarFamiliar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Eliminar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
+      <Label layoutX="291.0" layoutY="57.0" text="*" textFill="#f80707" />
+      <Label layoutX="230.0" layoutY="163.0" text="*" textFill="#f80707" />
    </children>
 </AnchorPane>

@@ -12,7 +12,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #CECEF6;">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="750.0" style="-fx-background-color: #2E2EFE;" text="Datos Registrados del Paciente" textFill="#f5f5f5">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="900.0" style="-fx-background-color: #2E2EFE;" text="Datos Registrados del Paciente" textFill="#f5f5f5">
                      <font>
                         <Font name="System Bold Italic" size="23.0" />
                      </font>
@@ -22,13 +22,13 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="35.0" layoutY="82.0" />
+                  <TextField fx:id="tf_idpersonadps" layoutX="35.0" layoutY="82.0" />
                   <Label layoutX="203.0" layoutY="61.0" prefHeight="20.0" prefWidth="99.0" text="Me llamo:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="203.0" layoutY="82.0" prefHeight="25.0" prefWidth="177.0" />
+                  <TextField fx:id="tf_primerNombredps" layoutX="203.0" layoutY="82.0" prefHeight="25.0" prefWidth="177.0" />
                   <Label layoutX="407.0" layoutY="61.0" prefHeight="20.0" prefWidth="99.0" text="Mi EPS Es:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
@@ -51,26 +51,26 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="406.0" layoutY="125.0" prefHeight="25.0" prefWidth="148.0" />
+                  <TextField fx:id="tf_fechaNacimiento" layoutX="406.0" layoutY="125.0" prefHeight="25.0" prefWidth="148.0" />
                   <TextField layoutX="202.0" layoutY="125.0" prefHeight="25.0" prefWidth="176.0" />
                   <Label layoutX="36.0" layoutY="150.0" prefHeight="20.0" prefWidth="99.0" text="Soy Alérgico A:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextArea layoutX="36.0" layoutY="170.0" prefHeight="45.0" prefWidth="516.0" />
+                  <TextArea fx:id="ta_alergicoA" layoutX="36.0" layoutY="170.0" prefHeight="45.0" prefWidth="516.0" />
                   <Label layoutX="36.0" layoutY="218.0" prefHeight="20.0" prefWidth="99.0" text="Sufro De:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextArea layoutX="35.0" layoutY="238.0" prefHeight="45.0" prefWidth="520.0" />
+                  <TextArea fx:id="ta_enfermedadSufre" layoutX="35.0" layoutY="238.0" prefHeight="45.0" prefWidth="520.0" />
                   <Label layoutX="34.0" layoutY="283.0" prefHeight="20.0" prefWidth="99.0" text="Observaciones:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextArea layoutX="35.0" layoutY="300.0" prefHeight="45.0" prefWidth="518.0" />
+                  <TextArea fx:id="ta_observaciones" layoutX="35.0" layoutY="300.0" prefHeight="45.0" prefWidth="518.0" />
                   <Label layoutX="650.0" layoutY="85.0" text="Huella Digital">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />

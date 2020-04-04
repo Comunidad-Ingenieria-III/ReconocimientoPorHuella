@@ -132,14 +132,14 @@ public class ControladorLogin implements Initializable {
                 Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
                 Scene scene = new Scene(formulario_principal, 1000, 580);
                 stage.setResizable(false);
+                stage.setMaximized(true);
                 stage.getIcons().add(new Image("estrella_vida.jpg"));
-                stage.setTitle("AP_Humana(Gestión Principal)");
+                stage.setTitle("AP_Humana Menú Principal");
                 stage.getIcons().add(new Image("estrella_vida.jpg"));
-                JOptionPane.showMessageDialog(null, "Bienvenido al sistema",
-                        "", JOptionPane.INFORMATION_MESSAGE);
+
                 stage.setScene(scene);
                 stage.show();
-
+                ((Node) (event.getSource())).getScene().getWindow().hide();
                 //al cerrar la ventana de Libros
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override

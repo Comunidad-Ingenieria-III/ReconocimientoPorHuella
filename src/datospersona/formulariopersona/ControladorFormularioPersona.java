@@ -16,6 +16,7 @@ import eps.facadeeps.FacadeEps;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
@@ -87,7 +89,7 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private Button bt_inhabilitar;
     @FXML
-    private Button bt_abrirformulariopersonafamiliar;
+    private Button bt_hulla;
 
     private Connection conn;
     private PreparedStatement stmt;
@@ -98,12 +100,14 @@ public class ControladorFormularioPersona implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         dp_fechaNacimiento.setValue(LocalDate.now());
+
         iniciarCbxSexo();
         iniciarCbxDocumento();
         iniciarEps();
         deshabilitarBotones();
         deshabilitarCampos();
         Iniciar();
+        validarId();
 
     }
 
@@ -326,11 +330,15 @@ public class ControladorFormularioPersona implements Initializable {
                 } catch (RuntimeException e) {
                     throw new RuntimeException("Error SQL - Agregar()!");
                 }
-                JOptionPane.showMessageDialog(null, "Huella Guardada Correctamente");
+                //JOptionPane.showMessageDialog(null, "Huella Guardada Correctamente");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        limpiar();
+        deshabilitarCampos();
+        deshabilitarBotones();
+       
     }
 
     @FXML
@@ -349,8 +357,8 @@ public class ControladorFormularioPersona implements Initializable {
         String observaciones = ta_observaciones.getText();
         ByteArrayInputStream huella = new ByteArrayInputStream(template.serialize());
         int huella1 = template.serialize().length;
-        int ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
-        int ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
+        String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
+        String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
 
         Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
                 fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps);
@@ -387,39 +395,41 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setText("");
         tf_primerApellido.setText("");
         tf_segundoApellido.setText("");
-        dp_fechaNacimiento.setValue(null);
+        //dp_fechaNacimiento.setValue(null);
         tf_direccion.setText("");
         ta_alergicoA.setText("");
         ta_enfermedadSufre.setText("");
         ta_observaciones.setText("");
         cbxsexo.setValue("");
         cbxtipoeps.setValue(null);
+        txtArea.setText("");
     }
 
 
     @FXML
     private void habilitarBotones() {
         bt_crear.setDisable(true); //siempre ira deshabilitado
-        bt_consultar.setDisable(true);
+        bt_consultar.setDisable(false);
         bt_cancelar.setDisable(false);
         bt_salir.setDisable(false);
         bt_guardar.setDisable(false);
-        bt_modificar.setDisable(true);
-        bt_inhabilitar.setDisable(true);
-        //bt_abrirformulariopersonafamiliar.setDisable(false);
+        bt_modificar.setDisable(false);
+        bt_inhabilitar.setDisable(false);
+        bt_hulla.setDisable(false);
         habilitarCampos();
     }
 
     @FXML
     private void deshabilitarBotones() {
         bt_crear.setDisable(false); //siempre ira deshabilitado
-        bt_consultar.setDisable(false);
-        bt_cancelar.setDisable(false);
+        bt_consultar.setDisable(true);
+        bt_cancelar.setDisable(true);
         bt_salir.setDisable(false);
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        //bt_abrirformulariopersonafamiliar.setDisable(true);
+        bt_hulla.setDisable(true);
+
     }
 
 
@@ -431,11 +441,13 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setDisable(false);
         tf_primerApellido.setDisable(false);
         tf_segundoApellido.setDisable(false);
+        tf_direccion.setDisable(false);
         cbxsexo.setDisable(false);
         cbxtipoeps.setDisable(false);
         ta_alergicoA.setDisable(false);
         ta_enfermedadSufre.setDisable(false);
         ta_observaciones.setDisable(false);
+        txtArea.setDisable(false);
         dp_fechaNacimiento.setDisable(false);
         cbxtipodocumento.requestFocus();
     }
@@ -448,12 +460,14 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setDisable(true);
         tf_primerApellido.setDisable(true);
         tf_segundoApellido.setDisable(true);
+        tf_direccion.setDisable(true);
         cbxtipoeps.setDisable(true);
         ta_alergicoA.setDisable(true);
         ta_enfermedadSufre.setDisable(true);
         ta_observaciones.setDisable(true);
         dp_fechaNacimiento.setDisable(true);
         cbxsexo.setDisable(true);
+        txtArea.setDisable(true);
 
     }
 
@@ -463,13 +477,12 @@ public class ControladorFormularioPersona implements Initializable {
         limpiar();
         habilitarCampos();
 
-        //habilitarBotones();
 
     }
 
     @FXML
     private void guardarPersona() {
-        //validar();
+        validar();
 
         facadepersona.insertarPersona(crearPersona());
         Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
@@ -479,6 +492,22 @@ public class ControladorFormularioPersona implements Initializable {
         msg.show();
         bt_crear.setDisable(false);
 
+    }
+
+    @FXML
+    public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
+        tf_idpersona.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+
+            }
+
+        });
     }
 
     public void validar() {

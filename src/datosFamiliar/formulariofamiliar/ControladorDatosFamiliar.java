@@ -2,6 +2,7 @@ package datosFamiliar.formulariofamiliar;
 
 import datosFamiliar.dtofamiliar.Familiar;
 import datosFamiliar.facadefamiliar.Facade;
+import institucionreferencia.dto.InstitucionReferencia;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -82,12 +83,12 @@ public class ControladorDatosFamiliar implements Initializable {
         tblFamiliares.setItems(familiares);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("idFamiliar"));
-        colNombre1.setCellValueFactory(new PropertyValueFactory<>("nombre1"));
-        colNombre2.setCellValueFactory(new PropertyValueFactory<>("nombre2"));
-        colApellido1.setCellValueFactory(new PropertyValueFactory<>("apellido1"));
-        colApellido2.setCellValueFactory(new PropertyValueFactory<>("apellido2"));
+        colNombre1.setCellValueFactory(new PropertyValueFactory<>("primerNombre"));
+        colNombre2.setCellValueFactory(new PropertyValueFactory<>("segundoNombre"));
+        colApellido1.setCellValueFactory(new PropertyValueFactory<>("primerApellido"));
+        colApellido2.setCellValueFactory(new PropertyValueFactory<>("segundoApellido"));
         colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telFamiliar"));
 
 
 
@@ -101,7 +102,7 @@ public class ControladorDatosFamiliar implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Familiar> observable, Familiar oldValue, Familiar newValue) {
                 if (newValue != null ){
-                    tf_idfamiliar.setText(newValue.getIdFamiliar());
+                    tf_idfamiliar.setText(newValue.getIdFamiliar() + "");
                     tf_nombre1.setText(newValue.getPrimerNombre());
                     tf_nombre2.setText(newValue.getSegundoNombre());
                     tf_apellido1.setText(newValue.getPrimerApellido());
@@ -190,7 +191,7 @@ public class ControladorDatosFamiliar implements Initializable {
     @FXML
     public void guardarFamiliar() {//Este metodo toma los valores de los componenetes del formulario, crea un objeto y lo envia a la BD
         Familiar familiar= new Familiar(
-                tf_idfamiliar.getText(),
+                Integer.parseInt(tf_idfamiliar.getText()),
                 tf_nombre1.getText(),
                 tf_nombre2.getText(),
                 tf_apellido1.getText(),
@@ -221,4 +222,57 @@ public class ControladorDatosFamiliar implements Initializable {
         limpiarFormulario();
 
     }
+
+
+    @FXML
+    public void modificarFamiliar() {
+        Familiar familiar = new Familiar(
+                Integer.parseInt(tf_idfamiliar.getText()),
+                tf_nombre1.getText(),
+                tf_nombre2.getText(),
+                tf_apellido1.getText(),
+                tf_apellido2.getText(),
+                tf_direccion.getText(),
+                tf_numtelefono.getText()
+
+        );
+        int res = facade.modificarFamiliar(familiar);
+        if (res == 1) {
+            familiares.set(tblFamiliares.getSelectionModel().getSelectedIndex(), familiar);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Familiar Paciente");
+            msg.setContentText("El familiar se ha modificado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }else{
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Familiar Paciente");
+            msg.setContentText("El familiar No ha sido modificada");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+
+    }
+
+    @FXML
+    public void eliminarFamiliar() {
+        int res = facade.eliminarFamiliar(tblFamiliares.getSelectionModel().getSelectedItem().getIdFamiliar());
+        if (res == 1) {
+            familiares.remove(tblFamiliares.getSelectionModel().getSelectedIndex());
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Familiar Paciente");
+            msg.setContentText("El familiar se ha eliminado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }else{
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Familiar Paciente");
+            msg.setContentText("El familiar  No ha sido eliminada");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+
+
+    }
+
 }
