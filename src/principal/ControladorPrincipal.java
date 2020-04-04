@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -66,6 +67,8 @@ public class ControladorPrincipal implements Initializable {
     private MenuItem mi_regisgtro_atencion;
     @FXML
     private MenuItem mnuInstitucionAcademica;
+    @FXML
+    private MenuItem mnuCargo;
 
 
 
@@ -214,6 +217,22 @@ public class ControladorPrincipal implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void ventanaCargos(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("cargo/formulario/formularioCargo.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("MODULO DE CARGOS");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }//fin del metodo ventanaCargos()
+
 
     @FXML
     private void abrirCargoEmpleado(ActionEvent event) throws IOException {
