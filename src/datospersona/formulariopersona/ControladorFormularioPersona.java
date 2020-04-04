@@ -16,6 +16,7 @@ import eps.facadeeps.FacadeEps;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
@@ -96,12 +98,14 @@ public class ControladorFormularioPersona implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         dp_fechaNacimiento.setValue(LocalDate.now());
+
         iniciarCbxSexo();
         iniciarCbxDocumento();
         iniciarEps();
         deshabilitarBotones();
         deshabilitarCampos();
         Iniciar();
+        validarId();
 
     }
 
@@ -324,7 +328,7 @@ public class ControladorFormularioPersona implements Initializable {
                 } catch (RuntimeException e) {
                     throw new RuntimeException("Error SQL - Agregar()!");
                 }
-                JOptionPane.showMessageDialog(null, "Huella Guardada Correctamente");
+                //JOptionPane.showMessageDialog(null, "Huella Guardada Correctamente");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -474,7 +478,7 @@ public class ControladorFormularioPersona implements Initializable {
 
     @FXML
     private void guardarPersona() {
-        //validar();
+        validar();
 
         facadepersona.insertarPersona(crearPersona());
         Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
@@ -484,6 +488,22 @@ public class ControladorFormularioPersona implements Initializable {
         msg.show();
         bt_crear.setDisable(false);
 
+    }
+
+    @FXML
+    public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
+        tf_idpersona.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+
+            }
+
+        });
     }
 
     public void validar() {
