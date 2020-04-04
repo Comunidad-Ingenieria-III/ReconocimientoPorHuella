@@ -13,11 +13,19 @@ public class Facade {
 
 
     public List<Familiar> obtenerTodosFamiliares() {
-        return familiarDAO.lsitarTodos();
+        return familiarDAO.listarTodos();
     }
 
     public int agregarFamiliar(Familiar familiar) {
         return familiarDAO.agregar(familiar);
 
+    }
+
+    public int modificarFamiliar(Familiar familiar){
+        return familiarDAO.modificar(familiar);
+    }
+
+    public int eliminarFamiliar(int idFamiliar){
+        return familiarDAO.eliminar(idFamiliar);
     }
 }

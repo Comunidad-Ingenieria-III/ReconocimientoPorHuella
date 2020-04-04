@@ -69,6 +69,10 @@ public class ControladorPrincipal implements Initializable {
     private MenuItem mnuInstitucionAcademica;
     @FXML
     private MenuItem mnuCargo;
+    @FXML
+    private MenuItem mnuInstitucionReferencia;
+    @FXML
+    private MenuItem mnuDatosFamiliar;
 
 
 
@@ -149,13 +153,10 @@ public class ControladorPrincipal implements Initializable {
             Parent formulario_datos_familiar = FXMLLoader.load(getClass().getClassLoader().getResource("datosFamiliar/formulariofamiliar/FormularioDatosFamiliar.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Datos Familiar)");
-            stage.setScene(new Scene(formulario_datos_familiar, 500, 350));
+            stage.setScene(new Scene(formulario_datos_familiar));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
-            //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
-            //Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -232,6 +233,23 @@ public class ControladorPrincipal implements Initializable {
             System.out.println(e.toString());
         }
     }//fin del metodo ventanaCargos()
+
+    @FXML
+    public void ventanaInstitucionReferencia(){
+        try {
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("institucionreferencia/formulario/FormularioInstitucionReferencia.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("MODULO INSTITUCIÓN REFERENCIA");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }//fin del metodo ventanaInstitucionReferencia()
+
+
 
 
     @FXML
