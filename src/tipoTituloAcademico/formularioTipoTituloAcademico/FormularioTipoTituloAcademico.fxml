@@ -6,7 +6,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="307.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ttAcademico.formularioTipoTituloAcademico.ContraladorTipoTituloAcademico">
+<AnchorPane prefHeight="307.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipoTituloAcademico.formularioTipoTituloAcademico.ContraladorTipoTituloAcademico">
    <children>
       <SplitPane dividerPositions="0.6653333333333333" layoutY="2.0" prefHeight="305.0" prefWidth="752.0">
         <items>
@@ -111,7 +111,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="435.0" prefWidth="206.0">
                <children>
-                  <TableView layoutX="4.0" prefHeight="301.0" prefWidth="282.0">
+                  <TableView fx:id="tb_tituloAcademico" layoutX="4.0" prefHeight="301.0" prefWidth="282.0">
                     <columns>
                       <TableColumn prefWidth="75.0" text="Código" />
                       <TableColumn prefWidth="75.0" text="Nombre" />

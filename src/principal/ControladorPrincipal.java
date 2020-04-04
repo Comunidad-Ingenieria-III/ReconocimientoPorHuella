@@ -186,7 +186,7 @@ public class ControladorPrincipal implements Initializable {
 
         Parent formulario_Tipo_Titulo_Academico;
         try {
-            formulario_Tipo_Titulo_Academico = FXMLLoader.load(getClass().getClassLoader().getResource("tipoTituloAcademico/formulariotipotitulo/FormularioTipoTituloAcademico.fxml"));
+            formulario_Tipo_Titulo_Academico = FXMLLoader.load(getClass().getClassLoader().getResource("tipoTituloAcademico/formularioTipoTituloAcademico/FormularioTipoTituloAcademico.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Tipo Título Académico)");
             stage.setScene(new Scene(formulario_Tipo_Titulo_Academico, 500, 300));
