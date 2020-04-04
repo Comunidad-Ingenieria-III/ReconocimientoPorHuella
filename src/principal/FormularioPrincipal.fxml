@@ -26,7 +26,7 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="mnuCargo" mnemonicParsing="false" onAction="#ventanaCargos" text="Cargo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Personal Salud" />
+                  <MenuItem fx:id="bt_personalsalud" mnemonicParsing="false" onAction="#abrirPersonalSalud" text="Personal Salud" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="mnuInstitucionReferencia" mnemonicParsing="false" onAction="#ventanaInstitucionReferencia" text="Institución de Referencia" />
                   <SeparatorMenuItem mnemonicParsing="false" />

@@ -7,7 +7,9 @@
 <?import javafx.scene.text.*?>
 
 
-<AnchorPane prefHeight="427.0" prefWidth="981.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionAcademica.ControladorInstitucionAcademica">
+
+<AnchorPane prefHeight="427.0" prefWidth="981.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionAcademica.formulario.ControladorInstitucionAcademica">
+
 
    <children>
       <SplitPane dividerPositions="0.449438202247191" layoutX="2.0" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="427.0" prefWidth="981.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

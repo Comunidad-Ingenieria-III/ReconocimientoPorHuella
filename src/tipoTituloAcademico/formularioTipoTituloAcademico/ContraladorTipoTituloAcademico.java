@@ -58,7 +58,7 @@ public class ContraladorTipoTituloAcademico implements Initializable {
         bt_guardar.setDisable(false);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        habilitarCampos();
+        //habilitarCampos();
     }
 
     @FXML
