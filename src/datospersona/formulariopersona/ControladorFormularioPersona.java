@@ -88,6 +88,8 @@ public class ControladorFormularioPersona implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
+    @FXML
+    private Button bt_hulla;
 
     private Connection conn;
     private PreparedStatement stmt;
@@ -413,6 +415,7 @@ public class ControladorFormularioPersona implements Initializable {
         bt_guardar.setDisable(false);
         bt_modificar.setDisable(false);
         bt_inhabilitar.setDisable(false);
+        bt_hulla.setDisable(false);
         habilitarCampos();
     }
 
@@ -425,6 +428,7 @@ public class ControladorFormularioPersona implements Initializable {
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
+        bt_hulla.setDisable(true);
 
     }
 
