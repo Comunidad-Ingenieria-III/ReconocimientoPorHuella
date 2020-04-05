@@ -9,9 +9,11 @@ import eps.dto.DtoEps;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import personalSalud.personalsaluddto.PersonalSalud;
 import personalSalud.personalsaludfacade.PersonalSaludFacade;
@@ -86,6 +88,7 @@ public class ControladorPersonalSalud implements Initializable {
         //deshabilitarBotones();
         //deshabilitarCampos();
 
+
     }
 
     @FXML
@@ -133,11 +136,7 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private void guardarPersona() {
         //validar();
-        try {
-            guardar();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        guardar();
 
         /*int res = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud());
 
@@ -169,51 +168,50 @@ public class ControladorPersonalSalud implements Initializable {
             sb.append("*No existe libro\n");
         }
 
+        if (tf_numerodocumento.getText().isEmpty()) {
+            esValido = false;
+            sb.append("Campo Documeto Requerido\n");
+        }
+
+        if (tf_numerodocumento.getLength() <= 4) {
+            esValido = false;
+            sb.append("Numero Documento Mayor de 4 y Menor de 10 Digitos\n");
+        }
+
+        if (tf_numerodocumento.getLength() > 10) {
+            esValido = false;
+            sb.append("Numero Documento Mayor de 4 y Menor de 10 Digitos\n");
+        }
+
         if (tf_nombre1.getText().isEmpty()) {
             esValido = false;
-            sb.append("Campo Primer Nombre Requerido ");
+            sb.append("Campo Primer Nombre Requerido\n");
         }
 
         if (tf_apellido1.getText().isEmpty()) {
             esValido = false;
-            sb.append("Campo Primer Apellido Requerido ");
+            sb.append("Campo Primer Apellido Requerido\n");
         }
 
-
-        /*}else if (!tf_Usuario.getText().contains("@") || !tf_Usuario.getText().contains(".")){
-            lblUsuario.setText("Usuario invalido");
-        }else {
-            lblUsuario.setText("");
+        if (cmb_sexo.getValue().isEmpty()) {
+            esValido = false;
+            sb.append("Campo Sexo Requerido\n");
         }
 
-        /*if (personalSalud.getNombre1().trim().isEmpty()) {
+        if (tf_numtelefono.getText().isEmpty()) {
             esValido = false;
-            sb.append("*Nombre requerido\n");
+            sb.append("Campo Numero Telefono Requerido\n");
         }
-        /*if(libro.getNombre().trim().length() > 100){
+
+        if (tf_correoelectronico.getText().contains("@")){
             esValido = false;
-            sb.append("*Nombre debe ser menor a 100 caracteres\n");
+            sb.append("Debes Ingresar una Dirección de Correo Valida\n");
         }
-        if(libro.getAutor().trim().equals("")){
+
+        if (tf_correoelectronico.getText().contains(".")){
             esValido = false;
-            sb.append("*Autor requerido\n");
+            sb.append("Debes Ingresar una Dirección de Correo Valida");
         }
-        if(libro.getAutor().trim().length() > 100){
-            esValido = false;
-            sb.append("*Autor debe ser menor a 100 caracteres\n");
-        }
-        if(libro.getGenero().trim().equals("")){
-            esValido = false;
-            sb.append("*Género requerido\n");
-        }
-        if(libro.getPaginas() <= 0){
-            esValido = false;
-            sb.append("*Páginas debe ser mayor a cero\n");
-        }
-        if(libro.getFechaLong() == 0){
-            esValido = false;
-            sb.append("*Fecha requerida\n");
-        }*/
 
         if (!esValido) {
             JOptionPane.showMessageDialog(null, "Se encontraron los siguientes "
@@ -223,100 +221,55 @@ public class ControladorPersonalSalud implements Initializable {
         return esValido;
     }
 
-    public boolean guardar() throws SQLException {
+    public boolean guardar() {
 
-        PersonalSalud personalSalud = new PersonalSalud();
+        try {
+            PersonalSalud personalSalud = new PersonalSalud();
 
-        if (validar(personalSalud) == false) {
-            return false;
+            if (validar(personalSalud) == false) {
+                return false;
+            }
+            boolean exito;
+
+            if (personalSalud.getIdPersonal() == 0) {
+
+                exito = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud());
+
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Personal de Salud");
+                msg.setContentText("El Personal de Salud ha sido agregado correctamente");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                limpiar();
+
+            } else
+                exito = modificarPersonalSalud(personalSalud);
+
+            return exito;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        boolean exito;
-        if (personalSalud.getIdPersonal() == 0) {
 
-            exito = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud());
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Pacientes - familiares");
-            msg.setContentText("El familiar ha sido agregado correctamente");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
-        } else
-            exito = modificarPersonalSalud(personalSalud);
-
-        return exito;
+        return false;
     }
 
-
-    /*
     @FXML
-     public void guardarPersonalSaldud() {//Este metodo toma los valores de los componenetes del formulario, crea un objeto y lo envia a la BD
-        PersonalSalud personalSalud = new PersonalSalud(
-                Integer.parseInt(tf_numerodocumento.getText()),
-                tf_nombre1.getText(),
-                tf_nombre2.getText(),
-                tf_apellido1.getText(),
-                tf_apellido2.getText(),
-                cmb_sexo.getValue(),
-                tf_numtelefono.getText(),
-                tf_correoelectronico.getText(),
-                cmb_tipodocumento.getValue(),
-                cmb_cargo.getValue()
+    public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
+        tf_numerodocumento.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
 
-        );
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
 
-        int res = personalSaludFacade.agregarPersonalSalud(personalSalud);
+            }
 
-        if (res == 1) {
-            //familiares.add(familiar);//Cada que se agrege un objeto a se actualiza la observable(el modelo de la tableView
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Pacientes - familiares");
-            msg.setContentText("El familiar ha sido agregado correctamente");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
-        } else {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Pacientes - Familiares");
-            msg.setContentText("El familiar NO ha sido agregado correctamente");
-            msg.setHeaderText("REsult");
-            msg.show();
-        }
-        //limpiarFormulario();
-
+        });
     }
-
     /*
-    @FXML
-    public void modificarPersonalSalud() {
-        PersonalSalud personalSalud = new Familiar(
-                Integer.parseInt(tf_idfamiliar.getText()),
-                tf_nombre1.getText(),
-                tf_nombre2.getText(),
-                tf_apellido1.getText(),
-                tf_apellido2.getText(),
-                tf_direccion.getText(),
-                tf_numtelefono.getText()
-
-        );
-        int res = facade.modificarFamiliar(familiar);
-        if (res == 1) {
-            familiares.set(tblFamiliares.getSelectionModel().getSelectedIndex(), familiar);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Familiar Paciente");
-            msg.setContentText("El familiar se ha modificado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        } else {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Familiar Paciente");
-            msg.setContentText("El familiar No ha sido modificada");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-
-    }
-
     @FXML
     public void eliminarFamiliar() {
         int res = facade.eliminarFamiliar(tblFamiliares.getSelectionModel().getSelectedItem().getIdFamiliar());
@@ -358,44 +311,49 @@ public class ControladorPersonalSalud implements Initializable {
         cmb_cargo.setItems(listaCargo);
     }
 
-
-    @FXML
-    private void habilitarBotones() {
-        bt_crear.setDisable(true); //siempre ira deshabilitado
-        bt_consultar.setDisable(true);
-        bt_cancelar.setDisable(true);
-        bt_salir.setDisable(false);
-        bt_guardar.setDisable(false);
-        bt_modificar.setDisable(true);
-        bt_inhabilitar.setDisable(true);
-        habilitarCampos();
-    }
-
-    @FXML
-    private void deshabilitarBotones() {
-        bt_crear.setDisable(false); //siempre ira deshabilitado
-        bt_consultar.setDisable(false);
-        bt_cancelar.setDisable(false);
-        bt_salir.setDisable(false);
-        bt_guardar.setDisable(true);
-        bt_modificar.setDisable(true);
-        bt_inhabilitar.setDisable(true);
-    }
-
     @FXML
     private void habilitarCampos() {
-        cmb_tipodocumento.setDisable(false);
+
+        cmb_tipodocumento.setDisable(true);
         tf_numerodocumento.setDisable(false);
         tf_nombre1.setDisable(false);
         tf_nombre2.setDisable(false);
         tf_apellido1.setDisable(false);
         tf_apellido2.setDisable(false);
-        cmb_sexo.setDisable(false);
-        tf_correoelectronico.setDisable(false);
+        cmb_sexo.setDisable(true);
         tf_numtelefono.setDisable(false);
-        cmb_cargo.setDisable(false);
-        mi_tabla.setDisable(false);
+        tf_correoelectronico.setDisable(false);
+        cmb_cargo.setDisable(true);
         tf_numerodocumento.requestFocus();
+    }
+    /*
+    @FXML
+    private void deshabilitarBotones() {
+
+        btnCrear.setDisable(false); //siempre ira deshabilitado
+        btnConsultar.setDisable(false);
+        bntCancelar.setDisable(false);
+        btnSalir.setDisable(false);
+        btnGuardar.setDisable(true);
+        btnModificar.setDisable(true);
+        btnInhabilitar.setDisable(true);
+
+    }*/
+
+    @FXML
+    public void limpiar() {
+        //cmb_tipodocumento.setValue(null);
+        tf_numerodocumento.setText("");
+        tf_nombre1.setText("");
+        tf_nombre2.setText("");
+        tf_apellido1.setText("");
+        tf_apellido2.setText("");
+        //cmb_sexo.setValue(null);
+        tf_numtelefono.setText("");
+        tf_correoelectronico.setText("");
+        //cmb_cargo.setValue(null);
+        tf_numerodocumento.setText("");
+
     }
 
     @FXML
