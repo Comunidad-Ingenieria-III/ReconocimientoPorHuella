@@ -76,6 +76,7 @@ public class ControladorLogin implements Initializable {
 
 
     public void validarcampos(){
+
         if (tf_Usuario.getText().isEmpty()){
             lblUsuario.setText("Campo Requerido");
         }else if (!tf_Usuario.getText().contains("@") || !tf_Usuario.getText().contains(".")){

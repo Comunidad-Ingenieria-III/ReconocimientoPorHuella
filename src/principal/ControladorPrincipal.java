@@ -66,13 +66,19 @@ public class ControladorPrincipal implements Initializable {
     @FXML
     private MenuItem mi_regisgtro_atencion;
     @FXML
-    private MenuItem mnuInstitucionAcademica;
+    private MenuItem mi_eps;
     @FXML
-    private MenuItem mnuCargo;
+    private MenuItem mi_datos_personal_salud;
     @FXML
-    private MenuItem mnuInstitucionReferencia;
+    private MenuItem mi_registro_atencion_paciente;
     @FXML
-    private MenuItem mnuDatosFamiliar;
+    private MenuItem mi_InstitucionAcademica;
+    @FXML
+    private MenuItem mi_Cargo;
+    @FXML
+    private MenuItem mi_InstitucionReferencia;
+    @FXML
+    private MenuItem mi_DatosFamiliar;
 
 
 
@@ -166,7 +172,7 @@ public class ControladorPrincipal implements Initializable {
     private void abrirPersonalSalud(ActionEvent event) throws IOException {
 
         try {
-            Parent formulario_Personal_salud = FXMLLoader.load(getClass().getClassLoader().getResource("personalSalud/formulariopersonalsalud/FormularioPersonalSalud.fxml"));
+            Parent formulario_Personal_salud = FXMLLoader.load(getClass().getClassLoader().getResource("personalSalud/personalsaludformulario/FormularioPersonalSalud.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Personal Salud)");
             stage.setScene(new Scene(formulario_Personal_salud, 830, 545));

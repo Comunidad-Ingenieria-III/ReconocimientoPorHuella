@@ -16,19 +16,19 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="mi_datos_persona" mnemonicParsing="false" onAction="#abrirDatosPersona" text="Datos Persona" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mnuDatosFamiliar" mnemonicParsing="false" onAction="#abrirDatosFamiliar" text="Datos Familiar" />
+                  <MenuItem fx:id="mi_DatosFamiliar" mnemonicParsing="false" onAction="#abrirDatosFamiliar" text="Datos Familiar" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#abrirEps" text="EPS" />
+                  <MenuItem fx:id="mi_eps" mnemonicParsing="false" onAction="#abrirEps" text="EPS" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#abriTipoTituloAcademico" text="Tipo Título Académico" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mnuInstitucionAcademica" mnemonicParsing="false" onAction="#ventanaInstitucionAcademica" text="Institución Académica" />
+                  <MenuItem fx:id="mi_InstitucionAcademica" mnemonicParsing="false" onAction="#ventanaInstitucionAcademica" text="Institución Académica" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mnuCargo" mnemonicParsing="false" onAction="#ventanaCargos" text="Cargo" />
+                  <MenuItem fx:id="mi_Cargo" mnemonicParsing="false" onAction="#ventanaCargos" text="Cargo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="bt_personalsalud" mnemonicParsing="false" onAction="#abrirPersonalSalud" text="Personal Salud" />
+                  <MenuItem fx:id="mi_datos_personal_salud" mnemonicParsing="false" onAction="#abrirPersonalSalud" text="Personal Salud" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mnuInstitucionReferencia" mnemonicParsing="false" onAction="#ventanaInstitucionReferencia" text="Institución de Referencia" />
+                  <MenuItem fx:id="mi_InstitucionReferencia" mnemonicParsing="false" onAction="#ventanaInstitucionReferencia" text="Institución de Referencia" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirMedicamentos" text="Medicamentos" />
               </items>
