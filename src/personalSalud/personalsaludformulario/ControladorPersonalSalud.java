@@ -77,6 +77,8 @@ public class ControladorPersonalSalud implements Initializable {
     private TableColumn<PersonalSalud, String> colFecha;
     @FXML
     private TableColumn<DtoEps, String> colTelefono;
+    @FXML
+    private Label lblDocumento;
 
 
     @Override
@@ -112,53 +114,7 @@ public class ControladorPersonalSalud implements Initializable {
 
     }
 
-    private boolean modificarPersonalSalud(PersonalSalud personalSalud) {
 
-        String query = "UPDATE personal_salud set " +
-
-                "nombre1 = '" + personalSalud.getNombre1() + "','" +
-                "nombre2 = '" + personalSalud.getNombre2() + "','" +
-                "apellido1 = '" + personalSalud.getApellido1() + "','" +
-                "apellido2 = '" + personalSalud.getApellido2() + "','" +
-                "sexo = '" + personalSalud.getSexo() + "','" +
-                "telefono = '" + personalSalud.getTelefono() + "','" +
-                "email = '" + personalSalud.getEmail() + "','" +
-                "tipoDocumento = '" + personalSalud.getTipoDocumento() + "','" +
-                "cargo = '" + personalSalud.getCargo() + "')" +
-                "WHERE idPersona = '" + personalSalud.getIdPersonal();
-        JdbcHelper jdbc = new JdbcHelper();
-        boolean exito = jdbc.ejecutarQuery(query);
-        return exito;
-
-
-    }
-
-    @FXML
-    private void guardarPersona() {
-        //validar();
-        guardar();
-
-        /*int res = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud());
-
-        if (res == 1) {
-            //familiares.add(familiar);//Cada que se agrege un objeto a se actualiza la observable(el modelo de la tableView
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Pacientes - familiares");
-            msg.setContentText("El familiar ha sido agregado correctamente");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
-        } else {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Pacientes - Familiares");
-            msg.setContentText("El familiar NO ha sido agregado correctamente");
-            msg.setHeaderText("REsult");
-            msg.show();
-        }
-        //limpiarFormulario();*/
-
-    }
 
     public boolean validar(PersonalSalud personalSalud) {
         StringBuilder sb = new StringBuilder();
@@ -171,6 +127,8 @@ public class ControladorPersonalSalud implements Initializable {
         if (tf_numerodocumento.getText().isEmpty()) {
             esValido = false;
             sb.append("Campo Documeto Requerido\n");
+            lblDocumento.setText("Campo Requerido");
+            tf_numerodocumento.requestFocus();
         }
 
         if (tf_numerodocumento.getLength() <= 4) {
@@ -203,7 +161,7 @@ public class ControladorPersonalSalud implements Initializable {
             sb.append("Campo Numero Telefono Requerido\n");
         }
 
-        if (tf_correoelectronico.getText().contains("@")){
+        /*if (tf_correoelectronico.getText().contains("@")){
             esValido = false;
             sb.append("Debes Ingresar una Dirección de Correo Valida\n");
         }
@@ -211,7 +169,7 @@ public class ControladorPersonalSalud implements Initializable {
         if (tf_correoelectronico.getText().contains(".")){
             esValido = false;
             sb.append("Debes Ingresar una Dirección de Correo Valida");
-        }
+        }*/
 
         if (!esValido) {
             JOptionPane.showMessageDialog(null, "Se encontraron los siguientes "
@@ -221,6 +179,8 @@ public class ControladorPersonalSalud implements Initializable {
         return esValido;
     }
 
+
+    @FXML
     public boolean guardar() {
 
         try {
@@ -243,7 +203,7 @@ public class ControladorPersonalSalud implements Initializable {
                 limpiar();
 
             } else
-                exito = modificarPersonalSalud(personalSalud);
+                exito = personalSaludFacade.agregarPersonalSalud(personalSalud);
 
             return exito;
 

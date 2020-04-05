@@ -98,7 +98,7 @@ public class PersonalSaludDao {
 
 
     public boolean modificarPersonalSalud(PersonalSalud personalSalud)  {
-        try {
+        /*try {
             conn = ConexionRoot.getConexion();
             String sql = "update personal_salud set nombre1 = ?, nombre2 = ?, apellido1 = ?, apellido2 = ?, " +
                     " sexo = ?, telefono = ?, email = ?, tipoDocumento = ?, cargo = ? where idPersonal = ?";
@@ -115,21 +115,32 @@ public class PersonalSaludDao {
             stmt.setString(9, personalSalud.getTipoDocumento());
             stmt.setString(10, personalSalud.getCargo());
 
-            stmt.setInt(11, personalSalud.getIdPersonal());
+            stmt.setInt(11, personalSalud.getIdPersonal());*/
 
+            String query = "UPDATE personal_salud set " +
 
-
+                    "nombre1 = '" + personalSalud.getNombre1() + "','" +
+                    "nombre2 = '" + personalSalud.getNombre2() + "','" +
+                    "apellido1 = '" + personalSalud.getApellido1() + "','" +
+                    "apellido2 = '" + personalSalud.getApellido2() + "','" +
+                    "sexo = '" + personalSalud.getSexo() + "','" +
+                    "telefono = '" + personalSalud.getTelefono() + "','" +
+                    "email = '" + personalSalud.getEmail() + "','" +
+                    "tipoDocumento = '" + personalSalud.getTipoDocumento() + "','" +
+                    "cargo = '" + personalSalud.getCargo() + "')" +
+                    "WHERE idPersona = '" + personalSalud.getIdPersonal();
             JdbcHelper jdbc = new JdbcHelper();
-            boolean exito = jdbc.ejecutarQuery(sql);
+            boolean exito = jdbc.ejecutarQuery(query);
             return exito;
 
-            //return stmt.executeUpdate();
+
+            /*return stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //return 0;*/
-        return false;
+        return 0;
+        return false;*/
     }
 
     public int eliminarPersonalSalud(int idPersonal) {
