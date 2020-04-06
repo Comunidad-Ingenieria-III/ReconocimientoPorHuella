@@ -174,7 +174,7 @@ public class ControladorPersonalSalud implements Initializable {
         if (!esValido) {
             JOptionPane.showMessageDialog(null, "Se encontraron los siguientes "
                             + "errores: \n" + sb.toString(), "Error de validación",
-                    JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
         return esValido;
     }

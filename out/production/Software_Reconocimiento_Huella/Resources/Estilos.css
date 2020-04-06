@@ -1,6 +1,6 @@
 
 .root {
-    -fx-background-image: url("fondoPrincipal.jpg");
+    -fx-background-image: url("../fondoPrincipal.jpg");
 }
 
 .Label {

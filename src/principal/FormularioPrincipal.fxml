@@ -8,7 +8,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
    <children>
-      <MenuBar prefHeight="80.0" prefWidth="800.0" styleClass="Button" stylesheets="@../Estilos.css">
+      <MenuBar prefHeight="80.0" prefWidth="800.0" styleClass="Button" stylesheets="@../Resources/Estilos.css">
         <menus>
             <Menu mnemonicParsing="false" text="Gestiones">
               <items>
@@ -76,7 +76,7 @@
             <InnerShadow choke="0.12" color="#4a1f1f" height="54.37" radius="22.792499999999997" width="38.8" />
          </effect>
       </MenuBar>
-      <AnchorPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" stylesheets="@../Estilos.css" />
+      <AnchorPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" stylesheets="@../Resources/Estilos.css" />
       <HBox prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #000000;">
          <children>
             <Label prefHeight="67.0" prefWidth="310.0" />
