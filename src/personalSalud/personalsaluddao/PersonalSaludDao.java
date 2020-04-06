@@ -3,8 +3,10 @@ package personalSalud.personalsaluddao;
 import conexionBD.ConexionRoot;
 import conexionBD.JdbcHelper;
 import datosFamiliar.dtofamiliar.Familiar;
+import institucionAcademica.dto.InstitucionAcademica;
 import personalSalud.personalsaluddto.PersonalSalud;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalSaludDao {
+
+    JdbcHelper jdbcHelper = new JdbcHelper();
 
     private Connection conn;
     private PreparedStatement stmt;
@@ -72,20 +76,19 @@ public class PersonalSaludDao {
         stmt.setString(10, personalSalud.getCargo());*/
 
         String query = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
-                " values('"+personalSalud.getIdPersonal()+"','"
-                +personalSalud.getNombre1()+"','"
-                +personalSalud.getNombre2()+"','"
-                +personalSalud.getApellido1()+"','"
-                +personalSalud.getApellido2()+"','"
-                +personalSalud.getSexo()+"','"
-                +personalSalud.getTelefono()+"','"
-                +personalSalud.getEmail()+"','"
-                +personalSalud.getCargo()+"','"
-                +personalSalud.getCargo()+"')";
+                " values('" + personalSalud.getIdPersonal() + "','"
+                + personalSalud.getNombre1() + "','"
+                + personalSalud.getNombre2() + "','"
+                + personalSalud.getApellido1() + "','"
+                + personalSalud.getApellido2() + "','"
+                + personalSalud.getSexo() + "','"
+                + personalSalud.getTelefono() + "','"
+                + personalSalud.getEmail() + "','"
+                + personalSalud.getCargo() + "','"
+                + personalSalud.getCargo() + "')";
         JdbcHelper jdbc = new JdbcHelper();
         boolean exito = jdbc.ejecutarQuery(query);
         return exito;
-
 
 
         //return stmt.executeUpdate();
@@ -97,66 +100,99 @@ public class PersonalSaludDao {
     } // Fin del método agregar()
 
 
-    public boolean modificarPersonalSalud(PersonalSalud personalSalud)  {
-        /*try {
-            conn = ConexionRoot.getConexion();
-            String sql = "update personal_salud set nombre1 = ?, nombre2 = ?, apellido1 = ?, apellido2 = ?, " +
-                    " sexo = ?, telefono = ?, email = ?, tipoDocumento = ?, cargo = ? where idPersonal = ?";
-            stmt = conn.prepareStatement(sql);
+    public Boolean modificarPersonalSalud(PersonalSalud personalSalud) {
 
-            stmt.setInt(1, personalSalud.getIdPersonal());
-            stmt.setString(2, personalSalud.getNombre1());
-            stmt.setString(3, personalSalud.getNombre2());
-            stmt.setString(4, personalSalud.getApellido1());
-            stmt.setString(5, personalSalud.getApellido2());
-            stmt.setString(6, personalSalud.getSexo());
-            stmt.setString(7, personalSalud.getTelefono());
-            stmt.setString(8, personalSalud.getEmail());
-            stmt.setString(9, personalSalud.getTipoDocumento());
-            stmt.setString(10, personalSalud.getCargo());
-
-            stmt.setInt(11, personalSalud.getIdPersonal());*/
-
-            String query = "UPDATE personal_salud set " +
-
-                    "nombre1 = '" + personalSalud.getNombre1() + "','" +
-                    "nombre2 = '" + personalSalud.getNombre2() + "','" +
-                    "apellido1 = '" + personalSalud.getApellido1() + "','" +
-                    "apellido2 = '" + personalSalud.getApellido2() + "','" +
-                    "sexo = '" + personalSalud.getSexo() + "','" +
-                    "telefono = '" + personalSalud.getTelefono() + "','" +
-                    "email = '" + personalSalud.getEmail() + "','" +
-                    "tipoDocumento = '" + personalSalud.getTipoDocumento() + "','" +
-                    "cargo = '" + personalSalud.getCargo() + "')" +
-                    "WHERE idPersona = '" + personalSalud.getIdPersonal();
-            JdbcHelper jdbc = new JdbcHelper();
-            boolean exito = jdbc.ejecutarQuery(query);
-            return exito;
+        String sql = "UPDATE personal_salud SET nombre1 = '" + personalSalud.getNombre1() + "',"
+                + "nombre2 = '" + personalSalud.getNombre2() + "',"
+                + "apellido1 = '" + personalSalud.getApellido1() + "',"
+                + "apellido2 = '" + personalSalud.getApellido2() + "',"
+                + "sexo = '" + personalSalud.getSexo() + "',"
+                + "telefono = '" + personalSalud.getTelefono() + "',"
+                + "email = '" + personalSalud.getEmail()
+                + " WHERE idPersonal = '" + personalSalud.getTipoDocumento();
+        //+ "tipoDocumento = '" + Integer.parseInt(personalSalud.getTipoDocumento())+"',"
+        //+ "cargo = '" + personalSalud.getCargo()
 
 
-            /*return stmt.executeUpdate();
+        JdbcHelper jdbc = new JdbcHelper();
+        boolean exito = jdbc.ejecutarQuery(sql);
+        return exito;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-        return false;*/
     }
 
-    public int eliminarPersonalSalud(int idPersonal) {
+    public int modificarPersonal(PersonalSalud personalSalud) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from personal_salud where idPersonal = ?";
+
+            String sql = "update personal_salud set nombre1 = ?, nombre2 = ?, apellido1 = ?, apellido2 = ?, sexo = ?," +
+                    " telefono = ?, email = ?, tipoDocumento = ?, cargo = ?  where idPersonal = ?";
             stmt = conn.prepareStatement(sql);
 
-            stmt.setInt(1, idPersonal);
+            stmt.setString(1, personalSalud.getNombre1());
+            stmt.setString(2, personalSalud.getNombre2());
+            stmt.setString(3, personalSalud.getApellido1());
+            stmt.setString(4, personalSalud.getApellido2());
+            stmt.setString(5, personalSalud.getSexo());
+            stmt.setString(6, personalSalud.getTelefono());
+            stmt.setString(7, personalSalud.getEmail());
+            stmt.setString(8, personalSalud.getTipoDocumento());
+            stmt.setString(9, personalSalud.getCargo());
 
+            stmt.setString(10, String.valueOf(Integer.parseInt(String.valueOf(personalSalud.getIdPersonal()))));
             return stmt.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+            return 0;
         }
-        return 0;
+    } // Fin del método modificar()
+
+    public PersonalSalud buscarPersonalSalud(int idPersonal) {
+        String query = "SELECT * FROM personal_salud WHERE idPersonal = " + idPersonal;
+        JdbcHelper jdbc = new JdbcHelper();
+        ResultSet rs = jdbc.realizarConsulta(query);
+
+        PersonalSalud personalSalud = null;
+
+        try {
+            if (rs.next()) {
+                int id = idPersonal;
+                String nombre1 = rs.getString("nombre1");
+                String nombre2 = rs.getString("nombre2");
+                String apellido1 = rs.getString("apellido1");
+                String apellido2 = rs.getString("apellido2");
+                //String sexo = rs.getString("sexo");
+                String telefono = rs.getString("telefono");
+                String email = rs.getString("email");
+                //String tipoDocumento = rs.getString("tipoDocumento");
+                //String cargo = rs.getString("cargo");
+
+                personalSalud = new PersonalSalud(idPersonal, nombre1, nombre2, apellido1, apellido2,
+                        telefono, email);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar Personal de Salud: " + ex,
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return personalSalud;
+    }
+
+    public void eliminarPersonalSalud(int idCliente) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "delete from datos_persona where idpersona = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idCliente);
+
+            int rta = stmt.executeUpdate();
+            if (rta != 1) {
+                throw new RuntimeException("Error al eliminar!");
+            } else {
+                JOptionPane.showMessageDialog(null, "El Registro Fue Eliminado Exitosamente ", "INFORMACIÓN", 1);
+            }
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - eliminar()!");
+        }
     }
 
 

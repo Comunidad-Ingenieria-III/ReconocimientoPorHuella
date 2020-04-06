@@ -40,8 +40,19 @@ public class PersonalSalud {
         this(0, "", "", "", "", "", "", "", "", "");
     }
 
-    //public PersonalSalud(int idPersonal, String text, String text1, String text2, String text3, String value, String text4, String text5, DtoTipoDocumento value1, Cargo value2) {
-    //}
+
+    public PersonalSalud(int idPersonal, String nombre1, String nombre2, String apellido1, String apellido2,
+                          String telefono, String email) {
+        this.idPersonal.set(idPersonal);
+        this.nombre1.set(nombre1);
+        this.nombre2.set(nombre2);
+        this.apellido1.set(apellido1);
+        this.apellido2.set(apellido2);
+        //this.sexo.set(sexo);
+        this.email.set(email);
+        this.telefono.set(telefono);
+
+    }
 
     public int getIdPersonal() {
         return idPersonal.get();

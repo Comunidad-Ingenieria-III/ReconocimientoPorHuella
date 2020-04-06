@@ -2,10 +2,12 @@ package personalSalud.personalsaludformulario;
 
 import cargo.dto.Cargo;
 import cargo.facade.FacadeCargo;
+import conexionBD.ConexionRoot;
 import conexionBD.JdbcHelper;
 import datosFamiliar.dtofamiliar.Familiar;
 import datospersona.dto.Persona;
 import eps.dto.DtoEps;
+import institucionAcademica.dto.InstitucionAcademica;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,8 +25,8 @@ import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 import javax.swing.*;
 import java.io.ByteArrayInputStream;
 import java.net.URL;
-import java.sql.Date;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControladorPersonalSalud implements Initializable {
@@ -45,6 +47,8 @@ public class ControladorPersonalSalud implements Initializable {
     private TextField tf_apellido1;
     @FXML
     private TextField tf_apellido2;
+    @FXML
+    private TextField tf_aux;
     @FXML
     private ComboBox<String> cmb_sexo;
     @FXML
@@ -80,6 +84,9 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private Label lblDocumento;
 
+    private Connection conn;
+    private PreparedStatement stmt;
+    private ResultSet rset;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -114,8 +121,61 @@ public class ControladorPersonalSalud implements Initializable {
 
     }
 
+    @FXML
+    public void buscarPersonaSalud() {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from personal_salud where idPersonal = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, tf_numerodocumento.getText());
+            rset = stmt.executeQuery();
 
+            if (rset.next()) {
 
+                //tf_numerodocumento.setText(rset.getString("idPersonal"));
+                tf_nombre1.setText(rset.getString("nombre1"));
+                tf_nombre2.setText(rset.getString("nombre2"));
+                tf_apellido1.setText(rset.getString("apellido1"));
+                tf_apellido2.setText(rset.getString("apellido2"));
+                cmb_sexo.setValue(String.valueOf(rset.getString("sexo")));
+                tf_numtelefono.setText(rset.getString("telefono"));
+                tf_correoelectronico.setText(rset.getString("email"));
+                //cmb_tipodocumento.setValue(String.valueOf(rset.getString("tipoDocumento")));
+                //cmb_cargo.setSelectionModel().setItems(); = rs.getString("cargo");
+
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        }
+        //JOptionPane.showMessageDialog(null, "Error al buscar Personal de Salud: ",
+        //"Error", JOptionPane.ERROR_MESSAGE);
+
+    }
+
+    @FXML
+    public void modificarPersonal() {
+
+        int res = Integer.parseInt(tf_numerodocumento.getText());
+        personalSaludFacade.eliminarPersonal(res);
+
+        if (res == 1) {
+
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion se ha modificado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        } else {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion No ha sido modificada");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        limpiar();
+    }
+
+    @FXML
     public boolean validar(PersonalSalud personalSalud) {
         StringBuilder sb = new StringBuilder();
         boolean esValido = true;
@@ -229,27 +289,20 @@ public class ControladorPersonalSalud implements Initializable {
 
         });
     }
-    /*
+
     @FXML
     public void eliminarFamiliar() {
-        int res = facade.eliminarFamiliar(tblFamiliares.getSelectionModel().getSelectedItem().getIdFamiliar());
-        if (res == 1) {
-            familiares.remove(tblFamiliares.getSelectionModel().getSelectedIndex());
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Familiar Paciente");
-            msg.setContentText("El familiar se ha eliminado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        } else {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Familiar Paciente");
-            msg.setContentText("El familiar  No ha sido eliminada");
-            msg.setHeaderText("Resultado");
-            msg.show();
+
+        int opcion = JOptionPane.showConfirmDialog(null, "Desea eliminar el"
+                + "registro?", "Confirmación", JOptionPane.YES_NO_OPTION, 2);
+        if (opcion == JOptionPane.YES_OPTION) {
+            int id = Integer.parseInt(tf_numerodocumento.getText());
+            personalSaludFacade.eliminarPersonal(id);
+            JOptionPane.showMessageDialog(null, "Registro eliminado con éxito.",
+                    "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
-
-
-    }*/
+        limpiar();
+    }
 
     @FXML
     public void iniciarCbxSexo() {

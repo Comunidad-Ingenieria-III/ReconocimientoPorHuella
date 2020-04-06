@@ -1,5 +1,6 @@
 package eps.formularioeps;
 
+import conexionBD.ConexionRoot;
 import eps.dao.DaoEps;
 import eps.dto.DtoEps;
 import eps.facadeeps.FacadeEps;
@@ -15,9 +16,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import personalSalud.personalsaluddto.PersonalSalud;
 
 import javax.swing.*;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EPS implements Initializable {
@@ -63,6 +69,10 @@ public class EPS implements Initializable {
 
     private ObservableList<DtoEps> epss;
 
+    private Connection conn;
+    private PreparedStatement stmt;
+    private ResultSet rset;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -81,6 +91,55 @@ public class EPS implements Initializable {
         bt_Guardar.setDisable(true);
 
         manejarEventos();
+    }
+
+    @FXML
+    public void buscarPorId() {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from eps where idEps = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, tf_Codigo.getText());
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+
+               // tf_Codigo.setText(rset.getString("idEps"));
+                tf_Nombre.setText(rset.getString("nombreEps"));
+                tf_Direccion.setText(rset.getString("direccionEps"));
+                tf_Telefono.setText(rset.getString("telEps"));
+
+            }
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        }
+
+    }
+
+    @FXML
+    public void mostrarPersonal(){
+
+        DtoEps dtoEps = new DtoEps();
+
+
+        tf_Nombre.setText(dtoEps.getNombreEps());
+        System.out.println(tf_Nombre);
+        tf_Telefono.setText(dtoEps.getTelEps());
+        tf_Direccion.setText(dtoEps.getdireccionEps());
+
+
+    }
+
+    @FXML
+    private void buscarPersonalEps(){
+
+
+        String idPersona = tf_Codigo.getText();
+        facadeEps.buscarEps(idPersona);
+
+        mostrarPersonal();
+
+        JOptionPane.showMessageDialog(null, "Dato Encontrado", "INFORMACIÓN", 1);
     }
 
     public void manejarEventos() {

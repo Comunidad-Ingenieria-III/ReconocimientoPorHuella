@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="545.0" prefWidth="830.0" style="-fx-background-color: #CECEF6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<AnchorPane prefHeight="545.0" prefWidth="830.0" style="-fx-background-color: #CECEF6;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <children>
       <Label alignment="CENTER" prefHeight="40.0" prefWidth="830.0" style="-fx-background-color: #2E2EFE;" text="Personal Salud" textFill="#f2f2f2">
          <font>
@@ -77,7 +76,7 @@
          </font>
       </Label>
       <ComboBox fx:id="cmb_cargo" layoutX="643.0" layoutY="166.0" prefWidth="180.0" />
-      <TableView fx:id="mi_tabla" layoutX="9.0" layoutY="280.0" prefHeight="176.0" prefWidth="815.0" style="-fx-background-color: #FFFFFF;">
+      <TableView fx:id="mi_tabla" layoutX="9.0" layoutY="280.0" onSort="#modificarPersonal" prefHeight="176.0" prefWidth="815.0" style="-fx-background-color: #FFFFFF;">
         <columns>
           <TableColumn minWidth="8.0" prefWidth="263.0" text="Nombre Título Académico" />
             <TableColumn minWidth="0.0" prefWidth="246.0" text="Nombre Institución Académica" />
@@ -92,7 +91,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_consultar" layoutX="130.0" layoutY="484.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
+      <Button fx:id="bt_consultar" layoutX="130.0" layoutY="484.0" mnemonicParsing="false" onAction="#buscarPersonaSalud" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -100,7 +99,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_cancelar" layoutX="240.0" layoutY="484.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
+      <Button fx:id="bt_cancelar" layoutX="240.0" layoutY="484.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -124,7 +123,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_modificar" layoutX="467.0" layoutY="484.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
+      <Button fx:id="bt_modificar" layoutX="467.0" layoutY="484.0" mnemonicParsing="false" onAction="#modificarPersonal" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -132,7 +131,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_inhabilitar" layoutX="353.0" layoutY="484.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Inhabilitar" textFill="WHITE">
+      <Button fx:id="bt_inhabilitar" layoutX="353.0" layoutY="484.0" mnemonicParsing="false" onAction="#eliminarFamiliar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Inhabilitar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -148,5 +147,6 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
+      <TextField fx:id="tf_aux" layoutX="472.0" layoutY="223.0" />
    </children>
 </AnchorPane>
