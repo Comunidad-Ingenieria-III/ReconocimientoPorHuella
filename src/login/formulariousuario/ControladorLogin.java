@@ -131,7 +131,7 @@ public class ControladorLogin implements Initializable {
             if (rset.next()) {
                 Stage stage = new Stage();
                 Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
-                Scene scene = new Scene(formulario_principal, 1000, 580);
+                Scene scene = new Scene(formulario_principal);
                 stage.setResizable(false);
                 stage.setMaximized(true);
                 stage.getIcons().add(new Image("estrella_vida.jpg"));

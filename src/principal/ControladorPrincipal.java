@@ -212,6 +212,7 @@ public class ControladorPrincipal implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("institucionAcademica/formulario/FormularioInstitucionAcademica.fxml"));
             Stage stage = new Stage();
+            root.getStylesheets().add("Resources/Style.css");
             stage.setScene(new Scene(root));
             stage.setTitle("MODULO INSTITUCIÓN ACADEMICA");
             stage.setResizable(false);

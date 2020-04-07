@@ -59,6 +59,17 @@ public class ControladorInstitucionAcademica implements Initializable {
     @FXML
     private Button btnInhabilitar;
 
+    @FXML
+    private Label lblCodigo;
+    @FXML
+    private Label lbNombre;
+    @FXML
+    private Label lblDireccion;
+    @FXML
+    private Label lblTelefono;
+
+
+
     private ObservableList<InstitucionAcademica> instituciones;
 
     @Override
@@ -134,17 +145,62 @@ public class ControladorInstitucionAcademica implements Initializable {
 
     @FXML
     private void eventoGuardar(){
+
         btnGuardar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            StringBuilder sb = new StringBuilder();
+            boolean esValido = true;
             @Override
             public void handle(MouseEvent event) {
-                if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
+                /*if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
                         txtTelefono.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null, "DEBE LLENAR TODOS LOS CAMPOS",
                             "ERROR AL INTENTAR GUARDAR", JOptionPane.ERROR_MESSAGE);
 
                 }else {
                     guardarInstitucion();
-                }
+                }*/
+
+                    if (txtCodigo.getText().isEmpty()) {
+                        txtCodigo.setStyle("-fx-border-color: red ; -fx-border-width: 2px; -fx-border-radius: 6px;");
+                        lblCodigo.setText("Re");
+
+                    } else {
+                        lblCodigo.setText("");
+                    }
+                    if (txtNombre.getText().isEmpty()) {
+                        lbNombre.setText("Re");
+
+                    } else {
+                        lbNombre.setText("");
+                    }
+                    if (txtDireccion.getText().isEmpty()) {
+                        lblDireccion.setText("Re");
+
+                    } else {
+                        lblDireccion.setText("");
+                    }
+
+                    if (txtTelefono.getText().isEmpty()) {
+                        lblTelefono.setText("Re");
+
+                    } else {
+                        lblTelefono.setText("");
+                    }
+
+                    if (!esValido){
+
+                        Alert msg = new Alert(Alert.AlertType.ERROR);
+                        msg.setTitle("Gestiones - Personal de Salud");
+                        msg.setContentText("Errores: \n" + sb.toString());
+
+                        msg.setHeaderText("Resultado");
+                        msg.show();
+                    }
+
+
+
+
+
 
             }
         });
