@@ -18,6 +18,7 @@ import java.util.List;
 public class PersonalSaludDao {
 
     JdbcHelper jdbcHelper = new JdbcHelper();
+    PsDto psDto = new PsDto();
 
     private Connection conn;
     private PreparedStatement stmt;
@@ -77,8 +78,20 @@ public class PersonalSaludDao {
             stmt.setString(9, personalSalud.getTipoDocumento());
             stmt.setString(10, personalSalud.getCargo());
 
+            //return stmt.executeUpdate();
+
+            String sql_1 = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(sql_1);
+            stmt.setInt(1, psDto.getId());
+            stmt.setString(2, psDto.getIdPersonal());
+            stmt.setString(3, psDto.getIdTipoTitu());
+            stmt.setString(4, psDto.getIdInstitucion());
+            stmt.setDate(5, new java.sql.Date(psDto.getFechaTitulacion().getTime()));
 
             return stmt.executeUpdate();
+
+
+
 
         } catch (SQLException | RuntimeException e) {
             System.out.println(e.toString());

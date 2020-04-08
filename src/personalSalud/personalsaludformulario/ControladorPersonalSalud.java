@@ -7,6 +7,7 @@ import conexionBD.JdbcHelper;
 import datosFamiliar.dtofamiliar.Familiar;
 import datospersona.dto.Persona;
 import eps.dto.DtoEps;
+import institucionAcademica.dao.FacadeInstitucionAcademica;
 import institucionAcademica.dto.InstitucionAcademica;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,11 +19,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import personalSalud.personalsaluddto.PersonalSalud;
 import personalSalud.personalsaludfacade.PersonalSaludFacade;
+import personal_salud_titulo.psdto.PsDto;
+import personal_salud_titulo.psfacade.PsFacade;
+import tipoTituloAcademico.dto.TtAcademico;
+import tipoTituloAcademico.facade.FacadeTtAcademico;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
@@ -39,6 +45,10 @@ public class ControladorPersonalSalud implements Initializable {
     PersonalSaludFacade personalSaludFacade = new PersonalSaludFacade();
     FacadeTipoDocumento facadeTipoDocumento = new FacadeTipoDocumento();
     FacadeCargo facadeCargo = new FacadeCargo();
+    FacadeInstitucionAcademica facadeInstitucionAcademica = new FacadeInstitucionAcademica();
+    PsFacade psFacade = new PsFacade();
+    FacadeTtAcademico facadeTtAcademico = new FacadeTtAcademico();
+
 
     @FXML
     private ComboBox<DtoTipoDocumento> cmb_tipodocumento;
@@ -62,6 +72,34 @@ public class ControladorPersonalSalud implements Initializable {
     private TextField tf_correoelectronico;
     @FXML
     private ComboBox<Cargo> cmb_cargo;
+
+    //------------------------------------------------------------------------
+    @FXML
+    private DatePicker dp_fechatitulacion;
+    @FXML
+    private ComboBox<PersonalSalud> cbx_idpersona;
+    @FXML
+    private ComboBox<TtAcademico> cbx_idtipotitulo;
+    @FXML
+    private ComboBox<InstitucionAcademica> cbx_idinstitucion;
+
+    private ObservableList<PsDto> titulos;
+
+    @FXML
+    private TableView<PsDto> tb_personal;
+    @FXML
+    private TableColumn<PsDto, Integer> colIdPst;
+    @FXML
+    private TableColumn<PsDto, String> colIdPersonal;
+    @FXML
+    private TableColumn<PsDto, String> colIdTipoTitu;
+    @FXML
+    private TableColumn<PsDto, String> colIdIntitucion;
+    @FXML
+    private TableColumn<PsDto, String> colFechaTitulacion;
+
+    //---------------------------------------------------------------------------
+
     @FXML
     private Button bt_crear;
     @FXML
@@ -78,16 +116,7 @@ public class ControladorPersonalSalud implements Initializable {
     private Button bt_inhabilitar;
     @FXML
     private Button bt_abrirFormularioPer;
-    @FXML
-    private TableView mi_tabla;
-    @FXML
-    private TableColumn<PersonalSalud, String> colIdTitulo;
-    @FXML
-    private TableColumn<PersonalSalud, String> colIdInstitucion;
-    @FXML
-    private TableColumn<PersonalSalud, String> colFecha;
-    @FXML
-    private TableColumn<DtoEps, String> colTelefono;
+
     @FXML
     private Label lblDocumento;
 
@@ -98,13 +127,46 @@ public class ControladorPersonalSalud implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        titulos = FXCollections.observableArrayList(psFacade.obtenerTodas());
+
+
+        tb_personal.setItems(titulos);
+
+        //colIdPst.setCellValueFactory(new PropertyValueFactory<>("idPst"));
+        colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
+        colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
+        colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
+        colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
+
         iniciarCbxDocumento();
         iniciarCbxSexo();
         iniciarCargo();
         //deshabilitarBotones();
         //deshabilitarCampos();
+        iniciarCbxPersona();
+        iniciarCbxTipoTitulo();
+        iniciarInstitucion();
 
 
+    }
+
+    @FXML
+    public void iniciarCbxPersona() {
+        ObservableList<PersonalSalud> listapersonas = FXCollections.observableArrayList(personalSaludFacade.obtenerTodoPersonalSalud());
+        cbx_idpersona.setItems(listapersonas);
+
+    }
+
+    @FXML
+    public void iniciarCbxTipoTitulo() {
+        ObservableList<TtAcademico> listatitulos = FXCollections.observableArrayList(facadeTtAcademico.obtenerTodosTitulosAcdemicos());
+        cbx_idtipotitulo.setItems(listatitulos);
+    }
+
+    @FXML
+    public void iniciarInstitucion() {
+        ObservableList<InstitucionAcademica> listainstituciones = FXCollections.observableArrayList(facadeInstitucionAcademica.obtenerTodasInstituciones());
+        cbx_idinstitucion.setItems(listainstituciones);
     }
 
     @FXML
@@ -387,7 +449,7 @@ public class ControladorPersonalSalud implements Initializable {
         tf_correoelectronico.setDisable(true);
         tf_numtelefono.setDisable(true);
         cmb_cargo.setDisable(true);
-        mi_tabla.setDisable(true);
+        tb_personal.setDisable(true);
         tf_numerodocumento.requestFocus();
     }
 
@@ -398,7 +460,7 @@ public class ControladorPersonalSalud implements Initializable {
             Parent formulario_Personal_salud_titulo = FXMLLoader.load(getClass().getClassLoader().getResource("personal_salud_titulo/formulariops/FormularioPst.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Personal Salud)");
-            stage.setScene(new Scene(formulario_Personal_salud_titulo, 830, 545));
+            stage.setScene(new Scene(formulario_Personal_salud_titulo, 830, 350));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);

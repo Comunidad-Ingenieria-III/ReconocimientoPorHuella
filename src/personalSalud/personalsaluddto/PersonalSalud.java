@@ -164,7 +164,7 @@ public class PersonalSalud {
 
     @Override
     public String toString() {
-        return (nombre1.get());
+        return (idPersonal.get());
     }
 
 

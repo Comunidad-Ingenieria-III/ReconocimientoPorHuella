@@ -76,11 +76,25 @@
          </font>
       </Label>
       <ComboBox fx:id="cmb_cargo" layoutX="643.0" layoutY="166.0" prefWidth="180.0" />
-      <TableView fx:id="mi_tabla" layoutX="9.0" layoutY="280.0" onSort="#modificarPersonal" prefHeight="176.0" prefWidth="815.0" style="-fx-background-color: #FFFFFF;">
+      <TableView fx:id="tb_personal" layoutX="9.0" layoutY="280.0" onSort="#modificarPersonal" prefHeight="176.0" prefWidth="815.0" style="-fx-background-color: #FFFFFF;">
         <columns>
-          <TableColumn minWidth="8.0" prefWidth="263.0" text="Nombre Título Académico" />
-            <TableColumn minWidth="0.0" prefWidth="246.0" text="Nombre Institución Académica" />
-            <TableColumn prefWidth="305.0" text="Fecha De Titulación" />
+          <TableColumn fx:id="colIdPersonal" minWidth="8.0" prefWidth="199.0">
+               <graphic>
+                  <ComboBox fx:id="cbx_idpersona" prefHeight="25.0" prefWidth="176.0" promptText="Documento Persona" />
+               </graphic></TableColumn>
+            <TableColumn fx:id="colIdTipoTitu" prefWidth="187.0">
+               <graphic>
+                  <ComboBox fx:id="cbx_idtipotitulo" prefHeight="25.0" prefWidth="138.0" promptText="Código Titulo" />
+               </graphic>
+            </TableColumn>
+            <TableColumn fx:id="colIdIntitucion" minWidth="0.0" prefWidth="154.0">
+               <graphic>
+                  <ComboBox fx:id="cbx_idinstitucion" prefHeight="25.0" prefWidth="159.0" promptText="Código Institución" />
+               </graphic></TableColumn>
+            <TableColumn fx:id="colFechaTitulacion" prefWidth="349.0">
+               <graphic>
+                  <DatePicker fx:id="dp_fechatitulacion" promptText="Fecha de Titulación" />
+               </graphic></TableColumn>
         </columns>
       </TableView>
       <Button fx:id="bt_crear" layoutX="14.0" layoutY="484.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Crear" textFill="WHITE">
@@ -147,8 +161,7 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_aux" layoutX="472.0" layoutY="223.0" />
-      <Button fx:id="bt_abrirFormularioPer" layoutX="643.0" layoutY="220.0" mnemonicParsing="false" onAction="#abrirPersonalTitulo" prefHeight="40.0" prefWidth="177.0" style="-fx-background-color: #2E64FE;" text="Abrir Titulos" textFill="WHITE">
+      <Button fx:id="bt_abrirFormularioPer" layoutX="495.0" layoutY="227.0" mnemonicParsing="false" onAction="#abrirPersonalTitulo" prefHeight="40.0" prefWidth="177.0" style="-fx-background-color: #2E64FE;" text="Abrir Titulos" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
