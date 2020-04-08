@@ -1,9 +1,6 @@
 package personal_salud_titulo.psdao;
-
 import conexionBD.ConexionRoot;
-import institucionAcademica.dto.InstitucionAcademica;
 import personal_salud_titulo.psdto.PsDto;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,39 +18,34 @@ public class PsDao {
     private PsDto psDto;
     private List<PsDto> listaPs;
 
-    public List<PsDto> obtenerTodas(){
+    public List<PsDto> cargartodas() throws RuntimeException {
+
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from personal_salud_titulo";
-            stmt = conn.prepareStatement(sql);
-            rset = stmt.executeQuery();
+            stmt = conn.prepareStatement(sql);//preparar consulta
+            rset = stmt.executeQuery();//ejecutar la consulta y guardarla en la variabble rset
 
             listaPs = new ArrayList<>();
 
-            while (rset.next()){
-                psDto = new PsDto();
+            while (rset.next()) {
 
+                psDto = new PsDto();
                 psDto.setId(rset.getInt("idPst"));
-                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
                 psDto.setIdPersonal(rset.getString("idPersonal"));
                 psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
                 psDto.setIdInstitucion(rset.getString("idInstitucion"));
-
+                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
 
                 listaPs.add(psDto);
 
-                for (PsDto ls :listaPs
-                     ) {
-                    System.out.println(ls.toString());
-                }
             }
 
 
-        }catch (RuntimeException | SQLException e){
-            throw new RuntimeException( e.toString());
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerTodos()!");
         }
         return listaPs;
-
     }
 
     public int agregar(PsDto psDto) {
@@ -65,7 +57,7 @@ public class PsDao {
             stmt.setInt(1, psDto.getId());
             stmt.setString(2, psDto.getIdPersonal());
             stmt.setString(3, psDto.getIdTipoTitu());
-            stmt.setString(4,psDto.getIdInstitucion());
+            stmt.setString(4, psDto.getIdInstitucion());
             stmt.setDate(5, new java.sql.Date(psDto.getFechaTitulacion().getTime()));
 
             return stmt.executeUpdate();
@@ -86,7 +78,7 @@ public class PsDao {
 
             stmt.setString(1, psDto.getIdPersonal());
             stmt.setString(2, psDto.getIdTipoTitu());
-            stmt.setString(3,psDto.getIdInstitucion());
+            stmt.setString(3, psDto.getIdInstitucion());
             stmt.setDate(4, psDto.getFechaTitulacion());
 
             stmt.setString(5, psDto.getIdPersonal());
@@ -94,14 +86,14 @@ public class PsDao {
 
             return stmt.executeUpdate();
 
-} catch (SQLException | RuntimeException e) {
-        System.out.println(e.toString());
-        return 0;
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+            return 0;
         }
-        } // Fin del método modificar()
+    } // Fin del método modificar()
 
 
-public int eliminar(String idPst) {
+    public int eliminar(String idPst) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "delete from personal_salud_titulo where idPst = ?";

@@ -107,7 +107,7 @@ public class ControladorPst implements Initializable {
 
         tb_personal.setItems(titulos);
 
-        colIdPst.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colIdPst.setCellValueFactory(new PropertyValueFactory<>("idPst"));
         colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
         colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
         colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
