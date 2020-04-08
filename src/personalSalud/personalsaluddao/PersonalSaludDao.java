@@ -38,7 +38,7 @@ public class PersonalSaludDao {
             while (rset.next()) {
                 personalSalud = new PersonalSalud();
 
-                personalSalud.setIdPersonal(rset.getInt("idPersonal"));
+                personalSalud.setIdPersonal(rset.getString("idPersonal"));
                 personalSalud.setNombre1(rset.getString("nombre1"));
                 personalSalud.setNombre2(rset.getString("nombre2"));
                 personalSalud.setApellido1(rset.getString("apellido1"));
@@ -66,7 +66,7 @@ public class PersonalSaludDao {
             String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
                     " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, personalSalud.getIdPersonal());
+            stmt.setString(1, personalSalud.getIdPersonal());
             stmt.setString(2, personalSalud.getNombre1());
             stmt.setString(3, personalSalud.getNombre2());
             stmt.setString(4, personalSalud.getApellido1());
@@ -155,7 +155,7 @@ public class PersonalSaludDao {
         }
     } // Fin del método modificar()
 
-    public PersonalSalud buscarPersonalSalud(int idPersonal) {
+    /*public PersonalSalud buscarPersonalSalud(int idPersonal) {
         String query = "SELECT * FROM personal_salud WHERE idPersonal = " + idPersonal;
         JdbcHelper jdbc = new JdbcHelper();
         ResultSet rs = jdbc.realizarConsulta(query);
@@ -183,14 +183,14 @@ public class PersonalSaludDao {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
         return personalSalud;
-    }
+    }*/
 
-    public void eliminarPersonalSalud(int idCliente) {
+    public void eliminarPersonalSalud(String idCliente) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "delete from datos_persona where idpersona = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, idCliente);
+            stmt.setString(1, idCliente);
 
             int rta = stmt.executeUpdate();
             if (rta != 1) {

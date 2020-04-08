@@ -45,7 +45,7 @@ public class ControladorPst implements Initializable {
     @FXML
     private TableColumn<PsDto, Integer> colIdPst;
     @FXML
-    private TableColumn<PsDto, Integer> colIdPersonal;
+    private TableColumn<PsDto, String> colIdPersonal;
     @FXML
     private TableColumn<PsDto, String> colIdTipoTitu;
     @FXML
@@ -107,7 +107,7 @@ public class ControladorPst implements Initializable {
 
         tb_personal.setItems(titulos);
 
-        colIdPst.setCellValueFactory(new PropertyValueFactory<>("idPst"));
+        colIdPst.setCellValueFactory(new PropertyValueFactory<>("id"));
         colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
         colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
         colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
@@ -121,6 +121,8 @@ public class ControladorPst implements Initializable {
         iniciarCbxPersona();
         iniciarCbxTipoTitulo();
         iniciarInstitucion();
+
+
 
     }
 

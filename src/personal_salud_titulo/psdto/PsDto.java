@@ -14,33 +14,24 @@ import java.time.LocalDate;
 public class PsDto {
 
     private IntegerProperty id;
-    private IntegerProperty idPersonal;
+    private StringProperty idPersonal;
     private StringProperty idTipoTitu;
     private StringProperty idInstitucion;
     private Date fechaTitulacion;
 
 
-    public PsDto(int id, int idPersonal, String idTipoTitu, String idInstitucion, Date fechaTitulacion) {
+    public PsDto(int id, String idPersonal, String idTipoTitu, String idInstitucion, Date fechaTitulacion) {
 
         this.id = new SimpleIntegerProperty(id);
-        this.idPersonal = new SimpleIntegerProperty(idPersonal);
+        this.idPersonal = new SimpleStringProperty(idPersonal);
         this.idTipoTitu = new SimpleStringProperty(idTipoTitu);
         this.idInstitucion = new SimpleStringProperty(idInstitucion);
         this.fechaTitulacion = fechaTitulacion;
     }
 
-    public PsDto(int idPersonal, String idTipoTitu, String idInstitucion, Date fechaTitulacion) {
-
-        this.idPersonal = new SimpleIntegerProperty(idPersonal);
-        this.idTipoTitu = new SimpleStringProperty(idTipoTitu);
-        this.idInstitucion = new SimpleStringProperty(idInstitucion);
-        this.fechaTitulacion = fechaTitulacion;
-    }
-
-    //public PsDto(){}
 
    public PsDto() {
-        this(0,0, "", "", Date.valueOf(""));
+        this(0,"", "", "", Date.valueOf(""));
     }
 
 
@@ -56,15 +47,15 @@ public class PsDto {
         this.id.set(id);
     }
 
-    public int getIdPersonal() {
+    public String getIdPersonal() {
         return idPersonal.get();
     }
 
-    public IntegerProperty idPersonalProperty() {
+    public StringProperty idPersonalProperty() {
         return idPersonal;
     }
 
-    public void setIdPersonal(int idPersonal) {
+    public void setIdPersonal(String idPersonal) {
         this.idPersonal.set(idPersonal);
     }
 

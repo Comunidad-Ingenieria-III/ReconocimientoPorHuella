@@ -34,17 +34,23 @@ public class PsDao {
                 psDto = new PsDto();
 
                 psDto.setId(rset.getInt("idPst"));
-                psDto.setIdPersonal(rset.getInt("idPersonal"));
+                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
+                psDto.setIdPersonal(rset.getString("idPersonal"));
                 psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
                 psDto.setIdInstitucion(rset.getString("idInstitucion"));
-                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
+
 
                 listaPs.add(psDto);
+
+                for (PsDto ls :listaPs
+                     ) {
+                    System.out.println(ls.toString());
+                }
             }
 
 
         }catch (RuntimeException | SQLException e){
-            throw new RuntimeException("Error SQL - obtenerTodas()!");
+            throw new RuntimeException( e.toString());
         }
         return listaPs;
 
@@ -57,7 +63,7 @@ public class PsDao {
             String sql = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, psDto.getId());
-            stmt.setInt(2, psDto.getIdPersonal());
+            stmt.setString(2, psDto.getIdPersonal());
             stmt.setString(3, psDto.getIdTipoTitu());
             stmt.setString(4,psDto.getIdInstitucion());
             stmt.setDate(5, new java.sql.Date(psDto.getFechaTitulacion().getTime()));
@@ -78,12 +84,12 @@ public class PsDao {
             stmt = conn.prepareStatement(sql);
 
 
-            stmt.setInt(1, psDto.getIdPersonal());
+            stmt.setString(1, psDto.getIdPersonal());
             stmt.setString(2, psDto.getIdTipoTitu());
             stmt.setString(3,psDto.getIdInstitucion());
             stmt.setDate(4, psDto.getFechaTitulacion());
 
-            stmt.setInt(5, psDto.getIdPersonal());
+            stmt.setString(5, psDto.getIdPersonal());
 
 
             return stmt.executeUpdate();

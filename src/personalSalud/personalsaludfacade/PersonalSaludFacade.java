@@ -31,15 +31,15 @@ public class PersonalSaludFacade {
     public boolean modificarPersonalSalud(PersonalSalud personalSalud) throws SQLException {
         return personalSaludDao.modificarPersonalSalud(personalSalud);
     }
-    public void modificarPersonal(PersonalSalud personalSalud){
-        personalSaludDao.modificarPersonalSalud(personalSalud);
+    public int modificarPersonal(PersonalSalud personalSalud){
+        return personalSaludDao.modificarPersonal(personalSalud);
     }
 
-    public PersonalSalud buscarPersonalSalud(int idPersonal){
+   /*public PersonalSalud buscarPersonalSalud(String idPersonal){
         return personalSaludDao.buscarPersonalSalud(idPersonal);
-    }
+    }*/
 
-    public void eliminarPersonal(int idPersonal){
-        personalSaludDao.buscarPersonalSalud(idPersonal);
+    public void eliminarPersonal(String idPersonal){
+        personalSaludDao.eliminarPersonalSalud(idPersonal);
     }
 }

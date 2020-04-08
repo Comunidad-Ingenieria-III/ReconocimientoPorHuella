@@ -9,7 +9,7 @@ import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 
 public class PersonalSalud {
 
-    private IntegerProperty idPersonal = new SimpleIntegerProperty();
+    private StringProperty idPersonal = new SimpleStringProperty();
     private StringProperty nombre1 = new SimpleStringProperty();
     private StringProperty nombre2 = new SimpleStringProperty();
     private StringProperty apellido1 = new SimpleStringProperty();
@@ -21,7 +21,7 @@ public class PersonalSalud {
     private StringProperty cargo = new SimpleStringProperty();
 
 
-    public PersonalSalud(int idPersonal, String nombre1, String nombre2, String apellido1, String apellido2,
+    public PersonalSalud(String idPersonal, String nombre1, String nombre2, String apellido1, String apellido2,
                          String sexo, String telefono, String email, String tipoDocumento, String cargo) {
         this.idPersonal.set(idPersonal);
         this.nombre1.set(nombre1);
@@ -37,32 +37,20 @@ public class PersonalSalud {
     }
 
     public PersonalSalud() {
-        this(0, "", "", "", "", "", "", "", "", "");
+        this("", "", "", "", "", "", "", "", "", "");
     }
 
 
-    public PersonalSalud(int idPersonal, String nombre1, String nombre2, String apellido1, String apellido2,
-                          String telefono, String email) {
-        this.idPersonal.set(idPersonal);
-        this.nombre1.set(nombre1);
-        this.nombre2.set(nombre2);
-        this.apellido1.set(apellido1);
-        this.apellido2.set(apellido2);
-        //this.sexo.set(sexo);
-        this.email.set(email);
-        this.telefono.set(telefono);
 
-    }
-
-    public int getIdPersonal() {
+    public String getIdPersonal() {
         return idPersonal.get();
     }
 
-    public IntegerProperty idPersonalProperty() {
+    public StringProperty idPersonalProperty() {
         return idPersonal;
     }
 
-    public void setIdPersonal(int idPersonal) {
+    public void setIdPersonal(String idPersonal) {
         this.idPersonal.set(idPersonal);
     }
 

@@ -110,7 +110,7 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private PersonalSalud crearPersonalSalud() {
 
-        int idPersonal = Integer.parseInt(tf_numerodocumento.getText());
+        String idPersonal = tf_numerodocumento.getText();
         String nombre1 = tf_nombre1.getText();
         String nombre2 = tf_nombre2.getText();
         String apellido1 = tf_apellido1.getText();
@@ -162,8 +162,7 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     public void modificarPersonal() {
 
-        int res = Integer.parseInt(tf_numerodocumento.getText());
-        personalSaludFacade.eliminarPersonal(res);
+        int res = personalSaludFacade.modificarPersonal(crearPersonalSalud());
 
         if (res == 1) {
 
@@ -258,7 +257,7 @@ public class ControladorPersonalSalud implements Initializable {
             }
             boolean exito;
 
-            if (personalSalud.getIdPersonal() == 0) {
+            if (personalSalud.getIdPersonal() == "") {
 
                 exito = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud());
 
@@ -303,7 +302,7 @@ public class ControladorPersonalSalud implements Initializable {
         int opcion = JOptionPane.showConfirmDialog(null, "Desea eliminar el"
                 + "registro?", "Confirmación", JOptionPane.YES_NO_OPTION, 2);
         if (opcion == JOptionPane.YES_OPTION) {
-            int id = Integer.parseInt(tf_numerodocumento.getText());
+            String id = tf_numerodocumento.getText();
             personalSaludFacade.eliminarPersonal(id);
             JOptionPane.showMessageDialog(null, "Registro eliminado con éxito.",
                     "Aviso", JOptionPane.INFORMATION_MESSAGE);
