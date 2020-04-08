@@ -2,6 +2,7 @@ package institucionAcademica.dao;
 
 import conexionBD.ConexionRoot;
 import institucionAcademica.dto.InstitucionAcademica;
+import personal_salud_titulo.psdto.PsDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,13 +52,12 @@ public class InstitucionAcademicaDAO {
     public int agregar(InstitucionAcademica institucionAcademica) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into institucion_academica(idInstitucion, nombre, direccion, telefono) values(?, ?, ?, ?)";
+            String sql= "insert into institucion_academica(idInstitucion, nombre, direccion, telefono) values(?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, institucionAcademica.getIdInstitucion());
             stmt.setString(2, institucionAcademica.getNombre());
             stmt.setString(3, institucionAcademica.getDireccion());
             stmt.setString(4, institucionAcademica.getTelefono());
-
 
             return stmt.executeUpdate();
 

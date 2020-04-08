@@ -176,17 +176,8 @@ public class PersonalSalud {
 
     @Override
     public String toString() {
-        return "PersonalSalud{" +
-                "idPersonal=" + idPersonal +
-                ", nombre1=" + nombre1 +
-                ", nombre2=" + nombre2 +
-                ", apellido1=" + apellido1 +
-                ", apellido2=" + apellido2 +
-                ", sexo=" + sexo +
-                ", telefono=" + telefono +
-                ", email=" + email +
-                ", tipoDocumento=" + tipoDocumento +
-                ", cargo=" + cargo +
-                '}';
+        return (nombre1.get());
     }
+
+
 }

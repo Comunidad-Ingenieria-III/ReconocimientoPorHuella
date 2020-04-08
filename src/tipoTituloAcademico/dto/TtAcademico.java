@@ -38,4 +38,9 @@ public class TtAcademico {
     public void setNombre(String nombre) {
         this.nombre.set(nombre);
     }
+
+    @Override
+    public String toString() {
+        return nombre.get();
+    }
 }

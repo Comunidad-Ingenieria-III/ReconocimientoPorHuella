@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ControladorCargo implements Initializable {
+
     FacadeCargo facadeCargo = new FacadeCargo();
 
     @FXML
@@ -107,12 +108,6 @@ public class ControladorCargo implements Initializable {
 
         });
     }
-
-
-
-
-
-
 
     @FXML
     public void guardarCargo() {

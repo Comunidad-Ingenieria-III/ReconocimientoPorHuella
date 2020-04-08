@@ -19,7 +19,7 @@ public class TtAcademicoDao {
     private List<TtAcademico> ttAcademicoList;
 
 
-    public List<TtAcademico> obterTodas(){
+    public List<TtAcademico> obterTodas() {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from tipo_titulo_academico";
@@ -27,17 +27,15 @@ public class TtAcademicoDao {
             rset = stmt.executeQuery();
 
             ttAcademicoList = new ArrayList<>();
-            while (rset.next()){
+            while (rset.next()) {
                 ttAcademico = new TtAcademico();
-                ttAcademico.setIdTipoTituloAcademico(rset.getString("idIipoTitu"));
+                ttAcademico.setIdTipoTituloAcademico(rset.getString("idTipoTitu"));
                 ttAcademico.setNombre(rset.getString("nombre"));
 
                 ttAcademicoList.add(ttAcademico);
             }
 
-
-
-        }catch (RuntimeException | SQLException e){
+        } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("Error SQL - obtenerTodas()!");
         }
         return ttAcademicoList;
@@ -46,7 +44,7 @@ public class TtAcademicoDao {
     public int agregar(TtAcademico ttAcademico) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into tipo_titulo_academico(idIipoTitu nombre) values(?, ?)";
+            String sql = "insert into tipo_titulo_academico(idTipoTitu, nombre) values(?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, ttAcademico.getIdTipoTituloAcademico());
             stmt.setString(2, ttAcademico.getNombre());
@@ -84,9 +82,6 @@ public class TtAcademicoDao {
             return 0;
         }
     } // Fin del método eliminar()
-
-
-
 
 
 }

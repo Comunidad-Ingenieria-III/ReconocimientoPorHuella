@@ -1,5 +1,8 @@
-package institucionAcademica.formulario;
+package personal_salud_titulo.formulariops;
 
+import datospersona.dto.Persona;
+import datospersona.facade.FacadePersona;
+import eps.dto.DtoEps;
 import institucionAcademica.dao.FacadeInstitucionAcademica;
 import institucionAcademica.dto.InstitucionAcademica;
 import javafx.beans.value.ChangeListener;
@@ -14,26 +17,41 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import personalSalud.personalsaluddto.PersonalSalud;
+import personalSalud.personalsaludfacade.PersonalSaludFacade;
+import personal_salud_titulo.psdto.PsDto;
+import personal_salud_titulo.psfacade.PsFacade;
+import tipoTituloAcademico.dto.TtAcademico;
+import tipoTituloAcademico.facade.FacadeTtAcademico;
+import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 
-
-import javax.swing.*;
+import java.io.ByteArrayInputStream;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
-public class ControladorInstitucionAcademica implements Initializable {
-    FacadeInstitucionAcademica facade =  new FacadeInstitucionAcademica();
-    @FXML
-    private TableView<InstitucionAcademica> tbIinstitucionAcademica;
+import static java.lang.String.valueOf;
+
+public class ControladorPst implements Initializable {
+
+    FacadeInstitucionAcademica facadeInstitucionAcademica = new FacadeInstitucionAcademica();
+    PsFacade psFacade = new PsFacade();
+    FacadeTtAcademico facadeTtAcademico = new FacadeTtAcademico();
+    PersonalSaludFacade personalSaludFacade = new PersonalSaludFacade();
 
 
     @FXML
-    private TableColumn<InstitucionAcademica, String> colId;
+    private TableView<PsDto> tb_personal;
     @FXML
-    private TableColumn<InstitucionAcademica, String> colNombre;
+    private TableColumn<PsDto, Integer> colIdPst;
     @FXML
-    private TableColumn<InstitucionAcademica, String> colDireccion;
+    private TableColumn<PsDto, Integer> colIdPersonal;
     @FXML
-    private TableColumn<InstitucionAcademica, String> colTelefono;
+    private TableColumn<PsDto, String> colIdTipoTitu;
+    @FXML
+    private TableColumn<PsDto, String> colIdIntitucion;
+    @FXML
+    private TableColumn<PsDto, String> colFechaTitulacion;
 
 
     @FXML
@@ -68,40 +86,122 @@ public class ControladorInstitucionAcademica implements Initializable {
     @FXML
     private Label lblTelefono;
 
+    @FXML
+    private DatePicker dp_fechatitulacion;
+
+    @FXML
+    private ComboBox<PersonalSalud> cbx_idpersona;
+    @FXML
+    private ComboBox<TtAcademico> cbx_idtipotitulo;
+    @FXML
+    private ComboBox<InstitucionAcademica> cbx_idinstitucion;
 
 
-    private ObservableList<InstitucionAcademica> instituciones;
+    private ObservableList<PsDto> titulos;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        instituciones = FXCollections.observableArrayList(facade.obtenerTodasInstituciones());
+        titulos = FXCollections.observableArrayList(psFacade.obtenerTodas());
 
 
-        tbIinstitucionAcademica.setItems(instituciones);
+        tb_personal.setItems(titulos);
 
-        colId.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        colIdPst.setCellValueFactory(new PropertyValueFactory<>("idPst"));
+        colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
+        colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
+        colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
+        colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
 
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
-        btnGuardar.setDisable(true);
+        btnGuardar.setDisable(false);
 
-        deshabilitarBotones();
-        deshabilitarCampos();
-        manejarEventos();
-        eventoCrear();
+
+        iniciarCbxPersona();
+        iniciarCbxTipoTitulo();
+        iniciarInstitucion();
+
     }
 
-    public void manejarEventos() {
-        tbIinstitucionAcademica.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<InstitucionAcademica>() {
+
+    @FXML
+    public void iniciarCbxPersona() {
+        ObservableList<PersonalSalud> listapersonas = FXCollections.observableArrayList(personalSaludFacade.obtenerTodoPersonalSalud());
+        cbx_idpersona.setItems(listapersonas);
+
+    }
+
+    @FXML
+    public void iniciarCbxTipoTitulo() {
+        ObservableList<TtAcademico> listatitulos = FXCollections.observableArrayList(facadeTtAcademico.obtenerTodosTitulosAcdemicos());
+        cbx_idtipotitulo.setItems(listatitulos);
+    }
+
+    @FXML
+    public void iniciarInstitucion() {
+        ObservableList<InstitucionAcademica> listainstituciones = FXCollections.observableArrayList(facadeInstitucionAcademica.obtenerTodasInstituciones());
+        cbx_idinstitucion.setItems(listainstituciones);
+    }
+
+    /*
+    @FXML
+    public PsDto crearPersona() {
+
+        int idPst = 0;
+        int idPersonal = cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal();
+        String idTipoTitu = cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico();
+        String idInstitucion = cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion();
+        Date fechaTitulacion = Date.valueOf(dp_fechatitulacion.getValue());
+
+
+        PsDto psDto = new PsDto(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion);
+
+        return psDto;
+
+    }*/
+
+    @FXML
+    public void guardarInstitucion() {
+
+        PsDto psDto = new PsDto(
+                0,
+                cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal(),
+                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
+                cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
+                Date.valueOf(dp_fechatitulacion.getValue())
+
+        );
+
+        int res = psFacade.agregar(psDto);
+
+        if (res == 1) {
+            titulos.add(psDto);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion se ha agregado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        } else {
+
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("No se ha podido agregar la institucion");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        //limpiar();
+    }
+
+
+    /*public void manejarEventos() {
+        tb_personal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PsDto>() {
             @Override
-            public void changed(ObservableValue<? extends InstitucionAcademica> observable, InstitucionAcademica oldValue, InstitucionAcademica newValue) {
+            public void changed(ObservableValue<? extends PsDto> observable, PsDto oldValue, PsDto newValue) {
                 if (newValue != null) {
-                    txtCodigo.setText(newValue.getIdInstitucion());
-                    txtNombre.setText(newValue.getNombre());
+                    cbx_idpersona.setValue(String.valueOf(newValue.getIdPersonal()));
+                    cbx_idtipotitulo.setValue(newValue.getIdTipoTitu());
                     txtDireccion.setText(newValue.getDireccion());
                     txtTelefono.setText(newValue.getTelefono());
 
@@ -151,14 +251,14 @@ public class ControladorInstitucionAcademica implements Initializable {
             boolean esValido = true;
             @Override
             public void handle(MouseEvent event) {
-                /*if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
+                if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
                         txtTelefono.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null, "DEBE LLENAR TODOS LOS CAMPOS",
                             "ERROR AL INTENTAR GUARDAR", JOptionPane.ERROR_MESSAGE);
 
                 }else {
                     guardarInstitucion();
-                }*/
+                }
 
                     if (txtCodigo.getText().isEmpty()) {
                         txtCodigo.setStyle("-fx-border-color: red ; -fx-border-width: 2px; -fx-border-radius: 6px;");
@@ -196,40 +296,17 @@ public class ControladorInstitucionAcademica implements Initializable {
                         msg.setHeaderText("Resultado");
                         msg.show();
                     }
+
+
+
+
+
+
             }
         });
     }
 
-    @FXML
-    public void guardarInstitucion() {
 
-        InstitucionAcademica institucionAcademica = new InstitucionAcademica(
-                txtCodigo.getText(),
-                txtNombre.getText(),
-                txtDireccion.getText(),
-                txtTelefono.getText()
-        );
-
-        int res = facade.agregar(institucionAcademica);
-
-        if (res == 1) {
-            instituciones.add(institucionAcademica);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion se ha agregado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
-        } else {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("No se ha podido agregar la institucion");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-        limpiar();
-    }
 
     @FXML
     public void modificarInstitucion() {
@@ -240,7 +317,7 @@ public class ControladorInstitucionAcademica implements Initializable {
                 txtTelefono.getText()
 
         );
-        int res = facade.modificar(institucionAcademica);
+        int res = facadeInstitucionAcademica.modificar(institucionAcademica);
         if (res == 1) {
             instituciones.set(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex(), institucionAcademica);
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
@@ -248,19 +325,19 @@ public class ControladorInstitucionAcademica implements Initializable {
             msg.setContentText("La institucion se ha modificado");
             msg.setHeaderText("Resultado");
             msg.show();
-        }else{
+        } else {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Instituciones Academicas");
             msg.setContentText("La institucion No ha sido modificada");
             msg.setHeaderText("Resultado");
             msg.show();
         }
-      limpiar();
+        limpiar();
     }
 
     @FXML
     public void eliminarInstitucion() {
-        int res = facade.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
+        int res = facadeInstitucionAcademica.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
         if (res == 1) {
             instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
@@ -268,16 +345,15 @@ public class ControladorInstitucionAcademica implements Initializable {
             msg.setContentText("La institucion se ha eliminado");
             msg.setHeaderText("Resultado");
             msg.show();
-        }else{
+        } else {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Instituciones Academicas");
             msg.setContentText("La institucion No ha sido eliminada");
             msg.setHeaderText("Resultado");
             msg.show();
         }
-       limpiar();
+        limpiar();
     }
-
 
 
     @FXML
@@ -288,6 +364,7 @@ public class ControladorInstitucionAcademica implements Initializable {
         txtTelefono.setDisable(false);
         txtCodigo.requestFocus();
     }
+
     @FXML
     private void deshabilitarBotones() {
         btnCrear.setDisable(false); //siempre ira deshabilitado
@@ -299,6 +376,7 @@ public class ControladorInstitucionAcademica implements Initializable {
         btnInhabilitar.setDisable(true);
 
     }
+
     @FXML
     private void deshabilitarCampos() {
         txtCodigo.setDisable(true);
@@ -306,6 +384,7 @@ public class ControladorInstitucionAcademica implements Initializable {
         txtDireccion.setDisable(true);
         txtTelefono.setDisable(true);
     }
+
     @FXML
     public void limpiar() {
         txtCodigo.setText("");
@@ -313,7 +392,7 @@ public class ControladorInstitucionAcademica implements Initializable {
         txtDireccion.setText("");
         txtTelefono.setText("");
         bntCancelar.setDisable(false);
-    }
+    }*/
 
     @FXML
     private void cerrarInstitucionAcademica(ActionEvent event) {

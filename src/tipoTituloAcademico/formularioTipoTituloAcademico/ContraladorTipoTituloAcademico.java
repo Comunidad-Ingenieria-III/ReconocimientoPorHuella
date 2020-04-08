@@ -1,12 +1,16 @@
 package tipoTituloAcademico.formularioTipoTituloAcademico;
 
+import cargo.dto.Cargo;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import tipoTituloAcademico.dto.TtAcademico;
+import tipoTituloAcademico.facade.FacadeTtAcademico;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 
 import java.net.URL;
@@ -14,8 +18,15 @@ import java.util.ResourceBundle;
 
 public class ContraladorTipoTituloAcademico implements Initializable {
 
+    FacadeTtAcademico facadeTtAcademico = new FacadeTtAcademico();
+
     @FXML
-    private TableView<DtoTipoDocumento> tb_tituloAcademico;
+    private TableView<TtAcademico> tb_tituloAcademico;
+
+    @FXML
+    private TableColumn<TtAcademico, String> colId;
+    @FXML
+    private TableColumn<TtAcademico, String> colDescripcion;
 
     @FXML
     private TextField tf_Tipo;
@@ -36,11 +47,50 @@ public class ContraladorTipoTituloAcademico implements Initializable {
     @FXML
     private Button bt_inhabilitar;
 
+    private ObservableList<TtAcademico> titulos;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        deshabilitarBotones();
-        deshabilitarCampos();
+
+        titulos = FXCollections.observableArrayList(facadeTtAcademico.obtenerTodosTitulosAcdemicos());
+        tb_tituloAcademico.setItems(titulos);
+
+        colId.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
+        colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+        //deshabilitarBotones();
+        //deshabilitarCampos();
+    }
+
+    @FXML
+    public void guardarCargo() {
+
+
+        TtAcademico ttAcademico = new TtAcademico(
+                tf_Tipo.getText(),
+                tf_nombre1.getText()
+        );
+
+        int res = facadeTtAcademico.agregar(ttAcademico);
+
+        if (res == 1) {
+            titulos.add(ttAcademico);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Cargos");
+            msg.setContentText("El carego se ha agregado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        } else {
+
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Cargos");
+            msg.setContentText("No se ha podido agregar el cargo");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        }
     }
 
     @FXML

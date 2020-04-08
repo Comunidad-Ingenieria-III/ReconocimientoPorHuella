@@ -5,6 +5,7 @@ import conexionBD.JdbcHelper;
 import datosFamiliar.dtofamiliar.Familiar;
 import institucionAcademica.dto.InstitucionAcademica;
 import personalSalud.personalsaluddto.PersonalSalud;
+import personal_salud_titulo.psdto.PsDto;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -58,22 +59,35 @@ public class PersonalSaludDao {
     } // Fin del método obtenerTodos()
 
 
+    public int agregarPersonal(PersonalSalud personalSalud) throws SQLException {
+
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
+                    " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, personalSalud.getIdPersonal());
+            stmt.setString(2, personalSalud.getNombre1());
+            stmt.setString(3, personalSalud.getNombre2());
+            stmt.setString(4, personalSalud.getApellido1());
+            stmt.setString(5, personalSalud.getApellido2());
+            stmt.setString(6, personalSalud.getSexo());
+            stmt.setString(7, personalSalud.getTelefono());
+            stmt.setString(8, personalSalud.getEmail());
+            stmt.setString(9, personalSalud.getTipoDocumento());
+            stmt.setString(10, personalSalud.getCargo());
+
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+            return 0;
+        }
+    } // Fin del método agregar()
+
+
     public boolean agregarPersonalSalud(PersonalSalud personalSalud) throws SQLException {
-        //try {
-        /*conn = ConexionRoot.getConexion();
-        String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
-                " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, personalSalud.getIdPersonal());
-        stmt.setString(2, personalSalud.getNombre1());
-        stmt.setString(3, personalSalud.getNombre2());
-        stmt.setString(4, personalSalud.getApellido1());
-        stmt.setString(5, personalSalud.getApellido2());
-        stmt.setString(6, personalSalud.getSexo());
-        stmt.setString(7, personalSalud.getTelefono());
-        stmt.setString(8, personalSalud.getEmail());
-        stmt.setString(9, personalSalud.getTipoDocumento());
-        stmt.setString(10, personalSalud.getCargo());*/
 
         String query = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
                 " values('" + personalSalud.getIdPersonal() + "','"
@@ -86,18 +100,12 @@ public class PersonalSaludDao {
                 + personalSalud.getEmail() + "','"
                 + personalSalud.getCargo() + "','"
                 + personalSalud.getCargo() + "')";
+
         JdbcHelper jdbc = new JdbcHelper();
         boolean exito = jdbc.ejecutarQuery(query);
         return exito;
 
-
-        //return stmt.executeUpdate();
-
-        /*} catch (SQLException | RuntimeException e) {
-            System.out.println(e.toString());
-
-        }*/
-    } // Fin del método agregar()
+    }
 
 
     public Boolean modificarPersonalSalud(PersonalSalud personalSalud) {

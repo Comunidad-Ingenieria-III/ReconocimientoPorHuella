@@ -195,9 +195,10 @@ public class ControladorPrincipal implements Initializable {
             formulario_Tipo_Titulo_Academico = FXMLLoader.load(getClass().getClassLoader().getResource("tipoTituloAcademico/formularioTipoTituloAcademico/FormularioTipoTituloAcademico.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Tipo Título Académico)");
-            stage.setScene(new Scene(formulario_Tipo_Titulo_Academico, 500, 300));
+            stage.setScene(new Scene(formulario_Tipo_Titulo_Academico, 830, 545));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
+            //stage.initModality(Modality.APPLICATION_MODAL);
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)

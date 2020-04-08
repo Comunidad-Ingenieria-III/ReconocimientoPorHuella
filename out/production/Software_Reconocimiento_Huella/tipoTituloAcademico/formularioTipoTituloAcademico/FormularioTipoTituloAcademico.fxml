@@ -68,7 +68,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="bt_guardar" layoutX="340.0" layoutY="93.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
+                        <Button fx:id="bt_guardar" layoutX="340.0" layoutY="93.0" mnemonicParsing="false" onAction="#guardarCargo" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -113,8 +113,8 @@
                <children>
                   <TableView fx:id="tb_tituloAcademico" layoutX="4.0" prefHeight="301.0" prefWidth="282.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Código" />
-                      <TableColumn prefWidth="75.0" text="Nombre" />
+                      <TableColumn fx:id="colId" prefWidth="75.0" text="Código" />
+                      <TableColumn fx:id="colDescripcion" prefWidth="75.0" text="Nombre" />
                     </columns>
                   </TableView>
                </children>

@@ -148,5 +148,13 @@
          </font>
       </Label>
       <TextField fx:id="tf_aux" layoutX="472.0" layoutY="223.0" />
+      <Button fx:id="bt_abrirFormularioPer" layoutX="643.0" layoutY="220.0" mnemonicParsing="false" onAction="#abrirPersonalTitulo" prefHeight="40.0" prefWidth="177.0" style="-fx-background-color: #2E64FE;" text="Abrir Titulos" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

@@ -68,4 +68,9 @@ public class InstitucionAcademica {
     public void setTelefono(String telefono) {
         this.telefono.set(telefono);
     }
+
+    @Override
+    public String toString() {
+        return nombre.get();
+    }
 }

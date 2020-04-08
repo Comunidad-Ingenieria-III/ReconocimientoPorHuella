@@ -23,6 +23,11 @@ public class PersonalSaludFacade {
 
     }
 
+    public int agregarPersonal(PersonalSalud personalSalud) throws SQLException {
+        return personalSaludDao.agregarPersonal(personalSalud);
+
+    }
+
     public boolean modificarPersonalSalud(PersonalSalud personalSalud) throws SQLException {
         return personalSaludDao.modificarPersonalSalud(personalSalud);
     }

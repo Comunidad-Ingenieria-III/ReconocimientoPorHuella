@@ -13,8 +13,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import personalSalud.personalsaluddto.PersonalSalud;
@@ -24,6 +28,7 @@ import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
 import javax.swing.*;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.List;
@@ -71,6 +76,8 @@ public class ControladorPersonalSalud implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
+    @FXML
+    private Button bt_abrirFormularioPer;
     @FXML
     private TableView mi_tabla;
     @FXML
@@ -383,6 +390,26 @@ public class ControladorPersonalSalud implements Initializable {
         cmb_cargo.setDisable(true);
         mi_tabla.setDisable(true);
         tf_numerodocumento.requestFocus();
+    }
+
+    @FXML
+    private void abrirPersonalTitulo(ActionEvent event) throws IOException {
+
+        try {
+            Parent formulario_Personal_salud_titulo = FXMLLoader.load(getClass().getClassLoader().getResource("personal_salud_titulo/formulariops/FormularioPst.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("AP_Humana (Gestión Personal Salud)");
+            stage.setScene(new Scene(formulario_Personal_salud_titulo, 830, 545));
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.show();
+            //Hide this current window (if this is what you want)
+            //((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //guardar();
     }
 
     @FXML

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="427.0" prefWidth="981.0" style="-fx-background-color: #00FF7F;" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personal_salud_titulo.formulariops.ControladorPst">
+
+
+   <children>
+      <SplitPane dividerPositions="0.449438202247191" layoutX="2.0" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="427.0" prefWidth="981.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="362.0" prefWidth="408.0">
+               <children>
+                  <Pane prefHeight="425.0" prefWidth="437.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label layoutX="28.0" layoutY="57.0" text="Documento Personal de Salud">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="249.0" layoutY="128.0" text="*" textFill="#ee0707">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtCodigo" layoutX="30.0" layoutY="190.0" prefHeight="25.0" prefWidth="174.0" styleClass="text-field" />
+                        <Label layoutX="30.0" layoutY="91.0" prefHeight="27.0" prefWidth="164.0" text="Tipo de Titulo">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="258.0" layoutY="47.0" text="*" textFill="#ee0707">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtNombre" layoutX="33.0" layoutY="229.0" prefHeight="25.0" prefWidth="174.0" />
+                        <Label layoutX="25.0" layoutY="125.0" text="Codigo Institucion Academica">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="117.0" layoutY="256.0" text="*" textFill="#ee0707">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtDireccion" layoutX="37.0" layoutY="276.0" prefHeight="25.0" prefWidth="174.0" styleClass="text-field" />
+                        <Label layoutX="25.0" layoutY="160.0" prefHeight="27.0" prefWidth="174.0" text="Fecha de Titulacion">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="140.0" layoutY="94.0" text="*" textFill="#ee0707">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtTelefono" layoutX="40.0" layoutY="306.0" prefHeight="25.0" prefWidth="174.0" />
+                        <Button fx:id="btnCrear" layoutX="15.0" layoutY="354.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Crear" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnConsultar" layoutX="121.0" layoutY="354.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="bntCancelar" layoutX="229.0" layoutY="354.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Cancelar" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnSalir" layoutX="334.0" layoutY="354.0" mnemonicParsing="false" onAction="#cerrarInstitucionAcademica" prefHeight="30.0" prefWidth="100.0" text="Salir" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnGuardar" layoutX="301.0" layoutY="202.0" mnemonicParsing="false" onAction="#guardarInstitucion" prefHeight="30.0" prefWidth="100.0" text="Guardar">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnModificar" layoutX="311.0" layoutY="245.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnInhabilitar" layoutX="311.0" layoutY="304.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Eliminar" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label alignment="CENTER" layoutX="-3.0" prefHeight="43.0" prefWidth="445.0" styleClass="lbl-titulo" text="Institución Académica" />
+                        <Label fx:id="lblCodigo" layoutX="157.0" layoutY="104.0" textFill="#f20808">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbNombre" layoutX="157.0" layoutY="156.0" textFill="#fc0606">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblDireccion" layoutX="157.0" layoutY="208.0" textFill="#f80303">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblTelefono" layoutX="157.0" layoutY="260.0" textFill="#fc0606">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbx_idpersona" layoutX="261.0" layoutY="57.0" prefWidth="150.0" />
+                        <ComboBox fx:id="cbx_idtipotitulo" layoutX="259.0" layoutY="92.0" prefWidth="150.0" />
+                        <ComboBox fx:id="cbx_idinstitucion" layoutX="261.0" layoutY="125.0" prefWidth="150.0" />
+                        <DatePicker fx:id="dp_fechatitulacion" layoutX="242.0" layoutY="161.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="425.0" prefWidth="399.0">
+               <children>
+                  <TableView fx:id="tb_personal" prefHeight="425.0" prefWidth="537.0" snapToPixel="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TableColumn fx:id="colIdPst" prefWidth="75.0" text="Código Pst" />
+                      <TableColumn fx:id="colIdPersonal" prefWidth="142.0" resizable="false" text="Identificación Personal" />
+                      <TableColumn fx:id="colIdTipoTitu" prefWidth="71.0" resizable="false" text="Codigo Tipo Titulo" />
+                        <TableColumn fx:id="colIdIntitucion" prefWidth="125.0" resizable="false" text="Codigo Institucion" />
+                        <TableColumn fx:id="colFechaTitulacion" prefWidth="198.0" resizable="false" text="Fecha Titulacion" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
