@@ -42,10 +42,6 @@ public class PsDao {
 
                 listaPs.add(psDto);
 
-                for (PsDto ls :listaPs
-                     ) {
-                    System.out.println(ls.toString());
-                }
             }
 
 

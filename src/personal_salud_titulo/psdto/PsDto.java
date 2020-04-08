@@ -13,25 +13,25 @@ import java.time.LocalDate;
 
 public class PsDto {
 
-    private IntegerProperty id;
-    private StringProperty idPersonal;
-    private StringProperty idTipoTitu;
-    private StringProperty idInstitucion;
+    private IntegerProperty id = new SimpleIntegerProperty();
+    private StringProperty idPersonal = new SimpleStringProperty();
+    private StringProperty idTipoTitu = new SimpleStringProperty();
+    private StringProperty idInstitucion = new SimpleStringProperty();
     private Date fechaTitulacion;
 
 
     public PsDto(int id, String idPersonal, String idTipoTitu, String idInstitucion, Date fechaTitulacion) {
 
-        this.id = new SimpleIntegerProperty(id);
-        this.idPersonal = new SimpleStringProperty(idPersonal);
-        this.idTipoTitu = new SimpleStringProperty(idTipoTitu);
-        this.idInstitucion = new SimpleStringProperty(idInstitucion);
+        this.id.set(id);
+        this.idPersonal.set(idPersonal);
+        this.idTipoTitu.set(idTipoTitu);
+        this.idInstitucion.set(idInstitucion);
         this.fechaTitulacion = fechaTitulacion;
     }
 
 
    public PsDto() {
-        this(0,"", "", "", Date.valueOf(""));
+        this(0,"", "", "", new Date(new java.util.Date().getTime()));
     }
 
 
