@@ -14,13 +14,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import login.formulariousuario.ControladorLogin;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 public class ControladorPrincipal implements Initializable {
 
+    @FXML
+    private AnchorPane FormularioPrincipal;
     @FXML
     private Button bt_tipoDocumento;
     @FXML
@@ -81,24 +85,27 @@ public class ControladorPrincipal implements Initializable {
     private MenuItem mi_DatosFamiliar;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
+
     @FXML
     private void abrirTipoDocumento(ActionEvent event) throws IOException {
         try {
+
             Parent formulario_tipo_documento;
             formulario_tipo_documento = FXMLLoader.load(getClass().getClassLoader().getResource("tipodocumento/formulariotipodocumento/FormularioTipoDocumento.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("AP_Humana (Gestión Tipo de Documento)");
-            stage.setScene(new Scene(formulario_tipo_documento, 721, 427));
-            stage.setResizable(false);
-            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            FormularioPrincipal.getChildren().setAll(formulario_tipo_documento);
+            //Stage formulario_tipo_documento = new Stage();
+            //formulario_tipo_documento.setTitle("AP_Humana (Gestión Tipo de Documento)");
+            //formularioTipoDocumento.setScene(new Scene(formulario_tipo_documento, 721, 427));
+            //formulario_tipo_documento.setResizable(false);
+            //formulario_tipo_documento.getIcons().add(new Image("estrella_vida.jpg"));
+
             //stage.initStyle(StageStyle.UNDECORATED);
-            stage.show();
+            //formulario_tipo_documento.show();
             //Hide this current window (if this is what you want)
             //((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {
@@ -111,8 +118,11 @@ public class ControladorPrincipal implements Initializable {
 
         try {
 
-            Parent formulario_datos_persona = FXMLLoader.load(getClass().getClassLoader().getResource("datospersona/formulariopersona/FormularioDatosPersona.fxml"));
-            Stage stage = new Stage();
+            Parent formulario_datos_persona;
+            formulario_datos_persona = FXMLLoader.load(getClass().getClassLoader().getResource("datospersona/formulariopersona/FormularioDatosPersona.fxml"));
+            FormularioPrincipal.getChildren().setAll(formulario_datos_persona);
+            /*
+            Stage formulario_datos_persona = new Stage();
             AnchorPane panel_principal = new AnchorPane();
             Scene scene = new Scene(panel_principal);
             stage.setTitle("AP_Humana (Gestión Datos Persona)");
@@ -122,7 +132,7 @@ public class ControladorPrincipal implements Initializable {
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().hide();
+            //((Node) (event.getSource())).getScene().getWindow().hide();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -137,8 +147,11 @@ public class ControladorPrincipal implements Initializable {
     private void abrirEps(ActionEvent event) throws IOException {
 
         try {
-            Parent formulario_EPS = FXMLLoader.load(getClass().getClassLoader().getResource("eps/formularioeps/FormularioEPS.fxml"));
-            Stage stage = new Stage();
+            Parent formulario_EPS;
+            formulario_EPS = FXMLLoader.load(getClass().getClassLoader().getResource("eps/formularioeps/FormularioEPS.fxml"));
+            FormularioPrincipal.getChildren().setAll(formulario_EPS);
+
+            /*Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión EPS)");
             stage.setScene(new Scene(formulario_EPS, 981, 427));
             stage.setResizable(false);
@@ -146,7 +159,8 @@ public class ControladorPrincipal implements Initializable {
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().hide();
+            //((Node) (event.getSource())).getScene().getWindow().hide();*/
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -156,13 +170,16 @@ public class ControladorPrincipal implements Initializable {
     private void abrirDatosFamiliar(ActionEvent event) throws IOException {
 
         try {
-            Parent formulario_datos_familiar = FXMLLoader.load(getClass().getClassLoader().getResource("datosFamiliar/formulariofamiliar/FormularioDatosFamiliar.fxml"));
+            Parent formulario_datos_familiar;
+            formulario_datos_familiar = FXMLLoader.load(getClass().getClassLoader().getResource("datosFamiliar/formulariofamiliar/FormularioDatosFamiliar.fxml"));
+            FormularioPrincipal.getChildren().setAll(formulario_datos_familiar);
+            /*
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Datos Familiar)");
             stage.setScene(new Scene(formulario_datos_familiar));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
-            stage.show();
+            stage.show();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -172,8 +189,11 @@ public class ControladorPrincipal implements Initializable {
     private void abrirPersonalSalud(ActionEvent event) throws IOException {
 
         try {
-            Parent formulario_Personal_salud = FXMLLoader.load(getClass().getClassLoader().getResource("personalSalud/personalsaludformulario/FormularioPersonalSalud.fxml"));
-            Stage stage = new Stage();
+
+            Parent formulario_Personal_salud;
+            formulario_Personal_salud = FXMLLoader.load(getClass().getClassLoader().getResource("personalSalud/personalsaludformulario/FormularioPersonalSalud.fxml"));
+            FormularioPrincipal.getChildren().setAll(formulario_Personal_salud);
+            /*Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Personal Salud)");
             stage.setScene(new Scene(formulario_Personal_salud, 830, 545));
             stage.setResizable(false);
@@ -181,7 +201,7 @@ public class ControladorPrincipal implements Initializable {
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().hide();
+            //((Node) (event.getSource())).getScene().getWindow().hide();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,10 +210,12 @@ public class ControladorPrincipal implements Initializable {
     @FXML
     private void abriTipoTituloAcademico(ActionEvent event) throws IOException {
 
-        Parent formulario_Tipo_Titulo_Academico;
+
         try {
+            Parent formulario_Tipo_Titulo_Academico;
             formulario_Tipo_Titulo_Academico = FXMLLoader.load(getClass().getClassLoader().getResource("tipoTituloAcademico/formularioTipoTituloAcademico/FormularioTipoTituloAcademico.fxml"));
-            Stage stage = new Stage();
+            FormularioPrincipal.getChildren().setAll(formulario_Tipo_Titulo_Academico);
+            /*Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Tipo Título Académico)");
             stage.setScene(new Scene(formulario_Tipo_Titulo_Academico, 830, 545));
             stage.setResizable(false);
@@ -202,59 +224,63 @@ public class ControladorPrincipal implements Initializable {
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().hide();
+            //((Node) (event.getSource())).getScene().getWindow().hide();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    public void ventanaInstitucionAcademica(){
+    public void ventanaInstitucionAcademica() {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("institucionAcademica/formulario/FormularioInstitucionAcademica.fxml"));
-            Stage stage = new Stage();
+            Parent institucion_Academica;
+            institucion_Academica = FXMLLoader.load(getClass().getClassLoader().getResource("institucionAcademica/formulario/FormularioInstitucionAcademica.fxml"));
+            FormularioPrincipal.getChildren().setAll(institucion_Academica);
+            /*Stage stage = new Stage();
             root.getStylesheets().add("Resources/Style.css");
             stage.setScene(new Scene(root));
             stage.setTitle("MODULO INSTITUCIÓN ACADEMICA");
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+            stage.show();*/
         } catch (IOException e) {
             System.out.println(e.toString());
         }
     }//fin del metodo ventanaInstitucionReferencia()
 
     @FXML
-    public void ventanaCargos(){
+    public void ventanaCargos() {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("cargo/formulario/formularioCargo.fxml"));
-            Stage stage = new Stage();
+            Parent cargo;
+            cargo = FXMLLoader.load(getClass().getClassLoader().getResource("cargo/formulario/formularioCargo.fxml"));
+            FormularioPrincipal.getChildren().setAll(cargo);
+            /*Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("MODULO DE CARGOS");
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+            stage.show();*/
         } catch (IOException e) {
             System.out.println(e.toString());
         }
     }//fin del metodo ventanaCargos()
 
     @FXML
-    public void ventanaInstitucionReferencia(){
+    public void ventanaInstitucionReferencia() {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("institucionreferencia/formulario/FormularioInstitucionReferencia.fxml"));
-            Stage stage = new Stage();
+            Parent institucion_referencia;
+            institucion_referencia = FXMLLoader.load(getClass().getClassLoader().getResource("institucionreferencia/formulario/FormularioInstitucionReferencia.fxml"));
+            FormularioPrincipal.getChildren().setAll(institucion_referencia);
+            /*Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("MODULO INSTITUCIÓN REFERENCIA");
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+            stage.show();*/
         } catch (IOException e) {
             System.out.println(e.toString());
         }
     }//fin del metodo ventanaInstitucionReferencia()
-
-
 
 
     @FXML
@@ -299,10 +325,12 @@ public class ControladorPrincipal implements Initializable {
     @FXML
     private void abrirRegistroAtencionPaciente(ActionEvent event) throws IOException {
 
-        Parent formulario_Registro_Atencion_Paciente;
+
         try {
+            Parent formulario_Registro_Atencion_Paciente;
             formulario_Registro_Atencion_Paciente = FXMLLoader.load(getClass().getClassLoader().getResource("registroAtencionPaciente/FormularioRegistroAtencion.fxml"));
-            Stage stage = new Stage();
+            FormularioPrincipal.getChildren().setAll(formulario_Registro_Atencion_Paciente);
+            /*Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Registro Atención)");
             stage.setScene(new Scene(formulario_Registro_Atencion_Paciente, 900, 450));
             stage.setResizable(false);
@@ -310,7 +338,7 @@ public class ControladorPrincipal implements Initializable {
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().hide();
+            //((Node) (event.getSource())).getScene().getWindow().hide();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -320,8 +348,10 @@ public class ControladorPrincipal implements Initializable {
     private void abrirMedicamentos(ActionEvent event) throws IOException {
 
         try {
-            Parent formulario_Medicamentos = FXMLLoader.load(getClass().getClassLoader().getResource("medicamento/formularioMedicamento/FormularioMedicamentos.fxml"));
-            Stage stage = new Stage();
+            Parent formulario_Medicamentos;
+            formulario_Medicamentos = FXMLLoader.load(getClass().getClassLoader().getResource("medicamento/formularioMedicamento/FormularioMedicamentos.fxml"));
+            FormularioPrincipal.getChildren().setAll(formulario_Medicamentos);
+            /*Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Medicamentos)");
             stage.setScene(new Scene(formulario_Medicamentos));
             stage.setResizable(false);
@@ -329,7 +359,7 @@ public class ControladorPrincipal implements Initializable {
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
-            //((Node) (event.getSource())).getScene().getWindow().hide();
+            //((Node) (event.getSource())).getScene().getWindow().hide();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -467,7 +497,6 @@ public class ControladorPrincipal implements Initializable {
             e.printStackTrace();
         }
     }
-
 
 
     @FXML

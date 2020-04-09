@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
-   <children>
-      <MenuBar prefHeight="80.0" prefWidth="800.0" styleClass="Button" stylesheets="@../Resources/Estilos.css">
+<BorderPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
+   <top>
+      <MenuBar prefHeight="80.0" prefWidth="800.0" stylesheets="@../Resources/Style.css" BorderPane.alignment="CENTER">
         <menus>
             <Menu mnemonicParsing="false" text="Gestiones">
               <items>
@@ -76,27 +76,36 @@
             <InnerShadow choke="0.12" color="#4a1f1f" height="54.37" radius="22.792499999999997" width="38.8" />
          </effect>
       </MenuBar>
-      <AnchorPane prefHeight="650.0" prefWidth="1000.0" styleClass="root" stylesheets="@../Resources/Estilos.css" />
-      <HBox prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #000000;">
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="105.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="67.0" prefWidth="310.0" />
-            <Label prefHeight="63.0" prefWidth="288.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="302.0">
-               <graphic>
-                  <Button fx:id="bt_salir" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #000000;" text="Salir" textFill="#e8e8e8">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </graphic>
-            </Label>
+            <Button fx:id="bt_salir" layoutX="1151.0" layoutY="19.0" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #000000;" text="Salir" textFill="#e8e8e8">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
-         <effect>
-            <InnerShadow choke="0.27" color="#2c2a2a" height="127.74" radius="44.0975" width="50.65" />
-         </effect>
-      </HBox>
-   </children>
-</VBox>
+      </AnchorPane>
+   </bottom>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <AnchorPane fx:id="FormularioPrincipal" prefHeight="650.0" prefWidth="1000.0" styleClass="root" stylesheets="@../Resources/Estilos.css" BorderPane.alignment="CENTER" />
+   </center>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="27.0" layoutY="30.0" text="Solo Pruebas" textFill="#f8f5f5">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+   </left>
+</BorderPane>

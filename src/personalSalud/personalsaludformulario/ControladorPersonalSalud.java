@@ -329,6 +329,7 @@ public class ControladorPersonalSalud implements Initializable {
                 msg.setHeaderText("Resultado");
                 msg.show();
                 limpiar();
+                iniciarCbxPersona();
 
             } else
                 exito = personalSaludFacade.agregarPersonalSalud(personalSalud);
