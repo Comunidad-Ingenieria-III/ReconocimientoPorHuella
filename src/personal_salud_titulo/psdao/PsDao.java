@@ -1,6 +1,14 @@
 package personal_salud_titulo.psdao;
 import conexionBD.ConexionRoot;
+import conexionBD.JdbcHelper;
+import datospersona.dto.Persona;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.control.cell.PropertyValueFactory;
+import personalSalud.personalsaluddto.PersonalSalud;
 import personal_salud_titulo.psdto.PsDto;
+
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,6 +99,31 @@ public class PsDao {
             return 0;
         }
     } // Fin del método modificar()
+
+    public PsDto buscarPorId(String idPersonal) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from personal_salud_titulo where idPersonal = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idPersonal);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                psDto = new PsDto();
+
+                //psDto.setId(rset.getInt("idPst"));
+                psDto.setIdPersonal(rset.getString("idPersonal"));
+                psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
+                psDto.setIdInstitucion(rset.getString("idInstitucion"));
+                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
+
+            }
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        }
+        return psDto;
+    }
+
 
 
     public int eliminar(String idPst) {

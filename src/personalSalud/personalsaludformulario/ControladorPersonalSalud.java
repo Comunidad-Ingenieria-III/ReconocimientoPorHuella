@@ -127,7 +127,7 @@ public class ControladorPersonalSalud implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        titulos = FXCollections.observableArrayList(psFacade.obtenerTodas());
+        /*titulos = FXCollections.observableArrayList(psFacade.obtenerTodas());
 
 
         tb_personal.setItems(titulos);
@@ -136,7 +136,7 @@ public class ControladorPersonalSalud implements Initializable {
         colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
         colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
         colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
-        colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
+        colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));*/
 
         iniciarCbxDocumento();
         iniciarCbxSexo();
@@ -188,6 +188,7 @@ public class ControladorPersonalSalud implements Initializable {
 
         return personal;
     }
+
     @FXML
     private PsDto crearPsDto() {
         int id = 0;
@@ -207,8 +208,7 @@ public class ControladorPersonalSalud implements Initializable {
     public void guardarPersonalS() throws SQLException {
 
 
-
-        int res = personalSaludFacade.agregarPersonal(crearPersonalSalud(), crearPsDto());
+        int res = personalSaludFacade.agregarPersonal(crearPersonalSalud());
 
         if (res == 1) {
             //instituciones.add(p);
@@ -227,6 +227,7 @@ public class ControladorPersonalSalud implements Initializable {
             msg.show();
         }
         limpiar();
+        iniciarCbxPersona();
     }
 
 
@@ -234,7 +235,7 @@ public class ControladorPersonalSalud implements Initializable {
     public void buscarPersonaSalud() {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from personal_salud where idPersonal = ?";
+            String sql = "select * from personal_salud  where idPersonal = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, tf_numerodocumento.getText());
             rset = stmt.executeQuery();
@@ -251,6 +252,15 @@ public class ControladorPersonalSalud implements Initializable {
                 tf_correoelectronico.setText(rset.getString("email"));
                 //cmb_tipodocumento.setValue(String.valueOf(rset.getString("tipoDocumento")));
                 //cmb_cargo.setSelectionModel().setItems(); = rs.getString("cargo");
+
+
+               titulos = FXCollections.observableArrayList(personalSaludFacade.agregarPesonalTitulo());
+                tb_personal.setItems(titulos);
+                colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
+                colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
+                colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
+                colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
+
 
             }
         } catch (Exception ex) {
@@ -362,7 +372,7 @@ public class ControladorPersonalSalud implements Initializable {
 
             if (personalSalud.getIdPersonal() == "") {
 
-                exito = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud(),crearPsDto());
+                exito = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud(), crearPsDto());
 
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Personal de Salud");
@@ -382,6 +392,39 @@ public class ControladorPersonalSalud implements Initializable {
         }
 
         return false;
+    }
+
+    @FXML
+    public void guardarInstitucion() {
+
+        PsDto psDto = new PsDto(
+                0,
+                cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal(),
+                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
+                cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
+                Date.valueOf(dp_fechatitulacion.getValue())
+
+        );
+
+        int res = psFacade.agregar(psDto);
+
+        if (res == 1) {
+            titulos.add(psDto);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion se ha agregado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        } else {
+
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("No se ha podido agregar la institucion");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        limpiar();
     }
 
     @FXML
@@ -496,7 +539,7 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     @FXML
-    private void abrirPersonalTitulo(ActionEvent event) throws IOException {
+    private void abrirPersonalTitulo(ActionEvent event) throws IOException, SQLException {
 
         try {
             Parent formulario_Personal_salud_titulo = FXMLLoader.load(getClass().getClassLoader().getResource("personal_salud_titulo/formulariops/FormularioPst.fxml"));
@@ -512,12 +555,14 @@ public class ControladorPersonalSalud implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //guardar();
+        guardarPersonalS();
+        iniciarCbxPersona();
     }
 
     @FXML
     private void cerraPersonalSalud(ActionEvent event) {
         Stage stage = (Stage) bt_salir.getScene().getWindow();
         stage.close();
+
     }
 }

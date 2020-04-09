@@ -133,7 +133,8 @@ public class ControladorLogin implements Initializable {
                 Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
                 Scene scene = new Scene(formulario_principal);
                 stage.setResizable(false);
-                stage.setMaximized(true);
+                stage.setMaximized(false);
+                stage.centerOnScreen();
                 stage.getIcons().add(new Image("estrella_vida.jpg"));
                 stage.setTitle("AP_Humana Menú Principal");
                 stage.getIcons().add(new Image("estrella_vida.jpg"));

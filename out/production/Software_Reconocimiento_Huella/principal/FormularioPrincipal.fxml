@@ -81,7 +81,7 @@
       <AnchorPane prefHeight="105.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="67.0" prefWidth="310.0" />
-            <Button fx:id="bt_salir" layoutX="1151.0" layoutY="19.0" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #000000;" text="Salir" textFill="#e8e8e8">
+            <Button fx:id="bt_salir" layoutX="1151.0" layoutY="19.0" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="30.0" prefWidth="109.0" stylesheets="@../Resources/Style.css" text="Salir" textFill="#e8e8e8">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
@@ -96,12 +96,12 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <AnchorPane fx:id="FormularioPrincipal" prefHeight="650.0" prefWidth="1000.0" styleClass="root" stylesheets="@../Resources/Estilos.css" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="FormularioPrincipal" prefHeight="650.0" prefWidth="1000.0" styleClass="pane" stylesheets="@../Resources/Style.css" BorderPane.alignment="CENTER" />
    </center>
    <left>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="27.0" layoutY="30.0" text="Solo Pruebas" textFill="#f8f5f5">
+            <Label layoutX="13.0" layoutY="30.0" prefHeight="35.0" prefWidth="178.0" styleClass="lbl-titulo" stylesheets="@../Resources/Style.css" text="Solo Pruebas" textFill="#f8f5f5">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>

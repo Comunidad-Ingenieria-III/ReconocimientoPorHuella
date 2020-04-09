@@ -24,8 +24,12 @@ public class PersonalSaludFacade {
 
     }
 
-    public int agregarPersonal(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
-        return personalSaludDao.agregarPersonal(personalSalud ,psDto);
+    public List<PsDto> agregarPesonalTitulo() {
+        return personalSaludDao.listaPsdto();
+    }
+
+    public int agregarPersonal(PersonalSalud personalSalud) throws SQLException {
+        return personalSaludDao.agregarPersonal(personalSalud);
 
     }
 
@@ -35,6 +39,8 @@ public class PersonalSaludFacade {
     public int modificarPersonal(PersonalSalud personalSalud){
         return personalSaludDao.modificarPersonal(personalSalud);
     }
+
+    public PsDto buscar(PsDto psDto){return  personalSaludDao.buscarPorId(psDto);}
 
    /*public PersonalSalud buscarPersonalSalud(String idPersonal){
         return personalSaludDao.buscarPersonalSalud(idPersonal);
