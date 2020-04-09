@@ -6,13 +6,13 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="307.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipoTituloAcademico.formularioTipoTituloAcademico.ContraladorTipoTituloAcademico">
+<AnchorPane prefHeight="307.0" prefWidth="755.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipoTituloAcademico.formularioTipoTituloAcademico.ContraladorTipoTituloAcademico">
    <children>
       <SplitPane dividerPositions="0.6653333333333333" layoutY="2.0" prefHeight="305.0" prefWidth="752.0">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="315.0" prefWidth="524.0">
                <children>
-                  <Pane prefHeight="301.0" prefWidth="500.0" style="-fx-background-color: #CECEF6;">
+                  <Pane prefHeight="301.0" prefWidth="500.0" styleClass="background">
                      <children>
                         <Label layoutX="72.0" layoutY="66.0" text="Código">
                            <font>
@@ -35,8 +35,13 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
+<<<<<<< HEAD
                         <TextField fx:id="tf_nombre1" layoutX="72.0" layoutY="181.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="174.0" />
                         <Button fx:id="bt_crear" layoutX="17.0" layoutY="251.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Crear" textFill="WHITE">
+=======
+                        <TextField fx:id="tf_nombre1" layoutX="72.0" layoutY="181.0" prefHeight="25.0" prefWidth="174.0" />
+                        <Button fx:id="bt_crear" layoutX="17.0" layoutY="251.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="100.0" text="Crear" textFill="WHITE">
+>>>>>>> origin/master
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -44,7 +49,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="bt_consultar" layoutX="127.0" layoutY="251.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
+                        <Button fx:id="bt_consultar" layoutX="127.0" layoutY="251.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -52,7 +57,11 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+<<<<<<< HEAD
                         <Button fx:id="bt_cancelar" layoutX="233.0" layoutY="251.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
+=======
+                        <Button fx:id="bt_cancelar" layoutX="233.0" layoutY="251.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Cancelar" textFill="WHITE">
+>>>>>>> origin/master
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -60,7 +69,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="bt_salir" layoutX="340.0" layoutY="251.0" mnemonicParsing="false" onAction="#cerrarTipoTituloAcademico" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Salir" textFill="WHITE">
+                        <Button fx:id="bt_salir" layoutX="340.0" layoutY="251.0" mnemonicParsing="false" onAction="#cerrarTipoTituloAcademico" prefHeight="30.0" prefWidth="131.0" text="Salir" textFill="WHITE">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -68,7 +77,11 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+<<<<<<< HEAD
                         <Button fx:id="bt_guardar" layoutX="340.0" layoutY="93.0" mnemonicParsing="false" onAction="#guardarTtAcademico" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
+=======
+                        <Button fx:id="bt_guardar" layoutX="340.0" layoutY="93.0" mnemonicParsing="false" onAction="#guardarCargo" prefHeight="30.0" prefWidth="131.0" text="Guardar" textFill="WHITE">
+>>>>>>> origin/master
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -76,7 +89,11 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+<<<<<<< HEAD
                         <Button fx:id="bt_modificar" layoutX="340.0" layoutY="151.0" mnemonicParsing="false" onAction="#modificarTtAcademico" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
+=======
+                        <Button fx:id="bt_modificar" layoutX="340.0" layoutY="151.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="131.0" text="Modificar" textFill="WHITE">
+>>>>>>> origin/master
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -84,7 +101,11 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+<<<<<<< HEAD
                         <Button fx:id="bt_inhabilitar" layoutX="340.0" layoutY="202.0" mnemonicParsing="false" onAction="#eliminarTtAcademico" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Inhabilitar" textFill="WHITE">
+=======
+                        <Button fx:id="bt_inhabilitar" layoutX="340.0" layoutY="202.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="131.0" text="Inhabilitar" textFill="WHITE">
+>>>>>>> origin/master
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -92,7 +113,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Label alignment="CENTER" layoutX="17.0" layoutY="14.0" prefHeight="43.0" prefWidth="453.0" style="-fx-background-color: #2E64FE;" text="Tipo Título Académico ">
+                        <Label alignment="CENTER" layoutX="17.0" layoutY="14.0" prefHeight="43.0" prefWidth="453.0" styleClass="lbl-titulo" stylesheets="@../../Resources/MiEstilo.css" text="Tipo Título Académico ">
                            <font>
                               <Font name="System Bold Italic" size="20.0" />
                            </font>
@@ -111,11 +132,19 @@
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="435.0" prefWidth="206.0">
                <children>
+<<<<<<< HEAD
                   <TableView fx:id="tb_tituloAcademico" layoutX="4.0" prefHeight="301.0" prefWidth="248.0">
                      <columns>
                         <TableColumn fx:id="idCodigo" prefWidth="75.0" text="Código" />
                         <TableColumn fx:id="idNombre" prefWidth="171.0" text="Nombre" />
                      </columns>
+=======
+                  <TableView fx:id="tb_tituloAcademico" layoutX="4.0" prefHeight="301.0" prefWidth="282.0">
+                    <columns>
+                      <TableColumn fx:id="colId" prefWidth="75.0" resizable="false" text="Código" />
+                      <TableColumn fx:id="colDescripcion" prefWidth="168.0" resizable="false" text="Nombre" />
+                    </columns>
+>>>>>>> origin/master
                   </TableView>
                </children>
             </AnchorPane>

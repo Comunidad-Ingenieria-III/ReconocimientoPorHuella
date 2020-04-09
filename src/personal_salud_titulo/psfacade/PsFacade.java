@@ -12,7 +12,7 @@ public class PsFacade {
 
 
     public List<PsDto> obtenerTodas() {
-        return psDao.obtenerTodas();
+        return psDao.cargartodas();
     }
 
     public int agregar(PsDto psDto) {

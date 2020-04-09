@@ -55,14 +55,6 @@ public class ControladorPst implements Initializable {
 
 
     @FXML
-    private TextField txtCodigo;
-    @FXML
-    private TextField txtNombre;
-    @FXML
-    private TextField txtDireccion;
-    @FXML
-    private TextField txtTelefono;
-    @FXML
     private Button btnCrear;
     @FXML
     private Button btnConsultar;
@@ -76,15 +68,6 @@ public class ControladorPst implements Initializable {
     private Button btnModificar;
     @FXML
     private Button btnInhabilitar;
-
-    @FXML
-    private Label lblCodigo;
-    @FXML
-    private Label lbNombre;
-    @FXML
-    private Label lblDireccion;
-    @FXML
-    private Label lblTelefono;
 
     @FXML
     private DatePicker dp_fechatitulacion;
@@ -107,7 +90,7 @@ public class ControladorPst implements Initializable {
 
         tb_personal.setItems(titulos);
 
-        colIdPst.setCellValueFactory(new PropertyValueFactory<>("id"));
+        //colIdPst.setCellValueFactory(new PropertyValueFactory<>("idPst"));
         colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
         colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
         colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
@@ -121,8 +104,7 @@ public class ControladorPst implements Initializable {
         iniciarCbxPersona();
         iniciarCbxTipoTitulo();
         iniciarInstitucion();
-
-
+        manejarEventos();
 
     }
 
@@ -145,23 +127,6 @@ public class ControladorPst implements Initializable {
         ObservableList<InstitucionAcademica> listainstituciones = FXCollections.observableArrayList(facadeInstitucionAcademica.obtenerTodasInstituciones());
         cbx_idinstitucion.setItems(listainstituciones);
     }
-
-    /*
-    @FXML
-    public PsDto crearPersona() {
-
-        int idPst = 0;
-        int idPersonal = cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal();
-        String idTipoTitu = cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico();
-        String idInstitucion = cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion();
-        Date fechaTitulacion = Date.valueOf(dp_fechatitulacion.getValue());
-
-
-        PsDto psDto = new PsDto(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion);
-
-        return psDto;
-
-    }*/
 
     @FXML
     public void guardarInstitucion() {
@@ -193,45 +158,45 @@ public class ControladorPst implements Initializable {
             msg.setHeaderText("Resultado");
             msg.show();
         }
-        //limpiar();
+        limpiar();
     }
 
-
-    /*public void manejarEventos() {
+    public void manejarEventos() {
         tb_personal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PsDto>() {
             @Override
             public void changed(ObservableValue<? extends PsDto> observable, PsDto oldValue, PsDto newValue) {
                 if (newValue != null) {
-                    cbx_idpersona.setValue(String.valueOf(newValue.getIdPersonal()));
-                    cbx_idtipotitulo.setValue(newValue.getIdTipoTitu());
-                    txtDireccion.setText(newValue.getDireccion());
-                    txtTelefono.setText(newValue.getTelefono());
+                    cbx_idpersona.getSelectionModel().getSelectedItem().setIdPersonal("idPersonal");
+                    cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico();
+                    cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion();
+                    Date.valueOf(dp_fechatitulacion.getValue());
 
 
                     btnCrear.setDisable(false);
                     btnGuardar.setDisable(true);
                     btnModificar.setDisable(false);
                     btnInhabilitar.setDisable(false);
-                    habilitarCampos();
+                    //habilitarCampos();
                 }
 
             }
         });//FIN DEL LISTENER
     }
 
+    @FXML
     private void eventoCrear() {
         btnCrear.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 limpiar();
-                habilitarCampos();
+                //habilitarCampos();
                 btnInhabilitar.setDisable(true);
                 btnModificar.setDisable(true);
                 btnGuardar.setDisable(false);
             }
         });
     }
-
+    /*
     @FXML
     private void eventoCancelar(){
         bntCancelar.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -385,16 +350,16 @@ public class ControladorPst implements Initializable {
         txtNombre.setDisable(true);
         txtDireccion.setDisable(true);
         txtTelefono.setDisable(true);
-    }
+    }*/
 
     @FXML
     public void limpiar() {
-        txtCodigo.setText("");
-        txtNombre.setText("");
-        txtDireccion.setText("");
-        txtTelefono.setText("");
+        cbx_idpersona.setValue(null);
+        cbx_idtipotitulo.setValue(null);
+        cbx_idinstitucion.setValue(null);
+        dp_fechatitulacion.setValue(null);
         bntCancelar.setDisable(false);
-    }*/
+    }
 
     @FXML
     private void cerrarInstitucionAcademica(ActionEvent event) {
