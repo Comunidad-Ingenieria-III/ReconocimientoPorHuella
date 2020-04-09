@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="545.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<AnchorPane prefHeight="545.0" prefWidth="830.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <children>
       <Label alignment="CENTER" prefHeight="40.0" prefWidth="830.0" styleClass="lbl-titulo" text="Personal Salud" textFill="#f2f2f2">
          <font>
@@ -81,7 +80,7 @@
         <columns>
           <TableColumn fx:id="colIdPersonal" minWidth="8.0" prefWidth="199.0">
                <graphic>
-                  <ComboBox fx:id="cbx_idpersona" prefHeight="25.0" prefWidth="176.0" promptText="Documento Persona" />
+                  <ComboBox fx:id="cbx_idpersona" prefHeight="25.0" prefWidth="176.0" promptText="Documento Persona" styleClass="table-row-cell" />
                </graphic></TableColumn>
             <TableColumn fx:id="colIdTipoTitu" prefWidth="187.0">
                <graphic>
