@@ -217,7 +217,7 @@ public class ControladorPrincipal implements Initializable {
             FormularioPrincipal.getChildren().setAll(formulario_Tipo_Titulo_Academico);
             /*Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Tipo Título Académico)");
-            stage.setScene(new Scene(formulario_Tipo_Titulo_Academico, 830, 545));
+            stage.setScene(new Scene(formulario_Tipo_Titulo_Academico));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initModality(Modality.APPLICATION_MODAL);
