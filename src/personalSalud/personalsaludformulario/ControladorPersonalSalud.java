@@ -187,8 +187,48 @@ public class ControladorPersonalSalud implements Initializable {
                 sexo, telefono, email, tipoDocumento, cargo);
 
         return personal;
+    }
+    @FXML
+    private PsDto crearPsDto() {
+        int id = 0;
+        String idPersona = cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal();
+        String idTipoTitulo = cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico();
+        String idInstitucion = cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion();
+        Date fechaTitulacion = Date.valueOf(dp_fechatitulacion.getValue());
+
+
+        PsDto psDto = new PsDto(id, idPersona, idTipoTitulo, idInstitucion, fechaTitulacion);
+
+        return psDto;
 
     }
+
+    @FXML
+    public void guardarPersonalS() throws SQLException {
+
+
+
+        int res = personalSaludFacade.agregarPersonal(crearPersonalSalud(), crearPsDto());
+
+        if (res == 1) {
+            //instituciones.add(p);
+            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion se ha agregado");
+            msg.setHeaderText("Resultado");
+            msg.show();
+
+        } else {
+
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("No se ha podido agregar la institucion");
+            msg.setHeaderText("Resultado");
+            msg.show();
+        }
+        limpiar();
+    }
+
 
     @FXML
     public void buscarPersonaSalud() {
@@ -313,6 +353,7 @@ public class ControladorPersonalSalud implements Initializable {
 
         try {
             PersonalSalud personalSalud = new PersonalSalud();
+            PsDto psDto = new PsDto();
 
             if (validar(personalSalud) == false) {
                 return false;
@@ -321,7 +362,7 @@ public class ControladorPersonalSalud implements Initializable {
 
             if (personalSalud.getIdPersonal() == "") {
 
-                exito = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud());
+                exito = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud(),crearPsDto());
 
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Personal de Salud");
@@ -332,7 +373,7 @@ public class ControladorPersonalSalud implements Initializable {
                 iniciarCbxPersona();
 
             } else
-                exito = personalSaludFacade.agregarPersonalSalud(personalSalud);
+                exito = personalSaludFacade.agregarPersonalSalud(personalSalud, psDto);
 
             return exito;
 

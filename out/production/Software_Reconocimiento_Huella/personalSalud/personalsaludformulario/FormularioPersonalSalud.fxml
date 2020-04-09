@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="545.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<AnchorPane prefHeight="545.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <children>
       <Label alignment="CENTER" prefHeight="40.0" prefWidth="830.0" styleClass="lbl-titulo" text="Personal Salud" textFill="#f2f2f2">
          <font>
@@ -129,7 +130,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_guardar" layoutX="583.0" layoutY="484.0" mnemonicParsing="false" onAction="#guardar" prefHeight="30.0" prefWidth="100.0" text="Guardar" textFill="WHITE">
+      <Button fx:id="bt_guardar" layoutX="583.0" layoutY="484.0" mnemonicParsing="false" onAction="#guardarPersonalS" prefHeight="30.0" prefWidth="100.0" text="Guardar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
