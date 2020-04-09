@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import medicamento.dto.Medicamento;
 import medicamento.facade.FacadeMedicamento;
@@ -47,6 +48,11 @@ public class ControladorMedicamentos implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
+    @FXML
+    private Label validarMedicamento;
+    @FXML
+    private Label validarNombre;
+
 
     private ObservableList<Medicamento> medicamentos;
 
@@ -60,11 +66,9 @@ public class ControladorMedicamentos implements Initializable {
         idCodigo.setCellValueFactory(new PropertyValueFactory<>("idMedicamento"));
         idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
-
-
-
-        deshabilitarBotones();
-        deshabilitarCampos();
+        bt_modificar.setDisable(true);
+        bt_inhabilitar.setDisable(true);
+        bt_guardar.setDisable(true);
         manejarEventos();
     }
 
@@ -168,16 +172,46 @@ public class ControladorMedicamentos implements Initializable {
         limpiarFormulario();
 
     }
+    @FXML
+    public void validar(){
+        tf_Tipo.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+
+            }
+
+        });
+        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+
+            }
+
+        });
+
+    }
 
     public void validarCamposVacios(){
         if (tf_Tipo.getText().isEmpty()){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Medicamentos");
-            msg.setContentText("Debe ingresar todos los campos");
-            msg.setHeaderText("Resultado");
-            msg.show();
+            validarMedicamento.setText("Campo obligatorio");
+
+        }else{
+            validarMedicamento.setText("");
+        }
+        if(tf_nombre1.getText().isEmpty()){
+            validarNombre.setText("Campo Obligatorio");
+        }else{
+            validarNombre.setText("");
 
         }
+        if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()){
+            bt_guardar.setDisable(true);
+        }else {
+            bt_guardar.setDisable(false);
+        }
+
     }
 
     @FXML
@@ -242,6 +276,12 @@ public class ControladorMedicamentos implements Initializable {
         tf_Tipo.setDisable(true);
         tf_nombre1.setDisable(true);
 
+    }
+    public void cancelar() {
+        tf_Tipo.setText("");
+        tf_nombre1.setText("");
+        bt_modificar.setDisable(true);
+        bt_inhabilitar.setDisable(true);
     }
 
     @FXML
