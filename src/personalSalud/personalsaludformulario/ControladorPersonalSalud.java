@@ -131,7 +131,7 @@ public class ControladorPersonalSalud implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-<<<<<<< HEAD
+
         titulos = FXCollections.observableArrayList();
 
 
@@ -142,8 +142,7 @@ public class ControladorPersonalSalud implements Initializable {
         colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
         colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
         colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
-=======
->>>>>>> origin/master
+
 
         iniciarCbxDocumento();
         iniciarCbxSexo();
