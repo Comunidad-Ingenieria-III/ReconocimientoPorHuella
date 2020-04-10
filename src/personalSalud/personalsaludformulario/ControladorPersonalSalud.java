@@ -116,6 +116,8 @@ public class ControladorPersonalSalud implements Initializable {
     private Button bt_inhabilitar;
     @FXML
     private Button bt_abrirFormularioPer;
+    @FXML
+    private Button bt_agregar;
 
     @FXML
     private Label lblDocumento;
@@ -127,7 +129,7 @@ public class ControladorPersonalSalud implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        titulos = FXCollections.observableArrayList(psFacade.obtenerTodas());
+        titulos = FXCollections.observableArrayList();
 
 
         tb_personal.setItems(titulos);
@@ -151,6 +153,26 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     @FXML
+    public void agregarTitulos(){
+        PsDto psDto = new PsDto(
+                0,
+                tf_numerodocumento.getText(),
+                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getNombre(),
+                cbx_idinstitucion.getSelectionModel().getSelectedItem().getNombre(),
+                Date.valueOf(dp_fechatitulacion.getValue())
+        );
+
+        titulos.add(psDto);
+        limpiarComponentes();
+    }
+
+    public void limpiarComponentes(){
+        cbx_idtipotitulo.setValue(null);
+        cbx_idinstitucion.setValue(null);
+        dp_fechatitulacion.setValue(null);
+    }
+
+    @FXML
     public void iniciarCbxPersona() {
         ObservableList<PersonalSalud> listapersonas = FXCollections.observableArrayList(personalSaludFacade.obtenerTodoPersonalSalud());
         cbx_idpersona.setItems(listapersonas);
@@ -168,6 +190,9 @@ public class ControladorPersonalSalud implements Initializable {
         ObservableList<InstitucionAcademica> listainstituciones = FXCollections.observableArrayList(facadeInstitucionAcademica.obtenerTodasInstituciones());
         cbx_idinstitucion.setItems(listainstituciones);
     }
+
+
+
 
     @FXML
     private PersonalSalud crearPersonalSalud() {
