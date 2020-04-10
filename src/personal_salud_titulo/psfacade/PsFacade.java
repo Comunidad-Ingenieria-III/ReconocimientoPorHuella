@@ -23,6 +23,8 @@ public class PsFacade {
         return psDao.modificar(psDto);
     }
 
+    public void buscar(PsDto psDto){ psDao.buscarPorId(String.valueOf(psDto));}
+
     public int eliminar(String idInstitucion) {
         return psDao.eliminar(idInstitucion);
     }

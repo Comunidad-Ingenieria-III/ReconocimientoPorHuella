@@ -151,14 +151,14 @@ public class ControladorInstitucionAcademica implements Initializable {
             boolean esValido = true;
             @Override
             public void handle(MouseEvent event) {
-                /*if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
+                if (txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() || txtDireccion.getText().isEmpty() ||
                         txtTelefono.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null, "DEBE LLENAR TODOS LOS CAMPOS",
                             "ERROR AL INTENTAR GUARDAR", JOptionPane.ERROR_MESSAGE);
 
                 }else {
                     guardarInstitucion();
-                }*/
+                }
 
                     if (txtCodigo.getText().isEmpty()) {
                         txtCodigo.setStyle("-fx-border-color: red ; -fx-border-width: 2px; -fx-border-radius: 6px;");
