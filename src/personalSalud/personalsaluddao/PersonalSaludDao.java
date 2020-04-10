@@ -61,11 +61,13 @@ public class PersonalSaludDao {
         return personas;
     } // Fin del método obtenerTodos()
 
+
+
     public List<PsDto> listaPsdto() throws RuntimeException {
 
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from personal_salud_titulo";
+            String sql = "select * from personal_salud_titulo join personal_salud on personal_salud_titulo.idPersonal = personal_salud.idPersonal ";
             stmt = conn.prepareStatement(sql);//preparar consulta
             rset = stmt.executeQuery();//ejecutar la consulta y guardarla en la variabble rset
 
@@ -74,7 +76,7 @@ public class PersonalSaludDao {
             while (rset.next()) {
 
                 psDto = new PsDto();
-                psDto.setId(rset.getInt("idPst"));
+                //psDto.setId(rset.getInt("idPst"));
                 psDto.setIdPersonal(rset.getString("idPersonal"));
                 psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
                 psDto.setIdInstitucion(rset.getString("idInstitucion"));
@@ -143,7 +145,7 @@ public class PersonalSaludDao {
     } // Fin del método agregar()
 
 
-    public boolean agregarPersonalSalud(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
+    public boolean agregarPersonalSalud(PersonalSalud personalSalud) throws SQLException {
 
         String query = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
                 " values('" + personalSalud.getIdPersonal() + "','"
@@ -158,16 +160,16 @@ public class PersonalSaludDao {
                 + personalSalud.getCargo() + "')";
 
 
-        String query2 = "insert into personal_salu_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion)" +
+        /*String query2 = "insert into personal_salu_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion)" +
                 " values('" + psDto.getId() + "','"
                 + psDto.getFechaTitulacion() + "','"
                 + psDto.getIdPersonal() + "','"
                 + psDto.getIdTipoTitu() + "','"
-                + psDto.getIdInstitucion() + "','";
+                + psDto.getIdInstitucion() + "','";*/
 
         JdbcHelper jdbc = new JdbcHelper();
         boolean exito = jdbc.ejecutarQuery(query);
-        boolean exito2 = jdbc.ejecutarQuery(query2);
+        //boolean exito2 = jdbc.ejecutarQuery(query2);*/
 
 
         return exito;
@@ -246,22 +248,19 @@ public class PersonalSaludDao {
         return psDto;
     }
 
-    public void eliminarPersonalSalud(String idCliente) {
+    public int eliminarPersonalSalud(String idCliente) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "delete from datos_persona where idpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idCliente);
 
-            int rta = stmt.executeUpdate();
-            if (rta != 1) {
-                throw new RuntimeException("Error al eliminar!");
-            } else {
-                JOptionPane.showMessageDialog(null, "El Registro Fue Eliminado Exitosamente ", "INFORMACIÓN", 1);
-            }
+            return stmt.executeUpdate();
+
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("Error SQL - eliminar()!");
         }
+
     }
 
 

@@ -3,12 +3,13 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
+<BorderPane prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
    <top>
-      <MenuBar prefHeight="80.0" prefWidth="800.0" stylesheets="@../Resources/Style.css" BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="47.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
         <menus>
             <Menu mnemonicParsing="false" text="Gestiones">
               <items>
@@ -78,10 +79,9 @@
       </MenuBar>
    </top>
    <bottom>
-      <AnchorPane prefHeight="105.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="panel_inferior" prefHeight="40.0" prefWidth="1200.0" styleClass="panel_inferior" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="67.0" prefWidth="310.0" />
-            <Button fx:id="bt_salir" layoutX="1151.0" layoutY="19.0" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="30.0" prefWidth="109.0" stylesheets="@../Resources/Style.css" text="Salir" textFill="#e8e8e8">
+            <Button fx:id="bt_salir" layoutX="994.0" layoutY="10.0" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="30.0" prefWidth="109.0" styleClass="button" stylesheets="@../Resources/Style.css" text="Salir" textFill="#e8e8e8">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
@@ -93,19 +93,19 @@
       </AnchorPane>
    </bottom>
    <right>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_derecha" prefHeight="563.0" prefWidth="22.0" styleClass="panel_derecha" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <AnchorPane fx:id="FormularioPrincipal" prefHeight="650.0" prefWidth="1000.0" styleClass="pane" stylesheets="@../Resources/Style.css" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_principal" fx:id="FormularioPrincipal" prefHeight="563.0" prefWidth="1002.0" styleClass="panel_principal" BorderPane.alignment="CENTER" />
    </center>
    <left>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="panel_izquierdo" prefHeight="650.0" prefWidth="148.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="13.0" layoutY="30.0" prefHeight="35.0" prefWidth="178.0" styleClass="lbl-titulo" stylesheets="@../Resources/Style.css" text="Solo Pruebas" textFill="#f8f5f5">
-               <font>
-                  <Font name="System Bold Italic" size="24.0" />
-               </font>
-            </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/APH.jpg" />
+               </image>
+            </ImageView>
          </children></AnchorPane>
    </left>
 </BorderPane>

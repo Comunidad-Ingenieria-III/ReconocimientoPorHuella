@@ -38,6 +38,10 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> implements Initializable
     private Label validarTt;
     @FXML
     private Label validarNombre;
+    @FXML
+    private Label asterisco1;
+    @FXML
+    private Label asterico2;
 
     @FXML
     private Button bt_crear;

@@ -19,8 +19,8 @@ public class PersonalSaludFacade {
         return personalSaludDao.listarPersonalSalud();
     }
 
-    public boolean agregarPersonalSalud(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
-        return personalSaludDao.agregarPersonalSalud(personalSalud, psDto);
+    public boolean agregarPersonalSalud(PersonalSalud personalSalud) throws SQLException {
+        return personalSaludDao.agregarPersonalSalud(personalSalud);
 
     }
 
