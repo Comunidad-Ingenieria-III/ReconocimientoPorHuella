@@ -33,6 +33,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
     private TableColumn<TtAcademico, String> idCodigo;
     @FXML
     private TableColumn<TtAcademico, String> idNombre;
+
     @FXML
     private TextField tf_Tipo, tf_nombre1;
     @FXML

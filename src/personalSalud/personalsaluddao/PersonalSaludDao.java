@@ -26,6 +26,8 @@ public class PersonalSaludDao {
 
     private PersonalSalud personalSalud;
     private List<PersonalSalud> personas;
+    private PsDto psDto;
+    private List<PsDto> listaPs;
 
     public List<PersonalSalud> listarPersonalSalud() {
         try {
@@ -60,15 +62,47 @@ public class PersonalSaludDao {
     } // Fin del método obtenerTodos()
 
 
-    public int agregarPersonal(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
+
+    public List<PsDto> listaPsdto() throws RuntimeException {
+
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from personal_salud_titulo join personal_salud on personal_salud_titulo.idPersonal = personal_salud.idPersonal ";
+            stmt = conn.prepareStatement(sql);//preparar consulta
+            rset = stmt.executeQuery();//ejecutar la consulta y guardarla en la variabble rset
+
+            listaPs = new ArrayList<>();
+
+            while (rset.next()) {
+
+                psDto = new PsDto();
+                //psDto.setId(rset.getInt("idPst"));
+                psDto.setIdPersonal(rset.getString("idPersonal"));
+                psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
+                psDto.setIdInstitucion(rset.getString("idInstitucion"));
+                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
+
+                listaPs.add(psDto);
+
+            }
+
+
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerTodos()!");
+        }
+        return listaPs;
+    }
+
+
+    public int agregarPersonal(PersonalSalud personalSalud) throws SQLException {
+        Connection conflito = conn;
 
         try {
 
             conn = ConexionRoot.getConexion();
-            conn.setAutoCommit(false);
-            String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
-                    " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+            //conn.setAutoCommit(false);
+            String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, personalSalud.getIdPersonal());
             stmt.setString(2, personalSalud.getNombre1());
             stmt.setString(3, personalSalud.getNombre2());
@@ -80,9 +114,9 @@ public class PersonalSaludDao {
             stmt.setString(9, personalSalud.getTipoDocumento());
             stmt.setString(10, personalSalud.getCargo());
 
+            return stmt.executeUpdate();
 
-
-            String sql_1 = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
+           /* String sql_1 = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
 
             stmt.setInt(1, psDto.getId());
             stmt.setString(2, psDto.getIdPersonal());
@@ -96,21 +130,22 @@ public class PersonalSaludDao {
             stmt = conn.prepareStatement(sql_1);
 
             conn.commit();
-            JOptionPane.showMessageDialog(null, "Se ejecutó la transaccion corectamente");
+            JOptionPane.showMessageDialog(null, "Se ejecutó la transaccion corectamente");*/
 
 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al ejecutar " + conflito + ": " + ex);
 
-        } catch (SQLException | RuntimeException e) {
-            conn.rollback();
+            /*conn.rollback();
             System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "Algo salio mal");
+            JOptionPane.showMessageDialog(null, "Algo salio mal");*/
 
         }
         return 0;
     } // Fin del método agregar()
 
 
-    public boolean agregarPersonalSalud(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
+    public boolean agregarPersonalSalud(PersonalSalud personalSalud) throws SQLException {
 
         String query = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
                 " values('" + personalSalud.getIdPersonal() + "','"
@@ -125,17 +160,16 @@ public class PersonalSaludDao {
                 + personalSalud.getCargo() + "')";
 
 
-
-        String query2 = "insert into personal_salu_titulo(idPst, fechaTitulacion, idPersonal, idTipoTitu, idInstitucion)" +
+        /*String query2 = "insert into personal_salu_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion)" +
                 " values('" + psDto.getId() + "','"
-                +psDto.getFechaTitulacion() + "','"
+                + psDto.getFechaTitulacion() + "','"
                 + psDto.getIdPersonal() + "','"
                 + psDto.getIdTipoTitu() + "','"
-                + psDto.getIdInstitucion() + "','";
+                + psDto.getIdInstitucion() + "','";*/
 
         JdbcHelper jdbc = new JdbcHelper();
         boolean exito = jdbc.ejecutarQuery(query);
-        boolean exito2 = jdbc.ejecutarQuery(query2);
+        //boolean exito2 = jdbc.ejecutarQuery(query2);*/
 
 
         return exito;
@@ -190,52 +224,43 @@ public class PersonalSaludDao {
         }
     } // Fin del método modificar()
 
-    /*public PersonalSalud buscarPersonalSalud(int idPersonal) {
-        String query = "SELECT * FROM personal_salud WHERE idPersonal = " + idPersonal;
-        JdbcHelper jdbc = new JdbcHelper();
-        ResultSet rs = jdbc.realizarConsulta(query);
-
-        PersonalSalud personalSalud = null;
-
+    public PsDto buscarPorId(PsDto psDto) {
         try {
-            if (rs.next()) {
-                int id = idPersonal;
-                String nombre1 = rs.getString("nombre1");
-                String nombre2 = rs.getString("nombre2");
-                String apellido1 = rs.getString("apellido1");
-                String apellido2 = rs.getString("apellido2");
-                //String sexo = rs.getString("sexo");
-                String telefono = rs.getString("telefono");
-                String email = rs.getString("email");
-                //String tipoDocumento = rs.getString("tipoDocumento");
-                //String cargo = rs.getString("cargo");
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from personal_salud_titulo where idPersonal = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, String.valueOf(psDto));
+            rset = stmt.executeQuery();
 
-                personalSalud = new PersonalSalud(idPersonal, nombre1, nombre2, apellido1, apellido2,
-                        telefono, email);
+            if (rset.next()) {
+                psDto = new PsDto();
+
+                //psDto.setId(rset.getInt("idPst"));
+                psDto.setIdPersonal(rset.getString("idPersonal"));
+                psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
+                psDto.setIdInstitucion(rset.getString("idInstitucion"));
+                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
+
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar Personal de Salud: " + ex,
-                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerPorId()!");
         }
-        return personalSalud;
-    }*/
+        return psDto;
+    }
 
-    public void eliminarPersonalSalud(String idCliente) {
+    public int eliminarPersonalSalud(String idCliente) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "delete from datos_persona where idpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idCliente);
 
-            int rta = stmt.executeUpdate();
-            if (rta != 1) {
-                throw new RuntimeException("Error al eliminar!");
-            } else {
-                JOptionPane.showMessageDialog(null, "El Registro Fue Eliminado Exitosamente ", "INFORMACIÓN", 1);
-            }
+            return stmt.executeUpdate();
+
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("Error SQL - eliminar()!");
         }
+
     }
 
 

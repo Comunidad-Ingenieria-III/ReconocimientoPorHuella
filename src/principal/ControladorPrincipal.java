@@ -98,7 +98,13 @@ public class ControladorPrincipal implements Initializable {
             Parent formulario_tipo_documento;
             formulario_tipo_documento = FXMLLoader.load(getClass().getClassLoader().getResource("tipodocumento/formulariotipodocumento/FormularioTipoDocumento.fxml"));
             FormularioPrincipal.getChildren().setAll(formulario_tipo_documento);
-            //Stage formulario_tipo_documento = new Stage();
+
+            /*Stage documento = new Stage();
+            documento.setMaximized(false);
+            documento.centerOnScreen();
+            documento.show();*/
+
+
             //formulario_tipo_documento.setTitle("AP_Humana (Gestión Tipo de Documento)");
             //formularioTipoDocumento.setScene(new Scene(formulario_tipo_documento, 721, 427));
             //formulario_tipo_documento.setResizable(false);
