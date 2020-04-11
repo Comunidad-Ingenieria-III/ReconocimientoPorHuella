@@ -64,8 +64,6 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private TextField tf_apellido2;
     @FXML
-    private TextField tf_aux;
-    @FXML
     private ComboBox<String> cmb_sexo;
     @FXML
     private TextField tf_numtelefono;
@@ -120,9 +118,19 @@ public class ControladorPersonalSalud implements Initializable {
     private Button bt_abrirFormularioPer;
     @FXML
     private Button bt_agregar;
-
+    @FXML
+    private Label lbl_tipoDocumeto;
     @FXML
     private Label lblDocumento;
+    @FXML
+    private Label lbl_correo;
+    @FXML
+    private Label lbl_nombre1;
+    @FXML
+    private Label lbl_apellido1;
+    @FXML
+    private Label lbl_sexo;
+
 
     private Connection conn;
     private PreparedStatement stmt;
@@ -148,7 +156,7 @@ public class ControladorPersonalSalud implements Initializable {
         iniciarCbxSexo();
         iniciarCargo();
         deshabilitarBotones();
-        //deshabilitarCampos();
+        deshabilitarCampos();
         iniciarCbxPersona();
         iniciarCbxTipoTitulo();
         iniciarInstitucion();
@@ -158,7 +166,7 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     @FXML
-    public void agregarTitulos(){
+    public void agregarTitulos() {
         PsDto psDto = new PsDto(
                 0,
                 tf_numerodocumento.getText(),
@@ -171,32 +179,12 @@ public class ControladorPersonalSalud implements Initializable {
         limpiarComponentes();
     }
 
-    public void limpiarComponentes(){
+    public void limpiarComponentes() {
+        cbx_idpersona.setValue(null);
         cbx_idtipotitulo.setValue(null);
         cbx_idinstitucion.setValue(null);
         dp_fechatitulacion.setValue(null);
     }
-
-    @FXML
-    public void iniciarCbxPersona() {
-        ObservableList<PersonalSalud> listapersonas = FXCollections.observableArrayList(personalSaludFacade.obtenerTodoPersonalSalud());
-        cbx_idpersona.setItems(listapersonas);
-
-    }
-
-    @FXML
-    public void iniciarCbxTipoTitulo() {
-        ObservableList<TtAcademico> listatitulos = FXCollections.observableArrayList(facadeTtAcademico.obtenerTodosTitulosAcdemicos());
-        cbx_idtipotitulo.setItems(listatitulos);
-    }
-
-    @FXML
-    public void iniciarInstitucion() {
-        ObservableList<InstitucionAcademica> listainstituciones = FXCollections.observableArrayList(facadeInstitucionAcademica.obtenerTodasInstituciones());
-        cbx_idinstitucion.setItems(listainstituciones);
-    }
-
-
 
 
     @FXML
@@ -271,15 +259,6 @@ public class ControladorPersonalSalud implements Initializable {
                 cmb_tipodocumento.getSelectionModel().select(rset.getInt(dtoTipoDocumento.getNombreTipoDocumento()));
                 //cmb_cargo.set.setItems(rset.getString(cargo.getIdCargo()));
 
-
-                /*titulos = FXCollections.observableArrayList(personalSaludFacade.agregarPesonalTitulo());
-                tb_personal.setItems(titulos);
-                colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
-                colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
-                colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
-                colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));*/
-
-                buscarPorId();
             }
         } catch (Exception ex) {
             throw new RuntimeException("Error SQL - obtenerPorId()!");
@@ -290,43 +269,8 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     @FXML
-    public void buscarPorId() {
-
-        tb_personal.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        try {
-            conn = ConexionRoot.getConexion();
-            String sql = "select * from personal_salud_titulo where idPersonal = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, tf_numerodocumento.getText());
-            rset = stmt.executeQuery();
-
-            if (rset.next()) {
-                PsDto psDto = new PsDto();
-
-                titulos = FXCollections.observableArrayList(personalSaludFacade.agregarPesonalTitulo());
-                tb_personal.setItems(titulos);
-
-                if (tb_personal.getSelectionModel().getSelectedItem().getIdPersonal().equals(tf_numerodocumento.getText())) {
-
-                    //psDto.setId(rset.getInt("idPst"));
-                    colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
-                    colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
-                    colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
-                    colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
-                } else {
-                    JOptionPane.showMessageDialog(null, "No entro", "informacion", 1);
-                }
-
-            }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
-        }
-
-    }
-
-    @FXML
     public void modificarPersonal() {
+
 
         int res = personalSaludFacade.modificarPersonal(crearPersonalSalud());
 
@@ -468,7 +412,7 @@ public class ControladorPersonalSalud implements Initializable {
         int res = psFacade.agregar(psDto);
 
         if (res == 1) {
-            llenarTabla(psDto);
+
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
             msg.setTitle("Gestiones - Instituciones Academicas");
             msg.setContentText("La institucion se ha agregado");
@@ -484,21 +428,6 @@ public class ControladorPersonalSalud implements Initializable {
             msg.show();
         }
         limpiar();
-    }
-
-    @FXML
-    public PsDto llenarTabla(PsDto psDto) {
-
-        titulos = FXCollections.observableArrayList(personalSaludFacade.agregarPesonalTitulo());
-        tb_personal.setItems(titulos);
-
-        //colIdPst.setCellValueFactory(new PropertyValueFactory<>("idPst"));
-        colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
-        colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
-        colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
-        colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
-
-        return psDto;
     }
 
     @FXML
@@ -529,17 +458,55 @@ public class ControladorPersonalSalud implements Initializable {
         });
     }
 
-    /*@FXML
+    @FXML
+    private void validarCamposVacios() {
+        validarCampoCorreo();
+
+        if (cmb_tipodocumento.getValue().equals("Seleccione")==true) {
+            lbl_tipoDocumeto.setText("Campo Requerido");
+        } else {
+            lbl_tipoDocumeto.setText("");
+        }
+
+        if (tf_numerodocumento.getText().isEmpty()) {
+            lblDocumento.setText("Ingresa solo Números");
+
+        } else {
+            lblDocumento.setText("");
+        }
+        if (tf_nombre1.getText().isEmpty()) {
+            lbl_nombre1.setText("Campo Requerido");
+        } else {
+            lbl_nombre1.setText("");
+        }
+        if (tf_apellido1.getText().isEmpty()) {
+            lbl_apellido1.setText("Campo Requerido");
+        } else {
+            lbl_apellido1.setText("");
+        }
+        if (cmb_sexo.getValue().equals("Seleccione")==true) {
+            lbl_sexo.setText("Campo Requerido");
+        } else {
+            lbl_sexo.setText("");
+        }
+        if (tf_numerodocumento.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
+            bt_guardar.setDisable(true);
+        } else {
+            bt_guardar.setDisable(false);
+        }
+    }
+
+    @FXML
     private void validarCampoCorreo() {
 
         if (tf_correoelectronico.getText().isEmpty()) {
-            lblUsuario.setText("Campo Requerido");
-        } else if (!tf_Usuario.getText().contains("@") || !tf_Usuario.getText().contains(".")) {
-            lblUsuario.setText("Usuario invalido");
+            lbl_correo.setText("Campo Requerido");
+        } else if (!tf_correoelectronico.getText().contains("@") || !tf_correoelectronico.getText().contains(".")) {
+            lbl_correo.setText("Correo Invalido");
         } else {
-            lblUsuario.setText("");
+            lbl_correo.setText("");
         }
-    }*/
+    }
 
     @FXML
     private void eventoCrear() {
@@ -551,8 +518,64 @@ public class ControladorPersonalSalud implements Initializable {
                 bt_inhabilitar.setDisable(true);
                 bt_modificar.setDisable(true);
                 bt_guardar.setDisable(false);
+                cmb_tipodocumento.requestFocus();
             }
         });
+    }
+
+
+    @FXML
+    public void validar() {
+
+        cmb_tipodocumento.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+
+            }
+        });
+
+        tf_numerodocumento.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+
+            }
+
+        });
+        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+
+            }
+
+        });
+
+        tf_apellido1.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+
+            }
+
+        });
+
+        cmb_sexo.se.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+
+            }
+        });
+
+        tf_correoelectronico.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+            }
+        });
+
     }
 
     @FXML
@@ -572,9 +595,9 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     public void iniciarCbxSexo() {
         ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("Seleccione", "Masculino", "Femenino");
+        items.addAll("Masculino", "Femenino");
         cmb_sexo.setItems(items);
-        cmb_sexo.getSelectionModel().selectFirst();
+
     }
 
     @FXML
@@ -590,6 +613,25 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     @FXML
+    public void iniciarCbxPersona() {
+        ObservableList<PersonalSalud> listapersonas = FXCollections.observableArrayList(personalSaludFacade.obtenerTodoPersonalSalud());
+        cbx_idpersona.setItems(listapersonas);
+
+    }
+
+    @FXML
+    public void iniciarCbxTipoTitulo() {
+        ObservableList<TtAcademico> listatitulos = FXCollections.observableArrayList(facadeTtAcademico.obtenerTodosTitulosAcdemicos());
+        cbx_idtipotitulo.setItems(listatitulos);
+    }
+
+    @FXML
+    public void iniciarInstitucion() {
+        ObservableList<InstitucionAcademica> listainstituciones = FXCollections.observableArrayList(facadeInstitucionAcademica.obtenerTodasInstituciones());
+        cbx_idinstitucion.setItems(listainstituciones);
+    }
+
+    @FXML
     private void habilitarCampos() {
 
         cmb_tipodocumento.setDisable(false);
@@ -602,6 +644,7 @@ public class ControladorPersonalSalud implements Initializable {
         tf_numtelefono.setDisable(false);
         tf_correoelectronico.setDisable(false);
         cmb_cargo.setDisable(false);
+        tb_personal.setDisable(false);
         tf_numerodocumento.requestFocus();
     }
 
@@ -614,7 +657,7 @@ public class ControladorPersonalSalud implements Initializable {
         bt_salir.setDisable(false);
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
-        bt_modificar.setDisable(true);
+        bt_inhabilitar.setDisable(true);
 
     }
 
