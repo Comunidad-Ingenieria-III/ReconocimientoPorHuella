@@ -561,7 +561,7 @@ public class ControladorPersonalSalud implements Initializable {
 
         });
 
-        cmb_sexo.se.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        cmb_sexo.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarCamposVacios();
