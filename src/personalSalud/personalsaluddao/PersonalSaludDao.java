@@ -124,7 +124,7 @@ public class PersonalSaludDao {
             stmt.setDate(5, new java.sql.Date(psDto.getFechaTitulacion().getTime()));
             stmt.executeUpdate(sql_1);
 
-            JOptionPane.showMessageDialog(null,"datos insertados correctamenti");
+            JOptionPane.showMessageDialog(null, "datos insertados correctamenti");
 
 
             stmt = conn.prepareStatement(sql);
@@ -144,59 +144,6 @@ public class PersonalSaludDao {
         }
         return 0;
     } // Fin del método agregar()
-
-
-    public boolean agregarPersonalSalud(PersonalSalud personalSalud) throws SQLException {
-
-        String query = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo)" +
-                " values('" + personalSalud.getIdPersonal() + "','"
-                + personalSalud.getNombre1() + "','"
-                + personalSalud.getNombre2() + "','"
-                + personalSalud.getApellido1() + "','"
-                + personalSalud.getApellido2() + "','"
-                + personalSalud.getSexo() + "','"
-                + personalSalud.getTelefono() + "','"
-                + personalSalud.getEmail() + "','"
-                + personalSalud.getCargo() + "','"
-                + personalSalud.getCargo() + "')";
-
-
-        /*String query2 = "insert into personal_salu_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion)" +
-                " values('" + psDto.getId() + "','"
-                + psDto.getFechaTitulacion() + "','"
-                + psDto.getIdPersonal() + "','"
-                + psDto.getIdTipoTitu() + "','"
-                + psDto.getIdInstitucion() + "','";*/
-
-        JdbcHelper jdbc = new JdbcHelper();
-        boolean exito = jdbc.ejecutarQuery(query);
-        //boolean exito2 = jdbc.ejecutarQuery(query2);*/
-
-
-        return exito;
-
-    }
-
-
-    public Boolean modificarPersonalSalud(PersonalSalud personalSalud) {
-
-        String sql = "UPDATE personal_salud SET nombre1 = '" + personalSalud.getNombre1() + "',"
-                + "nombre2 = '" + personalSalud.getNombre2() + "',"
-                + "apellido1 = '" + personalSalud.getApellido1() + "',"
-                + "apellido2 = '" + personalSalud.getApellido2() + "',"
-                + "sexo = '" + personalSalud.getSexo() + "',"
-                + "telefono = '" + personalSalud.getTelefono() + "',"
-                + "email = '" + personalSalud.getEmail()
-                + " WHERE idPersonal = '" + personalSalud.getTipoDocumento();
-        //+ "tipoDocumento = '" + Integer.parseInt(personalSalud.getTipoDocumento())+"',"
-        //+ "cargo = '" + personalSalud.getCargo()
-
-
-        JdbcHelper jdbc = new JdbcHelper();
-        boolean exito = jdbc.ejecutarQuery(sql);
-        return exito;
-
-    }
 
     public int modificarPersonal(PersonalSalud personalSalud) {
         try {
@@ -225,7 +172,7 @@ public class PersonalSaludDao {
         }
     } // Fin del método modificar()
 
-    public PsDto buscarPorId(PsDto psDto) {
+    /*public PsDto buscarPorId(PsDto psDto) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from personal_salud_titulo where idPersonal = ?";
@@ -247,7 +194,7 @@ public class PersonalSaludDao {
             throw new RuntimeException("Error SQL - obtenerPorId()!");
         }
         return psDto;
-    }
+    }*/
 
     public int eliminarPersonalSalud(String idCliente) {
         try {
@@ -261,8 +208,6 @@ public class PersonalSaludDao {
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("Error SQL - eliminar()!");
         }
-
     }
-
 
 }

@@ -225,14 +225,14 @@ public class ControladorPersonalSalud implements Initializable {
         int res = psFacade.agregar(psDto);*/
 
         int idPst = 0;
-        String idPersonal = tf_numerodocumento.getText();
-        String idInstitucion =  colIdTipoTitu.getText();
+        String idPersonal = colIdPersonal.getText();
+        String idInstitucion = colIdTipoTitu.getText();
         String idTipoTitu = colIdIntitucion.getText();
         SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
-        Date fechaTitulacion = Date.valueOf(String.valueOf(formato.parse(colFechaTitulacion.getText())));
+        Date fechaTitulacion = Date.valueOf(formato.format(colFechaTitulacion.getText()));
 
 
-        PsDto psDto = new PsDto(idPst,idPersonal,idInstitucion,idTipoTitu,fechaTitulacion);
+        PsDto psDto = new PsDto(idPst, idPersonal, idInstitucion, idTipoTitu, fechaTitulacion);
         return psDto;
     }
 
@@ -320,112 +320,7 @@ public class ControladorPersonalSalud implements Initializable {
         limpiar();
     }
 
-    @FXML
-    public boolean validar(PersonalSalud personalSalud) {
-
-        StringBuilder sb = new StringBuilder();
-        boolean esValido = true;
-        if (personalSalud == null) {
-            esValido = false;
-            sb.append("*No existe libro\n");
-        }
-
-        if (tf_numerodocumento.getText().isEmpty()) {
-            esValido = false;
-            sb.append("Campo Documeto Requerido\n");
-            lblDocumento.setText("Campo Requerido");
-            tf_numerodocumento.requestFocus();
-        }
-
-        if (tf_numerodocumento.getLength() <= 4) {
-            esValido = false;
-            sb.append("Numero Documento Mayor de 4 y Menor de 10 Digitos\n");
-        }
-
-        if (tf_numerodocumento.getLength() > 10) {
-            esValido = false;
-            sb.append("Numero Documento Mayor de 4 y Menor de 10 Digitos\n");
-        }
-
-        if (tf_nombre1.getText().isEmpty()) {
-            esValido = false;
-            sb.append("Campo Primer Nombre Requerido\n");
-        }
-
-        if (tf_apellido1.getText().isEmpty()) {
-            esValido = false;
-            sb.append("Campo Primer Apellido Requerido\n");
-        }
-
-        if (cmb_sexo.getValue() == null) {
-            esValido = false;
-            sb.append("Campo Sexo Requerido\n");
-        }
-
-        if (tf_numtelefono.getText().isEmpty()) {
-            esValido = false;
-            sb.append("Campo Numero Telefono Requerido\n");
-        }
-
-        if (tf_correoelectronico.getText().contains("@")) {
-            esValido = false;
-            sb.append("Debes Ingresar una Dirección de Correo Valida\n");
-        }
-
-        if (tf_correoelectronico.getText().contains(".")) {
-            esValido = false;
-            sb.append("Debes Ingresar una Dirección de Correo Valida");
-        }
-
-
-        if (!esValido) {
-            JOptionPane.showMessageDialog(null, "Se encontraron los siguientes "
-                            + "errores: \n" + sb.toString(), "Error de validación",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-
-        return esValido;
-    }
-
-
-    @FXML
-    public boolean guardar() {
-
-        try {
-            PersonalSalud personalSalud = new PersonalSalud();
-            PsDto psDto = new PsDto();
-
-            if (validar(personalSalud) == false) {
-                return false;
-            }
-            boolean exito;
-
-            if (personalSalud.getIdPersonal() == "") {
-
-                exito = personalSaludFacade.agregarPersonalSalud(crearPersonalSalud());
-
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Personal de Salud");
-                msg.setContentText("El Personal de Salud ha sido agregado correctamente");
-                msg.setHeaderText("Resultado");
-                msg.show();
-
-
-
-            } else
-                exito = personalSaludFacade.agregarPersonalSalud(personalSalud);
-
-
-            return exito;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-
-    }
-
+    /*
     @FXML
     public void guardarInstitucion() {
 
@@ -458,7 +353,7 @@ public class ControladorPersonalSalud implements Initializable {
             msg.show();
         }
         limpiar();
-    }
+    }*/
 
     @FXML
     public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
