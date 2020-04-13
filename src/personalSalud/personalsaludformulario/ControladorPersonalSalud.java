@@ -132,6 +132,8 @@ public class ControladorPersonalSalud implements Initializable {
     private Label lbl_apellido1;
     @FXML
     private Label lbl_sexo;
+    @FXML
+    private Label lbl_numtelefono;
 
 
     private Connection conn;
