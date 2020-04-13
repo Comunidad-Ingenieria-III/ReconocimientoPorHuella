@@ -43,6 +43,34 @@ public class TtAcademicoDao {
         return ttAcademicoList;
     } // Fin de obterner todas
 
+
+
+    public List<TtAcademico> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from tipo_titulo_academico where idTipoTitu LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            ttAcademicoList = new ArrayList<>();
+            while (rset.next()){
+                ttAcademico = new TtAcademico();
+                ttAcademico.setIdTipoTituloAcademico(rset.getString("idTipoTitu"));
+                ttAcademico.setNombre(rset.getString("nombre"));
+
+                ttAcademicoList.add(ttAcademico);
+            }
+
+
+
+        }catch (RuntimeException | SQLException e){
+            throw new RuntimeException("Error SQL - BucarTitulo()!");
+        }
+        return ttAcademicoList;
+    }
+
+
     public int agregar(TtAcademico ttAcademico) {
         try {
             conn = ConexionRoot.getConexion();

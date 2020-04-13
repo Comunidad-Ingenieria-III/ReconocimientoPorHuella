@@ -58,6 +58,28 @@ public class MedicamentoDao {
         }
     } // Fin del método agregar()
 
+    public List<Medicamento> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from medicamento where idMedicamento LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            medicamentoList = new ArrayList<>();
+            while (rset.next()){
+                medicamento = new Medicamento();
+                medicamento.setIdMedicamento(rset.getString("idMedicamento"));
+                medicamento.setNombre(rset.getString("nombre"));
+
+                medicamentoList.add(medicamento);
+            }
+
+        }catch (RuntimeException | SQLException e){
+            throw new RuntimeException("Error SQL - BucarMedicamento()!");
+        }
+        return medicamentoList;
+    } // Fin del metodo buscar por ID
 
 
 

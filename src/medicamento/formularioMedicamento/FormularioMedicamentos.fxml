@@ -6,7 +6,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="318.0" prefWidth="775.0"  stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medicamento.formularioMedicamento.ControladorMedicamentos">
+<AnchorPane prefHeight="318.0" prefWidth="775.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medicamento.formularioMedicamento.ControladorMedicamentos">
    <children>
       <SplitPane dividerPositions="0.6718547341115434" prefHeight="318.0" prefWidth="773.0">
         <items>
@@ -44,7 +44,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="bt_consultar" layoutX="135.0" layoutY="229.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
+                        <Button fx:id="bt_consultar" layoutX="135.0" layoutY="229.0" mnemonicParsing="false" onAction="#consultarMedicamento" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -52,7 +52,7 @@
                               <Cursor fx:constant="HAND" />
                                 </cursor>
                         </Button>
-                        <Button fx:id="bt_cancelar" layoutX="240.0" layoutY="229.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
+                        <Button fx:id="bt_cancelar" layoutX="240.0" layoutY="229.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -65,7 +65,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="bt_guardar" layoutX="345.0" layoutY="68.0" mnemonicParsing="false" onAction="#guardarMedicamentos" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
+                        <Button fx:id="bt_guardar" layoutX="345.0" layoutY="68.0" mnemonicParsing="false" onAction="#botonGuardar" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
@@ -73,7 +73,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="bt_modificar" layoutX="345.0" layoutY="122.0" mnemonicParsing="false" onAction="#modificarMedicamento" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
+                        <Button fx:id="bt_modificar" layoutX="345.0" layoutY="122.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="131.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>

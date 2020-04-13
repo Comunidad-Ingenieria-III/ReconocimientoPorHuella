@@ -9,67 +9,50 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import medicamento.dto.Medicamento;
 import medicamento.facade.FacadeMedicamento;
+import tipoTituloAcademico.dto.TtAcademico;
 
+import javax.swing.*;
+import java.awt.*;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class ControladorMedicamentos implements Initializable {
+public class ControladorMedicamentos extends Component implements Initializable {
     FacadeMedicamento facade =  new FacadeMedicamento();
     @FXML
     private TableView<Medicamento> tbMedicamentos;
-
-
     @FXML
-    private TableColumn<Medicamento, String> idCodigo;
+    private TableColumn<Medicamento, String> idCodigo,idNombre;
     @FXML
-    private TableColumn<Medicamento, String> idNombre;
-
-
+    private TextField tf_Tipo,tf_nombre1;
     @FXML
-    private TextField tf_Tipo;
+    private Button bt_crear,bt_consultar,bt_cancelar,bt_salir,bt_guardar,bt_modificar,bt_inhabilitar;
     @FXML
-    private TextField tf_nombre1;
+    private Label validarMedicamento,validarNombre;
     @FXML
-    private Button bt_crear;
-    @FXML
-    private Button bt_consultar;
-    @FXML
-    private Button bt_cancelar;
-    @FXML
-    private Button bt_salir;
-    @FXML
-    private Button bt_guardar;
-    @FXML
-    private Button bt_modificar;
-    @FXML
-    private Button bt_inhabilitar;
-    @FXML
-    private Label validarMedicamento;
-    @FXML
-    private Label validarNombre;
-
-
     private ObservableList<Medicamento> medicamentos;
+    @FXML
+    private List<Medicamento> medicamentos1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         medicamentos = FXCollections.observableArrayList(facade.obternetTodosMedicamentos());
-
-
         tbMedicamentos.setItems(medicamentos);
-
         idCodigo.setCellValueFactory(new PropertyValueFactory<>("idMedicamento"));
         idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         bt_guardar.setDisable(true);
         manejarEventos();
+        deshabilitarCampos();
     }
 
     public void manejarEventos() {
@@ -79,12 +62,11 @@ public class ControladorMedicamentos implements Initializable {
                 if (newValue != null) {
                     tf_Tipo.setText(newValue.getIdMedicamento());
                     tf_nombre1.setText(newValue.getNombre());
-
-
-                    bt_crear.setDisable(false);
+                    bt_crear.setDisable(true);
                     bt_guardar.setDisable(true);
                     bt_modificar.setDisable(false);
                     bt_inhabilitar.setDisable(false);
+                    bt_consultar.setDisable(true);
                 }
 
             }
@@ -98,78 +80,125 @@ public class ControladorMedicamentos implements Initializable {
         tf_Tipo.setText("");
         tf_nombre1.setText("");
     }
-
     @FXML
-    public void guardarMedicamentos() {
+    public void botonGuardar(){
+        medicamentos1= facade.buscar(tf_Tipo.getText());
         Medicamento medicamento = new Medicamento(
                 tf_Tipo.getText(),
                 tf_nombre1.getText()
         );
+        if (medicamentos1.isEmpty()) {
+            if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
+                cancelar();
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Medicamentos");
+                msg.setContentText("Campos requeridos");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                bt_guardar.setDisable(true);
+            } else {
 
-        int res = facade.agregar(medicamento);
+                int res = facade.agregar(medicamento);
+                if (res == 1) {
+                    bt_guardar.setDisable(true);
+                    medicamentos.add(medicamento);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Medicamento");
+                    msg.setContentText("El medicamento se ha agregado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
 
-        if (res == 1) {
-            medicamentos.add(medicamento);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Medicamentos");
-            msg.setContentText("El medicamento  se ha agregado");
-            msg.setHeaderText("Resultado");
-            msg.show();
 
+                } else {
+                    cancelar();
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Medicamento");
+                    msg.setContentText("No se ha podido agregar el medicamento");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                }
+
+
+            }
         } else {
 
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Medicamentos");
-            msg.setContentText("No se ha podido agregar el medicamento");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-        limpiarFormulario();
-    }
+            if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Medicamentos");
+                msg.setContentText("Nombre es un campo requerido");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                tf_nombre1.requestFocus();
 
+            } else {
+
+
+                int res = facade.modificar(medicamento);
+                if (res == 1) {
+                    medicamentos.set(tbMedicamentos.getSelectionModel().getSelectedIndex(), medicamento);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Medicamento");
+                    msg.setContentText("El medicamento se ha modificado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                } else {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Medicamento");
+                    msg.setContentText("El medicamento , No ha sido modificado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                }
+
+            }
+        }
+
+
+
+
+    }
     @FXML
-    public void modificarMedicamento() {
-        Medicamento medicamento = new Medicamento(
-                tf_Tipo.getText(),
-                tf_nombre1.getText()
-
-        );
-        int res = facade.modificar(medicamento);
-        if (res == 1) {
-            medicamentos.set(tbMedicamentos.getSelectionModel().getSelectedIndex(), medicamento);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Medicamentos");
-            msg.setContentText("El medicamento se ha modificado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }else{
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Medicamentos");
-            msg.setContentText("El medicamento, No ha sido modificada");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-        limpiarFormulario();
+    public void modificar(){
+        tf_Tipo.setDisable(true);
+        tf_nombre1.setDisable(false);
+        tf_nombre1.requestFocus();
+        bt_modificar.setDisable(true);
     }
+
 
     @FXML
     public void eliminarMedicamento() {
         int res = facade.eliminar(tbMedicamentos.getSelectionModel().getSelectedItem().getIdMedicamento());
-        if (res == 1) {
-            medicamentos.remove(tbMedicamentos.getSelectionModel().getSelectedIndex());
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Medicamentos");
-            msg.setContentText("El medicamento se ha eliminado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }else{
+        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el medicamento");
+        if(i==0){
+            if (res == 1) {
+                medicamentos.remove(tbMedicamentos.getSelectionModel().getSelectedIndex());
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Medicamentos ");
+                msg.setContentText("El medicamento  se ha eliminado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }else{
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Medicamento");
+                msg.setContentText("El medicamento No ha sido eliminada");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }
+            limpiarFormulario();
+            cancelar();
+
+        }else if(i==1){
             Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Medicamentos");
+            msg.setTitle("Gestiones - Medicamento");
             msg.setContentText("El medicamento, No ha sido eliminada");
             msg.setHeaderText("Resultado");
             msg.show();
         }
         limpiarFormulario();
+        cancelar();
 
     }
     @FXML
@@ -193,24 +222,27 @@ public class ControladorMedicamentos implements Initializable {
 
     }
 
+    @FXML
     public void validarCamposVacios(){
         if (tf_Tipo.getText().isEmpty()){
-            validarMedicamento.setText("Campo obligatorio");
+            validarMedicamento.setText("Campo requerido");
+            bt_guardar.setDisable(true);
 
         }else{
             validarMedicamento.setText("");
+            bt_guardar.setDisable(false);
         }
         if(tf_nombre1.getText().isEmpty()){
-            validarNombre.setText("Campo Obligatorio");
+            validarNombre.setText("Campo requerido");
         }else{
             validarNombre.setText("");
 
         }
-        if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()){
-            bt_guardar.setDisable(true);
-        }else {
-            bt_guardar.setDisable(false);
-        }
+        //if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()){
+        // bt_guardar.setDisable(true);
+        //}//else {
+        //bt_guardar.setDisable(false);
+        //}
 
     }
 
@@ -224,28 +256,45 @@ public class ControladorMedicamentos implements Initializable {
         });
     }
 
+    @FXML
+    private void consultarMedicamento() {
+        if(tf_Tipo.getText().isEmpty()){
+            tf_Tipo.setDisable(false);
+            tf_nombre1.setDisable(true);
+            tf_Tipo.requestFocus();
+            bt_crear.setDisable(true);
+            bt_guardar.setDisable(true);
+
+        }else{
+
+            medicamentos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
+            tbMedicamentos.setItems(medicamentos);
+            idCodigo.setCellValueFactory(new PropertyValueFactory<>("idMedicamento"));
+            idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+            bt_consultar.setDisable(true);
+
+
+        }
+
+    }
+
 
     @FXML
     public void limpiarFormulario() {
         tf_Tipo.setText("");
         tf_nombre1.setText("");
-
-        bt_crear.setDisable(false);
-        bt_guardar.setDisable(false);
+        bt_crear.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
     }
-
-
-
 
     @FXML
     private void habilitarBotones() {
         bt_crear.setDisable(true); //siempre ira deshabilitado
         bt_consultar.setDisable(true);
-        bt_cancelar.setDisable(true);
+        bt_cancelar.setDisable(false);
         bt_salir.setDisable(false);
-        bt_guardar.setDisable(false);
+        // bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         habilitarCampos();
@@ -277,11 +326,23 @@ public class ControladorMedicamentos implements Initializable {
         tf_nombre1.setDisable(true);
 
     }
+    @FXML
     public void cancelar() {
         tf_Tipo.setText("");
         tf_nombre1.setText("");
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
+        bt_consultar.setDisable(false);
+        bt_crear.setDisable(false);
+        tf_nombre1.setDisable(true);
+        tf_Tipo.setDisable(true);
+        validarMedicamento.setText("");
+        validarNombre.setText("");
+
+        medicamentos = FXCollections.observableArrayList(facade.obternetTodosMedicamentos());
+        tbMedicamentos.setItems(medicamentos);
+        idCodigo.setCellValueFactory(new PropertyValueFactory<>("idMedicamento"));
+        idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     }
 
     @FXML
