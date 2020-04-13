@@ -115,7 +115,7 @@
  
 // centrar y cambiar color de los titulos de columnas
 .table-view .column-header .label{
-    -fx-text-fill: #52677A;
+    -fx-text-fill: black;
     -fx-alignment: CENTER;
 }
 
