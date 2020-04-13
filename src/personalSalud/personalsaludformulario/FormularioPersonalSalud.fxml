@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="576.0" prefWidth="1000.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<VBox prefHeight="576.0" prefWidth="1000.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <children>
       <AnchorPane id="panel_personal_salud" prefHeight="271.0" prefWidth="830.0" styleClass="panel_personal_salud">
          <children>
@@ -127,36 +128,36 @@
       </AnchorPane>
       <TableView fx:id="tb_personal" prefHeight="229.0" prefWidth="1000.0" tableMenuButtonVisible="true">
         <columns>
-          <TableColumn fx:id="colIdPersonal" prefWidth="190.0" text="Documento">
+          <TableColumn prefWidth="190.0" text="Documento">
                <columns>
-                  <TableColumn prefWidth="190.0" text="Column X">
+                  <TableColumn fx:id="colIdPersonal" prefWidth="190.0" text="documento">
                      <graphic>
                         <ComboBox fx:id="cbx_idpersona" prefHeight="25.0" prefWidth="176.0" promptText="Seleccione" />
                      </graphic>
                   </TableColumn>
                </columns>
             </TableColumn>
-            <TableColumn fx:id="colIdTipoTitu" prefWidth="190.0" text="Título">
+            <TableColumn prefWidth="190.0" text="Título">
                <columns>
-                  <TableColumn prefWidth="190.0">
+                  <TableColumn fx:id="colIdTipoTitu" prefWidth="190.0" text="titulo">
                      <graphic>
                         <ComboBox fx:id="cbx_idtipotitulo" prefHeight="25.0" prefWidth="190.0" promptText="Seleccione" />
                      </graphic>
                   </TableColumn>
                </columns>
             </TableColumn>
-            <TableColumn fx:id="colIdIntitucion" minWidth="0.0" prefWidth="190.0" text="Institución">
+            <TableColumn minWidth="0.0" prefWidth="190.0" text="Institución">
                <columns>
-                  <TableColumn prefWidth="190.0" text="Column X">
+                  <TableColumn fx:id="colIdIntitucion" prefWidth="190.0" text="institucion">
                      <graphic>
                         <ComboBox fx:id="cbx_idinstitucion" prefHeight="25.0" prefWidth="190.0" promptText="Seleccione" />
                      </graphic>
                   </TableColumn>
                </columns>
             </TableColumn>
-            <TableColumn fx:id="colFechaTitulacion" prefWidth="224.0" text="Fecha Titulación">
+            <TableColumn prefWidth="224.0" text="Fecha Titulación">
                <columns>
-                  <TableColumn prefWidth="224.0" text="Column X">
+                  <TableColumn fx:id="colFechaTitulacion" prefWidth="224.0" text="fechatitulacion">
                      <graphic>
                         <DatePicker fx:id="dp_fechatitulacion" prefHeight="25.0" prefWidth="224.0" promptText="DD/MM/AAAA" />
                      </graphic>
