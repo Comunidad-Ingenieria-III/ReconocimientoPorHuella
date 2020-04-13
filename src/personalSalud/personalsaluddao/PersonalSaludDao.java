@@ -62,7 +62,6 @@ public class PersonalSaludDao {
     } // Fin del método obtenerTodos()
 
 
-
     public List<PsDto> listaPsdto() throws RuntimeException {
 
         try {
@@ -94,13 +93,13 @@ public class PersonalSaludDao {
     }
 
 
-    public int agregarPersonal(PersonalSalud personalSalud) throws SQLException {
+    public int agregarPersonal(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
         Connection conflito = conn;
 
         try {
 
             conn = ConexionRoot.getConexion();
-            //conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
             String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, personalSalud.getIdPersonal());
@@ -114,31 +113,33 @@ public class PersonalSaludDao {
             stmt.setString(9, personalSalud.getTipoDocumento());
             stmt.setString(10, personalSalud.getCargo());
 
-            return stmt.executeUpdate();
+            stmt.executeUpdate(sql);
 
-           /* String sql_1 = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
+            String sql_1 = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
 
             stmt.setInt(1, psDto.getId());
             stmt.setString(2, psDto.getIdPersonal());
             stmt.setString(3, psDto.getIdTipoTitu());
             stmt.setString(4, psDto.getIdInstitucion());
             stmt.setDate(5, new java.sql.Date(psDto.getFechaTitulacion().getTime()));
+            stmt.executeUpdate(sql_1);
 
-           // stmt.executeUpdate(sql);
-            //stmt.executeUpdate(sql_1);
+            JOptionPane.showMessageDialog(null,"datos insertados correctamenti");
+
+
             stmt = conn.prepareStatement(sql);
             stmt = conn.prepareStatement(sql_1);
 
             conn.commit();
-            JOptionPane.showMessageDialog(null, "Se ejecutó la transaccion corectamente");*/
+            JOptionPane.showMessageDialog(null, "Se ejecutó la transaccion corectamente");
 
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al ejecutar " + conflito + ": " + ex);
 
-            /*conn.rollback();
-            System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "Algo salio mal");*/
+            conn.rollback();
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Algo salio mal");
 
         }
         return 0;

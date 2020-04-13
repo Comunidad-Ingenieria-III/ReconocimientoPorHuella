@@ -28,8 +28,8 @@ public class PersonalSaludFacade {
         return personalSaludDao.listaPsdto();
     }
 
-    public int agregarPersonal(PersonalSalud personalSalud) throws SQLException {
-        return personalSaludDao.agregarPersonal(personalSalud);
+    public int agregarPersonal(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
+        return personalSaludDao.agregarPersonal(personalSalud, psDto);
 
     }
 

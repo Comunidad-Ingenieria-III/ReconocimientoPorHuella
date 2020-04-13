@@ -38,6 +38,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -157,11 +159,10 @@ public class ControladorPersonalSalud implements Initializable {
         iniciarCargo();
         deshabilitarBotones();
         deshabilitarCampos();
-        iniciarCbxPersona();
+        //iniciarCbxPersona();
         iniciarCbxTipoTitulo();
         iniciarInstitucion();
         validarId();
-
 
     }
 
@@ -180,12 +181,11 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     public void limpiarComponentes() {
-        cbx_idpersona.setValue(null);
+//        cbx_idpersona.setValue(null);
         cbx_idtipotitulo.setValue(null);
         cbx_idinstitucion.setValue(null);
         dp_fechatitulacion.setValue(null);
     }
-
 
     @FXML
     private PersonalSalud crearPersonalSalud() {
@@ -207,12 +207,39 @@ public class ControladorPersonalSalud implements Initializable {
         return personal;
     }
 
-    /*
     @FXML
-    public void guardarPersonalS() throws SQLException {
+    private PsDto crearPsDto() throws ParseException {
+
+        /*PsDto psDto = new PsDto(
+                0,
+                tf_numerodocumento.getText(),
+                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
+                cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
+                Date.valueOf(dp_fechatitulacion.getValue())
 
 
-        int res = personalSaludFacade.agregarPersonal(crearPersonalSalud());
+        );
+
+        int res = psFacade.agregar(psDto);*/
+
+        int idPst = 0;
+        String idPersonal = tf_numerodocumento.getText();
+        String idInstitucion =  colIdTipoTitu.getText();
+        String idTipoTitu = colIdIntitucion.getText();
+        SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
+        Date fechaTitulacion = Date.valueOf(String.valueOf(formato.parse(colFechaTitulacion.getText())));
+
+
+        PsDto psDto = new PsDto(idPst,idPersonal,idInstitucion,idTipoTitu,fechaTitulacion);
+        return psDto;
+    }
+
+
+    @FXML
+    public void guardarPersonalS() throws SQLException, ParseException {
+
+
+        int res = personalSaludFacade.agregarPersonal(crearPersonalSalud(), crearPsDto());
 
         if (res == 1) {
             //instituciones.add(p);
@@ -231,8 +258,8 @@ public class ControladorPersonalSalud implements Initializable {
             msg.show();
         }
         limpiar();
-        iniciarCbxPersona();
-    }*/
+
+    }
 
 
     @FXML
@@ -381,11 +408,11 @@ public class ControladorPersonalSalud implements Initializable {
                 msg.setHeaderText("Resultado");
                 msg.show();
 
-                iniciarCbxPersona();
+
 
             } else
                 exito = personalSaludFacade.agregarPersonalSalud(personalSalud);
-            iniciarCbxPersona();
+
 
             return exito;
 
@@ -402,10 +429,11 @@ public class ControladorPersonalSalud implements Initializable {
 
         PsDto psDto = new PsDto(
                 0,
-                cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal(),
+                tf_numerodocumento.getText(),
                 cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
                 cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
                 Date.valueOf(dp_fechatitulacion.getValue())
+
 
         );
 
@@ -462,11 +490,12 @@ public class ControladorPersonalSalud implements Initializable {
     private void validarCamposVacios() {
         validarCampoCorreo();
 
-        if (cmb_tipodocumento.getValue().equals("Seleccione")==true) {
+       /* if (!cmb_tipodocumento.getSelectionModel().getSelectedItem().getNombreTipoDocumento().contains("Seleccione")==true) {
             lbl_tipoDocumeto.setText("Campo Requerido");
+            System.out.println("por aqui voy");
         } else {
             lbl_tipoDocumeto.setText("");
-        }
+        }*/
 
         if (tf_numerodocumento.getText().isEmpty()) {
             lblDocumento.setText("Ingresa solo Números");
@@ -484,11 +513,11 @@ public class ControladorPersonalSalud implements Initializable {
         } else {
             lbl_apellido1.setText("");
         }
-        if (cmb_sexo.getValue().equals("Seleccione")==true) {
+        /*if (cmb_sexo.getSelectionModel().getSelectedItem().equals("Seleccione")) {
             lbl_sexo.setText("Campo Requerido");
         } else {
             lbl_sexo.setText("");
-        }
+        }*/
         if (tf_numerodocumento.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
             bt_guardar.setDisable(true);
         } else {
@@ -612,12 +641,12 @@ public class ControladorPersonalSalud implements Initializable {
         cmb_cargo.setItems(listaCargo);
     }
 
-    @FXML
+   /* @FXML
     public void iniciarCbxPersona() {
         ObservableList<PersonalSalud> listapersonas = FXCollections.observableArrayList(personalSaludFacade.obtenerTodoPersonalSalud());
         cbx_idpersona.setItems(listapersonas);
 
-    }
+    }*/
 
     @FXML
     public void iniciarCbxTipoTitulo() {
@@ -644,7 +673,6 @@ public class ControladorPersonalSalud implements Initializable {
         tf_numtelefono.setDisable(false);
         tf_correoelectronico.setDisable(false);
         cmb_cargo.setDisable(false);
-        tb_personal.setDisable(false);
         tf_numerodocumento.requestFocus();
     }
 
@@ -690,7 +718,6 @@ public class ControladorPersonalSalud implements Initializable {
         tf_correoelectronico.setDisable(true);
         tf_numtelefono.setDisable(true);
         cmb_cargo.setDisable(true);
-        tb_personal.setDisable(true);
         tf_numerodocumento.requestFocus();
     }
 

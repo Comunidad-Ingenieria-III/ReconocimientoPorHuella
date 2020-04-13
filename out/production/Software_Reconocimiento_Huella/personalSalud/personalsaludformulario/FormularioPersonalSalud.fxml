@@ -95,7 +95,7 @@
             <Label layoutX="129.0" layoutY="58.0" text="*" textFill="#f80707" />
             <Label layoutX="598.0" layoutY="171.0" text="*" textFill="#f80707" />
             <Label layoutX="587.0" layoutY="58.0" text="*" textFill="#f80707" />
-            <Button fx:id="bt_guardar" layoutX="527.0" layoutY="215.0" mnemonicParsing="false" onAction="#guardar" prefHeight="40.0" prefWidth="180.0" text="Guardar Personal Salud" textFill="WHITE">
+            <Button fx:id="bt_guardar" layoutX="527.0" layoutY="215.0" mnemonicParsing="false" onAction="#guardarPersonalS" prefHeight="40.0" prefWidth="180.0" text="Guardar Personal Salud" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
@@ -127,15 +127,7 @@
       </AnchorPane>
       <TableView fx:id="tb_personal" prefHeight="229.0" prefWidth="1000.0" tableMenuButtonVisible="true">
         <columns>
-          <TableColumn fx:id="colIdPersonal" prefWidth="190.0" text="Documento">
-               <columns>
-                  <TableColumn prefWidth="190.0" text="Column X">
-                     <graphic>
-                        <ComboBox fx:id="cbx_idpersona" prefHeight="25.0" prefWidth="176.0" promptText="Seleccione" />
-                     </graphic>
-                  </TableColumn>
-               </columns>
-            </TableColumn>
+          <TableColumn fx:id="colIdPersonal" prefWidth="190.0" text="Documento" />
             <TableColumn fx:id="colIdTipoTitu" prefWidth="190.0" text="Título">
                <columns>
                   <TableColumn prefWidth="190.0">
