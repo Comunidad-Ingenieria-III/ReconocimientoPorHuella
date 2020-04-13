@@ -43,7 +43,7 @@ CREATE TABLE `cargo` (
 
 LOCK TABLES `cargo` WRITE;
 /*!40000 ALTER TABLE `cargo` DISABLE KEYS */;
-INSERT INTO `cargo` VALUES ('1','Aph'),('2','Medico'),('3','Camillero'),('654','Enfermero');
+INSERT INTO `cargo` VALUES ('1','Aph'),('2','Medico'),('3','Camillero'),('4','conductot'),('654','Enfermero');
 /*!40000 ALTER TABLE `cargo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,13 +68,13 @@ CREATE TABLE `datos_persona` (
   `observaciones` varchar(255) COLLATE utf32_spanish_ci NOT NULL,
   `huella` blob NOT NULL,
   `huella1` tinyblob NOT NULL,
-  `idTipoDocumento` int(2) NOT NULL,
+  `idTipoDocumento` varchar(5) COLLATE utf32_spanish_ci NOT NULL,
   `idEps` int(10) NOT NULL,
   PRIMARY KEY (`idpersona`),
   KEY `idEps` (`idEps`),
   KEY `idTipoDocumento` (`idTipoDocumento`),
-  CONSTRAINT `datos_persona_ibfk_1` FOREIGN KEY (`idEps`) REFERENCES `eps` (`idEps`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `datos_persona_ibfk_2` FOREIGN KEY (`idTipoDocumento`) REFERENCES `tipo_de_documento` (`idTipoDocumento`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_personal_salud_tipo_de_documento` FOREIGN KEY (`idTipoDocumento`) REFERENCES `tipo_de_documento` (`idTipoDocumento`),
+  CONSTRAINT `datos_persona_ibfk_1` FOREIGN KEY (`idEps`) REFERENCES `eps` (`idEps`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,7 +84,6 @@ CREATE TABLE `datos_persona` (
 
 LOCK TABLES `datos_persona` WRITE;
 /*!40000 ALTER TABLE `datos_persona` DISABLE KEYS */;
-INSERT INTO `datos_persona` VALUES (1111,'','aaaaaaaa','aaaaaaaaaaaa','aaaaaaaaaaaa','2020-04-03','aaaaaaaaaaaaa','Masculino','aaaaaaaaa','aaaaaaaa','aaaaaa',_binary '\0øB\È*\ãs\\ÀA7	«qp®Uš8\'\ï\ï\ÇkA¬ô\ÖCò³Mñf\ÚXzL\Ô—j_\éK*³R}I°#5\îG\ëE\Û^W]6²q¼—˜\ÎQ\ZO¢\ÍEnIk´‘°¾8$€\Ò\Û\Î8€°4Ö²¶_9\ÙM\'v\îQºÇ³8+\Çø¡Pv\Í\r·\'$\Ói” \â\ìù¸m¬~\ã\ÏÄ€’rc\ê™\Þ\çYõHû«\È>U‚R‚ÿõ-\×p‘\ÇC\Æ[þ›\Åû\Ý\'/s2og/[›;w­\åfü%\Ûd!7&@\Ç\Â®\\Y\à™\Ê\Ô®_¼dV\×X ö¦÷p(F}:6¹\Ühª¹µð\0k¤!g¤cÖŠ‹\Ë\í¬,™˜\Ö^i»:‡=‚\Ð4\íkø§\'µ\nŒ‡»”([T‘2”\Ð(­\ÈL\ÓC2\Z¨\ë	\ßÁ*o\0ø;\È*\ãs\\ÀA7	«q0¯Uš&ñ¾ƒs9Hû&¹”Á6)“Ì»\Äó\ÓQ:$÷GkKše·•IJ>r\è@@\Ä.°\Ìu\ãˆ\Ð\ÄDk\äa a\ÛÍŒa\Íjˆ\Ð\æ\\\ÐMô\Ö\æ>‚ý—oÁ‹¨.a¹¢Ad\\|úZb¿¿v­V\áÒqVòÃ±\ÍM\Ä\r#£\ë„e®9I\è/\"‚U¿þ´»\ålh•d¬ñwº\êtoJƒ¡Ë›\Î$av4\áw.¸Hi\×`~TƒˆŸ–$/e\Õñ;Ÿ¶‡\Íüv¥(V,ž}O`<^sJ\èBkˆ\\Qˆ]/|\à›Utü#p~4¨7§«½ºº\×î±Š…R­¡h‡¤>s’«LÎ”w+Lû£O–J¼ªXgM¸¼™ýó’•8\n\Ì\×ö\ÅãŠ¬)|‚o\0ø?\È*\ãs\\ÀA7	«qð‘Uš\ÔpøoWö¶vÀ™Ã¶‡À£\Ø^•7\Âû‘–\Ó\Ö\ëø\n$´\r[,¢Y¤\î`ªŒ·|e®\î9(ž\ìo*Z1þ\Ây\Âl›‰\æû\Ö÷cŠ\\\'\ÖeÐžQ¯}At\æ>ö\0Y)šh\Ù‘\â\Ã\Ó!mcY^\â¹\ë¹3º•f«§“\Ðœò\ÇøôËµ:?\ê{Lw…\"\×ñÁK9\à=²¬\í`%ôd\ÌX «\ÞOD£¿\Éø¡\æ\nššÀ¢Rö•:¶Ä•ÿ\àÿƒÙ†+°v%m*n5³8– \Ï\Ñ`M(\Z\ëi&\nk…g£\à\êðqh°#K\íw\â *\Â~\ä”©L\áA€\"J=›m¦C\áþ\Î\Ó\Ì5¡b¥~ecH\Ãò\'kòN<²ùI°E\Ç]{\ÞÓŒ[©\Ùfö¤óvG\Ý\ã™o\0\è8\È*\ãs\\ÀA7	«q0ªUš\ï€\ÏûP³;©r\â{‹W\r(^\'¤7v\âO\å†£-	\ßZÁiš€KÞƒ‰6,\Ãg\r\Æ)§(\Ò?\ÊC-\rYoü›\Õ 7¡–â¿žG¼¹\É\ÂJ\ï\Êq&“\ÊY=µÒ¹›h\ìuˆó\á›ôpnJÍƒ\×}·Æ•Ã•8Ot\é‘z³g^‰È‡€\é|Nˆ-k„÷s­º®7“ø5\0 \ã\Ê \å>%\"t.\ì¼8€pW™[‰y\ÇaQ\ÈM.Ç•\æ)?·þ\î¹\Í\n¤ROºœón3QUgÕŒD[(\×Â¶\ÃmG Dfó\ëlb\ï%_œ¿ñ\0\â²Ò¢§Ç”\ä9)U¡ò\Ô0Z\\Öºq\'¤r¸\ÛL7\î\æ™s–¶S h`‰#ªx…\"a²\Z&yèµ‹U€”o\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',_binary '1632',3,2),(1111111,'qqqqqqqqqqq','qqqqqqq','qq','qqqq','2020-04-02','qqqq','Femenino','qqqq','qqqq','qqqqqqqqq',_binary '\0ø&\È*\ãs\\ÀA7	«q°‘Uš¸,Æ…HE¥xh+\Ñ1’]·lÏ©§ôc\ÕiF÷N:]ªqç¥ÿ3\âAŸL>„kFR\ìŠh(ƒÀ\ÉS±E$pªUÔ´\×ô»˜±´Xƒƒ\ÏL\ËYþºŒ÷¾ $Ÿ\ÜMl‡ðó\ÓÜ¹n\áo\Õ8sqžÅœ:szum\ï¹®J›\ç¾}\Ú7>žýVZ>ó•{÷AUcM¶Ê«\æœI-“|\Ãmß—:%´¼ƒâ£œ\'p2¡ ³;8\06	8xô‚\ânW\ÄiQaZtÍ½T!\Þj,²RÏ–S\×\\¦1-[´¥b}C\Ögõ®Î¹Vè§—W\Ú>\Z·˜NúaI…5\êY\ÄÿðI¦HŠ—\ÑÀ\á^ok–\ÄGQo\0øL\È*\ãs\\ÀA7	«qðƒUš\ØóúF´zW>\ÈI¥®Î¨ }¼+›ryVÛ±Xyªs\Ïb© øòZ»\È\ÂWi?Ÿ_ÿ³O_VV8#1ò=\íKòc&\"‘:Bç­¾¬!ºü\n¤\êaW\ïp^[\æTŒƒ\Òôl_òù!}rže\Ä=ù\ï·p!Vª¬Õ»\Ô_ý\Í\âBž\Ý\Ç\×O¹™…P¶:\èÚ‰3ay©m-ºo%\äLp„!\"<Õ½ÆºU\ïŽ\Ø\ÉWÖ®\È4\Â\ÊN[_Ä™tn\Ú\ÝÌ’t1v	\Ê\\Ú­Ak°z\Ä\ã	[ƒ\Å!\ÆZ9£¦\â\äO\"\é#Q©°\â \ßð\Ûù0\ÔUÍ¥\ÞE¥h†P\Ê\êkR\ÍÍ &\î\ÂRC\'ÁE\æô\ÌSÙ™ˆÒ‚g£.³4X§6÷{”@\ßXYÈ– O¶ˆ7Ô™N^§ˆ\'8xY±˜lo\0ø5\È*\ãs\\ÀA7	«qð—Uš\ÂY÷ð¡\ß}­À\åš£z\ÔyŸù\n1)]œõ˜\Û\n\Ú*\È8RöD\Ýb½ÿùˆ¹szž<\èúh`\ëÀ(VV±q3jd\×\Û\nPz\ãÿY ð˜\Äe½ð˜±0ò\å:ÔŒJ\ãRŒ0œ°\Í:0_—Ÿq_\éç„—8õ£ñAóDÿWú¥\Æ\íõ\í¯;0\éÀS\Îþ¹\á‰¨ó¢÷W\Ô_sÂ ¼J\ëÉ’¦/µŸ*Sœ\ß7ô\ß\Ï\Ç\rb\'ŠcƒDE\ÐV¤<Os\àe\Æ*&¦c\ÞR$až\ã|ð}Gµ\éYRR\Üc\â\Ë\"Ž\n_z\Üú­R\"^ªWu\å7q\ÄÁ[-£\Ç5}\ëò4D›Ò®}G+Y<$™P\Þ*3h:\å\ßrZ\Øql+k\Í1\ëÚ¡\ÔAº\ì\Û\×o\0\èX\È*\ãs\\ÀA7	«qp¨Uš½öú8•˜\ã #’U±s½œÿ“xÆ¤¹\íQrý‰\âk”\ÈC\ÐT¥*wq\În\Öû\Ì[Z^º¡u×§}­&-Þ”°\Äyöý\ÒøŠk²\ê\Ìgþ¾Z\Ñ)„_ö~\ÃLd7‹H‘\ìŒ?\Êo²:¨Á\'\íÁ@OI`ÝŒM\Ùú(W\Õ.\Ù\Ëf=l\è6\á£89¨\n\0zV\Ö²\ã:D\ßz_²z&,AaN\È.Œñ 4\éX÷…\Ð÷\Þ,pvþ†X­ü£.®þx€\ëœ \Ísk£\Ðz¥^z´X3n\éF(;T{a¿ÿ¦\Z<.`\æoð”ª\Õ97o7\îo\Ø\Ô\Âp†\"³û6\ía$\Û\ío­ö‹Y\èô³H•²\ÛL\Õdji\î+ûUS„Jv´\×\Þ%o†T\íx»T[BWû\ä|Ý·\ÉzEL°ÿü’·H\nªú¼Y< ›\n\Ù\\y!P\Ç#±T\ro\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',_binary '1632',3,5),(6454433,'nnnnnnnn','aaaa','','aaaaaaa','2020-04-03','aaaa','Masculino','aaaaa','aaaaaaaa','aaaaaaaaa',_binary '\0øH\È*\ãs\\ÀA7	«q0”UšÎ¢¹U;W0¢µ&m#­\Óq(I¦aÿ†\Æ<´Lª\ÛPqPø¬}¬fq/’6@’Ž	±ZŒœq¾—W\ÖH´¦¶\á\ÍRa\\\ÒAA‰#’˜×ž>\ë¢p\ã¹V\ë*l+×¸BÙª*Qÿ\Þ\ÓÒ£’.\Þ÷ˆú\'·™\îôf•‰¥õ}2x¸{¸h¤·Ì§w\r.‚¡TÁ—WA#+]¿®Bpwe\n\Â&Áå·¤´ÿ/+»±r²\Ê],ðZÈ¦\Û-3Ž\ÃÉ®ïºª70Ÿ…@\×«…ÿW\ï#o,š\æ1{S+;S¡hC\ÄzT\ÌF²\Ë[\é¶Â”?C\ì™\ìºX\ê\Ñ\â@žl¹Z™í»¨F>\ßn\ç4ICHf\Âp]\Ó\Â\â\Õ\n™kÑMj{•€+ÐŠN·Œ¸Wi5\âk|Zƒ±o\0øq\È*\ãs\\ÀA7	«qpšUš\åÀ¡÷šÑ†œ2E\î[Ä¹ˆb!÷-k¡¦B™\È\Z\nD±SºL;ÄŒð80›” ºT4øI\Z¨¦ ›/}\0\â«\í`¤&¹vRš‘u\ÊAd\Äxf\Ï\ãµ\Ã+:\\\æUT\ã·Pº´AzÖ¬¾)\èrF\Ï|\ç|ygU<Š¿x‚H\×Ö«\à™r\ßÁT²\È\Ép¿þC%J\×(¨÷ˆm˜€f,kª\Ý\às§­\æ(*X¹©D\ÖL\î\Éò¥\03Ž<dôõþS;>Cß¼68?¿‹HQøF9hÌ‘jX7ò¨ô`;Cð~f]4^§\Û\äA”W·D­¼VhŒ«Á44\é¤F¿ÁÚ°K	*0:\Ö\Øw/ø),\r“QSúvµhˆ‡\ìõ´\ÔPý\Ñ`\âþ“Š õK}Vn²Y£*\å¯\â®\Æe!÷\ÖuYJVKr¹×¬\\O)\ëþz´”\Ð {ƒÂ´¹\êaS\Þz\ï‹R†\\{ö[e@ g\ëo\0øE\È*\ãs\\ÀA7	«qð­UšÖ¹\ã?´^\âˆiºT_gkLBeL\rñRµ”Õ‡ðÒ§Y˜)\ç\î‰g:~nô\Ý&‡Šfó7ƒ˜))7‡#uñ7\æfÉŠN_\Í4c·ù\Z‘]I÷\ãG#œÊ…¹4‹;œ7±\Ë\Þ\äÝ·\Ã.£\ïÿsVû@	Ã—6\Ð\ÊkM’¯\Ø(í–‚\Þ\Äü\íMk¬\ÆJ}\élf\ï¸ï‘Š\Ë»ûPŠ·fjk6–[œ\"\Æ\0œ\Ã\×3Iõk\ÈkBM\æF¤s[ÿ„œ5stƒAp7\\J‚I°xyÀ¤cx\àá‚õðK~±\n±ja™T\r¤Z£D&]f# \ÜV\Ë_\nL\r\Ì]\Û\êó«¶›\ÔI÷LƒŽR#\Ê_Wœ…\æ®.@F „\Íf?\ä´\ïõM\ZQ\ßh­\Û\Ò-¡}ôo\0\è€\È*\ãs\\ÀA7	«q°¬UšK¥c÷«‰W‘«[x\Ü\\#»…f€\é\ëVaIKc°x\ÇQ-$[\í\n6¨r/C`V¹\0TŽ¢ó×º€1’óG\ìS\ßsF¿	½\å\ØJµ|—Ê®^	\é‚o\ã,þ\ãòšeu£byøˆ§­[õXS¯\ì‘[\á=g~±?7\ê2þufIŒd>U7\æ‘\á‘\ì|>\0\Ì-2g=7\Ú\Ó\Ýö)»\ãº”Bf=x@c¢‚\Þ\ç|\íz\Ë\Î5RÀ2\'\Ñ_æ®6a,;Xw\×=,ˆ½RÀ\ÙbÅ¤öNm­>“p\ß3	,¿\ÚBŸ=Lö\Õð\Ã7:Y\î\ä\ÔšIduœGr\ZŸ-8ð´y(\ê\"\ìSoYN29P-bf7\èh¡þkß†ž,ƒ§1Wñ\Ó\Æ\ë T\ÜNÿ,˜\çT2Y• ö\ê£¿\å\n<!s>0XÞ©dÀQW²§APô]µÛž\\U3sŸf\Ëx\Õ _^ü\\\Ôr\Ã±ª‹5\îšBWó\Öo\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',_binary '1632',2,2),(55555555,'gggggggg','ggggggg','ggggggg','ggggggg','2020-04-02','gggggggggg','Masculino','ggggggggggg','ggggggggg','ggggggggggggg',_binary '\0øI\È*\ãs\\ÀA7	«qp˜Uš\èe\éž5x°–\ç|¶(…óXÀ-õ	Ž\Ù\ã\Ý$\Ë\Ê5\ã\äMsZH*ý·SN­pÿX\Ñ\'b%H?Ê<j\Ê÷3JA3\á\æ%S¼Ï„\ØAÃž$Àu\ØE\à*9\Æ\ârŸ–Oe\éa(þ\â;\ì\Õ|7(S·¿h§gM\Â\àT—)\"œ­Šd\Û	Y¯þ\ÓþPžhW™\è+¯,3{\0ƒ\0õ²®¨Œ„ž\0ª50\Ù\äø¥yD%Ì¢ýi\Ê4\ÅI:–Š˜KÓ¤ƒ©f¡ dª\'>{\ç[€X¸eO‰\î—jœ1\ïKS¹A\à¯û~Eºblƒd_ªsT\ÜWõ\äþ+\0•Œð¦\âE\'£Qõ&µù=$9\" ²y	·-ûT‡3øC¿8pü½——\ìô@®<1$r`ò$±ñ\n\äŒ\è÷\Ëöo\0ø0\È*\ãs\\ÀA7	«q0™Uš¢¢\ÊQýw\Ö;î„¹\é{6)\Ûr/ý\Z\íSº~Þ‰a:‡cl\Î$MPHE\0 ô\Å\'\Ö\éaµNC\Ö6_Ø¾24<>%²Q4ºQ\Ì*{Ï¥®²_‰ž±\Z“\Ú\Út×ˆ=e¬±\ÄN,“n6•‚\Ä\ä¯\ä\ÖkF·³\0÷N\æU+ Ä©s’Fa`š\"oh\á«:²\Íú\Æle\ÉRK?p?ñû\0¯©‚š\r2©±\Êml>U¬\Çq\ÎPÂŠ(ù]›d>õ¦¡\×99G\Ä\äˆ\Ñ&‰wƒc>\Æ#G\ã¡õ¾\é\ç…\ëF	[\Ò\ØXþ?\Z¼Þ &vÏ˜¨ù#O\Ô=5>…0ª.*Í‰AûŽ\áF\ÖO*wuþ.mxjö\Ð\ÌSÊ±Æœ¢ø¼G‹\ï\Ã\rC¢MN\éo\0øU\È*\ãs\\ÀA7	«qpƒUš\ÃLÖ€\Ó?\ÑrZ«÷Æ›÷9[¿\Ê”[G\Ò^¼”¢\åcšø’\ZN›|“Í‚\é<³ï›…@ˆ&s3“±³\Ã\r†Ü¨w\ê—\Z’\Z)M^9ð\r\È~tB\ì\Ü[QT¬Ø®!ŽbŠ¬·\Ö\r!‡\0ñ¡ÕI)m\Ón\ï\Í7!:RñVD&\Ú\0Q\Z@§+¥7,\0 þ®\ås£1\Ý\Ù\ÚbJº\ãš†‹}4S¸›Wt=²9¢*‚’j\×ó\Ò[]	­!?cþªº„‡\Æa!¨£]˜gu­óI‡9\ÇžRÓ£ZIŽ\Øðõ³O\ÏDóy\î\ç¡ß‹\ÓY‚»e@¸¨\Z>-JCü»Yóý\×)S\Ï”j”ë‘¼X\ÈgjšB~3–£«‡c«~ga‹U\Ä]¾\Óâ²r=°|‘\áóÙ¥7+`\Æ÷«ä›¯\"gªt¯–{o\0\è-\È*\ãs\\ÀA7	«q0žUš\\tÁa\ËS¯Š4u\Ö!P}p{\àõ¢c’¼6g¶úi+-2£, Q=“m‰	c¿|ñ°º\ÈnAF#œ¬ÿ—M\Þ\è½\ë%§šn“m\ÍK¾«5{5ˆ\îY@^r\ï\ÙW\Ê`šo‚=Yn\Ú_­‘¯aA¿ýU!ø\Ù3¢\"ó\áÕ‚Õ®¶ø‹\×\Çpó\Û\ày5”•±7H±ùv¥\0Eú’m´(\é›z¢L\Î\ê!\ëT\ÍvÿV\'µ`\Øoû\ë\nqˆ<µ“	Mm2M¤C|¬1\Û\rq~u°Ot-¦uz„\à® ø	mJ\æ§	;~\\\Û?\åtˆ	10e”e‡\ÓI\à,—¶¤·3…JÇ•¶\ØúWy\á\ä\åC\èM8Á÷\ÏWJµ\ËPo\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',_binary '1632',3,2),(1020303388,'Thomas','','Salazar','Osorio','2009-05-22','Bello','Masculino','No sufro de Alergias','NO','Todo Excelente',_binary '\0ø\È*\ãs\\ÀA7	«qp£Ušm\0tJ°oúªX\ê\ä•ÞŒ—%\í\Åõh§£\êß«†ù*)x\êøóþ¿w‚7Bª§ŸS/Œ\ìIT„¿l\Õd\\qŒC‹\Þ¤ß’_¸Pøž\Åò\Ïb\Ìj2\ÃùŒ\r^µ#\Ï\Ë\â\Ërt\"QtL\ÃIm “Þ5\×UK\ï\Ö]}·\ãThaf±Ig` fÜ\'ñnVD‹–:(S±@\ÚÛ´1§¢­V\Æ\\ó…\ßi\Ç6h]\rq`¢gªs&B\ç\Ö¦+q¸\×ði2ú\ì;\×\æ\ÓÔžHt\ç$H|KK–$•ro¦Q1——#9kõ3Ûˆžôu{dw•óaümr{\\¤“b\Ò`\ï˜oô´	\È\Äö\n\í\æ—\Ö\'Š=zQNŽ­‰K.dù´Ž‡\Écú¨\ÝJš”¨Vò6-:®\Ã8öÁÁ)T	K\Î\ÒF\ÂÒ‰ñe‹Ž§£$x#ó\Òþ’^iø\åÿ)\Þ~J\"oa\é$\íò\ÛD\åQvm\ëaÁ‰o\0ø~\È*\ãs\\ÀA7	«qpžUš€sD„ªñ¬?cf³\æ¡öÀ\à4²,µú´B\ØBXEÓ¸˜ßµs\Ï\ÌÁã¤ŸN˜QÎ½hG¥ƒ\ÞW\è\ÒÁ2¾|þG{‡Œ\Ð-3§`\ë—\ÈoÀ¸W3Â‘Y¼Rò,\æx§M÷\r\Ïmö™\Ç9GS³\0>¼#Ÿú;®]\Ù\×uðX/•\Ë\È4 riô™=IÁAÉˆ v\Ï\É)‚Zû®ù¸{©@l3½,D86ˆš†\ç\Õ_²\ÌQY\í>\ÉÛ¡ÐŸŒYÎ…k\Âj$üm‘GiŸô!öL\Ëƒo\â\rõ\Ï\ÐP|T\n;ª6ÀŸ%> Jm’\Ô9\Èô÷˜\ã`3†cû‰\í%W“J•4Ú» ºY\Ô3\ç±p’eòõÞ€\Ùrgy\"•Ð¦T›\\a\Ô7 SÁ+ÁLv\\K³i\Ä\éF\Ì@Àh±_\à~0­ß·7\n¶œ¦þd\×UZ¾:§ó\áÌ¬Ñž2\Ü<ô¿©Ÿ\ÛI\Ù\Ë\Ñ\ÐW\rb‡TP’	)Ù£¥­”o\0ø\È*\ãs\\ÀA7	«q°¾UšG;¡da\èu>ª(\Î%41k\Ù4X­qTL§+0\ìj\ß\Ïé—Ž\\‚±<M³\Ü\É x„l¿¡jfE²\n*\Ú2N\í\Ä\Ï/\ÒÁ\ÛS±¸@R:h(khz\Ãnmm‘ö\Ò\Ç\n\ÌÁŸ9ÿ\Õ%m=\Ûù\n\Øo‹\ÑdŽ\Ó.ý&[®\n%§þ\Ý\Ú8¡\'š§ž\Ç\Îþ\ÔkQ\Ú\"/>¿&SF\î¯\Ã?ªO\Ì6j\È\×z­R=tó\Ö\ÔD\\j_¢rxP\át\Ò7-„\Â@ôGÿ‹T5 :\Ëf$ü©‘\È÷Œ‘ts!±\Ð\ázE\Ý\Â\âÄ’4Rþ)\ÐûR¹§t\ß\Ù¤:P±\æ`üH\Ì>¬”\\ýI$K_§1g÷-0[f‘M2\àv&\Æs9÷>\Ó2_É¥¯Ç«‰ü-ÿ¹SI\\\Ù\Ó<$\ÍAØ•ªô[a`\ïW°CŸ+}xÁ6!¿h\ä\ÄuVþ\Óòø·o“\Ü%:\Úf•kþjGP}\ä”\ØIÜŠs0\r•o\0\è€\È*\ãs\\ÀA7	«q0 Ušô*5\á$qLF<n·Z=•Ú²ý”ªa¾U,ö\'Ÿ\âtP[\æI\è\n\àVL¢¿j‘\Êò›„ \Ëø¾>Eúx©á»©\Æ\ìi]¢‰w²W?øöó\ï¨;…-w@§\ç‰]]¿.T\énKÿ*‘“m¡öy\å5ø\ËÊš\Ð\ÜÀ\Ìl]\\\ÞNU„ED‡»§”->¼\Û6…ÿ\Íÿ’\á—„7pØ’Ž\Æ&\ÌÛ¦‘|ûMrM®\È¼Sð÷¥¬¹\×\È\ë,)M\Þ\ç‰nÎ«„2Ý®È‹’\Õ\Ù\ËC„øŸ\Ð„õ—\ßûY°\Ñ.^ˆµ«¨!\Úws\Ñ\Ð7^©Q\Þ\0\'3mBpÁÀcfRB\Ãl>l\ëº9‡´\n°$\0¢X>\Î_XA\ØGNÿw\Ø›ýo«º¥[]z<mÜ ^kWŸœ«§6\í\ãgW\Û#ôs?ÁEn\åt\Ìz($þh\ÖsStã–”:	‘\n‘Ÿ\Ä\×\Ûi¶SY¯Ê•+lŒòö´»Eb\è\Ï	¶YLo\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',_binary '1632',2,1);
 /*!40000 ALTER TABLE `datos_persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +146,7 @@ CREATE TABLE `eps` (
 
 LOCK TABLES `eps` WRITE;
 /*!40000 ALTER TABLE `eps` DISABLE KEYS */;
-INSERT INTO `eps` VALUES (1,'Sura','La Floresta',122334),(2,'Coomeva','la 80',123456),(5,'Colsanitas','La 80',324567);
+INSERT INTO `eps` VALUES (2,'Coomeva','la 80',123456),(5,'Colsanitas','La 80',324567);
 /*!40000 ALTER TABLE `eps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +201,7 @@ CREATE TABLE `institucion_academica` (
 
 LOCK TABLES `institucion_academica` WRITE;
 /*!40000 ALTER TABLE `institucion_academica` DISABLE KEYS */;
-INSERT INTO `institucion_academica` VALUES ('A234','San Luis','Los LLanos','6666666'),('w2456','Uniremington','Parque Berri','23466');
+INSERT INTO `institucion_academica` VALUES ('2','UNIREMINGTO','PARQUE BERRIO','3333333'),('A234','San Luis cvb','Los LLanos','6666666');
 /*!40000 ALTER TABLE `institucion_academica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,7 +251,7 @@ CREATE TABLE `medicamento` (
 
 LOCK TABLES `medicamento` WRITE;
 /*!40000 ALTER TABLE `medicamento` DISABLE KEYS */;
-INSERT INTO `medicamento` VALUES ('3','ranitidina');
+INSERT INTO `medicamento` VALUES ('3','ranitidina'),('ss','ss');
 /*!40000 ALTER TABLE `medicamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,13 +322,13 @@ CREATE TABLE `personal_salud` (
   `sexo` varchar(20) NOT NULL,
   `telefono` varchar(20) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `tipoDocumento` int(2) NOT NULL,
+  `idTipoDocumento` varchar(5) NOT NULL,
   `cargo` varchar(15) NOT NULL,
   PRIMARY KEY (`idPersonal`),
-  KEY `FK_personal_salud_tipo_de_documento` (`tipoDocumento`),
+  KEY `FK_personal_salud_tipo_de_documento` (`idTipoDocumento`),
   KEY `FK_personal_salud_cargo` (`cargo`),
-  CONSTRAINT `FK_personal_salud_cargo` FOREIGN KEY (`cargo`) REFERENCES `cargo` (`idCargo`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_personal_salud_tipo_de_documento` FOREIGN KEY (`tipoDocumento`) REFERENCES `tipo_de_documento` (`idTipoDocumento`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_personal_salud_cargo` FOREIGN KEY (`cargo`) REFERENCES `cargo` (`idCargo`) ON UPDATE CASCADE,
+  CONSTRAINT `personal_salud_ibfk_1` FOREIGN KEY (`idTipoDocumento`) REFERENCES `tipo_titulo_academico` (`idTipoTitu`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -339,7 +338,6 @@ CREATE TABLE `personal_salud` (
 
 LOCK TABLES `personal_salud` WRITE;
 /*!40000 ALTER TABLE `personal_salud` DISABLE KEYS */;
-INSERT INTO `personal_salud` VALUES ('11111','sssssssssss','ssssssss','sssssssss','ssss','Masculino','33333333','qqqqqqq',2,'3'),('12345678','wert','wwww','wwwwww','wwww','Masculino','22','eeee',3,'3'),('123456789','rrrrrrr','qqqq','www','www','Masculino','wwwwww','wwwwww',2,'2'),('15327400','Nelson','Giovanni','Salazar','Roldan','Masculino','3136850154','nesalaz56@gmail.com',3,'3'),('2','jorge','zzz','zzz','zzzz','Masculino','22','xxx',2,'2'),('22222222','wwwwwwww','4','wwwwwwwww','6','Masculino','qqq','wwwwww',3,'3'),('223','wwww','www','w','w','Masculino','333','ss',2,'2'),('276534','unamar','aaaaaaaaaaa','aaaaaaaa','aaaaaaaaaaa','Masculino','222222','n@m.',3,'3'),('3333','eeeeee','eeeeeeee','eeeee','eeeeee','Femenino','44444','ffffff',5,'654'),('4','ddddddd','dddddddd','ddddddddd','dddddddd','Masculino','4444','dddddd',2,'3'),('4235678','ttrrree','wwww','uuuuuu','uuuuuuuu','Masculino','555555','',2,'2'),('44444','rrrrrrr','4444','fff','ffff','Masculino','5555','gggggg',2,'2'),('54673','Thomas','','Salazar','Osorio','Masculino','2345','t@m.com',2,'2'),('7654','','d','d','d','Masculino','33','ertt',2,'2'),('765432','aaaaaaaa','aaaa','aaaaa','aaaa','Masculino','222222','aaaaaa',2,'2'),('76547','dser','qqq','qs','s','Masculino','333333','222222',2,'2'),('7777','ggggggggg','gggggggg','gggggg','gggg','Masculino','6666','gggggggggg',2,'2'),('84567','qqqqq','eeeeeee','sssssss','eeeeeeee','Masculino','444444','rt',2,'2'),('89453','ddddddd','ddddd','dddddddddd','dddddddddd','Masculino','333333333','ffffffff',2,'2');
 /*!40000 ALTER TABLE `personal_salud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,19 +349,19 @@ DROP TABLE IF EXISTS `personal_salud_titulo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personal_salud_titulo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fechaTitulacion` date NOT NULL,
+  `idPst` int(11) NOT NULL AUTO_INCREMENT,
   `idPersonal` varchar(15) NOT NULL,
   `idTipoTitu` varchar(5) NOT NULL,
   `idInstitucion` varchar(5) NOT NULL,
-  PRIMARY KEY (`id`),
+  `fechaTitulacion` date NOT NULL,
+  PRIMARY KEY (`idPst`),
   KEY `FK_personal_salud_titulo_personal_salud` (`idPersonal`),
   KEY `FK_personal_salud_titulo_tipo_titulo_academico` (`idTipoTitu`),
   KEY `FK_personal_salud_titulo_institucion_academica` (`idInstitucion`),
   CONSTRAINT `FK_personal_salud_titulo_institucion_academica` FOREIGN KEY (`idInstitucion`) REFERENCES `institucion_academica` (`idInstitucion`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_personal_salud_titulo_personal_salud` FOREIGN KEY (`idPersonal`) REFERENCES `personal_salud` (`idPersonal`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_personal_salud_titulo_tipo_titulo_academico` FOREIGN KEY (`idTipoTitu`) REFERENCES `tipo_titulo_academico` (`idTipoTitu`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -422,7 +420,7 @@ DROP TABLE IF EXISTS `tipo_de_documento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tipo_de_documento` (
-  `idTipoDocumento` int(2) NOT NULL,
+  `idTipoDocumento` varchar(5) COLLATE utf32_spanish_ci NOT NULL,
   `nombreTipoDocumento` varchar(45) COLLATE utf32_spanish_ci NOT NULL,
   PRIMARY KEY (`idTipoDocumento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
@@ -434,7 +432,7 @@ CREATE TABLE `tipo_de_documento` (
 
 LOCK TABLES `tipo_de_documento` WRITE;
 /*!40000 ALTER TABLE `tipo_de_documento` DISABLE KEYS */;
-INSERT INTO `tipo_de_documento` VALUES (2,'Tarjeta de Identidad'),(3,'Registro Civil'),(4,'Pasaporte'),(5,'Cedula de Extrangeria'),(6,'Polizon'),(7,'sssss'),(10,'');
+INSERT INTO `tipo_de_documento` VALUES ('1','cedula');
 /*!40000 ALTER TABLE `tipo_de_documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,6 +456,7 @@ CREATE TABLE `tipo_titulo_academico` (
 
 LOCK TABLES `tipo_titulo_academico` WRITE;
 /*!40000 ALTER TABLE `tipo_titulo_academico` DISABLE KEYS */;
+INSERT INTO `tipo_titulo_academico` VALUES ('2','Medico'),('4','pacinie'),('5','Tecnologo en Atencion'),('6','Auxiliar de Enfermeria'),('ha','erty'),('yyyy','tttt');
 /*!40000 ALTER TABLE `tipo_titulo_academico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,4 +501,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-05 12:03:25
+-- Dump completed on 2020-04-13 17:33:42
