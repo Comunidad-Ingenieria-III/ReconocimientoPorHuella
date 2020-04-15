@@ -44,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ControladorPersonalSalud implements Initializable {
@@ -124,6 +125,8 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private Button bt_agregar;
     @FXML
+    private Button bt_eliminar;
+    @FXML
     private Label lbl_tipoDocumeto;
     @FXML
     private Label lblDocumento;
@@ -180,31 +183,47 @@ public class ControladorPersonalSalud implements Initializable {
                 cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
                 //java.sql.Date.valueOf(dp_fechatitulacion.getValue())
                 Date.valueOf(dp_fechatitulacion.getValue())
-
-
         );
 
-                if (titulos.isEmpty()){//Validar que no se puedan ingresar registros iguales a la tabla
-                    titulos.add(psDto);
-                    limpiarComponentes();
-                }else {
-                    for (int i = 0; i < titulos.size(); i++) {
-                        if ((titulos.get(i).getIdPersonal().equals(psDto.getIdPersonal())) && (titulos.get(i).getIdTipoTitu().equals
-                                (psDto.getIdTipoTitu())) && (titulos.get(i).getIdInstitucion().equals(psDto.getIdInstitucion()))) {
-                            JOptionPane.showMessageDialog(null, "el registro ya esxiste");
-                            break;
+        if (titulos.size()<1){
+            titulos.add(psDto);
+            limpiarComponentes();
 
-                        } else {
-                            titulos.add(psDto);
-                            limpiarComponentes();
-                            break;
+        }else {
+            boolean resultado = recorrerTablaTitulos(titulos,psDto);
+            if (resultado){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Personal Salud");
+                msg.setContentText("El Registro Ya Existe ");
+                msg.show();
+            }else{
+                titulos.add(psDto);
+                limpiarComponentes();
 
-                        }
+            }
 
-                    }
-                }
+        }
 
     }
+
+    public boolean recorrerTablaTitulos(List<PsDto> titulos, PsDto psDto){//Metodo para recorrel la tabla con el fin de no ingresar regisstros duplicados
+        boolean resultado = false;
+        for (int i = 0; i<titulos.size(); i++){
+            if (titulos.get(i).getIdTipoTitu().equals(psDto.getIdTipoTitu())&&titulos.get(i).getIdInstitucion().equals(psDto.getIdInstitucion()
+                )&&titulos.get(i).getFechaTitulacion().equals(psDto.getFechaTitulacion())){
+                resultado = true;
+                break;
+            }
+        }
+        return resultado;
+    }
+
+    @FXML
+    public void eliminarTitulos(){//Metodo para eliminar el registro seleccionado en la tabla
+        titulos.remove(tb_personal.getSelectionModel().getFocusedIndex());
+        limpiarComponentes();
+    }
+
 
     public void limpiarComponentes() {
 //        cbx_idpersona.setValue(null);
@@ -233,52 +252,6 @@ public class ControladorPersonalSalud implements Initializable {
         return personal;
     }
 
-    @FXML
-    private PsDto crearPsDto() throws ParseException {
-
-
-        for (PsDto ps:titulos) {
-            System.out.println(ps.toString());
-        }
-
-
-        /*PsDto psDto = new PsDto(
-                0,
-                tf_numerodocumento.getText(),
-                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
-                cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
-                Date.valueOf(dp_fechatitulacion.getValue())
-
-
-        );
-
-        int res = psFacade.agregar(psDto);*/
-
-        int idPst = 0;
-        String  idPersonal= colIdPersonal.getCellData(0);
-        String idInstitucion = colIdTipoTitu.getCellData(1);
-        String idTipoTitu = colIdIntitucion.getCellData(2);
-        //SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
-        //java.sql.Date.valueOf(dp_fechatitulacion.getValue());
-        //Date fechaTitulacion = Date.valueOf((dp_fechatitulacion.getValue()));
-        //Date fechaTitulacion = Date.valueOf(colFechaTitulacion.);
-        //colFechaTitulacion.getCellData(3);
-        System.out.println(idPersonal);
-        System.out.println(idInstitucion);
-        System.out.println(idTipoTitu);
-        System.out.println(colIdIntitucion);
-
-
-
-        PsDto psDto = new PsDto(idPst, idPersonal, idInstitucion, idTipoTitu,colFechaTitulacion.getCellData(3));
-        return psDto;
-    }
-
-
-
-
-
-
 
     @FXML
     public void guardarPersonalS(){
@@ -288,20 +261,20 @@ public class ControladorPersonalSalud implements Initializable {
         if (res == 1) {
             //instituciones.add(p);
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion se ha agregado");
+            msg.setTitle("Gestiones - Personal Salud");
+            msg.setContentText("El Personal Ha Sido Agregado Correctamente");
             msg.setHeaderText("Resultado");
             msg.show();
-
+            limpiar();
+            titulos.clear();
         } else {
 
             Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("No se ha podido agregar la institucion");
+            msg.setTitle("Gestiones - Personal Salud");
+            msg.setContentText("No Se Ha Podido Agregar ");
             msg.setHeaderText("Resultado");
             msg.show();
         }
-        //limpiar();
 
     }
 
@@ -362,40 +335,6 @@ public class ControladorPersonalSalud implements Initializable {
         limpiar();
     }
 
-    /*
-    @FXML
-    public void guardarInstitucion() {
-
-        PsDto psDto = new PsDto(
-                0,
-                tf_numerodocumento.getText(),
-                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
-                cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
-                Date.valueOf(dp_fechatitulacion.getValue())
-
-
-        );
-
-        int res = psFacade.agregar(psDto);
-
-        if (res == 1) {
-
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion se ha agregado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
-        } else {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("No se ha podido agregar la institucion");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-        limpiar();
-    }*/
 
     @FXML
     public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros

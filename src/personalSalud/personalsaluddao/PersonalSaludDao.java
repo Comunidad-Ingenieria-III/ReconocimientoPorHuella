@@ -131,6 +131,7 @@ public class PersonalSaludDao {
 
             conn.commit();
             JOptionPane.showMessageDialog(null, "Se ejecutó la transaccion corectamente");
+            return 1;
 
         } catch (SQLException ex) {
             try {
