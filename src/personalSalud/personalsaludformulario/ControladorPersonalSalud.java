@@ -38,8 +38,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -98,7 +101,7 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private TableColumn<PsDto, String> colIdIntitucion;
     @FXML
-    private TableColumn<PsDto, String> colFechaTitulacion;
+    private TableColumn<PsDto, Date> colFechaTitulacion;
 
     //---------------------------------------------------------------------------
 
@@ -173,13 +176,34 @@ public class ControladorPersonalSalud implements Initializable {
         PsDto psDto = new PsDto(
                 0,
                 tf_numerodocumento.getText(),
-                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getNombre(),
-                cbx_idinstitucion.getSelectionModel().getSelectedItem().getNombre(),
+                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
+                cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
+                //java.sql.Date.valueOf(dp_fechatitulacion.getValue())
                 Date.valueOf(dp_fechatitulacion.getValue())
+
+
         );
 
-        titulos.add(psDto);
-        limpiarComponentes();
+                if (titulos.isEmpty()){//Validar que no se puedan ingresar registros iguales a la tabla
+                    titulos.add(psDto);
+                    limpiarComponentes();
+                }else {
+                    for (int i = 0; i < titulos.size(); i++) {
+                        if ((titulos.get(i).getIdPersonal().equals(psDto.getIdPersonal())) && (titulos.get(i).getIdTipoTitu().equals
+                                (psDto.getIdTipoTitu())) && (titulos.get(i).getIdInstitucion().equals(psDto.getIdInstitucion()))) {
+                            JOptionPane.showMessageDialog(null, "el registro ya esxiste");
+                            break;
+
+                        } else {
+                            titulos.add(psDto);
+                            limpiarComponentes();
+                            break;
+
+                        }
+
+                    }
+                }
+
     }
 
     public void limpiarComponentes() {
@@ -212,6 +236,12 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private PsDto crearPsDto() throws ParseException {
 
+
+        for (PsDto ps:titulos) {
+            System.out.println(ps.toString());
+        }
+
+
         /*PsDto psDto = new PsDto(
                 0,
                 tf_numerodocumento.getText(),
@@ -225,23 +255,35 @@ public class ControladorPersonalSalud implements Initializable {
         int res = psFacade.agregar(psDto);*/
 
         int idPst = 0;
-        String idPersonal = colIdPersonal.getText();
-        String idInstitucion = colIdTipoTitu.getText();
-        String idTipoTitu = colIdIntitucion.getText();
-        SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
-        Date fechaTitulacion = Date.valueOf(formato.format(colFechaTitulacion.getText()));
+        String  idPersonal= colIdPersonal.getCellData(0);
+        String idInstitucion = colIdTipoTitu.getCellData(1);
+        String idTipoTitu = colIdIntitucion.getCellData(2);
+        //SimpleDateFormat formato = new SimpleDateFormat("YYYY/MM/dd");
+        //java.sql.Date.valueOf(dp_fechatitulacion.getValue());
+        //Date fechaTitulacion = Date.valueOf((dp_fechatitulacion.getValue()));
+        //Date fechaTitulacion = Date.valueOf(colFechaTitulacion.);
+        //colFechaTitulacion.getCellData(3);
+        System.out.println(idPersonal);
+        System.out.println(idInstitucion);
+        System.out.println(idTipoTitu);
+        System.out.println(colIdIntitucion);
 
 
-        PsDto psDto = new PsDto(idPst, idPersonal, idInstitucion, idTipoTitu, fechaTitulacion);
+
+        PsDto psDto = new PsDto(idPst, idPersonal, idInstitucion, idTipoTitu,colFechaTitulacion.getCellData(3));
         return psDto;
     }
 
 
+
+
+
+
+
     @FXML
-    public void guardarPersonalS() throws SQLException, ParseException {
+    public void guardarPersonalS(){
 
-
-        int res = personalSaludFacade.agregarPersonal(crearPersonalSalud(), crearPsDto());
+        int res = personalSaludFacade.agregarPersonal(crearPersonalSalud(), titulos);
 
         if (res == 1) {
             //instituciones.add(p);
@@ -259,7 +301,7 @@ public class ControladorPersonalSalud implements Initializable {
             msg.setHeaderText("Resultado");
             msg.show();
         }
-        limpiar();
+        //limpiar();
 
     }
 

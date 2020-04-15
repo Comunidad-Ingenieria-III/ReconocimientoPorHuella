@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PersonalSaludDao {
@@ -93,57 +94,82 @@ public class PersonalSaludDao {
     }
 
 
-    public int agregarPersonal(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
-        Connection conflito = conn;
+    public int agregarPersonal(PersonalSalud personalSalud, List<PsDto> titulos) {
+        PreparedStatement personal,pertitu;
 
         try {
 
             conn = ConexionRoot.getConexion();
             conn.setAutoCommit(false);
-            String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, tipoDocumento, cargo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, personalSalud.getIdPersonal());
-            stmt.setString(2, personalSalud.getNombre1());
-            stmt.setString(3, personalSalud.getNombre2());
-            stmt.setString(4, personalSalud.getApellido1());
-            stmt.setString(5, personalSalud.getApellido2());
-            stmt.setString(6, personalSalud.getSexo());
-            stmt.setString(7, personalSalud.getTelefono());
-            stmt.setString(8, personalSalud.getEmail());
-            stmt.setString(9, personalSalud.getTipoDocumento());
-            stmt.setString(10, personalSalud.getCargo());
-
-            stmt.executeUpdate(sql);
-
-            String sql_1 = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
-
-            stmt.setInt(1, psDto.getId());
-            stmt.setString(2, psDto.getIdPersonal());
-            stmt.setString(3, psDto.getIdTipoTitu());
-            stmt.setString(4, psDto.getIdInstitucion());
-            stmt.setDate(5, new java.sql.Date(psDto.getFechaTitulacion().getTime()));
-            stmt.executeUpdate(sql_1);
-
-            JOptionPane.showMessageDialog(null, "datos insertados correctamenti");
+            String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2, sexo, telefono, email, idTipoDocumento, cargo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            personal = conn.prepareStatement(sql);
+            personal.setString(1, personalSalud.getIdPersonal());
+            personal.setString(2, personalSalud.getNombre1());
+            personal.setString(3, personalSalud.getNombre2());
+            personal.setString(4, personalSalud.getApellido1());
+            personal.setString(5, personalSalud.getApellido2());
+            personal.setString(6, personalSalud.getSexo());
+            personal.setString(7, personalSalud.getTelefono());
+            personal.setString(8, personalSalud.getEmail());
+            personal.setString(9, personalSalud.getTipoDocumento());
+            personal.setString(10, personalSalud.getCargo());
+            personal.executeUpdate();
 
 
-            stmt = conn.prepareStatement(sql);
-            stmt = conn.prepareStatement(sql_1);
+            String sql1 = "insert into personal_salud_titulo(idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?)";
+            pertitu = conn.prepareStatement(sql1);
+            for (PsDto title : titulos) {
+                pertitu.setString(1, title.getIdPersonal());
+                pertitu.setString(2, title.getIdTipoTitu());
+                pertitu.setString(3, title.getIdInstitucion());
+                pertitu.setDate(4,title.getFechaTitulacion());
+                pertitu.addBatch();
+
+            }
+            pertitu.executeBatch();
+            pertitu.executeUpdate();
 
             conn.commit();
             JOptionPane.showMessageDialog(null, "Se ejecutó la transaccion corectamente");
 
+        } catch (SQLException ex) {
+            try {
+                conn.rollback();
+                JOptionPane.showMessageDialog(null, "Error en la transaccion");
+               ex.printStackTrace();
+            } catch (SQLException e) {
+                e.getMessage();
+            }
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al ejecutar " + conflito + ": " + ex);
-
-            conn.rollback();
-            System.out.println(ex.toString());
-            JOptionPane.showMessageDialog(null, "Algo salio mal");
 
         }
         return 0;
     } // Fin del método agregar()
+
+
+
+    public boolean agregarLote(List<PsDto> listaPs) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(sql);
+            for (PsDto titulo : listaPs) {
+                stmt.setInt(1, titulo.getId());
+                stmt.setString(2, titulo.getIdPersonal());
+                stmt.setString(3, titulo.getIdTipoTitu());
+                stmt.setString(4, titulo.getIdInstitucion());
+                stmt.setDate(5,titulo.getFechaTitulacion());
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+            return true;
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
+
 
     public int modificarPersonal(PersonalSalud personalSalud) {
         try {

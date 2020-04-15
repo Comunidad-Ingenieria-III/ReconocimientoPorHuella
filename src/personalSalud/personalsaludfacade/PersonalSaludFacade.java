@@ -23,9 +23,13 @@ public class PersonalSaludFacade {
         return personalSaludDao.listaPsdto();
     }
 
-    public int agregarPersonal(PersonalSalud personalSalud, PsDto psDto) throws SQLException {
-        return personalSaludDao.agregarPersonal(personalSalud, psDto);
+    public int agregarPersonal(PersonalSalud personalSalud, List<PsDto> titulos){
+        return personalSaludDao.agregarPersonal(personalSalud, titulos);
 
+    }
+
+    public boolean agregarTitulos(List<PsDto> listaps){
+        return personalSaludDao.agregarLote(listaps);
     }
 
     public int modificarPersonal(PersonalSalud personalSalud){
