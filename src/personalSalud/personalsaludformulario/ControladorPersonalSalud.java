@@ -308,6 +308,11 @@ public class ControladorPersonalSalud implements Initializable {
 
     @FXML
     public void buscarPersonaSalud() {
+
+        DtoTipoDocumento dtoTipoDocumento = new DtoTipoDocumento();
+        Cargo cargo = new Cargo();
+        PsDto psDto = new PsDto();
+
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from personal_salud  where idPersonal = ?";
@@ -316,8 +321,7 @@ public class ControladorPersonalSalud implements Initializable {
             rset = stmt.executeQuery();
 
             if (rset.next()) {
-                DtoTipoDocumento dtoTipoDocumento = new DtoTipoDocumento();
-                Cargo cargo = new Cargo();
+
 
                 //tf_numerodocumento.setText(rset.getString("idPersonal"));
                 tf_nombre1.setText(rset.getString("nombre1"));
@@ -327,9 +331,24 @@ public class ControladorPersonalSalud implements Initializable {
                 cmb_sexo.setValue(String.valueOf(rset.getString("sexo")));
                 tf_numtelefono.setText(rset.getString("telefono"));
                 tf_correoelectronico.setText(rset.getString("email"));
-                cmb_tipodocumento.getSelectionModel().select(rset.getInt(dtoTipoDocumento.getNombreTipoDocumento()));
+                //cmb_tipodocumento.getSelectionModel().select(rset.getInt(dtoTipoDocumento.getNombreTipoDocumento()));
                 //cmb_cargo.set.setItems(rset.getString(cargo.getIdCargo()));
 
+
+                String sql2 = "select * from personal_salud_titulo where idPersonal = ?";
+                stmt = conn.prepareStatement(sql2);
+                stmt.setString(1, tf_numerodocumento.getText());
+                rset = stmt.executeQuery();
+
+                if (rset.next()) {
+
+                    //colIdPst.setId(String.valueOf(rset.getInt("idPst")));
+                    //tf_numerodocumento.setText(rset.getString("idPst"));
+                    colIdPersonal.setText(rset.getString("idPersonal"));
+                    colIdTipoTitu.setText(rset.getString("idTipoTitu"));
+                    colIdIntitucion.setText(rset.getString("idInstitucion"));
+                    colFechaTitulacion.setText(String.valueOf(rset.getDate("fechaTitulacion")));
+                }
             }
         } catch (Exception ex) {
             throw new RuntimeException("Error SQL - obtenerPorId()!");
@@ -337,6 +356,34 @@ public class ControladorPersonalSalud implements Initializable {
         //JOptionPane.showMessageDialog(null, "Error al buscar Personal de Salud: ",
         //"Error", JOptionPane.ERROR_MESSAGE);
 
+    }
+    @FXML
+     public PsDto buscarPorId() {
+
+        PsDto psDto = new PsDto();
+
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from personal_salud_titulo where idPersonal = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, String.valueOf(psDto));
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                psDto = new PsDto();
+
+                //colIdPst.setId(String.valueOf(rset.getInt("idPst")));
+                tf_numerodocumento.setText(rset.getString("idPst"));
+                colIdPersonal.setText(rset.getString("idPersonal"));
+                colIdTipoTitu.setText(rset.getString("idTipoTitu"));
+                colIdIntitucion.setText(rset.getString("idInstitucion"));
+                colFechaTitulacion.setText(String.valueOf(rset.getDate("fechaTitulacion")));
+
+            }
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        }
+        return psDto;
     }
 
     @FXML
@@ -361,41 +408,6 @@ public class ControladorPersonalSalud implements Initializable {
         }
         limpiar();
     }
-
-    /*
-    @FXML
-    public void guardarInstitucion() {
-
-        PsDto psDto = new PsDto(
-                0,
-                tf_numerodocumento.getText(),
-                cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
-                cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
-                Date.valueOf(dp_fechatitulacion.getValue())
-
-
-        );
-
-        int res = psFacade.agregar(psDto);
-
-        if (res == 1) {
-
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion se ha agregado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
-        } else {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("No se ha podido agregar la institucion");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-        limpiar();
-    }*/
 
     @FXML
     public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
@@ -642,6 +654,10 @@ public class ControladorPersonalSalud implements Initializable {
         tf_correoelectronico.setText("");
         cmb_cargo.setValue(null);
         tf_numerodocumento.setText("");
+        colIdPersonal.setText("");
+        colIdTipoTitu.setText("");
+        colIdIntitucion.setText("");
+        colFechaTitulacion.setText("");
 
     }
 
