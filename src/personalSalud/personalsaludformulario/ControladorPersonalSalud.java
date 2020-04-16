@@ -386,32 +386,6 @@ public class ControladorPersonalSalud implements Initializable {
         return psDto;
     }
 
-<<<<<<< HEAD
-    @FXML
-    public void modificarPersonal() {
-
-
-        int res = personalSaludFacade.modificarPersonal(crearPersonalSalud());
-
-        if (res == 1) {
-
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion se ha modificado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        } else {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion No ha sido modificada");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-        limpiar();
-    }
-=======
->>>>>>> test
-
     @FXML
     public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
         tf_numerodocumento.setOnKeyTyped(new EventHandler<KeyEvent>() {

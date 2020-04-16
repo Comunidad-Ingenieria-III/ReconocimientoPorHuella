@@ -209,7 +209,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_modificar" layoutX="352.0" layoutY="18.0" mnemonicParsing="false" onAction="#modificarPersonal" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
+                <Button fx:id="bt_modificar" layoutX="352.0" layoutY="18.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
