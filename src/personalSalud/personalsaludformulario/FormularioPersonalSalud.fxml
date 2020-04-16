@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="576.0" prefWidth="1000.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<VBox prefHeight="576.0" prefWidth="1000.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
     <children>
         <AnchorPane id="panel_personal_salud" prefHeight="271.0" prefWidth="830.0" styleClass="panel_personal_salud">
             <children>
@@ -97,14 +96,6 @@
                 <Label layoutX="129.0" layoutY="58.0" text="*" textFill="#f80707" />
                 <Label layoutX="598.0" layoutY="171.0" text="*" textFill="#f80707" />
                 <Label layoutX="587.0" layoutY="58.0" text="*" textFill="#f80707" />
-                <Button fx:id="bt_guardar" layoutX="527.0" layoutY="215.0" mnemonicParsing="false" onAction="#guardarPersonalS" prefHeight="40.0" prefWidth="180.0" text="Guardar Personal Salud" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
                 <Label fx:id="lbl_apellido1" layoutX="401.0" layoutY="203.0" prefHeight="25.0" prefWidth="115.0" textFill="#eb0707">
                     <font>
                         <Font name="System Bold Italic" size="12.0" />
@@ -224,7 +215,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_abrirFormularioPer" layoutX="577.0" layoutY="18.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" text="Guardar Titulo" textFill="WHITE">
+                <Button fx:id="bt_guardar" layoutX="586.0" layoutY="18.0" mnemonicParsing="false" onAction="#guardarPersonalS" prefHeight="30.0" prefWidth="100.0" text="Guardar" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
