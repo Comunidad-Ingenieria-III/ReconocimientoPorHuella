@@ -73,8 +73,8 @@ CREATE TABLE `datos_persona` (
   PRIMARY KEY (`idpersona`),
   KEY `idEps` (`idEps`),
   KEY `idTipoDocumento` (`idTipoDocumento`),
-  CONSTRAINT `FK_personal_salud_tipo_de_documento` FOREIGN KEY (`idTipoDocumento`) REFERENCES `tipo_de_documento` (`idTipoDocumento`),
-  CONSTRAINT `datos_persona_ibfk_1` FOREIGN KEY (`idEps`) REFERENCES `eps` (`idEps`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `datos_persona_ibfk_1` FOREIGN KEY (`idEps`) REFERENCES `eps` (`idEps`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `datos_persona_ibfk_2` FOREIGN KEY (`idTipoDocumento`) REFERENCES `tipo_documento` (`idTipoDocumento`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -201,7 +201,7 @@ CREATE TABLE `institucion_academica` (
 
 LOCK TABLES `institucion_academica` WRITE;
 /*!40000 ALTER TABLE `institucion_academica` DISABLE KEYS */;
-INSERT INTO `institucion_academica` VALUES ('2','UNIREMINGTO','PARQUE BERRIO','3333333'),('A234','San Luis cvb','Los LLanos','6666666');
+INSERT INTO `institucion_academica` VALUES ('2','UNIREMINGTO','PARQUE BERRIO','3333333'),('3','Luis Amigo','Calle Colombia','22222'),('A234','San Luis ','Los LLanos','6666666');
 /*!40000 ALTER TABLE `institucion_academica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,13 +322,13 @@ CREATE TABLE `personal_salud` (
   `sexo` varchar(20) NOT NULL,
   `telefono` varchar(20) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `idTipoDocumento` varchar(5) NOT NULL,
+  `idTipoDocumento` varchar(5) CHARACTER SET utf32 COLLATE utf32_spanish_ci NOT NULL,
   `cargo` varchar(15) NOT NULL,
   PRIMARY KEY (`idPersonal`),
-  KEY `FK_personal_salud_tipo_de_documento` (`idTipoDocumento`),
   KEY `FK_personal_salud_cargo` (`cargo`),
-  CONSTRAINT `FK_personal_salud_cargo` FOREIGN KEY (`cargo`) REFERENCES `cargo` (`idCargo`) ON UPDATE CASCADE,
-  CONSTRAINT `personal_salud_ibfk_1` FOREIGN KEY (`idTipoDocumento`) REFERENCES `tipo_titulo_academico` (`idTipoTitu`) ON DELETE NO ACTION ON UPDATE CASCADE
+  KEY `personal_salud_ibfk_1` (`idTipoDocumento`),
+  CONSTRAINT `FK_personal_salud_cargo` FOREIGN KEY (`cargo`) REFERENCES `cargo` (`idCargo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `personal_salud_ibfk_1` FOREIGN KEY (`idTipoDocumento`) REFERENCES `tipo_documento` (`idTipoDocumento`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -338,6 +338,7 @@ CREATE TABLE `personal_salud` (
 
 LOCK TABLES `personal_salud` WRITE;
 /*!40000 ALTER TABLE `personal_salud` DISABLE KEYS */;
+INSERT INTO `personal_salud` VALUES ('1234567','Thomas','','Salazar','Osorio','Masculino','2334456','thoma@gmail.com','2','2');
 /*!40000 ALTER TABLE `personal_salud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,7 +362,7 @@ CREATE TABLE `personal_salud_titulo` (
   CONSTRAINT `FK_personal_salud_titulo_institucion_academica` FOREIGN KEY (`idInstitucion`) REFERENCES `institucion_academica` (`idInstitucion`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_personal_salud_titulo_personal_salud` FOREIGN KEY (`idPersonal`) REFERENCES `personal_salud` (`idPersonal`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_personal_salud_titulo_tipo_titulo_academico` FOREIGN KEY (`idTipoTitu`) REFERENCES `tipo_titulo_academico` (`idTipoTitu`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,6 +371,7 @@ CREATE TABLE `personal_salud_titulo` (
 
 LOCK TABLES `personal_salud_titulo` WRITE;
 /*!40000 ALTER TABLE `personal_salud_titulo` DISABLE KEYS */;
+INSERT INTO `personal_salud_titulo` VALUES (53,'1234567','2','2','2020-04-02'),(54,'1234567','2','2','2020-04-02');
 /*!40000 ALTER TABLE `personal_salud_titulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -413,27 +415,27 @@ LOCK TABLES `registro_atencion_paciente` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tipo_de_documento`
+-- Table structure for table `tipo_documento`
 --
 
-DROP TABLE IF EXISTS `tipo_de_documento`;
+DROP TABLE IF EXISTS `tipo_documento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tipo_de_documento` (
+CREATE TABLE `tipo_documento` (
   `idTipoDocumento` varchar(5) COLLATE utf32_spanish_ci NOT NULL,
-  `nombreTipoDocumento` varchar(45) COLLATE utf32_spanish_ci NOT NULL,
+  `nombreTipoDocumento` varchar(20) COLLATE utf32_spanish_ci NOT NULL,
   PRIMARY KEY (`idTipoDocumento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tipo_de_documento`
+-- Dumping data for table `tipo_documento`
 --
 
-LOCK TABLES `tipo_de_documento` WRITE;
-/*!40000 ALTER TABLE `tipo_de_documento` DISABLE KEYS */;
-INSERT INTO `tipo_de_documento` VALUES ('1','cedula');
-/*!40000 ALTER TABLE `tipo_de_documento` ENABLE KEYS */;
+LOCK TABLES `tipo_documento` WRITE;
+/*!40000 ALTER TABLE `tipo_documento` DISABLE KEYS */;
+INSERT INTO `tipo_documento` VALUES ('1','Cedula de Ciudadania'),('2','Tarjeta de Identidad');
+/*!40000 ALTER TABLE `tipo_documento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -456,7 +458,7 @@ CREATE TABLE `tipo_titulo_academico` (
 
 LOCK TABLES `tipo_titulo_academico` WRITE;
 /*!40000 ALTER TABLE `tipo_titulo_academico` DISABLE KEYS */;
-INSERT INTO `tipo_titulo_academico` VALUES ('2','Medico'),('4','pacinie'),('5','Tecnologo en Atencion'),('6','Auxiliar de Enfermeria'),('ha','erty'),('yyyy','tttt');
+INSERT INTO `tipo_titulo_academico` VALUES ('2','Conductor'),('4','Medico'),('5','Tecnologo en Atencion'),('6','Auxiliar de Enfermeria'),('ha','erty'),('yyyy','tttt');
 /*!40000 ALTER TABLE `tipo_titulo_academico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -501,4 +503,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-13 17:33:42
+-- Dump completed on 2020-04-16 15:34:20

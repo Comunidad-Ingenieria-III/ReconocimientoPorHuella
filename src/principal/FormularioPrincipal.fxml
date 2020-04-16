@@ -3,7 +3,6 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -93,19 +92,12 @@
       </AnchorPane>
    </bottom>
    <right>
-      <AnchorPane id="panel_derecha" prefHeight="563.0" prefWidth="22.0" styleClass="panel_derecha" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_derecha" prefHeight="563.0" prefWidth="57.0" styleClass="panel_derecha" BorderPane.alignment="CENTER" />
    </right>
    <center>
       <AnchorPane id="panel_principal" fx:id="FormularioPrincipal" prefHeight="563.0" prefWidth="1002.0" styleClass="panel_principal" BorderPane.alignment="CENTER" />
    </center>
    <left>
-      <AnchorPane id="panel_izquierdo" prefHeight="650.0" prefWidth="148.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/APH.jpg" />
-               </image>
-            </ImageView>
-         </children></AnchorPane>
+      <AnchorPane id="panel_izquierdo" prefHeight="563.0" prefWidth="78.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
    </left>
 </BorderPane>
