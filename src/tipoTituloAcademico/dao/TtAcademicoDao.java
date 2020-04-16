@@ -115,7 +115,23 @@ public class TtAcademicoDao {
     } // Fin del método eliminar()
 
 
+    public TtAcademico buscarPorId(String idTipoTitu) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from tipo_titulo_academico where idTipoTitu = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idTipoTitu);
+            rset = stmt.executeQuery();
 
+            if (rset.next()) {
+                ttAcademico = new TtAcademico();
+                ttAcademico.setIdTipoTituloAcademico(rset.getString("idTipoTitu"));
+                ttAcademico.setNombre(rset.getString("nombre"));
 
-
+            }
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        }
+        return ttAcademico;
+    }
 }

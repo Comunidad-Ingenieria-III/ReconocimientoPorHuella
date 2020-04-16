@@ -20,5 +20,10 @@ public class FacadeTtAcademico {
         return ttAcademicoDao.eliminar(idTipoTituloAcdemico);
     }
 
-    public List<TtAcademico> buscar(String buscar) { return ttAcademicoDao.buscar(buscar); }
+    public List<TtAcademico> buscar(String buscar) {
+        return ttAcademicoDao.buscar(buscar); }
+
+    public TtAcademico obtenerPorId(String idTipoTitu) {
+        return ttAcademicoDao.buscarPorId(idTipoTitu);
+    }
 }

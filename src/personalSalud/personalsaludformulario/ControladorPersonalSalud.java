@@ -9,6 +9,8 @@ import datospersona.dto.Persona;
 import eps.dto.DtoEps;
 import institucionAcademica.dao.FacadeInstitucionAcademica;
 import institucionAcademica.dto.InstitucionAcademica;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -151,9 +153,7 @@ public class ControladorPersonalSalud implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
-        titulos = FXCollections.observableArrayList();
-
+            titulos = FXCollections.observableArrayList();
 
         tb_personal.setItems(titulos);
 
@@ -205,14 +205,16 @@ public class ControladorPersonalSalud implements Initializable {
             }
 
         }
-
+        manejarEventosTablaTitulos();
     }
 
-    public boolean recorrerTablaTitulos(List<PsDto> titulos, PsDto psDto) {//Metodo para recorrel la tabla con el fin de no ingresar regisstros duplicados
+    public boolean recorrerTablaTitulos(List<PsDto> titulos, PsDto psDto){//Metodo para recorrer la tabla con el fin de no ingresar regisstros duplicados
         boolean resultado = false;
-        for (int i = 0; i < titulos.size(); i++) {
-            if (titulos.get(i).getIdTipoTitu().equals(psDto.getIdTipoTitu()) && titulos.get(i).getIdInstitucion().equals(psDto.getIdInstitucion()
-            ) && titulos.get(i).getFechaTitulacion().equals(psDto.getFechaTitulacion())) {
+        for (int i = 0; i<titulos.size(); i++){
+            if (titulos.get(i).getIdPersonal().equals(psDto.getIdPersonal())&&titulos.get(i).getIdTipoTitu().equals(psDto.getIdTipoTitu())
+                    &&titulos.get(i).getIdInstitucion().equals(psDto.getIdInstitucion()
+                )){
+
                 resultado = true;
                 break;
             }
@@ -254,9 +256,9 @@ public class ControladorPersonalSalud implements Initializable {
         return personal;
     }
 
-
     @FXML
-    public void guardarPersonalS() {
+
+    public void guardarPersonalS(){
 
         int res = personalSaludFacade.agregarPersonal(crearPersonalSalud(), titulos);
 
@@ -316,6 +318,30 @@ public class ControladorPersonalSalud implements Initializable {
         }
 
     }
+    public void manejarEventosTablaTitulos() {//Metodo para que cuando se seleccione un registro de la tabla se asigne a los componentes
+        tb_personal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PsDto>() {
+            @Override
+            public void changed(ObservableValue<? extends PsDto> observable, PsDto oldValue, PsDto newValue) {
+                if (newValue != null) {
+
+                    cbx_idtipotitulo.getSelectionModel().select(facadeTtAcademico.obtenerPorId(
+                            tb_personal.getSelectionModel().getSelectedItem().getIdTipoTitu()));
+                    cbx_idinstitucion.getSelectionModel().select(facadeInstitucionAcademica.obtenerPorId(
+                            tb_personal.getSelectionModel().getSelectedItem().getIdInstitucion()));
+                    dp_fechatitulacion.setValue(newValue.getFechaTitulacion().toLocalDate());
+
+
+                }
+
+            }
+        });//FIN DEL LISTENER
+    }
+
+    @FXML
+    public void modificarPersonasS(){
+
+    }
+
 
 
     @FXML
@@ -595,10 +621,7 @@ public class ControladorPersonalSalud implements Initializable {
         tf_correoelectronico.setText("");
         cmb_cargo.setValue(null);
         tf_numerodocumento.setText("");
-        colIdPersonal.setText("");
-        colIdTipoTitu.setText("");
-        colIdIntitucion.setText("");
-        colFechaTitulacion.setText("");
+        titulos.clear();
 
     }
 

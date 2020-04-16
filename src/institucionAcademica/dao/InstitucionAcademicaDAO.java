@@ -105,6 +105,32 @@ public class InstitucionAcademicaDAO {
     } // Fin del método eliminar()
 
 
+
+    public InstitucionAcademica buscarPorId(String idInstitucion) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from institucion_academica where idInstitucion = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idInstitucion);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                institucionAcademica = new InstitucionAcademica();
+                institucionAcademica.setIdInstitucion(rset.getString("idInstitucion"));
+                institucionAcademica.setNombre(rset.getString("nombre"));
+                institucionAcademica.setDireccion(rset.getString("direccion"));
+                institucionAcademica.setTelefono(rset.getString("telefono"));
+            }
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return institucionAcademica;
+    }
+
+
+
     public List<InstitucionAcademica> buscar(String buscar){
         try {
             conn = ConexionRoot.getConexion();
@@ -120,17 +146,13 @@ public class InstitucionAcademicaDAO {
                 institucionAcademica.setNombre(rset.getString("nombre"));
                 institucionAcademica.setDireccion(rset.getString("direccion"));
                 institucionAcademica.setTelefono(rset.getString("telefono"));
-
                 institucionAcademicaList.add(institucionAcademica);
             }
-
-
 
         }catch (RuntimeException | SQLException e){
             throw new RuntimeException("Error SQL - Bucar Institución()!");
         }
         return institucionAcademicaList;
     }
-
 
 }
