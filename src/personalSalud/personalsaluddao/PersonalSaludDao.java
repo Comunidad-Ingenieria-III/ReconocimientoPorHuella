@@ -3,7 +3,9 @@ package personalSalud.personalsaluddao;
 import conexionBD.ConexionRoot;
 import conexionBD.JdbcHelper;
 import datosFamiliar.dtofamiliar.Familiar;
+import datospersona.dto.Persona;
 import institucionAcademica.dto.InstitucionAcademica;
+import personalSalud.personalsaluddto.BusquedaDePersonal;
 import personalSalud.personalsaluddto.PersonalSalud;
 import personal_salud_titulo.psdto.PsDto;
 
@@ -131,6 +133,7 @@ public class PersonalSaludDao {
 
             conn.commit();
             JOptionPane.showMessageDialog(null, "Se ejecutó la transaccion corectamente");
+            return 1;
 
         } catch (SQLException ex) {
             try {
@@ -197,6 +200,60 @@ public class PersonalSaludDao {
             return 0;
         }
     } // Fin del método modificar()
+
+    public BusquedaDePersonal buscarPersonalPorId(String idPersonal){
+        PsDto psDto;
+        List<PsDto>listaTitulos = null;
+        PersonalSalud personalSalud = null;
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from personal_salud where idPersonal=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,idPersonal);
+            rset = stmt.executeQuery();
+
+            if (rset.next()){
+                personalSalud = new PersonalSalud();
+                personalSalud.setIdPersonal(rset.getString("idPersonal"));
+                personalSalud.setNombre1(rset.getString("nombre1"));
+                personalSalud.setNombre2(rset.getString("nombre2"));
+                personalSalud.setApellido1(rset.getString("apellido1"));
+                personalSalud.setApellido2(rset.getString("apellido2"));
+                personalSalud.setSexo(rset.getString("sexo"));
+                personalSalud.setTelefono(rset.getString("telefono"));
+                personalSalud.setEmail(rset.getString("email"));
+                personalSalud.setTipoDocumento(rset.getString("idTipoDocumento"));
+                personalSalud.setCargo(rset.getString("cargo"));
+
+
+
+            }
+
+            String sql2 = "select * from personal_salud_titulo where idPersonal=?";
+            stmt = conn.prepareStatement(sql2);
+            stmt.setString(1,idPersonal);
+            rset = stmt.executeQuery();
+
+            listaTitulos = new ArrayList<>();
+            while (rset.next()){
+                psDto = new PsDto();
+                psDto.setId(rset.getInt("idPst"));
+                psDto.setIdPersonal(rset.getString("idPersonal"));
+                psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
+                psDto.setIdInstitucion(rset.getString("idInstitucion"));
+                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
+
+                listaTitulos.add(psDto);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+            return new BusquedaDePersonal(listaTitulos,personalSalud);
+    }
+
+
 
     /*public PsDto buscarPorId(PsDto psDto) {
         try {

@@ -3,6 +3,7 @@ package personalSalud.personalsaludfacade;
 import datosFamiliar.daofamiliar.FamiliarDAO;
 import datosFamiliar.dtofamiliar.Familiar;
 import personalSalud.personalsaluddao.PersonalSaludDao;
+import personalSalud.personalsaluddto.BusquedaDePersonal;
 import personalSalud.personalsaluddto.PersonalSalud;
 import personal_salud_titulo.psdto.PsDto;
 
@@ -35,6 +36,12 @@ public class PersonalSaludFacade {
     public int modificarPersonal(PersonalSalud personalSalud){
         return personalSaludDao.modificarPersonal(personalSalud);
     }
+
+    public BusquedaDePersonal buscarPersonalTitulos(String idPersonal){
+        return personalSaludDao.buscarPersonalPorId(idPersonal);
+
+    }
+
 
     /*public PsDto buscar(PsDto psDto){return  personalSaludDao.buscarPorId(psDto);}
 

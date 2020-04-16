@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="576.0" prefWidth="1000.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<VBox prefHeight="576.0" prefWidth="1000.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
     <children>
         <AnchorPane id="panel_personal_salud" prefHeight="271.0" prefWidth="830.0" styleClass="panel_personal_salud">
             <children>
@@ -163,9 +164,14 @@
                </graphic>
                 </TableColumn>
                 <TableColumn prefWidth="190.0">
-                    <graphic>
-                        <Button fx:id="bt_agregar" mnemonicParsing="false" onAction="#agregarTitulos" prefHeight="63.0" prefWidth="160.0" text="Agregar Campos" />
-                    </graphic>
+               <graphic>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                              <Button fx:id="bt_agregar" mnemonicParsing="false" onAction="#agregarTitulos" prefHeight="63.0" prefWidth="88.0" text="Agregar" />
+                        <Button fx:id="bt_eliminar" mnemonicParsing="false" onAction="#eliminarTitulos" prefHeight="63.0" prefWidth="92.0" text="Eliminar" />
+                     </children>
+                  </HBox>
+               </graphic>
                 </TableColumn>
             </columns>
         </TableView>
@@ -179,7 +185,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_consultar" layoutX="125.0" layoutY="18.0" mnemonicParsing="false" onAction="#buscarPersonaSalud" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
+                <Button fx:id="bt_consultar" layoutX="125.0" layoutY="18.0" mnemonicParsing="false" onAction="#consultarPersonalTitulo" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>

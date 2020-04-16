@@ -47,6 +47,7 @@ public class DaoTipoDocumento {
         return dtotipodocumentos;
     }
 
+
     public int agregarTipoDocumento(DtoTipoDocumento dtotipodocumento) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();

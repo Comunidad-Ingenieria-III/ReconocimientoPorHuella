@@ -24,4 +24,8 @@ public class FacadeCargo {
     public int eliminar(String idCargo){
         return cargoDAO.eliminar(idCargo);
     }
+
+    public Cargo obtenerPorId(String idCargo) {
+        return cargoDAO.buscarPorId(idCargo);
+    }
 }
