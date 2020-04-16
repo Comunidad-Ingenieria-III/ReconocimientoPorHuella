@@ -27,6 +27,8 @@ public class FacadeInstitucionReferencia {
         return institucionReferenciaDAO.eliminar(idInstitucionR);
      }
 
+    public List<InstitucionReferencia> buscar(String buscar) { return institucionReferenciaDAO.buscar(buscar); }
+
 
 
 }

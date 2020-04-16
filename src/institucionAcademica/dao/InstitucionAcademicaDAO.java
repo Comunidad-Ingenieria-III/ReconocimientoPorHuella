@@ -105,6 +105,7 @@ public class InstitucionAcademicaDAO {
     } // Fin del método eliminar()
 
 
+<<<<<<< HEAD
     public InstitucionAcademica buscarPorId(String idInstitucion) {
         try {
             conn = ConexionRoot.getConexion();
@@ -116,15 +117,43 @@ public class InstitucionAcademicaDAO {
             if (rset.next()) {
                 institucionAcademica = new InstitucionAcademica();
 
+=======
+    public List<InstitucionAcademica> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from institucion_academica where idInstitucion LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            institucionAcademicaList = new ArrayList<>();
+            while (rset.next()){
+                institucionAcademica = new InstitucionAcademica();
+>>>>>>> origin/master
                 institucionAcademica.setIdInstitucion(rset.getString("idInstitucion"));
                 institucionAcademica.setNombre(rset.getString("nombre"));
                 institucionAcademica.setDireccion(rset.getString("direccion"));
                 institucionAcademica.setTelefono(rset.getString("telefono"));
 
+<<<<<<< HEAD
             }
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("Error SQL - obtenerPorId()!");
         }
         return institucionAcademica;
     }
+=======
+                institucionAcademicaList.add(institucionAcademica);
+            }
+
+
+
+        }catch (RuntimeException | SQLException e){
+            throw new RuntimeException("Error SQL - Bucar Institución()!");
+        }
+        return institucionAcademicaList;
+    }
+
+
+>>>>>>> origin/master
 }

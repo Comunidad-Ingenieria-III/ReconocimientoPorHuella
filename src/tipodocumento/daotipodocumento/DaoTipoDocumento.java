@@ -24,7 +24,7 @@ public class DaoTipoDocumento {
 
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from tipo_de_documento";
+            String sql = "select * from tipo_documento";
 
             stmt = conn.prepareStatement(sql);//preparar consulta
             rset = stmt.executeQuery();//ejecutar la consulta y guardarla en la variabble rset
@@ -51,7 +51,7 @@ public class DaoTipoDocumento {
     public int agregarTipoDocumento(DtoTipoDocumento dtotipodocumento) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into tipo_de_documento(idTipoDocumento, nombreTipoDocumento) values (?, ?)";
+            String sql = "insert into tipo_documento(idTipoDocumento, nombreTipoDocumento) values (?, ?)";
 
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
             stmt.setString(1, dtotipodocumento.getIdTipoDocumento());
@@ -68,7 +68,7 @@ public class DaoTipoDocumento {
     public DtoTipoDocumento buscarPorId(String idTipoDocumento) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from tipo_de_documento where idTipoDocumento = ?";
+            String sql = "select * from tipo_documento where idTipoDocumento = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idTipoDocumento);
             rset = stmt.executeQuery();
@@ -88,7 +88,7 @@ public class DaoTipoDocumento {
     public int modificar(DtoTipoDocumento dtotipodocumento) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update tipo_de_documento set nombreTipoDocumento = ?  where idTipoDocumento = ?";
+            String sql = "update tipo_documento set nombreTipoDocumento = ?  where idTipoDocumento = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, dtotipodocumento.getNombreTipoDocumento());
@@ -108,7 +108,7 @@ public class DaoTipoDocumento {
     public int eliminar(String idTipoDocumento) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from tipo_de_documento where idTipoDocumento = ?";
+            String sql = "delete from tipo_documento where idTipoDocumento = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, Integer.parseInt(idTipoDocumento));
             return stmt.executeUpdate();
