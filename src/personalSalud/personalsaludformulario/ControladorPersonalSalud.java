@@ -176,7 +176,7 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     @FXML
-    public void agregarTitulos() {
+    public void agregarTitulos() {//Metodo agregar titulos a la tabla
         PsDto psDto = new PsDto(
                 0,
                 tf_numerodocumento.getText(),
@@ -295,7 +295,6 @@ public class ControladorPersonalSalud implements Initializable {
         cmb_cargo.setValue(facadeCargo.obtenerPorId(personalSalud.getCargo()));
 
         ObservableList<PsDto> titulos = FXCollections.observableArrayList(busqueda.getListaTitulos());
-
 
         tb_personal.setItems(titulos);
 
