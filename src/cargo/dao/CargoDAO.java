@@ -99,4 +99,24 @@ public class CargoDAO {
         return 0;
     }//Fin del metodo eliminar
 
+    public Cargo buscarPorId(String idCargo) {
+        Cargo cargo = null;
+        try {
+            conn = ConexionRoot.getConexion();
+            String query = "select * from cargo where idCargo=?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1,idCargo);
+            rset = stmt.executeQuery();
+
+            if (rset.next()){
+                cargo = new Cargo();
+                cargo.setIdCargo(rset.getString("idCargo"));
+                cargo.setNombre(rset.getString("nombre"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cargo;
+    }
 }

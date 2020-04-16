@@ -30,4 +30,8 @@ public class FacadeTipoDocumento {
         return daotipodocumento.eliminar(tipoDocumento);
     }
 
+    public DtoTipoDocumento obtenerPorId(String idTipoDocumento){
+        return daotipodocumento.buscarPorId(idTipoDocumento);
+    }
+
 }
