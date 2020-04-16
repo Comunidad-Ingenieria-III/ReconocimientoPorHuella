@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import personalSalud.personalsaluddto.BusquedaDePersonal;
 import personalSalud.personalsaluddto.PersonalSalud;
 import personalSalud.personalsaludfacade.PersonalSaludFacade;
 import personal_salud_titulo.psdto.PsDto;
@@ -278,6 +279,33 @@ public class ControladorPersonalSalud implements Initializable {
 
     }
 
+    @FXML
+    public void consultarPersonalTitulo() {
+        BusquedaDePersonal busqueda = personalSaludFacade.buscarPersonalTitulos(tf_numerodocumento.getText());
+        PersonalSalud personalSalud = busqueda.getPersonalSalud();
+
+        tf_nombre1.setText(personalSalud.getNombre1());
+        tf_nombre2.setText(personalSalud.getNombre2());
+        tf_apellido1.setText(personalSalud.getApellido1());
+        tf_apellido2.setText(personalSalud.getApellido2());
+        cmb_sexo.setValue(personalSalud.getSexo());
+        tf_numtelefono.setText(personalSalud.getTelefono());
+        tf_correoelectronico.setText(personalSalud.getEmail());
+        cmb_tipodocumento.setValue(facadeTipoDocumento.obtenerPorId(personalSalud.getTipoDocumento()));
+        cmb_cargo.setValue(facadeCargo.obtenerPorId(personalSalud.getCargo()));
+
+        ObservableList<PsDto> titulos = FXCollections.observableArrayList(busqueda.getListaTitulos());
+
+
+        tb_personal.setItems(titulos);
+
+        colIdPersonal.setCellValueFactory(new PropertyValueFactory<>("idPersonal"));
+        colIdTipoTitu.setCellValueFactory(new PropertyValueFactory<>("idTipoTitu"));
+        colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
+        colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
+
+    }
+
 
     @FXML
     public void buscarPersonaSalud() {
@@ -426,6 +454,7 @@ public class ControladorPersonalSalud implements Initializable {
                 bt_modificar.setDisable(true);
                 bt_guardar.setDisable(false);
                 cmb_tipodocumento.requestFocus();
+                titulos.clear();
             }
         });
     }
