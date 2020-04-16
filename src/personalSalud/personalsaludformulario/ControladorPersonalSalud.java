@@ -150,9 +150,7 @@ public class ControladorPersonalSalud implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
-        titulos = FXCollections.observableArrayList();
-
+            titulos = FXCollections.observableArrayList();
 
         tb_personal.setItems(titulos);
 
@@ -207,11 +205,12 @@ public class ControladorPersonalSalud implements Initializable {
 
     }
 
-    public boolean recorrerTablaTitulos(List<PsDto> titulos, PsDto psDto){//Metodo para recorrel la tabla con el fin de no ingresar regisstros duplicados
+    public boolean recorrerTablaTitulos(List<PsDto> titulos, PsDto psDto){//Metodo para recorrer la tabla con el fin de no ingresar regisstros duplicados
         boolean resultado = false;
         for (int i = 0; i<titulos.size(); i++){
-            if (titulos.get(i).getIdTipoTitu().equals(psDto.getIdTipoTitu())&&titulos.get(i).getIdInstitucion().equals(psDto.getIdInstitucion()
-                )&&titulos.get(i).getFechaTitulacion().equals(psDto.getFechaTitulacion())){
+            if (titulos.get(i).getIdPersonal().equals(psDto.getIdPersonal())&&titulos.get(i).getIdTipoTitu().equals(psDto.getIdTipoTitu())
+                    &&titulos.get(i).getIdInstitucion().equals(psDto.getIdInstitucion()
+                )){
                 resultado = true;
                 break;
             }
@@ -303,88 +302,9 @@ public class ControladorPersonalSalud implements Initializable {
         colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
         colFechaTitulacion.setCellValueFactory(new PropertyValueFactory<>("fechaTitulacion"));
 
-    }
-
-
-    @FXML
-    public void buscarPersonaSalud() {
-
-        DtoTipoDocumento dtoTipoDocumento = new DtoTipoDocumento();
-        Cargo cargo = new Cargo();
-        PsDto psDto = new PsDto();
-
-        try {
-            conn = ConexionRoot.getConexion();
-            String sql = "select * from personal_salud  where idPersonal = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, tf_numerodocumento.getText());
-            rset = stmt.executeQuery();
-
-            if (rset.next()) {
-
-
-                //tf_numerodocumento.setText(rset.getString("idPersonal"));
-                tf_nombre1.setText(rset.getString("nombre1"));
-                tf_nombre2.setText(rset.getString("nombre2"));
-                tf_apellido1.setText(rset.getString("apellido1"));
-                tf_apellido2.setText(rset.getString("apellido2"));
-                cmb_sexo.setValue(String.valueOf(rset.getString("sexo")));
-                tf_numtelefono.setText(rset.getString("telefono"));
-                tf_correoelectronico.setText(rset.getString("email"));
-                //cmb_tipodocumento.getSelectionModel().select(rset.getInt(dtoTipoDocumento.getNombreTipoDocumento()));
-                //cmb_cargo.set.setItems(rset.getString(cargo.getIdCargo()));
-
-
-                String sql2 = "select * from personal_salud_titulo where idPersonal = ?";
-                stmt = conn.prepareStatement(sql2);
-                stmt.setString(1, tf_numerodocumento.getText());
-                rset = stmt.executeQuery();
-
-                if (rset.next()) {
-
-                    //colIdPst.setId(String.valueOf(rset.getInt("idPst")));
-                    //tf_numerodocumento.setText(rset.getString("idPst"));
-                    colIdPersonal.setText(rset.getString("idPersonal"));
-                    colIdTipoTitu.setText(rset.getString("idTipoTitu"));
-                    colIdIntitucion.setText(rset.getString("idInstitucion"));
-                    colFechaTitulacion.setText(String.valueOf(rset.getDate("fechaTitulacion")));
-                }
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
-        }
-        //JOptionPane.showMessageDialog(null, "Error al buscar Personal de Salud: ",
-        //"Error", JOptionPane.ERROR_MESSAGE);
 
     }
-    @FXML
-     public PsDto buscarPorId() {
 
-        PsDto psDto = new PsDto();
-
-        try {
-            conn = ConexionRoot.getConexion();
-            String sql = "select * from personal_salud_titulo where idPersonal = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, String.valueOf(psDto));
-            rset = stmt.executeQuery();
-
-            if (rset.next()) {
-                psDto = new PsDto();
-
-                //colIdPst.setId(String.valueOf(rset.getInt("idPst")));
-                tf_numerodocumento.setText(rset.getString("idPst"));
-                colIdPersonal.setText(rset.getString("idPersonal"));
-                colIdTipoTitu.setText(rset.getString("idTipoTitu"));
-                colIdIntitucion.setText(rset.getString("idInstitucion"));
-                colFechaTitulacion.setText(String.valueOf(rset.getDate("fechaTitulacion")));
-
-            }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
-        }
-        return psDto;
-    }
 
     @FXML
     public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
