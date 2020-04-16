@@ -146,8 +146,8 @@ public class InstitucionAcademicaDAO {
                 institucionAcademica.setNombre(rset.getString("nombre"));
                 institucionAcademica.setDireccion(rset.getString("direccion"));
                 institucionAcademica.setTelefono(rset.getString("telefono"));
-            }
                 institucionAcademicaList.add(institucionAcademica);
+            }
 
         }catch (RuntimeException | SQLException e){
             throw new RuntimeException("Error SQL - Bucar Institución()!");

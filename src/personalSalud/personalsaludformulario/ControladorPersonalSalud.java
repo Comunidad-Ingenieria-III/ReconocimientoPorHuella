@@ -256,23 +256,9 @@ public class ControladorPersonalSalud implements Initializable {
         return personal;
     }
 
-
-    public void validarClavePrimaria(){
-        boolean personalSalud = personalSaludFacade.buscarPorId(tf_numerodocumento.getText());
-        if (personalSalud){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Personal Salud.");
-            msg.setContentText("El Documento: \n" + tf_numerodocumento.getText() + " Ya Ha Sido Registrado.");
-            msg.setHeaderText("Error.");
-            msg.show();
-
-        }
-    }
-
     @FXML
 
     public void guardarPersonalS(){
-        validarClavePrimaria();
 
         int res = personalSaludFacade.agregarPersonal(crearPersonalSalud(), titulos);
 
