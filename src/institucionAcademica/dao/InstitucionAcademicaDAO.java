@@ -105,7 +105,7 @@ public class InstitucionAcademicaDAO {
     } // Fin del método eliminar()
 
 
-<<<<<<< HEAD
+
     public InstitucionAcademica buscarPorId(String idInstitucion) {
         try {
             conn = ConexionRoot.getConexion();
@@ -116,8 +116,21 @@ public class InstitucionAcademicaDAO {
 
             if (rset.next()) {
                 institucionAcademica = new InstitucionAcademica();
+                institucionAcademica.setIdInstitucion(rset.getString("idInstitucion"));
+                institucionAcademica.setNombre(rset.getString("nombre"));
+                institucionAcademica.setDireccion(rset.getString("direccion"));
+                institucionAcademica.setTelefono(rset.getString("telefono"));
+            }
 
-=======
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return institucionAcademica;
+    }
+
+
+
     public List<InstitucionAcademica> buscar(String buscar){
         try {
             conn = ConexionRoot.getConexion();
@@ -129,24 +142,12 @@ public class InstitucionAcademicaDAO {
             institucionAcademicaList = new ArrayList<>();
             while (rset.next()){
                 institucionAcademica = new InstitucionAcademica();
->>>>>>> origin/master
                 institucionAcademica.setIdInstitucion(rset.getString("idInstitucion"));
                 institucionAcademica.setNombre(rset.getString("nombre"));
                 institucionAcademica.setDireccion(rset.getString("direccion"));
                 institucionAcademica.setTelefono(rset.getString("telefono"));
-
-<<<<<<< HEAD
             }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
-        }
-        return institucionAcademica;
-    }
-=======
                 institucionAcademicaList.add(institucionAcademica);
-            }
-
-
 
         }catch (RuntimeException | SQLException e){
             throw new RuntimeException("Error SQL - Bucar Institución()!");
@@ -154,6 +155,4 @@ public class InstitucionAcademicaDAO {
         return institucionAcademicaList;
     }
 
-
->>>>>>> origin/master
 }

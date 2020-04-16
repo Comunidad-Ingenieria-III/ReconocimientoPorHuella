@@ -21,13 +21,14 @@ InstitucionAcademicaDAO institucionAcademicaDAO = new InstitucionAcademicaDAO();
     public int eliminar(String idInstitucion) {
         return institucionAcademicaDAO.eliminar(idInstitucion);
     }
-<<<<<<< HEAD
+
 
     public InstitucionAcademica obtenerPorId(String idInstitucion) {
         return institucionAcademicaDAO.buscarPorId(idInstitucion);
     }
-=======
-    public List<InstitucionAcademica> buscar(String buscar) { return institucionAcademicaDAO.buscar(buscar); }
 
->>>>>>> origin/master
+    public List<InstitucionAcademica> buscar(String buscar) {
+        return institucionAcademicaDAO.buscar(buscar); }
+
+
 }
