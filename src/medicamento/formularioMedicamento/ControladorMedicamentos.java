@@ -73,6 +73,33 @@ public class ControladorMedicamentos extends Component implements Initializable 
         });//FIN DEL LISTENER
     }
 
+    public void validarExistente(){
+
+        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarE();
+            }
+        });
+    }
+
+    public void validarE(){
+        medicamentos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
+        if(medicamentos.size()>=1){
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Tipo de titulo académico");
+            msg.setContentText("Codigo existente no es posible agregar");
+            msg.setHeaderText("Resultado");
+            msg.show();
+            tf_Tipo.setText("");
+            tf_nombre1.setText("");
+            tf_Tipo.requestFocus();
+
+
+
+        }
+    }
+
 
 
     @FXML
@@ -89,13 +116,14 @@ public class ControladorMedicamentos extends Component implements Initializable 
         );
         if (medicamentos1.isEmpty()) {
             if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
-                cancelar();
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Medicamentos");
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                tf_Tipo.requestFocus();
                 bt_guardar.setDisable(true);
+
             } else {
 
                 int res = facade.agregar(medicamento);
@@ -203,23 +231,12 @@ public class ControladorMedicamentos extends Component implements Initializable 
     }
     @FXML
     public void validar(){
-        tf_Tipo.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                validarCamposVacios();
-
-            }
-
-        });
         tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarCamposVacios();
-
             }
-
         });
-
     }
 
     @FXML
@@ -229,20 +246,17 @@ public class ControladorMedicamentos extends Component implements Initializable 
             bt_guardar.setDisable(true);
 
         }else{
-            validarMedicamento.setText("");
+            validarNombre.setText("");
             bt_guardar.setDisable(false);
         }
         if(tf_nombre1.getText().isEmpty()){
-            validarNombre.setText("Campo requerido");
+            bt_guardar.setDisable(true);
+            // validarNombre.setText("Campo requerido");
         }else{
             validarNombre.setText("");
+            bt_guardar.setDisable(false);
 
         }
-        //if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()){
-        // bt_guardar.setDisable(true);
-        //}//else {
-        //bt_guardar.setDisable(false);
-        //}
 
     }
 

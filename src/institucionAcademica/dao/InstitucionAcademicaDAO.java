@@ -3,6 +3,7 @@ package institucionAcademica.dao;
 import conexionBD.ConexionRoot;
 import institucionAcademica.dto.InstitucionAcademica;
 import personal_salud_titulo.psdto.PsDto;
+import tipoTituloAcademico.dto.TtAcademico;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -102,6 +103,34 @@ public class InstitucionAcademicaDAO {
             return 0;
         }
     } // Fin del método eliminar()
+
+
+    public List<InstitucionAcademica> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from institucion_academica where idInstitucion LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            institucionAcademicaList = new ArrayList<>();
+            while (rset.next()){
+                institucionAcademica = new InstitucionAcademica();
+                institucionAcademica.setIdInstitucion(rset.getString("idInstitucion"));
+                institucionAcademica.setNombre(rset.getString("nombre"));
+                institucionAcademica.setDireccion(rset.getString("direccion"));
+                institucionAcademica.setTelefono(rset.getString("telefono"));
+
+                institucionAcademicaList.add(institucionAcademica);
+            }
+
+
+
+        }catch (RuntimeException | SQLException e){
+            throw new RuntimeException("Error SQL - Bucar Institución()!");
+        }
+        return institucionAcademicaList;
+    }
 
 
 }

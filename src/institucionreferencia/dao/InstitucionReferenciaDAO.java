@@ -1,6 +1,7 @@
 package institucionreferencia.dao;
 
 import conexionBD.ConexionRoot;
+import institucionAcademica.dto.InstitucionAcademica;
 import institucionreferencia.dto.InstitucionReferencia;
 
 import java.sql.Connection;
@@ -101,4 +102,38 @@ public class InstitucionReferenciaDAO {
         }
         return 0;
     }
+
+    public List<InstitucionReferencia> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from institucion_referencia where idInstiRefe LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            institucionReferencias = new ArrayList();
+
+            while (rset.next()){
+                institucionReferencia = new InstitucionReferencia();
+
+                institucionReferencia.setIdInstitucion(rset.getString("idInstiRefe"));
+                institucionReferencia.setNombre(rset.getString("nombre"));
+                institucionReferencia.setDireccion(rset.getString("direccion"));
+                institucionReferencia.setTelefono(rset.getString("telefono"));
+
+                institucionReferencias.add(institucionReferencia);
+            }
+
+
+        }catch (SQLException | RuntimeException e){
+            System.out.println(e.toString());
+        }
+        return institucionReferencias;
+    }
+
+
+
+
+
+
 }

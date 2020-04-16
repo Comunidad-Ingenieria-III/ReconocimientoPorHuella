@@ -1,6 +1,7 @@
 package institucionAcademica.dao;
 
 import institucionAcademica.dto.InstitucionAcademica;
+import tipoTituloAcademico.dto.TtAcademico;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ InstitucionAcademicaDAO institucionAcademicaDAO = new InstitucionAcademicaDAO();
     public int eliminar(String idInstitucion) {
         return institucionAcademicaDAO.eliminar(idInstitucion);
     }
+    public List<InstitucionAcademica> buscar(String buscar) { return institucionAcademicaDAO.buscar(buscar); }
+
 }
