@@ -27,7 +27,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tf_numerodocumento" layoutX="213.0" layoutY="95.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="115.0" />
+                <TextField fx:id="tf_numerodocumento" layoutX="213.0" layoutY="95.0" onAction="#validarClavePrimaria" prefHeight="25.0" prefWidth="115.0" />
                 <Label fx:id="lblDocumento" layoutX="334.0" layoutY="100.0" prefHeight="17.0" prefWidth="166.0" textFill="#f20404">
                     <font>
                         <Font name="System Bold Italic" size="12.0" />

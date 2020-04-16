@@ -3,6 +3,7 @@ package institucionAcademica.dao;
 import conexionBD.ConexionRoot;
 import institucionAcademica.dto.InstitucionAcademica;
 import personal_salud_titulo.psdto.PsDto;
+import tipoTituloAcademico.dto.TtAcademico;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -104,4 +105,26 @@ public class InstitucionAcademicaDAO {
     } // Fin del método eliminar()
 
 
+    public InstitucionAcademica buscarPorId(String idInstitucion) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from institucion_academica where idInstitucion = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idInstitucion);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                institucionAcademica = new InstitucionAcademica();
+
+                institucionAcademica.setIdInstitucion(rset.getString("idInstitucion"));
+                institucionAcademica.setNombre(rset.getString("nombre"));
+                institucionAcademica.setDireccion(rset.getString("direccion"));
+                institucionAcademica.setTelefono(rset.getString("telefono"));
+
+            }
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        }
+        return institucionAcademica;
+    }
 }

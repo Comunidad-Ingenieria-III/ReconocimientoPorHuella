@@ -224,9 +224,6 @@ public class PersonalSaludDao {
                 personalSalud.setEmail(rset.getString("email"));
                 personalSalud.setTipoDocumento(rset.getString("idTipoDocumento"));
                 personalSalud.setCargo(rset.getString("cargo"));
-
-
-
             }
 
             String sql2 = "select * from personal_salud_titulo where idPersonal=?";
@@ -254,31 +251,6 @@ public class PersonalSaludDao {
     }
 
 
-
-    /*public PsDto buscarPorId(PsDto psDto) {
-        try {
-            conn = ConexionRoot.getConexion();
-            String sql = "select * from personal_salud_titulo where idPersonal = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, String.valueOf(psDto));
-            rset = stmt.executeQuery();
-
-            if (rset.next()) {
-                psDto = new PsDto();
-
-                //psDto.setId(rset.getInt("idPst"));
-                psDto.setIdPersonal(rset.getString("idPersonal"));
-                psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
-                psDto.setIdInstitucion(rset.getString("idInstitucion"));
-                psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
-
-            }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
-        }
-        return psDto;
-    }*/
-
     public int eliminarPersonalSalud(String idCliente) {
         try {
             conn = ConexionRoot.getConexion();
@@ -293,4 +265,21 @@ public class PersonalSaludDao {
         }
     }
 
+    public boolean buscarPrimaryKey(String idPersonal) {
+        boolean trpta = false;
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from personal_salud where idPersonal = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,idPersonal);
+            rset = stmt.executeQuery();
+
+            if (rset.next()){
+                trpta = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return trpta;
+    }
 }

@@ -52,4 +52,8 @@ public class PersonalSaludFacade {
     public void eliminarPersonal(String idPersonal){
         personalSaludDao.eliminarPersonalSalud(idPersonal);
     }
+
+    public boolean buscarPorId(String idPersonal) {
+        return  personalSaludDao.buscarPrimaryKey(idPersonal);
+    }
 }

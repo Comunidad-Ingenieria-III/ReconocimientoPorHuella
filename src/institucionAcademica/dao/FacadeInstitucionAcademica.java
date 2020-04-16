@@ -20,4 +20,8 @@ InstitucionAcademicaDAO institucionAcademicaDAO = new InstitucionAcademicaDAO();
     public int eliminar(String idInstitucion) {
         return institucionAcademicaDAO.eliminar(idInstitucion);
     }
+
+    public InstitucionAcademica obtenerPorId(String idInstitucion) {
+        return institucionAcademicaDAO.buscarPorId(idInstitucion);
+    }
 }
