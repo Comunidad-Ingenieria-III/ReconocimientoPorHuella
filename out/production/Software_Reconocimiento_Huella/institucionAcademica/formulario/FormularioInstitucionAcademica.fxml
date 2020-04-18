@@ -73,7 +73,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnConsultar" layoutX="157.0" layoutY="225.0" mnemonicParsing="false" onAction="#consultarInstitucion" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
+                        <Button fx:id="btnConsultar" layoutX="161.0" layoutY="225.0" mnemonicParsing="false" onAction="#consultarInstitucion" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -89,7 +89,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnSalir" layoutX="528.0" layoutY="225.0" mnemonicParsing="false" onAction="#cerrarInstitucionAcademica" prefHeight="30.0" prefWidth="100.0" text="Salir" textFill="WHITE">
+                        <Button fx:id="btnSalir" layoutX="555.0" layoutY="225.0" mnemonicParsing="false" onAction="#cerrarInstitucionAcademica" prefHeight="30.0" prefWidth="100.0" text="Salir" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -97,12 +97,12 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnGuardar" layoutX="555.0" layoutY="77.0" mnemonicParsing="false" onAction="#botonGuardar" prefHeight="30.0" prefWidth="100.0" text="Guardar">
+                        <Button fx:id="btnGuardar" layoutX="555.0" layoutY="105.0" mnemonicParsing="false" onAction="#botonGuardar" prefHeight="30.0" prefWidth="100.0" text="Guardar">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="btnModificar" layoutX="555.0" layoutY="123.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
+                        <Button fx:id="btnModificar" layoutX="555.0" layoutY="163.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -110,7 +110,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnInhabilitar" layoutX="402.0" layoutY="225.0" mnemonicParsing="false" onAction="#eliminarInstitucion" prefHeight="30.0" prefWidth="100.0" text="Eliminar" textFill="WHITE">
+                        <Button fx:id="btnInhabilitar" layoutX="414.0" layoutY="225.0" mnemonicParsing="false" onAction="#eliminarInstitucion" prefHeight="30.0" prefWidth="100.0" text="Eliminar" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
