@@ -128,6 +128,8 @@ public class ControladorPersonalSalud implements Initializable {
     private Label lbl_sexo;
     @FXML
     private Label lbl_numtelefono;
+    @FXML
+    private int valor=1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -252,27 +254,9 @@ public class ControladorPersonalSalud implements Initializable {
         return personal;
     }
 
-    public void validarDocumentoIdentidad(){//Metodo Que maneja un evento en la caja de texto primernombre para la validacion
-        //del documento de identidad de la persona.
 
-        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                boolean busqueda = buscarDocumento(tf_numerodocumento.getText());
-                if (busqueda) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
-                    msg.setTitle("Gestiones - Personal Salud");
-                    msg.setContentText("Ya Existe Una Persona Con El Documento Nro:\n" + tf_numerodocumento.getText() + " Asignado");
-                    msg.setHeaderText("Error.");
-                    msg.show();
-                    tf_numerodocumento.setText("");
-                    tf_nombre1.setText("");
-                    tf_numerodocumento.requestFocus();
-                }
 
-            }
-        });
-    }
+
 
     public boolean buscarDocumento(String idPersonal) {//Metodo que valida si el número de documento que se esta ingresando esxiste en la BBDD
         boolean documento = personalSaludFacade.buscarPorId(idPersonal);
@@ -368,6 +352,7 @@ public class ControladorPersonalSalud implements Initializable {
             tb_personal.setItems(titulos);
             initializeTableColumn();
             manejarEventosTablaTitulos();
+
         }
 
     }
@@ -489,6 +474,7 @@ public class ControladorPersonalSalud implements Initializable {
                 bt_guardar.setDisable(false);
                 cmb_tipodocumento.requestFocus();
                 titulos.clear();
+                valor=1;
             }
         });
     }
@@ -617,7 +603,7 @@ public class ControladorPersonalSalud implements Initializable {
         tf_correoelectronico.setDisable(false);
         cmb_cargo.setDisable(false);
         tf_nombre1.requestFocus();
-
+        valor=0;            //Ingreso una variable Jose Martin campo
         bt_modificar.setDisable(true);
         bt_guardar.setDisable(false);
     }
@@ -683,6 +669,62 @@ public class ControladorPersonalSalud implements Initializable {
         cmb_cargo.setDisable(true);
         tf_numerodocumento.requestFocus();
     }
+    //  Inicio modificación jose Martin
+
+    public void validarExistente(){
+
+        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarE();
+            }
+        });
+    }
+
+    public void validarE(){
+        if(valor==1){
+
+            boolean busqueda = buscarDocumento(tf_numerodocumento.getText());
+            if(busqueda){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Personal Salud");
+                msg.setContentText("Ya Existe Una Persona Con El Documento Nro:\n" + tf_numerodocumento.getText() + " Asignado");
+                msg.setHeaderText("Error.");
+                msg.show();
+                tf_numerodocumento.setText("");
+                tf_nombre1.setText("");
+                tf_numerodocumento.requestFocus();
+
+
+
+            }
+        }
+
+    }
+
+    public void validarDocumentoIdentidad(){//Metodo Que maneja un evento en la caja de texto primernombre para la validacion
+        //del documento de identidad de la persona.
+
+        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                boolean busqueda = buscarDocumento(tf_numerodocumento.getText());
+                if (busqueda) {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Personal Salud");
+                    msg.setContentText("Ya Existe Una Persona Con El Documento Nro:\n" + tf_numerodocumento.getText() + " Asignado");
+                    msg.setHeaderText("Error.");
+                    msg.show();
+                    tf_numerodocumento.setText("");
+                    tf_nombre1.setText("");
+                    tf_numerodocumento.requestFocus();
+                }
+
+            }
+        });
+    }
+
+
 
     @FXML
     private void cerraPersonalSalud(ActionEvent event) {
