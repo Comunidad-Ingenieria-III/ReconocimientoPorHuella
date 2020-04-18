@@ -5,6 +5,7 @@ import conexionBD.JdbcHelper;
 import datosFamiliar.dtofamiliar.Familiar;
 import datospersona.dto.Persona;
 import institucionAcademica.dto.InstitucionAcademica;
+import javafx.scene.control.Alert;
 import personalSalud.personalsaluddto.BusquedaDePersonal;
 import personalSalud.personalsaluddto.PersonalSalud;
 import personal_salud_titulo.psdto.PsDto;
@@ -132,13 +133,17 @@ public class PersonalSaludDao {
             pertitu.executeUpdate();
 
             conn.commit();
-            JOptionPane.showMessageDialog(null, "Se ejecutó la transaccion corectamente");
+
             return 1;
 
         } catch (SQLException ex) {
             try {
                 conn.rollback();
-                JOptionPane.showMessageDialog(null, "Error en la transaccion");
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Personal Salud");
+                msg.setContentText("Error Al Ejecutar La Transacción");
+                msg.setHeaderText("Error.");
+                msg.show();
                ex.printStackTrace();
             } catch (SQLException e) {
                 e.getMessage();
@@ -174,31 +179,54 @@ public class PersonalSaludDao {
 
 
 
-    public int modificarPersonal(PersonalSalud personalSalud) {
+    public int modificarPersonal(PersonalSalud personalSalud, List<PsDto> titulos) {
+        PreparedStatement personal,pertitu;
         try {
             conn = ConexionRoot.getConexion();
 
             String sql = "update personal_salud set nombre1 = ?, nombre2 = ?, apellido1 = ?, apellido2 = ?, sexo = ?," +
-                    " telefono = ?, email = ?, tipoDocumento = ?, cargo = ?  where idPersonal = ?";
-            stmt = conn.prepareStatement(sql);
+                    " telefono = ?, email = ?, idTipoDocumento = ?, cargo = ?  where idPersonal = ?";
+            personal = conn.prepareStatement(sql);
+            personal.setString(1, personalSalud.getNombre1());
+            personal.setString(2, personalSalud.getNombre2());
+            personal.setString(3, personalSalud.getApellido1());
+            personal.setString(4, personalSalud.getApellido2());
+            personal.setString(5, personalSalud.getSexo());
+            personal.setString(6, personalSalud.getTelefono());
+            personal.setString(7, personalSalud.getEmail());
+            personal.setString(8, personalSalud.getTipoDocumento());
+            personal.setString(9, personalSalud.getCargo());
 
-            stmt.setString(1, personalSalud.getNombre1());
-            stmt.setString(2, personalSalud.getNombre2());
-            stmt.setString(3, personalSalud.getApellido1());
-            stmt.setString(4, personalSalud.getApellido2());
-            stmt.setString(5, personalSalud.getSexo());
-            stmt.setString(6, personalSalud.getTelefono());
-            stmt.setString(7, personalSalud.getEmail());
-            stmt.setString(8, personalSalud.getTipoDocumento());
-            stmt.setString(9, personalSalud.getCargo());
+            personal.setString(10, personalSalud.getIdPersonal());
+            personal.executeUpdate();
 
-            stmt.setString(10, String.valueOf(Integer.parseInt(String.valueOf(personalSalud.getIdPersonal()))));
-            return stmt.executeUpdate();
+            String sql1 = "update personal_salud_titulo set idPersonal = ?, idTipoTitu = ? , idInstitucion = ?, fechatitulacion = ? where idPst = ?";
+            pertitu = conn.prepareStatement(sql1);
+
+            for (PsDto title : titulos) {
+                pertitu.setString(1, title.getIdPersonal());
+                pertitu.setString(2, title.getIdTipoTitu());
+                pertitu.setString(3, title.getIdInstitucion());
+                pertitu.setDate(4,title.getFechaTitulacion());
+                pertitu.setInt(5, title.getId());
+
+                pertitu.addBatch();
+
+            }
+            System.out.println(titulos.toString());
+            pertitu.executeBatch();
 
         } catch (SQLException | RuntimeException e) {
-            System.out.println(e.toString());
+
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Personal Salud");
+            msg.setContentText("Error Al Modificar");
+            msg.setHeaderText("Exito!");
+            msg.show();
+            e.printStackTrace();
             return 0;
         }
+        return 1;
     } // Fin del método modificar()
 
     public BusquedaDePersonal buscarPersonalPorId(String idPersonal){

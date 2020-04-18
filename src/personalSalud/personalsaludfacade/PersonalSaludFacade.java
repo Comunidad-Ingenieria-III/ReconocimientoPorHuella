@@ -33,8 +33,8 @@ public class PersonalSaludFacade {
         return personalSaludDao.agregarLote(listaps);
     }
 
-    public int modificarPersonal(PersonalSalud personalSalud){
-        return personalSaludDao.modificarPersonal(personalSalud);
+    public int modificarPersonal(PersonalSalud personalSalud , List<PsDto> titulos){
+        return personalSaludDao.modificarPersonal(personalSalud, titulos);
     }
 
     public BusquedaDePersonal buscarPersonalTitulos(String idPersonal){

@@ -39,7 +39,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tf_nombre1" layoutX="212.0" layoutY="127.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="180.0" />
+                <TextField fx:id="tf_nombre1" layoutX="212.0" layoutY="127.0" onKeyPressed="#validarDocumentoIdentidad" prefHeight="25.0" prefWidth="180.0" />
                 <Label fx:id="lbl_nombre1" layoutX="392.0" layoutY="127.0" prefHeight="25.0" prefWidth="115.0" textFill="#eb0707">
                     <font>
                         <Font name="System Bold Italic" size="12.0" />
@@ -168,6 +168,7 @@
                             <children>
                                 <Button fx:id="bt_agregar" mnemonicParsing="false" onAction="#agregarTitulos" prefHeight="63.0" prefWidth="88.0" text="Agregar" />
                                 <Button fx:id="bt_eliminar" mnemonicParsing="false" onAction="#eliminarTitulos" prefHeight="63.0" prefWidth="92.0" text="Eliminar" />
+                        <Button fx:id="bt_ModificarTabla" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#modificarRegistroDeTabla" prefHeight="63.0" prefWidth="88.0" text="modificar" />
                             </children>
                         </HBox>
                     </graphic>
@@ -208,7 +209,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_modificar" layoutX="352.0" layoutY="18.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
+                <Button fx:id="bt_modificar" layoutX="352.0" layoutY="18.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>

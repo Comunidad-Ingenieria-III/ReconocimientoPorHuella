@@ -66,6 +66,7 @@ public class DaoTipoDocumento {
     }
 
     public DtoTipoDocumento buscarPorId(String idTipoDocumento) {
+        DtoTipoDocumento documento = null;//Es necesario inicializar la variable para evitar conflictos con los otros metodos que contienen la misma variable
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from tipo_documento where idTipoDocumento = ?";
@@ -74,15 +75,15 @@ public class DaoTipoDocumento {
             rset = stmt.executeQuery();
 
             if (rset.next()) {
-
-                dtotipodocumento.setIdTipoDocumento(rset.getString("idTipoDocumento"));
-                dtotipodocumento.setNombreTipoDocumento(rset.getString("nombreTipoDocumento"));
+                documento = new DtoTipoDocumento();
+                documento.setIdTipoDocumento(rset.getString("idTipoDocumento"));
+                documento.setNombreTipoDocumento(rset.getString("nombreTipoDocumento"));
 
             }
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
+            e.printStackTrace();
         }
-        return dtotipodocumento;
+        return documento;
     }
 
     public int modificar(DtoTipoDocumento dtotipodocumento) {
