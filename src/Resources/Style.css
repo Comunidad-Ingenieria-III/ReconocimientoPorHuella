@@ -77,17 +77,33 @@
     -fx-font: bold 14px italic;
 }
 
+/* Estilo cuando se posiciona el ratón sobre cualquier botón */
+.button:hover {
+    -fx-font-size: 16px;
+
+}
+
+.button-tabla{
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    /*-fx-background-color:linear-gradient( black, brown);*/
+    -fx-background-color:linear-gradient( deepskyblue, darkslategray);
+    -fx-font: bold 10px italic;
+}
+
+/* Estilo cuando se posiciona el ratón sobre cualquier botón */
+.button-tabla:hover {
+    -fx-font-size: 12px;
+
+}
+
 
 .text-field{
 
     -fx-background-radius: 6px;
 }
 
-/* Estilo cuando se posiciona el ratón sobre cualquier botón */
-.button:hover {
-    -fx-font-size: 16px;
 
-}
 .menu-bar {
     -fx-background-color: derive(#1d1d1d,50%);
 }
