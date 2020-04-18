@@ -69,12 +69,40 @@ public class ControladorInstitucionAcademica extends Component implements Initia
 
     }
 
+    public void validarNumerostelefono(){
+
+        txtTelefono.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+
+            }
+
+        });
+    }
+
     public void validar(){
         txtTelefono.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarCamposVacios();
             }
+        });
+        txtTelefono.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+
+            }
+
         });
     }
     @FXML
@@ -285,25 +313,45 @@ public class ControladorInstitucionAcademica extends Component implements Initia
         btnInhabilitar.setDisable(true);
     }
 
+
+
     @FXML
     public void eliminarInstitucion() {
         int res = facade.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
-        if (res == 1) {
-            instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion se ha eliminado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }else{
+        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el la institución");
+        if(i==0){
+            if (res == 1) {
+                instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Instituciones Academicas");
+                msg.setContentText("La institucion se ha eliminado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }else{
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Instituciones Academicas");
+                msg.setContentText("La institucion No ha sido eliminada");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }
+            limpiarFormulario();
+            cancelar();
+
+        }else if(i==1){
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Instituciones Academicas");
             msg.setContentText("La institucion No ha sido eliminada");
             msg.setHeaderText("Resultado");
             msg.show();
         }
-       limpiar();
+        limpiarFormulario();
+        cancelar();
+
     }
+
+
+
+
 
     @FXML
     private void consultarInstitucion() {

@@ -383,11 +383,13 @@ public class ControladorPersonalSalud implements Initializable {
                             tb_personal.getSelectionModel().getSelectedItem().getIdInstitucion()));
                     dp_fechatitulacion.setValue(newValue.getFechaTitulacion().toLocalDate());
 
+
                 }
 
             }
         });//FIN DEL LISTENER
     }
+
 
 
     @FXML

@@ -6,78 +6,78 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="576.0" prefWidth="1000.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<VBox prefHeight="576.0" prefWidth="1002.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
     <children>
-        <AnchorPane id="panel_personal_salud" prefHeight="271.0" prefWidth="830.0" styleClass="panel_personal_salud">
+        <AnchorPane id="panel_personal_salud" prefHeight="271.0" prefWidth="830.0" styleClass="panel_login">
             <children>
-                <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1000.0" styleClass="lbl-titulo" text="Personal Salud" textFill="#f2f2f2">
+                <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1000.0" styleClass="lbl-titulo2" text="Personal Salud" textFill="#f2f2f2">
                     <font>
                         <Font name="System Bold Italic" size="19.0" />
                     </font>
                 </Label>
-                <Label layoutX="18.0" layoutY="56.0" prefHeight="20.0" prefWidth="177.0" text="Tipo Documento">
+                <Label layoutX="18.0" layoutY="56.0" prefHeight="20.0" prefWidth="177.0" styleClass="lbl-cuerpo" text="Tipo Documento">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
                 <ComboBox fx:id="cmb_tipodocumento" layoutX="212.0" layoutY="54.0" prefHeight="25.0" prefWidth="180.0" promptText="Seleccione" />
                 <Label layoutX="183.0" layoutY="97.0" text="*" textFill="#f80707" />
-                <Label layoutX="14.0" layoutY="98.0" prefHeight="20.0" prefWidth="166.0" text="Documento De Identidad" textFill="#1e1d1d">
+                <Label layoutX="14.0" layoutY="98.0" prefHeight="20.0" prefWidth="166.0" styleClass="lbl-cuerpo" text="Documento De Identidad" textFill="#1e1d1d">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tf_numerodocumento" layoutX="213.0" layoutY="95.0" prefHeight="25.0" prefWidth="115.0" />
+                <TextField fx:id="tf_numerodocumento" layoutX="213.0" layoutY="95.0" onKeyReleased="#validarDocumentoIdentidad" prefHeight="25.0" prefWidth="115.0" />
                 <Label fx:id="lblDocumento" layoutX="334.0" layoutY="100.0" prefHeight="17.0" prefWidth="166.0" textFill="#f20404">
                     <font>
                         <Font name="System Bold Italic" size="12.0" />
                     </font>
                 </Label>
                 <Label layoutX="682.0" layoutY="99.0" text="*" textFill="#f80707" />
-                <Label layoutX="15.0" layoutY="132.0" prefHeight="20.0" prefWidth="166.0" text="Primer Nombre">
+                <Label layoutX="15.0" layoutY="132.0" prefHeight="20.0" prefWidth="166.0" styleClass="lbl-cuerpo" text="Primer Nombre">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tf_nombre1" layoutX="212.0" layoutY="127.0" onKeyPressed="#validarDocumentoIdentidad" prefHeight="25.0" prefWidth="180.0" />
+                <TextField fx:id="tf_nombre1" layoutX="212.0" layoutY="127.0" prefHeight="25.0" prefWidth="180.0" />
                 <Label fx:id="lbl_nombre1" layoutX="392.0" layoutY="127.0" prefHeight="25.0" prefWidth="115.0" textFill="#eb0707">
                     <font>
                         <Font name="System Bold Italic" size="12.0" />
                     </font>
                 </Label>
-                <Label layoutX="14.0" layoutY="165.0" prefHeight="20.0" prefWidth="166.0" text="Segundo Nombre">
+                <Label layoutX="14.0" layoutY="165.0" prefHeight="20.0" prefWidth="166.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
                 <TextField fx:id="tf_nombre2" layoutX="213.0" layoutY="166.0" prefHeight="25.0" prefWidth="180.0" />
-                <Label layoutX="16.0" layoutY="202.0" prefHeight="20.0" prefWidth="115.0" text="Primer Apellido">
+                <Label layoutX="16.0" layoutY="202.0" prefHeight="20.0" prefWidth="115.0" styleClass="lbl-cuerpo" text="Primer Apellido">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
                 <Label layoutX="121.0" layoutY="134.0" text="*" textFill="#f80707" />
                 <TextField fx:id="tf_apellido1" layoutX="212.0" layoutY="200.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="180.0" />
-                <Label layoutX="14.0" layoutY="237.0" prefHeight="20.0" prefWidth="149.0" text="Segundo Apellido">
+                <Label layoutX="14.0" layoutY="237.0" prefHeight="20.0" prefWidth="149.0" styleClass="lbl-cuerpo" text="Segundo Apellido">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
                 <TextField fx:id="tf_apellido2" layoutX="212.0" layoutY="235.0" prefHeight="25.0" prefWidth="180.0" />
-                <Label layoutX="554.0" layoutY="57.0" prefHeight="20.0" prefWidth="127.0" text="Sexo">
+                <Label layoutX="554.0" layoutY="57.0" prefHeight="20.0" prefWidth="127.0" styleClass="lbl-cuerpo" text="Sexo">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
                 <ComboBox fx:id="cmb_sexo" layoutX="698.0" layoutY="54.0" prefHeight="25.0" prefWidth="166.0" promptText="Seleccione" />
-                <Label layoutX="554.0" layoutY="98.0" prefHeight="20.0" prefWidth="127.0" text="Número Telefónico">
+                <Label layoutX="554.0" layoutY="98.0" prefHeight="20.0" prefWidth="127.0" styleClass="lbl-cuerpo" text="Número Telefónico">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
                 <Label layoutX="124.0" layoutY="204.0" text="*" textFill="#f80707" />
                 <TextField fx:id="tf_numtelefono" layoutX="699.0" layoutY="96.0" prefHeight="25.0" prefWidth="166.0" />
-                <Label layoutX="553.0" layoutY="130.0" prefHeight="20.0" prefWidth="135.0" text="Correo Electrónico">
+                <Label layoutX="553.0" layoutY="130.0" prefHeight="20.0" prefWidth="135.0" styleClass="lbl-cuerpo" text="Correo Electrónico">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -88,7 +88,7 @@
                         <Font name="System Bold Italic" size="12.0" />
                     </font>
                 </Label>
-                <Label layoutX="554.0" layoutY="169.0" prefHeight="17.0" prefWidth="100.0" text="Cargo">
+                <Label layoutX="554.0" layoutY="169.0" prefHeight="17.0" prefWidth="100.0" styleClass="lbl-cuerpo" text="Cargo">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -97,14 +97,6 @@
                 <Label layoutX="129.0" layoutY="58.0" text="*" textFill="#f80707" />
                 <Label layoutX="598.0" layoutY="171.0" text="*" textFill="#f80707" />
                 <Label layoutX="587.0" layoutY="58.0" text="*" textFill="#f80707" />
-                <Button fx:id="bt_guardar" layoutX="527.0" layoutY="215.0" mnemonicParsing="false" onAction="#guardarPersonalS" prefHeight="40.0" prefWidth="180.0" text="Guardar Personal Salud" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
                 <Label fx:id="lbl_apellido1" layoutX="401.0" layoutY="203.0" prefHeight="25.0" prefWidth="115.0" textFill="#eb0707">
                     <font>
                         <Font name="System Bold Italic" size="12.0" />
@@ -132,52 +124,57 @@
                 </Label>
             </children>
         </AnchorPane>
-        <TableView fx:id="tb_personal" prefHeight="229.0" prefWidth="1000.0" tableMenuButtonVisible="true">
+        <TableView fx:id="tb_personal" editable="true" prefHeight="229.0" prefWidth="1000.0" tableMenuButtonVisible="true">
             <columns>
-                <TableColumn fx:id="colIdPersonal" prefWidth="190.0" text="Documento" />
-                <TableColumn prefWidth="190.0" text="Título">
+                <TableColumn fx:id="colIdPersonal" minWidth="5.0" prefWidth="190.0" text="Documento" />
+                <TableColumn minWidth="5.0" prefWidth="190.0" text="Título">
                     <columns>
-                        <TableColumn fx:id="colIdTipoTitu" prefWidth="190.0" text="titulo">
+                        <TableColumn fx:id="colIdTipoTitu" minWidth="5.0" prefWidth="190.0" text="titulo">
                             <graphic>
-                                <ComboBox fx:id="cbx_idtipotitulo" prefHeight="25.0" prefWidth="190.0" promptText="Seleccione" />
+                                <ComboBox fx:id="cbx_idtipotitulo" prefHeight="25.0" prefWidth="190.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
                             </graphic>
                         </TableColumn>
                     </columns>
                 </TableColumn>
                 <TableColumn minWidth="0.0" prefWidth="190.0" text="Institución">
                     <columns>
-                        <TableColumn fx:id="colIdIntitucion" prefWidth="190.0" text="institucion">
+                        <TableColumn fx:id="colIdIntitucion" minWidth="5.0" prefWidth="190.0" text="institucion">
                             <graphic>
-                                <ComboBox fx:id="cbx_idinstitucion" prefHeight="25.0" prefWidth="190.0" promptText="Seleccione" />
+                                <ComboBox fx:id="cbx_idinstitucion" prefHeight="25.0" prefWidth="190.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
                             </graphic>
                         </TableColumn>
                     </columns>
                 </TableColumn>
-                <TableColumn prefWidth="224.0" text="Fecha Titulación">
+                <TableColumn minWidth="5.0" prefWidth="224.0" text="Fecha Titulación">
                     <columns>
                         <TableColumn fx:id="colFechaTitulacion" prefWidth="224.0" text="fechatitulacion">
                             <graphic>
-                                <DatePicker fx:id="dp_fechatitulacion" prefHeight="25.0" prefWidth="224.0" promptText="DD/MM/AAAA" />
+                                <DatePicker fx:id="dp_fechatitulacion" prefHeight="25.0" prefWidth="224.0" promptText="DD/MM/AAAA" styleClass="cbx-cuerpo" />
                             </graphic>
                         </TableColumn>
                     </columns>
                 </TableColumn>
                 <TableColumn prefWidth="190.0">
-                    <graphic>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                            <children>
-                                <Button fx:id="bt_agregar" mnemonicParsing="false" onAction="#agregarTitulos" prefHeight="63.0" prefWidth="88.0" text="Agregar" />
-                                <Button fx:id="bt_eliminar" mnemonicParsing="false" onAction="#eliminarTitulos" prefHeight="63.0" prefWidth="92.0" text="Eliminar" />
-                        <Button fx:id="bt_ModificarTabla" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#modificarRegistroDeTabla" prefHeight="63.0" prefWidth="88.0" text="modificar" />
-                            </children>
-                        </HBox>
-                    </graphic>
+               <graphic>
+                  <BorderPane prefHeight="0.0" prefWidth="185.0">
+                     <left>
+                        <Button fx:id="bt_ModificarTabla" mnemonicParsing="false" onAction="#modificarRegistroDeTabla" prefHeight="30.0" prefWidth="90.0" text="Modificar" BorderPane.alignment="CENTER" />
+                     </left>
+                     <bottom>
+                                <Button fx:id="bt_eliminar" mnemonicParsing="false" onAction="#eliminarTitulos" prefHeight="30.0" prefWidth="90.0" text="Eliminar" BorderPane.alignment="CENTER" />
+                     </bottom>
+                     <right>
+            
+                                                        <Button fx:id="bt_agregar" mnemonicParsing="false" onAction="#agregarTitulos" prefHeight="30.0" prefWidth="90.0" text="Agregar" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
+               </graphic>
                 </TableColumn>
             </columns>
         </TableView>
-        <AnchorPane prefHeight="66.0" prefWidth="830.0" styleClass="panel_personal_salud">
+        <AnchorPane prefHeight="66.0" prefWidth="830.0" styleClass="panel_login">
             <children>
-                <Button fx:id="bt_crear" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="30.0" prefWidth="100.0" text="Crear" textFill="WHITE">
+                <Button fx:id="bt_crear" layoutY="13.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="35.0" prefWidth="135.0" text="Crear" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -185,7 +182,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_consultar" layoutX="125.0" layoutY="18.0" mnemonicParsing="false" onAction="#consultarPersonalTitulo" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
+                <Button fx:id="bt_consultar" layoutX="141.0" layoutY="13.0" mnemonicParsing="false" onAction="#consultarPersonalTitulo" prefHeight="35.0" prefWidth="135.0" text="Consultar" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -193,7 +190,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_cancelar" layoutX="238.0" layoutY="18.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="30.0" prefWidth="100.0" text="Cancelar" textFill="WHITE">
+                <Button fx:id="bt_cancelar" layoutX="284.0" layoutY="13.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="35.0" prefWidth="135.0" text="Cancelar" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -201,7 +198,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_salir" layoutX="703.0" layoutY="18.0" mnemonicParsing="false" onAction="#cerraPersonalSalud" prefHeight="30.0" prefWidth="115.0" text="Salir" textFill="WHITE">
+                <Button fx:id="bt_salir" layoutX="853.0" layoutY="13.0" mnemonicParsing="false" onAction="#cerraPersonalSalud" prefHeight="35.0" prefWidth="135.0" text="Salir" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -209,7 +206,9 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_modificar" layoutX="352.0" layoutY="18.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
+
+                <Button fx:id="bt_modificar" layoutX="426.0" layoutY="13.0" mnemonicParsing="false" onAction="#modificar" prefHeight="35.0" prefWidth="135.0" text="Modificar" textFill="WHITE">
+
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -217,7 +216,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_inhabilitar" layoutX="464.0" layoutY="18.0" mnemonicParsing="false" onAction="#eliminarFamiliar" prefHeight="30.0" prefWidth="100.0" text="Inhabilitar" textFill="WHITE">
+                <Button fx:id="bt_inhabilitar" layoutX="569.0" layoutY="13.0" mnemonicParsing="false" onAction="#eliminarFamiliar" prefHeight="35.0" prefWidth="135.0" text="Inhabilitar" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -225,7 +224,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_abrirFormularioPer" layoutX="577.0" layoutY="18.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" text="Guardar Titulo" textFill="WHITE">
+                <Button fx:id="bt_guardar" layoutX="711.0" layoutY="13.0" mnemonicParsing="false" onAction="#guardarPersonalS" prefHeight="35.0" prefWidth="135.0" text="Guardar " textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
