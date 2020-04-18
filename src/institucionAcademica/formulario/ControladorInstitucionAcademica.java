@@ -69,12 +69,40 @@ public class ControladorInstitucionAcademica extends Component implements Initia
 
     }
 
+    public void validarNumerostelefono(){
+
+        txtTelefono.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+
+            }
+
+        });
+    }
+
     public void validar(){
         txtTelefono.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarCamposVacios();
             }
+        });
+        txtTelefono.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+
+            }
+
         });
     }
     @FXML

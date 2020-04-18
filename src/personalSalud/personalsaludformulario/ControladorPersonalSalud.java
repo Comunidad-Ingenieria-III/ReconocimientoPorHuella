@@ -330,6 +330,7 @@ public class ControladorPersonalSalud implements Initializable {
                             tb_personal.getSelectionModel().getSelectedItem().getIdInstitucion()));
                     dp_fechatitulacion.setValue(newValue.getFechaTitulacion().toLocalDate());
 
+
                 }
 
             }
@@ -340,6 +341,7 @@ public class ControladorPersonalSalud implements Initializable {
     public void modificarPersonasS(){
 
     }
+
 
 
     @FXML

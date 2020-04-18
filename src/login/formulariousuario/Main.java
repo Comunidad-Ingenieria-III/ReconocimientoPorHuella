@@ -18,7 +18,7 @@ public class Main extends Application {
         primaryStage.setTitle("AP_Humana(Logeate)");
         primaryStage.getIcons().add(new Image("estrella_vida.jpg"));
         primaryStage.setScene(new Scene(formulario_login));
-        //primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setResizable(false);
         primaryStage.show();
     }

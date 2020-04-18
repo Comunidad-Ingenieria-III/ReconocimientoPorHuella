@@ -78,7 +78,7 @@
       </MenuBar>
    </top>
    <bottom>
-      <AnchorPane id="panel_inferior" prefHeight="40.0" prefWidth="1200.0" styleClass="panel_inferior" BorderPane.alignment="CENTER">
+      <AnchorPane id="panel_inferior" prefHeight="54.0" prefWidth="1200.0" styleClass="panel_inferior" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="bt_salir" layoutX="994.0" layoutY="10.0" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="30.0" prefWidth="109.0" styleClass="button" stylesheets="@../Resources/Style.css" text="Salir" textFill="#e8e8e8">
                <font>
@@ -92,12 +92,12 @@
       </AnchorPane>
    </bottom>
    <right>
-      <AnchorPane id="panel_derecha" prefHeight="563.0" prefWidth="57.0" styleClass="panel_derecha" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_derecha" prefHeight="549.0" prefWidth="22.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <AnchorPane id="panel_principal" fx:id="FormularioPrincipal" prefHeight="563.0" prefWidth="1002.0" styleClass="panel_principal" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_principal" fx:id="FormularioPrincipal" prefHeight="563.0" prefWidth="846.0" styleClass="panel_principal" BorderPane.alignment="CENTER" />
    </center>
    <left>
-      <AnchorPane id="panel_izquierdo" prefHeight="563.0" prefWidth="78.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_izquierdo" prefHeight="549.0" prefWidth="26.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
    </left>
 </BorderPane>

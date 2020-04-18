@@ -6,14 +6,14 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="516.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipoTituloAcademico.formularioTipoTituloAcademico.ContraladorTipoTituloAcademico">
+<AnchorPane prefHeight="500.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipoTituloAcademico.formularioTipoTituloAcademico.ContraladorTipoTituloAcademico">
     <children>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="516.0" prefWidth="611.0" stylesheets="@../../Resources/Style.css">
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css">
          <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="315.0" prefWidth="524.0" stylesheets="@../../Resources/Style.css">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="610.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css">
                     <children>
 
-                          <Label alignment="CENTER" prefHeight="43.0" prefWidth="609.0" styleClass="lbl-titulo" text="Tipo Título Académico ">
+                          <Label alignment="CENTER" prefHeight="43.0" prefWidth="609.0" styleClass="lbl-titulo2" text="Tipo Título Académico ">
                               <font>
                                   <Font name="System Bold Italic" size="20.0" />
                               </font>
@@ -26,37 +26,41 @@
                                   </LinearGradient>
                               </textFill>
                           </Label>
-                          <Label layoutX="67.0" layoutY="100.0" text="Código">
+                          <Label layoutX="27.0" layoutY="99.0" styleClass="lbl-cuerpo" text="Código">
                               <font>
                                   <Font name="System Bold Italic" size="18.0" />
                               </font>
                           </Label>
-                  <Label fx:id="validarTt" layoutX="207.0" layoutY="82.0" prefHeight="17.0" prefWidth="160.0" textFill="#f50303">
+                  <Label fx:id="validarTt" layoutX="31.0" layoutY="150.0" prefHeight="20.0" prefWidth="193.0" textFill="#5e1010">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font></Label>
-                          <Label layoutX="140.0" layoutY="164.0" text="*" textFill="#ee0707">
+                          <Label layoutX="322.0" layoutY="94.0" text="*" textFill="#ee0707">
                               <font>
                                   <Font name="System Bold" size="12.0" />
                               </font>
                           </Label>
-                          <TextField fx:id="tf_Tipo" layoutX="206.0" layoutY="103.0" onKeyReleased="#validarExistente" onMouseMoved="#validarExistente" prefHeight="25.0" prefWidth="174.0" styleClass="text-field" />
-                          <Label layoutX="67.0" layoutY="161.0" prefHeight="27.0" prefWidth="70.0" text="Nombre">
+
+
+                          <TextField fx:id="tf_Tipo" layoutX="27.0" layoutY="123.0" onKeyReleased="#validarExistente" prefHeight="25.0" prefWidth="200.0" styleClass="text-field" />
+                          <Label layoutX="252.0" layoutY="95.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
+
                               <font>
                                   <Font name="System Bold Italic" size="18.0" />
                               </font>
                           </Label>
-                          <Label layoutX="130.0" layoutY="103.0" text="*" textFill="#ee0707">
+                          <Label layoutX="71.0" layoutY="91.0" text="*" textFill="#ee0707">
                               <font>
                                   <Font name="System Bold" size="11.0" />
                               </font>
                           </Label>
-                          <TextField fx:id="tf_nombre1" layoutX="206.0" layoutY="162.0" onKeyPressed="#validar" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="174.0" />
-                  <Label fx:id="validarNombre" layoutX="206.0" layoutY="141.0" prefHeight="17.0" prefWidth="174.0" textFill="#ff0606">
+
+                          <TextField fx:id="tf_nombre1" layoutX="252.0" layoutY="123.0" onKeyPressed="#validar" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
+                  <Label fx:id="validarNombre" layoutX="252.0" layoutY="150.0" prefHeight="20.0" prefWidth="193.0" textFill="#5e1010">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font></Label>
-                          <Button fx:id="bt_guardar" layoutX="464.0" layoutY="71.0" mnemonicParsing="false" onAction="#botonGuardar" prefHeight="30.0" prefWidth="131.0" text="Guardar" textFill="WHITE">
+                          <Button fx:id="bt_guardar" layoutX="480.0" layoutY="96.0" mnemonicParsing="false" onAction="#botonGuardar" prefHeight="30.0" prefWidth="100.0" text="Guardar" textFill="WHITE">
                               <font>
                                   <Font name="System Bold Italic" size="14.0" />
                               </font>
@@ -64,7 +68,7 @@
                                   <Cursor fx:constant="HAND" />
                               </cursor>
                           </Button>
-                          <Button fx:id="bt_modificar" layoutX="464.0" layoutY="128.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="131.0" text="Modificar" textFill="WHITE">
+                          <Button fx:id="bt_modificar" layoutX="480.0" layoutY="145.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
                               <font>
                                   <Font name="System Bold Italic" size="14.0" />
                               </font>
@@ -72,7 +76,39 @@
                                   <Cursor fx:constant="HAND" />
                               </cursor>
                           </Button>
-                          <Button fx:id="bt_inhabilitar" layoutX="464.0" layoutY="184.0" mnemonicParsing="false" onAction="#eliminarTtAcademico" prefHeight="30.0" prefWidth="131.0" text="Inhabilitar" textFill="WHITE">
+                          <Button fx:id="bt_inhabilitar" layoutX="366.0" layoutY="199.0" mnemonicParsing="false" onAction="#eliminarTtAcademico" prefHeight="30.0" prefWidth="100.0" text="Inhabilitar" textFill="WHITE">
+                              <font>
+                                  <Font name="System Bold Italic" size="14.0" />
+                              </font>
+                              <cursor>
+                                  <Cursor fx:constant="HAND" />
+                              </cursor>
+                          </Button>
+                          <Button fx:id="bt_crear" layoutX="14.0" layoutY="199.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="100.0" text="Crear" textFill="WHITE">
+                              <font>
+                                  <Font name="System Bold Italic" size="14.0" />
+                              </font>
+                              <cursor>
+                                  <Cursor fx:constant="HAND" />
+                              </cursor>
+                          </Button>
+                          <Button fx:id="bt_consultar" layoutX="134.0" layoutY="199.0" mnemonicParsing="false" onAction="#consultarTitulo" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
+                              <font>
+                                  <Font name="System Bold Italic" size="14.0" />
+                              </font>
+                              <cursor>
+                                  <Cursor fx:constant="HAND" />
+                              </cursor>
+                          </Button>
+                          <Button fx:id="bt_cancelar" layoutX="246.0" layoutY="199.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="100.0" text="Cancelar" textFill="WHITE">
+                              <font>
+                                  <Font name="System Bold Italic" size="14.0" />
+                              </font>
+                              <cursor>
+                                  <Cursor fx:constant="HAND" />
+                              </cursor>
+                          </Button>
+                          <Button fx:id="bt_salir" layoutX="480.0" layoutY="199.0" mnemonicParsing="false" onAction="#cerrarTipoTituloAcademico" prefHeight="30.0" prefWidth="100.0" text="Salir" textFill="WHITE">
                               <font>
                                   <Font name="System Bold Italic" size="14.0" />
                               </font>
@@ -83,46 +119,14 @@
 
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="435.0" prefWidth="206.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="608.0">
                     <children>
-                        <TableView fx:id="tb_tituloAcademico" layoutX="-1.0" prefHeight="197.0" prefWidth="600.0" tableMenuButtonVisible="true">
+                        <TableView fx:id="tb_tituloAcademico" layoutX="-1.0" prefHeight="246.0" prefWidth="610.0" tableMenuButtonVisible="true">
                             <columns>
                                 <TableColumn fx:id="idCodigo" prefWidth="299.0" text="Código" />
                                 <TableColumn fx:id="idNombre" minWidth="0.0" prefWidth="285.0" text="Nombre" />
                             </columns>
                         </TableView>
-                          <Button fx:id="bt_crear" layoutX="10.0" layoutY="208.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="131.0" text="Crear" textFill="WHITE">
-                              <font>
-                                  <Font name="System Bold Italic" size="14.0" />
-                              </font>
-                              <cursor>
-                                  <Cursor fx:constant="HAND" />
-                              </cursor>
-                          </Button>
-                          <Button fx:id="bt_consultar" layoutX="161.0" layoutY="208.0" mnemonicParsing="false" onAction="#consultarTitulo" prefHeight="30.0" prefWidth="131.0" text="Consultar" textFill="WHITE">
-                              <font>
-                                  <Font name="System Bold Italic" size="14.0" />
-                              </font>
-                              <cursor>
-                                  <Cursor fx:constant="HAND" />
-                              </cursor>
-                          </Button>
-                          <Button fx:id="bt_cancelar" layoutX="311.0" layoutY="208.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="131.0" text="Cancelar" textFill="WHITE">
-                              <font>
-                                  <Font name="System Bold Italic" size="14.0" />
-                              </font>
-                              <cursor>
-                                  <Cursor fx:constant="HAND" />
-                              </cursor>
-                          </Button>
-                          <Button fx:id="bt_salir" layoutX="464.0" layoutY="208.0" mnemonicParsing="false" onAction="#cerrarTipoTituloAcademico" prefHeight="30.0" prefWidth="131.0" text="Salir" textFill="WHITE">
-                              <font>
-                                  <Font name="System Bold Italic" size="14.0" />
-                              </font>
-                              <cursor>
-                                  <Cursor fx:constant="HAND" />
-                              </cursor>
-                          </Button>
                     </children>
                 </AnchorPane>
          </items>
