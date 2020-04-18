@@ -47,6 +47,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
     private ObservableList<InstitucionAcademica> instituciones;
     @FXML
     private List<InstitucionAcademica> institucionAcademicas;
+    @FXML int valor =1;
 
 
 
@@ -136,6 +137,9 @@ public class ControladorInstitucionAcademica extends Component implements Initia
     }
 
     public void validarE(){
+        if(valor==1){
+
+
         instituciones = FXCollections.observableArrayList(facade.buscar(txtCodigo.getText()));
         if(instituciones.size()>=1){
             Alert msg = new Alert(Alert.AlertType.ERROR);
@@ -147,6 +151,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
 
             txtCodigo.requestFocus();
 
+            }
 
         }
     }
@@ -311,6 +316,8 @@ public class ControladorInstitucionAcademica extends Component implements Initia
         txtNombre.requestFocus();
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
+        valor=0;
+        btnGuardar.setDisable(false);
     }
 
 
@@ -412,6 +419,8 @@ public class ControladorInstitucionAcademica extends Component implements Initia
         txtDireccion.setDisable(false);
         txtTelefono.setDisable(false);
         txtCodigo.requestFocus();
+        valor=1;
+        btnGuardar.setDisable(false);
     }
 
     @FXML

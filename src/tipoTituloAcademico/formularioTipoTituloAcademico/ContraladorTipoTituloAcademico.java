@@ -46,6 +46,8 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
     private ObservableList<TtAcademico> ttAcademicos;
     @FXML
     private List<TtAcademico> titulosAcademicos;
+    @FXML
+    int valor=0;
 
 
 
@@ -90,20 +92,24 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
     }
 
     public void validarE(){
-        ttAcademicos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
-        if(ttAcademicos.size()>=1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de titulo académico");
-            msg.setContentText("Codigo existente no es posible agregar");
-            msg.setHeaderText("Resultado");
-            msg.show();
-            tf_Tipo.setText("");
-            tf_nombre1.setText("");
-            tf_Tipo.requestFocus();
+        if(valor==1){
+
+            ttAcademicos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
+            if(ttAcademicos.size()>=1){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Tipo de titulo académico");
+                msg.setContentText("Codigo existente no es posible agregar");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                tf_Tipo.setText("");
+                tf_nombre1.setText("");
+                tf_Tipo.requestFocus();
 
 
 
+            }
         }
+
     }
 
 
@@ -295,6 +301,8 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         tf_nombre1.requestFocus();
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
+        valor =0;
+        bt_guardar.setDisable(false);
     }
 
 
@@ -383,10 +391,11 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         bt_consultar.setDisable(true);
         bt_cancelar.setDisable(false);
         bt_salir.setDisable(false);
-       // bt_guardar.setDisable(true);
+        bt_guardar.setDisable(false);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         habilitarCampos();
+        valor=1;
     }
 
     @FXML

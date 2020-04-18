@@ -55,7 +55,7 @@
                               </font>
                           </Label>
 
-                          <TextField fx:id="tf_nombre1" layoutX="252.0" layoutY="123.0" onKeyPressed="#validar" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
+                          <TextField fx:id="tf_nombre1" layoutX="252.0" layoutY="123.0" onKeyPressed="#validar" onKeyReleased="#validar" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
                   <Label fx:id="validarNombre" layoutX="252.0" layoutY="150.0" prefHeight="20.0" prefWidth="193.0" textFill="#5e1010">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
