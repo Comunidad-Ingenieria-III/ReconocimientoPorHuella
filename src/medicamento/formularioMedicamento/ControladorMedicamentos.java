@@ -73,6 +73,36 @@ public class ControladorMedicamentos extends Component implements Initializable 
         });//FIN DEL LISTENER
     }
 
+    public void validar(){
+        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+            }
+        });
+    }
+
+    @FXML
+    public void validarCamposVacios(){
+        if (tf_Tipo.getText().isEmpty()){
+            validarMedicamento.setText("Campo requerido");
+            bt_guardar.setDisable(true);
+
+        }else{
+            validarMedicamento.setText("");
+            bt_guardar.setDisable(false);
+        }
+        if(tf_nombre1.getText().isEmpty()){
+            bt_guardar.setDisable(true);
+            // validarNombre.setText("Campo requerido");
+        }else{
+            validarNombre.setText("");
+            bt_guardar.setDisable(false);
+
+        }
+
+    }
+
     public void validarExistente(){
 
         tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -99,7 +129,6 @@ public class ControladorMedicamentos extends Component implements Initializable 
 
         }
     }
-
 
 
     @FXML
@@ -229,36 +258,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
         cancelar();
 
     }
-    @FXML
-    public void validar(){
-        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                validarCamposVacios();
-            }
-        });
-    }
 
-    @FXML
-    public void validarCamposVacios(){
-        if (tf_Tipo.getText().isEmpty()){
-            validarMedicamento.setText("Campo requerido");
-            bt_guardar.setDisable(true);
-
-        }else{
-            validarNombre.setText("");
-            bt_guardar.setDisable(false);
-        }
-        if(tf_nombre1.getText().isEmpty()){
-            bt_guardar.setDisable(true);
-            // validarNombre.setText("Campo requerido");
-        }else{
-            validarNombre.setText("");
-            bt_guardar.setDisable(false);
-
-        }
-
-    }
 
     @FXML
     public void validarB(){

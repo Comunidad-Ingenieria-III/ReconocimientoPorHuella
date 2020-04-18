@@ -243,21 +243,34 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     @FXML
     public void eliminarInstitucionReferencia() {
         int res = facadeInstitucionReferencia.eliminarInstitucionReferencia(tblInstitucionReferencia.getSelectionModel().getSelectedItem().getIdInstitucion());
-        if (res == 1) {
-            institucionReferencias.remove(tblInstitucionReferencia.getSelectionModel().getSelectedIndex());
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Institución Referencia");
-            msg.setContentText("La institución se ha eliminado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }else{
+        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el la institución de referencia");
+        if(i==0){
+            if (res == 1) {
+                institucionReferencias.remove(tblInstitucionReferencia.getSelectionModel().getSelectedIndex());
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Institución Referencia");
+                msg.setContentText("La institución se ha eliminado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }else{
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Institución Referencia");
+                msg.setContentText("La institución No ha sido eliminada");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }
+            limpiarFormulario();
+            cancelar();
+
+        }else if(i==1){
             Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Institución Referencia");
-            msg.setContentText("La institución No ha sido eliminada");
+            msg.setTitle("Gestiones - Instituciones Academicas");
+            msg.setContentText("La institucion No ha sido eliminada");
             msg.setHeaderText("Resultado");
             msg.show();
         }
-        limpiar();
+        limpiarFormulario();
+        cancelar();
 
     }
 
@@ -372,6 +385,17 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         txtDireccion.setDisable(true);
         txtTelefono.setDisable(true);
 
+    }
+
+    @FXML
+    public void limpiarFormulario() {
+        txtId.setText("");
+        txtNombre.setText("");
+        txtDireccion.setText("");
+        txtTelefono.setText("");
+        btnCrear.setDisable(true);
+        btnModificar.setDisable(true);
+        btnInhabilitar.setDisable(true);
     }
 
     @FXML
