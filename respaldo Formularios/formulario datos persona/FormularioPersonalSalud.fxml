@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<BorderPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../../src/Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <left>
         <AnchorPane prefHeight="500.0" prefWidth="430.0" styleClass="panel_personal_salud" BorderPane.alignment="CENTER">
             <children>

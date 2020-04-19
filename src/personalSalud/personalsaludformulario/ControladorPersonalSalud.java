@@ -115,6 +115,12 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private Button bt_ModificarTabla;
     @FXML
+    private MenuItem mi_agregar;
+    @FXML
+    private MenuItem mi_modificar;
+    @FXML
+    private MenuItem mi_eliminar;
+    @FXML
     private Label lbl_tipoDocumeto;
     @FXML
     private Label lblDocumento;
@@ -287,6 +293,8 @@ public class ControladorPersonalSalud implements Initializable {
                 msg.show();
                 limpiar();
                 titulos.clear();
+                deshabilitarCampos();
+                deshabilitarBotones();
             } else {
 
                 Alert msg = new Alert(Alert.AlertType.ERROR);
@@ -308,6 +316,8 @@ public class ControladorPersonalSalud implements Initializable {
                 msg.show();
                 limpiar();
                 titulos.clear();
+                deshabilitarCampos();
+                deshabilitarBotones();
             } else {
 
                 Alert msg = new Alert(Alert.AlertType.ERROR);
@@ -327,9 +337,22 @@ public class ControladorPersonalSalud implements Initializable {
         if (tf_numerodocumento.getText().isEmpty()) {
             tf_numerodocumento.setDisable(false);
             tf_nombre1.setDisable(true);
+            tf_nombre2.setDisable(true);
+            tf_apellido1.setDisable(true);
+            tf_apellido2.setDisable(true);
+            cmb_sexo.setDisable(true);
+            tf_correoelectronico.setDisable(true);
+            tf_numtelefono.setDisable(true);
+            cmb_cargo.setDisable(true);
             tf_numerodocumento.requestFocus();
             bt_modificar.setDisable(false);
             bt_inhabilitar.setDisable(false);
+            cbx_idtipotitulo.setDisable(true);
+            cbx_idinstitucion.setDisable(true);
+            dp_fechatitulacion.setDisable(true);
+            mi_agregar.setDisable(true);
+            mi_modificar.setDisable(true);
+            mi_eliminar.setDisable(true);
 
         } else {
 
@@ -352,6 +375,8 @@ public class ControladorPersonalSalud implements Initializable {
             tb_personal.setItems(titulos);
             initializeTableColumn();
             manejarEventosTablaTitulos();
+            bt_consultar.setDisable(true);
+            bt_crear.setDisable(true);
 
         }
 
@@ -472,6 +497,9 @@ public class ControladorPersonalSalud implements Initializable {
                 bt_inhabilitar.setDisable(true);
                 bt_modificar.setDisable(true);
                 bt_guardar.setDisable(false);
+                mi_agregar.setDisable(false);
+                mi_modificar.setDisable(false);
+                mi_eliminar.setDisable(false);
                 cmb_tipodocumento.requestFocus();
                 titulos.clear();
                 valor=1;
@@ -605,7 +633,13 @@ public class ControladorPersonalSalud implements Initializable {
         tf_nombre1.requestFocus();
         valor=0;            //Ingreso una variable Jose Martin campo
         bt_modificar.setDisable(true);
+        mi_modificar.setDisable(false);
         bt_guardar.setDisable(false);
+        mi_agregar.setDisable(false);
+        mi_eliminar.setDisable(false);
+        cbx_idtipotitulo.setDisable(false);
+        cbx_idinstitucion.setDisable(false);
+        dp_fechatitulacion.setDisable(false);
     }
 
     @FXML
@@ -622,6 +656,10 @@ public class ControladorPersonalSalud implements Initializable {
         tf_correoelectronico.setDisable(false);
         cmb_cargo.setDisable(false);
         tf_numerodocumento.requestFocus();
+        cbx_idtipotitulo.setDisable(false);
+        cbx_idinstitucion.setDisable(false);
+        dp_fechatitulacion.setDisable(false);
+
     }
 
     @FXML
@@ -634,6 +672,39 @@ public class ControladorPersonalSalud implements Initializable {
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
+        mi_modificar.setDisable(true);
+        mi_agregar.setDisable(true);
+        mi_eliminar.setDisable(true);
+        cbx_idtipotitulo.setDisable(true);
+        cbx_idinstitucion.setDisable(true);
+        dp_fechatitulacion.setDisable(true);
+
+    }
+
+    @FXML
+    public void cancelar() {
+
+        cmb_tipodocumento.setValue(null);
+        tf_numerodocumento.setText("");
+        tf_nombre1.setText("");
+        tf_nombre2.setText("");
+        tf_apellido1.setText("");
+        tf_apellido2.setText("");
+        cmb_sexo.setValue(null);
+        tf_numtelefono.setText("");
+        tf_correoelectronico.setText("");
+        cmb_cargo.setValue(null);
+        tf_numerodocumento.setText("");
+        bt_crear.setDisable(false);
+        bt_consultar.setDisable(false);
+        titulos.clear();
+        lbl_numtelefono.setText("");
+        lbl_nombre1.setText("");
+        lbl_apellido1.setText("");
+        lbl_correo.setText("");
+        lbl_tipoDocumeto.setText("");
+        deshabilitarCampos();
+        deshabilitarBotones();
 
     }
 

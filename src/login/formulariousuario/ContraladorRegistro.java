@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -33,6 +34,8 @@ public class ContraladorRegistro implements Initializable {
     private PasswordField tf_Contrasena;
     @FXML
     private Button bt_salir;
+    @FXML
+    private CheckBox cb_estado;
 
 
     @Override
@@ -51,13 +54,14 @@ public class ContraladorRegistro implements Initializable {
         String segundoApellido = tf_segundoApellido.getText();
         String nombreUsuario = tf_Usuario.getText();
         String contrasena = tf_Contrasena.getText();
-        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena);
+        Boolean estado = Boolean.valueOf(cb_estado.getText());
+        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena, estado);
         return usuario;
 
     }
 
     @FXML
-    private void guardarUsuario(ActionEvent e) {
+    private void guardarUsuario() {
         daoUsuario.crearUsuario(crearUsuario());
         limpiarR();
     }

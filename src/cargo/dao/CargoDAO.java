@@ -47,11 +47,12 @@ public class CargoDAO {
     public int agregar(Cargo cargo) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into cargo (idcargo, nombre) values (?,?)";
+            String sql = "insert into cargo (idcargo, nombre, estado) values (?, ?,?)";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, cargo.getIdCargo());
             stmt.setString(2, cargo.getNombre());
+            stmt.setBoolean(3, cargo.isEstado());
 
             return stmt.executeUpdate();
 

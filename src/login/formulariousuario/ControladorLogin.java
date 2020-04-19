@@ -2,6 +2,7 @@ package login.formulariousuario;
 
 import conexionBD.ConexionRoot;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -65,6 +66,8 @@ public class ControladorLogin implements Initializable {
     private Label lblContraseña;
     @FXML
     private Label lblUsuario;
+    @FXML
+    private CheckBox cb_estado;
 
 
 
@@ -194,7 +197,8 @@ public class ControladorLogin implements Initializable {
         String segundoApellido = tf_segundoApellido.getText();
         String nombreUsuario = tf_Usuario1.getText();
         String contrasena = tf_Contrasena2.getText();
-        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena);
+        Boolean estado = Boolean.valueOf(cb_estado.getText());
+        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena, estado);
         return usuario;
 
     }

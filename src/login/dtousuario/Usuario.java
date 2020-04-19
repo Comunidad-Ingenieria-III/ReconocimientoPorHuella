@@ -1,9 +1,6 @@
 package login.dtousuario;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class Usuario {
 
@@ -14,6 +11,7 @@ public class Usuario {
     private StringProperty segundoApellido;
     private StringProperty username;
     private StringProperty contrasena;
+    private SimpleBooleanProperty estado;
 
     public Usuario() {
     }
@@ -24,7 +22,7 @@ public class Usuario {
     }
 
     public Usuario(int idUsuario, String primerNombre, String segundoNombre, String primerApellido,
-                   String segundoApellido, String username, String contrasena) {
+                   String segundoApellido, String username, String contrasena, boolean estado) {
         this.idUsuario = new SimpleIntegerProperty(idUsuario);
         this.primerNombre = new SimpleStringProperty(primerNombre);
         this.segundoNombre = new SimpleStringProperty(segundoNombre);
@@ -32,6 +30,7 @@ public class Usuario {
         this.segundoApellido = new SimpleStringProperty(segundoApellido);
         this.username =  new SimpleStringProperty(username);;
         this.contrasena = new SimpleStringProperty(contrasena);
+        this.estado = new SimpleBooleanProperty(estado);
     }
 
     public int getIdUsuario() {
@@ -116,5 +115,17 @@ public class Usuario {
 
     public void setContrasena(String contrasena) {
         this.contrasena.set(contrasena);
+    }
+
+    public boolean isEstado() {
+        return estado.get();
+    }
+
+    public BooleanProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado.set(estado);
     }
 }

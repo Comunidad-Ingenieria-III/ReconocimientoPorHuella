@@ -13,7 +13,7 @@ public class ConexionRoot {
             if (cnxR == null) {
                 Runtime.getRuntime().addShutdownHook(new ShutdownHook());
                 Class.forName("com.mysql.jdbc.Driver");
-                cnxR = DriverManager.getConnection("jdbc:mysql://localhost/datos_por_huella", "root", "");
+                cnxR = DriverManager.getConnection("jdbc:mysql://db4free.net/datos_por_huella", "negisaro", "nelson2020");
             }
             return cnxR;
         } catch (ClassNotFoundException | SQLException e) {

@@ -23,7 +23,7 @@ public class DaoUsuario {
     public void crearUsuario(Usuario usuario) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, username, contrasena) values (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, username, contrasena, estado) values (?, ?, ?, ?, ?, ?, ?, ?)";
 
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
 
@@ -34,6 +34,7 @@ public class DaoUsuario {
             stmt.setString(5, usuario.getSegundoApellido());
             stmt.setString(6, usuario.getUsername());
             stmt.setString(7, usuario.getContrasena());
+            stmt.setBoolean(8, usuario.isEstado());
 
             int rta = stmt.executeUpdate();
             if (rta != 1) {
