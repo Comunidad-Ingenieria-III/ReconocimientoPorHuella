@@ -8,7 +8,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <left>
-        <AnchorPane prefHeight="500.0" prefWidth="430.0" styleClass="panel_personal_salud" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="500.0" prefWidth="430.0" styleClass="panel_login" BorderPane.alignment="CENTER">
             <children>
                 <Label layoutX="21.0" layoutY="40.0" prefHeight="20.0" prefWidth="139.0" styleClass="lbl-cuerpo" text="Tipo Documento">
                     <font>
@@ -185,7 +185,7 @@
         </AnchorPane>
    </bottom>
    <top>
-          <Label id="lbl-titulo" alignment="CENTER" prefHeight="50.0" prefWidth="1200.0" styleClass="lbl-titulo2" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
+          <Label id="lbl-titulo" alignment="CENTER" prefHeight="50.0" prefWidth="1200.0" styleClass="lblTitulo2" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
               <font>
                   <Font name="System Bold Italic" size="19.0" />
               </font>

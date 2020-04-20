@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipoTituloAcademico.formularioTipoTituloAcademico.ContraladorTipoTituloAcademico">
+<AnchorPane prefHeight="500.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipoTituloAcademico.formularioTipoTituloAcademico.ContraladorTipoTituloAcademico">
     <children>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css">
          <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="610.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css">
                     <children>
 
-                          <Label alignment="CENTER" prefHeight="43.0" prefWidth="609.0" styleClass="lbl-titulo2" text="Tipo Título Académico ">
+                          <Label alignment="CENTER" prefHeight="50.0" prefWidth="609.0" styleClass="lblTitulo2" text="Tipo Título Académico ">
                               <font>
                                   <Font name="System Bold Italic" size="20.0" />
                               </font>

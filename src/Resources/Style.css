@@ -20,10 +20,10 @@
 }
 
 .panel_login {
-    -fx-background-color: darkslategray;
+    -fx-background-color: linear-gradient(SlateGrey,Silver, #263c53);
 }
 
-.body {
+.panel_login {
     background: #263c53;
     font-size:16px;
     line-height: 20px;
@@ -32,8 +32,8 @@
     font-family: 'Open Sans', sans-serif;
     }
 
-.cbx-cuerpo{
-   -fx-background-color:linear-gradient( darkslategray, white);
+.cbxcuerpo{
+   -fx-background-color:linear-gradient( SteelBlue, white);
     -fx-font: bold 14px italic;
     -fx-text-fill: white;
  
@@ -48,7 +48,7 @@
  
 }
 
-.lbl-titulo2{
+.lblTitulo2{
     -fx-background-color:linear-gradient( darkslategray, teal);
     -fx-font: bold 24px italic;
     -fx-text-fill: white;

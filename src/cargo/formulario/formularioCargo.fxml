@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -7,13 +8,13 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="343.0" prefWidth="799.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cargo.formulario.ControladorCargo">
+<AnchorPane prefHeight="500.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cargo.formulario.ControladorCargo">
    <children>
-      <SplitPane dividerPositions="0.506900878293601" layoutX="76.0" layoutY="76.0" prefHeight="344.0" prefWidth="718.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="342.0" prefWidth="346.0" style="-fx-background-color: #CECEF6;">
+      <SplitPane dividerPositions="0.4899598393574297" orientation="VERTICAL" prefHeight="500.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css">
+         <items>
+            <AnchorPane prefHeight="266.0" prefWidth="610.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css">
                <children>
-                  <Label alignment="CENTER" layoutY="14.0" prefHeight="39.0" prefWidth="335.0" style="-fx-background-color: #2E64FE;" text="Cargo" AnchorPane.bottomAnchor="289.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="610.0" styleClass="lblTitulo2" text="Cargo">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
@@ -26,137 +27,93 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
-                  <GridPane layoutX="14.0" layoutY="69.0" prefHeight="142.0" prefWidth="304.0">
-                    <columnConstraints>
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="72.0" />
-                      <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="229.0" minWidth="10.0" prefWidth="223.0" />
-                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="229.0" minWidth="10.0" prefWidth="13.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="43.0" minHeight="9.0" prefHeight="43.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Label text="Código: " />
-                        <Label text="Descripción: " GridPane.rowIndex="1" />
-                        <HBox prefHeight="61.0" prefWidth="170.0" spacing="8.0" GridPane.columnIndex="1">
-                           <children>
-                              <TextField fx:id="txtId" prefHeight="25.0" prefWidth="90.0">
-                                 <HBox.margin>
-                                    <Insets top="9.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Label prefHeight="25.0" prefWidth="26.0" text="*" textFill="#ee0404">
-                                 <HBox.margin>
-                                    <Insets top="10.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="31.0" prefWidth="214.0" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <TextField fx:id="txtDescripcion" prefHeight="5.0" prefWidth="181.0">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </TextField>
-                              <Label prefHeight="27.0" prefWidth="20.0" text="*" textFill="#ee0404">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets top="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                           <GridPane.margin>
-                              <Insets top="17.0" />
-                           </GridPane.margin>
-                        </HBox>
-                        <RadioButton fx:id="estado" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Estado" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                     </children>
-                  </GridPane>
-                  <HBox layoutY="248.0" prefHeight="39.0" prefWidth="405.0" spacing="10.0">
-                     <children>
-                        <Button fx:id="btnCrear" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2E64FE;" text="Crear" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnConsultar" layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnCancelar" layoutX="110.0" layoutY="10.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnSalir" layoutX="210.0" layoutY="10.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2E64FE;" text="Salir" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <VBox layoutX="298.0" layoutY="101.0" prefHeight="132.0" prefWidth="100.0" spacing="15.0">
-                     <children>
-                        <Button fx:id="btnGuardar" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#guardarCargo" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnModificar" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#modificarCargo" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnEliminar" layoutX="10.0" layoutY="40.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#eliminarCargo" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2E64FE;" text="Eliminar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
+                  <Label layoutX="70.0" layoutY="91.0" prefHeight="17.0" prefWidth="59.0" styleClass="lbl-cuerpo" text="Código: " />
+                  <Label layoutX="114.0" layoutY="80.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#ee0404">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtId" layoutX="70.0" layoutY="109.0" prefHeight="25.0" prefWidth="130.0" />
+                  <Label layoutX="238.0" layoutY="91.0" styleClass="lbl-cuerpo" text="Descripción: " />
+                  <Label layoutX="306.0" layoutY="86.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#ee0404">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtDescripcion" layoutX="238.0" layoutY="109.0" prefHeight="5.0" prefWidth="181.0" />
+                  <RadioButton fx:id="estado" layoutX="464.0" layoutY="65.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Estado" />
+                  <Button fx:id="btnCrear" layoutX="30.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="30.0" prefWidth="90.0" text="Crear" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnConsultar" layoutX="143.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnCancelar" layoutX="251.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="90.0" text="Cancelar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnEliminar" layoutX="364.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#eliminarCargo" prefHeight="30.0" prefWidth="90.0" text="Eliminar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnSalir" layoutX="476.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="90.0" text="Salir" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnGuardar" layoutX="476.0" layoutY="93.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#guardarCargo" prefHeight="30.0" prefWidth="90.0" text="Guardar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnModificar" layoutX="476.0" layoutY="131.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#modificarCargo" prefHeight="30.0" prefWidth="90.0" text="Modificar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="341.0" prefWidth="378.0">
+          <AnchorPane prefHeight="190.0" prefWidth="610.0">
                <children>
-                  <TableView fx:id="tblCargos" layoutX="56.0" layoutY="14.0" prefHeight="341.0" prefWidth="390.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tblCargos" layoutX="56.0" layoutY="1.0" prefHeight="358.0" prefWidth="610.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="-98.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
                     <columns>
-                      <TableColumn fx:id="colId" prefWidth="114.0" resizable="false" text="Código" />
-                      <TableColumn fx:id="colDescripcion" maxWidth="275.0" prefWidth="275.0" resizable="false" text="Descripción" />
+                      <TableColumn fx:id="colId" prefWidth="257.0" resizable="false" text="Código" />
+                      <TableColumn fx:id="colDescripcion" prefWidth="336.0" resizable="false" text="Descripción" />
                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                </children>
             </AnchorPane>
-        </items>
+         </items>
       </SplitPane>
    </children>
 </AnchorPane>
