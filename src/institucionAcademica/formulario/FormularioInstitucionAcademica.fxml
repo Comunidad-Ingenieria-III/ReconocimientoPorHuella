@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="body" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionAcademica.formulario.ControladorInstitucionAcademica">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="body" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionAcademica.formulario.ControladorInstitucionAcademica">
 
 
    <children>
@@ -118,7 +119,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Label alignment="CENTER" layoutX="-3.0" prefHeight="45.0" prefWidth="700.0" styleClass="lbl-titulo2" text="Institución Académica" />
+                        <Label alignment="CENTER" layoutX="-3.0" prefHeight="45.0" prefWidth="700.0" styleClass="lblTitulo2" text="Institución Académica" />
                         <Label fx:id="lblCodigo" layoutX="157.0" layoutY="104.0" textFill="#8a1515">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />

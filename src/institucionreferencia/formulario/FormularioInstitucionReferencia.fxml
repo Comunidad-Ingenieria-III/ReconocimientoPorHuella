@@ -1,122 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="413.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionreferencia.formulario.ControladorInstitucionReferencia">
+<AnchorPane prefHeight="600.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionreferencia.formulario.ControladorInstitucionReferencia">
    <children>
-      <SplitPane dividerPositions="0.4531095755182626" layoutX="121.0" layoutY="58.0" prefHeight="500.0" prefWidth="922.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="436.0" style="-fx-background-color: #CECEF6;">
+      <SplitPane dividerPositions="0.5133779264214047" orientation="VERTICAL" prefHeight="600.0" prefWidth="610.0">
+         <items>
+            <Pane prefHeight="357.0" prefWidth="608.0" styleClass="panel_login">
                <children>
-                  <Pane layoutX="1.0" layoutY="71.0" prefHeight="386.0" prefWidth="449.0" style="-fx-background-color: #CECEF6;" AnchorPane.bottomAnchor="-12.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="71.0">
-                     <children>
-                        <Label layoutX="60.0" layoutY="12.0" text="Código">
-                           <font>
-                              <Font name="System Bold Italic" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="125.0" layoutY="11.0" text="*" textFill="#ee0707">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtId" layoutX="63.0" layoutY="39.0" onKeyPressed="#validarExistente" prefHeight="25.0" prefWidth="181.0" styleClass="text-field" />
-                        <Label layoutX="63.0" layoutY="63.0" prefHeight="27.0" prefWidth="70.0" text="Nombre">
-                           <font>
-                              <Font name="System Bold Italic" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="135.0" layoutY="62.0" text="*" textFill="#ee0707">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtNombre" layoutX="63.0" layoutY="89.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="181.0" />
-                        <Label layoutX="65.0" layoutY="113.0" prefHeight="27.0" prefWidth="89.0" text="Dirección">
-                           <font>
-                              <Font name="System Bold Italic" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="150.0" layoutY="114.0" text="*" textFill="#ee0707">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtDireccion" layoutX="63.0" layoutY="140.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="181.0" />
-                        <Label layoutX="64.0" layoutY="168.0" prefHeight="27.0" prefWidth="164.0" text="Número Telefónico">
-                           <font>
-                              <Font name="System Bold Italic" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="236.0" layoutY="171.0" text="*" textFill="#ee0707">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtTelefono" layoutX="63.0" layoutY="195.0" onKeyReleased="#validar" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="181.0" />
-                        <Button fx:id="btnCrear" layoutX="21.0" layoutY="248.0" mnemonicParsing="false" onAction="#crear" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Crear" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnConsultar" layoutX="127.0" layoutY="248.0" mnemonicParsing="false" onAction="#consultarInsReferencia" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnCancelar" layoutX="235.0" layoutY="248.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnSalir" layoutX="340.0" layoutY="248.0" mnemonicParsing="false" onAction="#cerrarInstitucionReferencia" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Salir" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnGuardar" layoutX="340.0" layoutY="46.0" mnemonicParsing="false" onAction="#botonGuardar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnModificar" layoutX="340.0" layoutY="101.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnInhabilitar" layoutX="340.0" layoutY="165.0" mnemonicParsing="false" onAction="#eliminarInstitucionReferencia" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E64FE;" text="Eliminar" textFill="WHITE">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold Italic" size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
-                  <Label alignment="CENTER" layoutX="1.0" layoutY="14.0" prefHeight="42.0" prefWidth="449.0" style="-fx-background-color: #2E64FE;" text="Institución Referencia">
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="610.0" styleClass="lblTitulo2" text="Institución Referencia">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
@@ -129,21 +27,124 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
+                  <Label layoutX="46.0" layoutY="94.0" styleClass="lbl-cuerpo" text="Código">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="111.0" layoutY="93.0" text="*" textFill="#ee0707">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtId" layoutX="49.0" layoutY="121.0" onKeyPressed="#validarExistente" prefHeight="25.0" prefWidth="181.0" styleClass="text-field" />
+                  <Label layoutX="245.0" layoutY="95.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="317.0" layoutY="94.0" text="*" textFill="#ee0707">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtNombre" layoutX="245.0" layoutY="121.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="181.0" />
+                  <Label layoutX="51.0" layoutY="152.0" prefHeight="27.0" prefWidth="89.0" styleClass="lbl-cuerpo" text="Dirección">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="136.0" layoutY="153.0" text="*" textFill="#ee0707">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtDireccion" layoutX="49.0" layoutY="179.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="181.0" />
+                  <Label layoutX="246.0" layoutY="154.0" prefHeight="27.0" prefWidth="164.0" styleClass="lbl-cuerpo" text="Número Telefónico">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="418.0" layoutY="157.0" text="*" textFill="#ee0707">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtTelefono" layoutX="245.0" layoutY="181.0" onKeyReleased="#validar" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="181.0" />
+                  <Button fx:id="btnCrear" layoutX="21.0" layoutY="253.0" mnemonicParsing="false" onAction="#crear" prefHeight="30.0" prefWidth="100.0" text="Crear" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnConsultar" layoutX="127.0" layoutY="253.0" mnemonicParsing="false" onAction="#consultarInsReferencia" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnCancelar" layoutX="235.0" layoutY="253.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="100.0" text="Cancelar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnSalir" layoutX="340.0" layoutY="253.0" mnemonicParsing="false" onAction="#cerrarInstitucionReferencia" prefHeight="30.0" prefWidth="100.0" text="Salir" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnGuardar" layoutX="466.0" layoutY="134.0" mnemonicParsing="false" onAction="#botonGuardar" prefHeight="30.0" prefWidth="100.0" text="Guardar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnModificar" layoutX="466.0" layoutY="189.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnInhabilitar" layoutX="466.0" layoutY="253.0" mnemonicParsing="false" onAction="#eliminarInstitucionReferencia" prefHeight="30.0" prefWidth="100.0" text="Eliminar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
                </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="409.0">
+            </Pane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="213.0" prefWidth="608.0">
                <children>
-                  <TableView fx:id="tblInstitucionReferencia" layoutX="93.0" layoutY="61.0" prefHeight="411.0" prefWidth="465.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tblInstitucionReferencia" prefHeight="300.0" prefWidth="610.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="colId" prefWidth="81.0" resizable="false" text="Código" />
-                      <TableColumn fx:id="colNombre" prefWidth="200.0" resizable="false" text="Nombre" />
-                        <TableColumn fx:id="colDireccion" prefWidth="162.0" resizable="false" text="Dirección" />
-                        <TableColumn fx:id="colTelefono" prefWidth="107.0" resizable="false" text="Teléfono" />
+                      <TableColumn fx:id="colId" prefWidth="101.0" resizable="false" text="Código" />
+                      <TableColumn fx:id="colNombre" prefWidth="187.0" resizable="false" text="Nombre" />
+                        <TableColumn fx:id="colDireccion" prefWidth="160.0" resizable="false" text="Dirección" />
+                        <TableColumn fx:id="colTelefono" prefWidth="145.0" resizable="false" text="Teléfono" />
                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                </children>
             </AnchorPane>
-        </items>
+         </items>
       </SplitPane>
    </children>
 </AnchorPane>

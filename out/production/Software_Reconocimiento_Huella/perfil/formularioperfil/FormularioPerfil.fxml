@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="perfil.formularioperfil.ControladorPerfil">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="perfil.formularioperfil.ControladorPerfil">
    <children>
       <SplitPane dividerPositions="0.5923694779116466" orientation="VERTICAL" prefHeight="500.0" prefWidth="610.0">
          <items>
-            <AnchorPane prefHeight="300.0" prefWidth="610.0" style="-fx-background-color: #F7F9F9;" stylesheets="@../../Resources/Style.css">
+            <AnchorPane prefHeight="300.0" prefWidth="610.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="610.0" style="-fx-background-color: #057DB9;" styleClass="lbl-cuerpo" text="Administración Perfil" textFill="#f8f1f1" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="610.0" styleClass="lblTitulo2" text="Administración Perfil" textFill="#f8f1f1" wrapText="true">
                      <font>
                         <Font name="System Bold Italic" size="24.0" />
                      </font>
@@ -27,7 +28,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnCrear" layoutX="16.0" layoutY="256.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #2E64FE;" styleClass="button" text="Crear" textFill="#f8f7f7">
+                  <Button fx:id="btnCrear" layoutX="16.0" layoutY="256.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="30.0" prefWidth="114.0" styleClass="button" text="Crear" textFill="#f8f7f7">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -35,7 +36,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnSalir" layoutX="381.0" layoutY="256.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #2E64FE;" styleClass="button" text="Salir" textFill="#fcf8f8">
+                  <Button fx:id="btnSalir" layoutX="381.0" layoutY="256.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="114.0" styleClass="button" text="Salir" textFill="#fcf8f8">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -43,12 +44,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="71.0" layoutY="117.0" prefHeight="30.0" prefWidth="91.0" style="-: #057DB9;" text="Código Perfil" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="71.0" layoutY="117.0" prefHeight="30.0" prefWidth="91.0" styleClass="lbl-cuerpo" text="Código Perfil" wrapText="true">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="67.0" layoutY="172.0" prefHeight="30.0" prefWidth="105.0" style="-: #057DB9;" text="Nombre Perfil" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="67.0" layoutY="172.0" prefHeight="30.0" prefWidth="105.0" styleClass="lbl-cuerpo" text="Nombre Perfil" wrapText="true">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -64,7 +65,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnConsultar" layoutX="140.0" layoutY="256.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #2E64FE;" styleClass="button" text="Consultar" textFill="#f8f7f7">
+                  <Button fx:id="btnConsultar" layoutX="140.0" layoutY="256.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" styleClass="button" text="Consultar" textFill="#f8f7f7">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -72,7 +73,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnCancelar" layoutX="260.0" layoutY="256.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #2E64FE;" styleClass="button" text="Cancelar" textFill="#f8f7f7">
+                  <Button fx:id="btnCancelar" layoutX="260.0" layoutY="256.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="114.0" styleClass="button" text="Cancelar" textFill="#f8f7f7">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -80,7 +81,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnGuardar" layoutX="448.0" layoutY="102.0" mnemonicParsing="false" onAction="#guardarPerfil" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #2E64FE;" styleClass="button" text="Guardar" textFill="#fcf8f8">
+                  <Button fx:id="btnGuardar" layoutX="448.0" layoutY="102.0" mnemonicParsing="false" onAction="#guardarPerfil" prefHeight="30.0" prefWidth="114.0" styleClass="button" text="Guardar" textFill="#fcf8f8">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -88,7 +89,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnModificar" layoutX="448.0" layoutY="147.0" mnemonicParsing="false" onAction="#modificarPerfil" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="#fcf8f8">
+                  <Button fx:id="btnModificar" layoutX="448.0" layoutY="147.0" mnemonicParsing="false" onAction="#modificarPerfil" prefHeight="30.0" prefWidth="114.0" text="Modificar" textFill="#fcf8f8">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -96,7 +97,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnEliminar" layoutX="448.0" layoutY="187.0" mnemonicParsing="false" onAction="#eliminarPerfil" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #2E64FE;" styleClass="button" text="Inhabilitar" textFill="#fcf8f8">
+                  <Button fx:id="btnEliminar" layoutX="448.0" layoutY="187.0" mnemonicParsing="false" onAction="#eliminarPerfil" prefHeight="30.0" prefWidth="114.0" styleClass="button" text="Inhabilitar" textFill="#fcf8f8">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
