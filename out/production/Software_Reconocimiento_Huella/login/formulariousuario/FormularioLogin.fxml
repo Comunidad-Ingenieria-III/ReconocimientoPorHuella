@@ -45,7 +45,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnSalir21" layoutX="294.0" layoutY="281.0" mnemonicParsing="false" onAction="#cerrarAplicacion" prefHeight="37.0" prefWidth="157.0" text="Salir" textFill="#fcf8f8">
+            <Button fx:id="btnSalir" layoutX="294.0" layoutY="281.0" mnemonicParsing="false" onAction="#cerrarLogin" prefHeight="37.0" prefWidth="157.0" text="Salir" textFill="#fcf8f8">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>

@@ -1,8 +1,8 @@
-package cargo.dao;
+package perfil.dao;
 
 import cargo.dto.Cargo;
 import conexionBD.ConexionRoot;
-import javafx.beans.property.StringProperty;
+import perfil.dtoperfil.PerfilDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,48 +11,48 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CargoDAO {
+public class PerfilDAO {
 
     private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rset;
 
-    private Cargo cargo;
-    private List<Cargo> cargos;
+    private PerfilDto perfilDto;
+    private List<PerfilDto> perfiles;
 
-    public List<Cargo> obtenerTodos() {
+    public List<PerfilDto> obtenerTodos() {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from cargo where estado = 1";
+            String sql = "select * from perfil where estado = 1";
             stmt = conn.prepareStatement(sql);
             rset = stmt.executeQuery();
 
-            cargos = new ArrayList<>();
+            perfiles = new ArrayList<>();
 
             while (rset.next()) {
-                cargo = new Cargo();
+                perfilDto = new PerfilDto();
 
-                cargo.setIdCargo(rset.getString("idCargo"));
-                cargo.setNombre(rset.getString("nombre"));
-                cargos.add(cargo);
+                perfilDto.setIdperfil(rset.getString("idperfil"));
+                perfilDto.setNombre(rset.getString("nombre"));
+                perfiles.add(perfilDto);
             }
 
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("Error SQL - obtenerTodos");
         }
-        return cargos;
+        return perfiles;
     }//Fin del metodo obtenerTodos
 
 
-    public int agregar(Cargo cargo) {
+    public int agregar(PerfilDto perfilDto) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into cargo (idcargo, nombre, estado) values (?, ?, ?)";
+            String sql = "insert into perfil (idperfil, nombre, estado) values (?, ?, ?)";
             stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, cargo.getIdCargo());
-            stmt.setString(2, cargo.getNombre());
-            stmt.setBoolean(3, cargo.isEstado());
+            stmt.setString(1, perfilDto.getIdperfil());
+            stmt.setString(2, perfilDto.getNombre());
+            stmt.setBoolean(3, perfilDto.isEstado());
 
             return stmt.executeUpdate();
 
@@ -65,16 +65,17 @@ public class CargoDAO {
     }//Fin del metodo agregar
 
 
-    public int modificar(Cargo cargo) {
+    public int modificar(PerfilDto perfilDto) {
 
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update cargo set nombre = ?, estado = ?  where idCargo = ?";
+            String sql = "update perfil set nombre = ?, estado = ?  where idCargo = ?";
             stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, cargo.getNombre());
-            stmt.setString(2, cargo.getIdCargo());
-            stmt.setBoolean(3, cargo.isEstado());
+            stmt.setString(1, perfilDto.getNombre());
+            stmt.setBoolean(2, perfilDto.isEstado());
+            stmt.setString(3, perfilDto.getIdperfil());
+
 
             return stmt.executeUpdate();
 
@@ -84,13 +85,13 @@ public class CargoDAO {
         return 0;
     }
 
-    public int eliminar(String idCargo) {
+    public int eliminar(String idperfil) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from cargo where idCargo = ?";
+            String sql = "delete from perfil where idperfil = ?";
             stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, idCargo);
+            stmt.setString(1, idperfil);
 
             return stmt.executeUpdate();
 
@@ -101,24 +102,24 @@ public class CargoDAO {
         return 0;
     }//Fin del metodo eliminar
 
-    public Cargo buscarPorId(String idCargo) {
-        Cargo cargo = null;
+    public PerfilDto buscarPorId(String idperfil) {
+        PerfilDto perfilDto = null;
         try {
             conn = ConexionRoot.getConexion();
-            String query = "select * from cargo where idCargo=?";
+            String query = "select * from perfil where idperfil=?";
             stmt = conn.prepareStatement(query);
-            stmt.setString(1,idCargo);
+            stmt.setString(1,idperfil);
             rset = stmt.executeQuery();
 
             if (rset.next()){
-                cargo = new Cargo();
-                cargo.setIdCargo(rset.getString("idCargo"));
-                cargo.setNombre(rset.getString("nombre"));
+                perfilDto = new PerfilDto();
+                perfilDto.setIdperfil(rset.getString("idperfil"));
+                perfilDto.setNombre(rset.getString("nombre"));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return cargo;
+        return perfilDto;
     }
 }

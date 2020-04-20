@@ -148,7 +148,6 @@ public class ControladorInstitucionAcademica extends Component implements Initia
             msg.setHeaderText("Resultado");
             msg.show();
             txtCodigo.setText("");
-
             txtCodigo.requestFocus();
 
             }

@@ -4,44 +4,47 @@ import javafx.beans.property.*;
 
 public class Usuario {
 
-    private IntegerProperty idUsuario;
-    private StringProperty primerNombre;
-    private StringProperty segundoNombre;
-    private StringProperty primerApellido;
-    private StringProperty segundoApellido;
-    private StringProperty username;
-    private StringProperty contrasena;
-    private SimpleBooleanProperty estado;
-
-    public Usuario() {
-    }
+    private SimpleStringProperty idUsuario = new SimpleStringProperty();
+    private SimpleStringProperty primerNombre = new SimpleStringProperty();
+    private SimpleStringProperty segundoNombre = new SimpleStringProperty();
+    private SimpleStringProperty primerApellido = new SimpleStringProperty();
+    private SimpleStringProperty segundoApellido = new SimpleStringProperty();
+    private SimpleStringProperty username = new SimpleStringProperty();
+    private SimpleStringProperty contrasena = new SimpleStringProperty();
+    private SimpleStringProperty idperfil = new SimpleStringProperty();
+    private SimpleBooleanProperty estado = new SimpleBooleanProperty();
 
     public Usuario(String username, String contrasena) {
-        this.username = new SimpleStringProperty(username);
-        this.contrasena = new SimpleStringProperty(contrasena);
+        this.username.set(username);
+        this.contrasena.set(contrasena);
     }
 
-    public Usuario(int idUsuario, String primerNombre, String segundoNombre, String primerApellido,
-                   String segundoApellido, String username, String contrasena, boolean estado) {
-        this.idUsuario = new SimpleIntegerProperty(idUsuario);
-        this.primerNombre = new SimpleStringProperty(primerNombre);
-        this.segundoNombre = new SimpleStringProperty(segundoNombre);
-        this.primerApellido = new SimpleStringProperty(primerApellido);
-        this.segundoApellido = new SimpleStringProperty(segundoApellido);
-        this.username =  new SimpleStringProperty(username);;
-        this.contrasena = new SimpleStringProperty(contrasena);
-        this.estado = new SimpleBooleanProperty(estado);
+    public Usuario(String idUsuario, String primerNombre, String segundoNombre, String primerApellido,
+                   String segundoApellido, String username, String contrasena, String idperfil, boolean estado) {
+        this.idUsuario.set(idUsuario);
+        this.primerNombre.set(primerNombre);
+        this.segundoNombre.set(segundoNombre);
+        this.primerApellido.set(primerApellido);
+        this.segundoApellido.set(segundoApellido);
+        this.username.set(username);
+        this.contrasena.set(contrasena);
+        this.idperfil.set(idperfil);
+        this.estado.set(estado);
     }
 
-    public int getIdUsuario() {
+    public Usuario() {
+        this("", "", "", "", "", "", "", "", Boolean.parseBoolean(""));
+    }
+
+    public String getIdUsuario() {
         return idUsuario.get();
     }
 
-    public IntegerProperty idUsuarioProperty() {
+    public SimpleStringProperty idUsuarioProperty() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(String idUsuario) {
         this.idUsuario.set(idUsuario);
     }
 
@@ -49,7 +52,7 @@ public class Usuario {
         return primerNombre.get();
     }
 
-    public StringProperty primerNombreProperty() {
+    public SimpleStringProperty primerNombreProperty() {
         return primerNombre;
     }
 
@@ -61,7 +64,7 @@ public class Usuario {
         return segundoNombre.get();
     }
 
-    public StringProperty segundoNombreProperty() {
+    public SimpleStringProperty segundoNombreProperty() {
         return segundoNombre;
     }
 
@@ -73,7 +76,7 @@ public class Usuario {
         return primerApellido.get();
     }
 
-    public StringProperty primerApellidoProperty() {
+    public SimpleStringProperty primerApellidoProperty() {
         return primerApellido;
     }
 
@@ -85,7 +88,7 @@ public class Usuario {
         return segundoApellido.get();
     }
 
-    public StringProperty segundoApellidoProperty() {
+    public SimpleStringProperty segundoApellidoProperty() {
         return segundoApellido;
     }
 
@@ -97,7 +100,7 @@ public class Usuario {
         return username.get();
     }
 
-    public StringProperty usernameProperty() {
+    public SimpleStringProperty usernameProperty() {
         return username;
     }
 
@@ -109,7 +112,7 @@ public class Usuario {
         return contrasena.get();
     }
 
-    public StringProperty contrasenaProperty() {
+    public SimpleStringProperty contrasenaProperty() {
         return contrasena;
     }
 
@@ -117,15 +120,41 @@ public class Usuario {
         this.contrasena.set(contrasena);
     }
 
+    public String getIdperfil() {
+        return idperfil.get();
+    }
+
+    public SimpleStringProperty idperfilProperty() {
+        return idperfil;
+    }
+
+    public void setIdperfil(String idperfil) {
+        this.idperfil.set(idperfil);
+    }
+
     public boolean isEstado() {
         return estado.get();
     }
 
-    public BooleanProperty estadoProperty() {
+    public SimpleBooleanProperty estadoProperty() {
         return estado;
     }
 
     public void setEstado(boolean estado) {
         this.estado.set(estado);
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", primerNombre=" + primerNombre +
+                ", segundoNombre=" + segundoNombre +
+                ", primerApellido=" + primerApellido +
+                ", segundoApellido=" + segundoApellido +
+                ", username=" + username +
+                ", contrasena=" + contrasena +
+                ", estado=" + estado +
+                '}';
     }
 }

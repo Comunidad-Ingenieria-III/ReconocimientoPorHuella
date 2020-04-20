@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="443.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ContraladorRegistro">
+<AnchorPane prefHeight="443.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ContraladorRegistro">
    <children>
       <Label alignment="CENTER" prefHeight="53.0" prefWidth="477.0" style="-fx-background-color: #057DB9;" text="Registro Usuario Nuevo" textFill="#f5f4f4">
          <font>
@@ -27,7 +22,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <ComboBox layoutX="238.0" layoutY="74.0" prefHeight="25.0" prefWidth="170.0" />
+      <ComboBox fx:id="cmb_perfil" layoutX="238.0" layoutY="74.0" prefHeight="25.0" prefWidth="170.0" />
       <Label layoutX="65.0" layoutY="105.0" text="Estado">
          <font>
             <Font name="System Bold Italic" size="14.0" />
@@ -38,7 +33,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <RadioButton layoutX="238.0" layoutY="107.0" mnemonicParsing="false" text="Activo" />
+      <RadioButton fx:id="cb_estado" layoutX="238.0" layoutY="107.0" mnemonicParsing="false" text="Activo" />
       <Label layoutX="62.0" layoutY="137.0" text="Número Documento">
          <font>
             <Font name="System Bold Italic" size="14.0" />
