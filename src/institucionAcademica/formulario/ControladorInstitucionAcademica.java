@@ -431,6 +431,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
         txtTelefono.setDisable(true);
 
     }
+    
 
 
     @FXML
