@@ -226,13 +226,8 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                         msg.show();
                         cancelar();
                     }
-
                 }
             }
-
-
-
-
     }
 
     /**
@@ -366,15 +361,9 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
             idCodigo.setCellValueFactory(new PropertyValueFactory<>("idTipoTituloAcademico"));
             idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
             bt_consultar.setDisable(true);
-
-
         }
 
     }
-
-
-
-
 
     @FXML
     public void limpiarFormulario() {
@@ -388,7 +377,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
     @FXML
     private void habilitarBotones() {
         bt_crear.setDisable(true); //siempre ira deshabilitado
-        bt_consultar.setDisable(true);
+        bt_consultar.setDisable(false);
         bt_cancelar.setDisable(false);
         bt_salir.setDisable(false);
         bt_guardar.setDisable(false);

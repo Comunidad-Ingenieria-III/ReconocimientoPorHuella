@@ -1,22 +1,28 @@
 package login.formulariousuario;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import login.daousuario.DaoUsuario;
 import login.dtousuario.Usuario;
+import perfil.dtoperfil.PerfilDto;
+import perfil.facadeperfil.PerfilFacade;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ContraladorRegistro implements Initializable {
 
     DaoUsuario daoUsuario = new DaoUsuario();
+    PerfilFacade perfilFacade = new PerfilFacade();
 
+    @FXML
+    private ComboBox<PerfilDto> cmb_perfil;
     @FXML
     private TextField tf_idUsuario;
     @FXML
@@ -33,10 +39,15 @@ public class ContraladorRegistro implements Initializable {
     private PasswordField tf_Contrasena;
     @FXML
     private Button bt_salir;
+    @FXML
+    private RadioButton cb_estado;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+            ObservableList<PerfilDto> listaPerfiles = FXCollections.observableArrayList(perfilFacade.obtenerCargos());
+            cmb_perfil.setItems(listaPerfiles);
 
     }
 
@@ -44,20 +55,22 @@ public class ContraladorRegistro implements Initializable {
     @FXML
     private Usuario crearUsuario() {
 
-        int idUsuario = Integer.parseInt(tf_idUsuario.getText());
+        String idUsuario = tf_idUsuario.getText();
         String primerNombre = tf_primerNombre.getText();
         String segundoNombre = tf_segundoNombre.getText();
         String primerApellido = tf_primerApellido.getText();
         String segundoApellido = tf_segundoApellido.getText();
         String nombreUsuario = tf_Usuario.getText();
         String contrasena = tf_Contrasena.getText();
-        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena);
+        String idperfil = cmb_perfil.getSelectionModel().getSelectedItem().getIdperfil();
+        Boolean estado = cb_estado.isSelected();
+        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena, idperfil, estado);
         return usuario;
 
     }
 
     @FXML
-    private void guardarUsuario(ActionEvent e) {
+    private void guardarUsuario() {
         daoUsuario.crearUsuario(crearUsuario());
         limpiarR();
     }

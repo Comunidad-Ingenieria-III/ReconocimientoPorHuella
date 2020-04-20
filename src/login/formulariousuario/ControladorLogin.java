@@ -2,6 +2,7 @@ package login.formulariousuario;
 
 import conexionBD.ConexionRoot;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,78 +37,56 @@ public class ControladorLogin implements Initializable {
     private ResultSet rset;
 
     @FXML
-    private TextField tf_idUsuario;
-    @FXML
-    private TextField tf_primerNombre;
-    @FXML
-    private TextField tf_segundoNombre;
-    @FXML
-    private TextField tf_primerApellido;
-    @FXML
-    private TextField tf_segundoApellido;
-    @FXML
     private TextField tf_Usuario;
     @FXML
     private PasswordField tf_Contrasena;
-    @FXML
-    private TextField tf_Usuario1;
-    @FXML
-    private PasswordField tf_Contrasena2;
-    @FXML
-    private ObservableList<Usuario> usuarios;
     @FXML
     private Button btnEntrar;
     @FXML
     private Button btnSalir;
     @FXML
-    private Button btnConsultar;
-    @FXML
     private Label lblContraseña;
     @FXML
     private Label lblUsuario;
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    btnEntrar.setDisable(true);
-
+        btnEntrar.setDisable(true);
     }
 
+    public void validarcampos() {
 
-    public void validarcampos(){
-
-        if (tf_Usuario.getText().isEmpty()){
+        if (tf_Usuario.getText().isEmpty()) {
             lblUsuario.setText("Campo Requerido");
-        }else if (!tf_Usuario.getText().contains("@") || !tf_Usuario.getText().contains(".")){
+        } else if (!tf_Usuario.getText().contains("@") || !tf_Usuario.getText().contains(".")) {
             lblUsuario.setText("Usuario invalido");
-        }else {
+        } else {
             lblUsuario.setText("");
         }
 
 
-        if (tf_Contrasena.getText().isEmpty()){
+        if (tf_Contrasena.getText().isEmpty()) {
             lblContraseña.setText("Campo Requerido");
-        }else{
+        } else {
             lblContraseña.setText("");
         }
-        if (tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty()){
+        if (tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty()) {
             btnEntrar.setDisable(true);
-        }else {
+        } else {
             btnEntrar.setDisable(false);
         }
     }
 
     @FXML
-    public void validar(){
-       tf_Usuario.setOnKeyReleased(new EventHandler<KeyEvent>() {
-           @Override
-           public void handle(KeyEvent event) {
-              validarcampos();
+    public void validar() {
+        tf_Usuario.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarcampos();
 
-           }
+            }
 
-       });
+        });
         tf_Contrasena.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -124,14 +103,15 @@ public class ControladorLogin implements Initializable {
 
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from usuario where username = '" + tf_Usuario.getText().trim() + "' and contrasena = '" + tf_Contrasena.getText().trim() + "' ";
+            String sql = "select * from usuario where username = '" + tf_Usuario.getText().trim() + "' and contrasena = '"
+                    + tf_Contrasena.getText().trim() + "' ";
             stmt = conn.prepareStatement(sql);
             rset = stmt.executeQuery();
 
             if (rset.next()) {
                 Stage stage = new Stage();
                 Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
-                Scene scene = new Scene(formulario_principal,1200,650);
+                Scene scene = new Scene(formulario_principal, 1200, 650);
                 stage.setResizable(false);
                 //stage.setMaximized(false);
                 stage.centerOnScreen();
@@ -155,8 +135,11 @@ public class ControladorLogin implements Initializable {
                 //ocultar la ventana de Login
                 ((Node) (event.getSource())).getScene().getWindow().hide();
             } else {
-                JOptionPane.showMessageDialog(null, "Usuario Y/O Contraseña Incorrecta.",
-                        "Acceso a Usuarios", JOptionPane.ERROR_MESSAGE);
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("AP_Humana - Ingreso al Sistema");
+                msg.setContentText("Usuario Y/O Contraseña Incorrecta.");
+                msg.setHeaderText("Verifica tus Datos");
+                msg.show();
                 limpiar();
             }
 
@@ -174,41 +157,13 @@ public class ControladorLogin implements Initializable {
     }
 
     @FXML
-    public void limpiarR() {
-        tf_idUsuario.setText("");
-        tf_primerNombre.setText("");
-        tf_segundoNombre.setText("");
-        tf_primerApellido.setText("");
-        tf_segundoApellido.setText("");
-        tf_Usuario1.setText("");
-        tf_Contrasena2.setText("");
-    }
-
-    @FXML
-    private Usuario crearUsuario() {
-
-        int idUsuario = Integer.parseInt(tf_idUsuario.getText());
-        String primerNombre = tf_primerNombre.getText();
-        String segundoNombre = tf_segundoNombre.getText();
-        String primerApellido = tf_primerApellido.getText();
-        String segundoApellido = tf_segundoApellido.getText();
-        String nombreUsuario = tf_Usuario1.getText();
-        String contrasena = tf_Contrasena2.getText();
-        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena);
-        return usuario;
-
-    }
-
-    @FXML
     private void abrirFormularioRegistro(ActionEvent event) throws IOException {
-
 
         try {
 
             Parent formulario_registro_inicio = FXMLLoader.load(getClass().getClassLoader().getResource("login/formulariousuario/FormularioRegistro.fxml"));
             Stage stage = new Stage();
-
-            stage.setTitle("AP_Humana(Registro Usuario Nuevo)");
+            stage.setTitle("AP_Humana(Registro Usuarios )");
             stage.setScene(new Scene(formulario_registro_inicio, 447, 443));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
@@ -225,15 +180,11 @@ public class ControladorLogin implements Initializable {
 
     }
 
-    @FXML
-    private void guardarUsuario(ActionEvent e) {
-        daoUsuario.crearUsuario(crearUsuario());
-        limpiarR();
-    }
 
     @FXML
-    private void cerrarAplicacion(ActionEvent event) {
-        System.exit(0);
+    private void cerrarLogin(ActionEvent event) {
+        Stage stage = (Stage) btnSalir.getScene().getWindow();
+        stage.close();
     }
 
 }

@@ -12,9 +12,8 @@
 }
 
 .panel_personal_salud {
-    -fx-background-color: darkgrey;
+    -fx-background-color: Teal;    
 }
-
 
 .panel_inferior {
     -fx-background-color: #1d1d1d;
@@ -23,7 +22,6 @@
 .panel_login {
     -fx-background-color: darkslategray;
 }
-
 
 .body {
     background: #263c53;
@@ -44,14 +42,14 @@
 
 .lbl-cuerpo{
     //-fx-background-color: white;
-    -fx-font: bold 13px italic;
+    -fx-font: bold 14px italic;
     -fx-text-fill: white;
     //-fx-background-color:linear-gradient( darkslategray, brown);
  
 }
 
 .lbl-titulo2{
-    -fx-background-color:linear-gradient( white, darkslategray);
+    -fx-background-color:linear-gradient( darkslategray, teal);
     -fx-font: bold 24px italic;
     -fx-text-fill: white;
 }
@@ -184,9 +182,9 @@
 // tamaño, bordes y color de fondo de los titulos
 .table-view .column-header, .table-view .filler {
     -fx-background-color: white;    
-    -fx-size: 45;
+    -fx-size: 38;
     -fx-border-color: -fx-box-border;
-    -fx-border-width: 0 1 3 0;
+    -fx-border-width: 0 1 1 0;
     -fx-border-insets: 0;
 }
 

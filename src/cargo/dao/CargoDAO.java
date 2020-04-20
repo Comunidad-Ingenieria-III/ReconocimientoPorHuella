@@ -23,7 +23,7 @@ public class CargoDAO {
     public List<Cargo> obtenerTodos() {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from cargo";
+            String sql = "select * from cargo where estado = 1";
             stmt = conn.prepareStatement(sql);
             rset = stmt.executeQuery();
 
@@ -47,11 +47,12 @@ public class CargoDAO {
     public int agregar(Cargo cargo) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into cargo (idcargo, nombre) values (?,?)";
+            String sql = "insert into cargo (idcargo, nombre, estado) values (?, ?, ?)";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, cargo.getIdCargo());
             stmt.setString(2, cargo.getNombre());
+            stmt.setBoolean(3, cargo.isEstado());
 
             return stmt.executeUpdate();
 
@@ -68,11 +69,12 @@ public class CargoDAO {
 
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update cargo set nombre = ? where idCargo = ?";
+            String sql = "update cargo set nombre = ?, estado = ?  where idCargo = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, cargo.getNombre());
             stmt.setString(2, cargo.getIdCargo());
+            stmt.setBoolean(3, cargo.isEstado());
 
             return stmt.executeUpdate();
 

@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="343.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cargo.formulario.ControladorCargo">
+<AnchorPane prefHeight="343.0" prefWidth="799.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cargo.formulario.ControladorCargo">
    <children>
       <SplitPane dividerPositions="0.506900878293601" layoutX="76.0" layoutY="76.0" prefHeight="344.0" prefWidth="718.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -79,6 +77,7 @@
                               <Insets top="17.0" />
                            </GridPane.margin>
                         </HBox>
+                        <RadioButton fx:id="estado" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Estado" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <HBox layoutY="248.0" prefHeight="39.0" prefWidth="405.0" spacing="10.0">

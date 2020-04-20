@@ -52,6 +52,8 @@ public class ControladorCargo implements Initializable {
     private Button btnCancelar;
     @FXML
     private Button btnSalir;
+    @FXML
+    private RadioButton estado;
 
     private ObservableList<Cargo>cargos;
 
@@ -67,7 +69,7 @@ public class ControladorCargo implements Initializable {
         colId.setCellValueFactory(new PropertyValueFactory<>("idCargo"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
-
+        estado.setDisable(true);
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
         btnGuardar.setDisable(true);
@@ -115,7 +117,8 @@ public class ControladorCargo implements Initializable {
 
         Cargo cargo = new Cargo(
                 txtId.getText(),
-                txtDescripcion.getText()
+                txtDescripcion.getText(),
+                estado.isSelected()
         );
 
         int res = facadeCargo.agregar(cargo);
@@ -143,7 +146,8 @@ public class ControladorCargo implements Initializable {
     public void modificarCargo() {
         Cargo cargo = new Cargo(
                 txtId.getText(),
-                txtDescripcion.getText()
+                txtDescripcion.getText(),
+                estado.isSelected()
         );
         int res = facadeCargo.modificar(cargo);
         if (res == 1) {
@@ -194,6 +198,7 @@ public class ControladorCargo implements Initializable {
         txtId.setText("");
         txtDescripcion.setText("");
         txtId.requestFocus();
+        estado.setDisable(false);
 
         btnCrear.setDisable(false);
         btnGuardar.setDisable(false);
@@ -206,6 +211,7 @@ public class ControladorCargo implements Initializable {
         txtId.setText("");
         txtDescripcion.setText("");
         txtId.requestFocus();
+        estado.setDisable(false);
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
         btnCrear.setDisable(false);

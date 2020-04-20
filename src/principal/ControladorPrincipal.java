@@ -83,11 +83,33 @@ public class ControladorPrincipal implements Initializable {
     private MenuItem mi_InstitucionReferencia;
     @FXML
     private MenuItem mi_DatosFamiliar;
+    @FXML
+    private MenuItem mi_perfil;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    @FXML
+    private void abrirPerfil(ActionEvent event) throws IOException {
+        try {
+            Parent formulario_Perfil;
+            formulario_Perfil = FXMLLoader.load(getClass().getClassLoader().getResource("perfil/formularioperfil/FormularioPerfil.fxml"));
+            //FormularioPrincipal.getChildren().setAll(formulario_tipo_documento);
+            Stage stage = new Stage();
+            stage.setTitle("AP_Humana (Gestión Perfil)");
+            stage.setScene(new Scene(formulario_Perfil));
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.show();
+            //Hide this current window (if this is what you want)
+            //((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -59,7 +59,7 @@
             <items>
               <MenuItem mnemonicParsing="false" text="Usario Y Contraseña" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Administración Perfil" />
+                  <MenuItem fx:id="mi_perfil" mnemonicParsing="false" onAction="#abrirPerfil" text="Administración Perfil" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Administración Usuario" />
             </items>
