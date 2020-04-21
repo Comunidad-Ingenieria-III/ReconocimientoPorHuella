@@ -11,8 +11,8 @@
     -fx-background-color: SlateBlue;
 }
 
-.panel_personal_salud {
-    -fx-background-color: Teal;    
+.panel_central{
+    -fx-background-color: linear-gradient(Teal,SlateGrey);    
 }
 
 .panel_inferior {
@@ -20,17 +20,17 @@
 }
 
 .panel_login {
-    -fx-background-color: linear-gradient(SlateGrey,Silver, #263c53);
+    -fx-background-color: linear-gradient(darkslategrey, steelblue, black);
 }
 
-.panel_login {
+/*.panel_login {
     background: #263c53;
     font-size:16px;
     line-height: 20px;
     color: #ffffff;
     word-wrap:break-word !important;
     font-family: 'Open Sans', sans-serif;
-    }
+    }*/
 
 .cbxcuerpo{
    -fx-background-color:linear-gradient( SteelBlue, white);
@@ -42,14 +42,14 @@
 
 .lbl-cuerpo{
     //-fx-background-color: white;
-    -fx-font: bold 14px italic;
+    -fx-font: bold 16px italic;
     -fx-text-fill: white;
     //-fx-background-color:linear-gradient( darkslategray, brown);
  
 }
 
 .lblTitulo2{
-    -fx-background-color:linear-gradient( darkslategray, teal);
+    -fx-background-color: linear-gradient(darkslategrey, steelblue, black);
     -fx-font: bold 24px italic;
     -fx-text-fill: white;
 }
@@ -67,33 +67,50 @@
      -fx-background-image: url("../imagenes/btGuardar.png");
 }*/
 
-.button{
+/*.button{
     -fx-text-fill: white;
     -fx-alignment: center;
-    /*-fx-background-color:linear-gradient( black, brown);*/
+    /*-fx-background-color:linear-gradient( black, brown);
     -fx-background-color:linear-gradient( deepskyblue, darkslategray);
     -fx-font: bold 14px italic;
 }
 
-/* Estilo cuando se posiciona el ratón sobre cualquier botón */
+Estilo cuando se posiciona el ratón sobre cualquier botón 
 .button:hover {
     -fx-font-size: 16px;
 
+}*/
+
+.button{    
+    -fx-text-fill: black;
+    -fx-padding: 5;
+    -fx-background-radius: 12;
+    -fx-shadow-highlight-color: f0f0f0;
+    -fx-font: bold 14px italic;
+    -fx-body-color: linear-gradient(from 0em 0em to 0em 2.083333em, white, steelblue, white);
 }
 
-.button-tabla{
+//Estilo cuando se posiciona el ratón sobre cualquier botón
+
+.button:hover {
+    -fx-font-size: 12px;
+    -fx-background-color: linear-gradient(from 0em 0em to 0em 2.083333em, white, dodgerblue, white);
+}
+
+
+/*.button-tabla{
     -fx-text-fill: white;
     -fx-alignment: center;
-    /*-fx-background-color:linear-gradient( black, brown);*/
+    /*-fx-background-color:linear-gradient( black, brown);
     -fx-background-color:linear-gradient( deepskyblue, darkslategray);
     -fx-font: bold 10px italic;
 }
 
-/* Estilo cuando se posiciona el ratón sobre cualquier botón */
+ Estilo cuando se posiciona el ratón sobre cualquier botón 
 .button-tabla:hover {
     -fx-font-size: 12px;
 
-}
+}*/
 
 
 .text-field{
@@ -103,7 +120,8 @@
 
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d,50%);
+    -fx-background-color: linear-gradient(from 0em 0em to 0em 6.083333em, black, white);
+    //-fx-background-color: derive(dodgerblue,50%);*/
 }
 
 .context-menu {
@@ -114,7 +132,7 @@
     -fx-font-size: 12pt;
     -fx-font-family: "bold italic";
     -fx-text-fill: white;
-    //-fx-opacity: 0;
+    //-fx-opacity: 0.5;
 }
 
 .menu .left-container {
@@ -127,6 +145,7 @@
     -fx-border-color: -fx-box-border -fx-box-border transparent transparent;  
     -fx-font: 13px "bold italic"; 
     -fx-text-fill: black; 
+    -fx-alignment: CENTER;
     -fx-border-insets: 0;
 }
 

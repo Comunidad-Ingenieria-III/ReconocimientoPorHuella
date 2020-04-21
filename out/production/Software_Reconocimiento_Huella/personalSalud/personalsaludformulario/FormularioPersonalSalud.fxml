@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<BorderPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <left>
         <AnchorPane prefHeight="500.0" prefWidth="430.0" styleClass="panel_login" BorderPane.alignment="CENTER">
             <children>
@@ -121,7 +120,7 @@
         </AnchorPane>
    </left>
    <bottom>
-        <AnchorPane prefHeight="50.0" prefWidth="1200.0" styleClass="panel_personal_salud" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="50.0" prefWidth="1200.0" styleClass="panel_inferior" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="bt_crear" layoutX="197.0" layoutY="10.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="20.0" prefWidth="100.0" text="Crear" textFill="WHITE">
                     <font>
@@ -185,7 +184,7 @@
         </AnchorPane>
    </bottom>
    <top>
-          <Label id="lbl-titulo" alignment="CENTER" prefHeight="50.0" prefWidth="1200.0" styleClass="lblTitulo2" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
+          <Label id="lbl-titulo" alignment="CENTER" prefHeight="50.0" prefWidth="1200.0" styleClass="panel_login" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
               <font>
                   <Font name="System Bold Italic" size="19.0" />
               </font>

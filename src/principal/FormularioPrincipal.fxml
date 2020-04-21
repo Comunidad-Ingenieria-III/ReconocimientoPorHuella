@@ -2,13 +2,12 @@
 
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
    <top>
-      <MenuBar prefHeight="47.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="50.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
         <menus>
             <Menu mnemonicParsing="false" text="Gestiones">
               <items>
@@ -72,9 +71,6 @@
               </items>
             </Menu>
         </menus>
-         <effect>
-            <InnerShadow choke="0.12" color="#4a1f1f" height="54.37" radius="22.792499999999997" width="38.8" />
-         </effect>
       </MenuBar>
    </top>
    <bottom>
@@ -92,12 +88,12 @@
       </AnchorPane>
    </bottom>
    <right>
-      <AnchorPane id="panel_derecha" prefHeight="549.0" prefWidth="22.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_derecha" prefHeight="546.0" prefWidth="250.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <AnchorPane id="panel_principal" fx:id="FormularioPrincipal" prefHeight="563.0" prefWidth="846.0" styleClass="panel_principal" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_principal" fx:id="FormularioPrincipal" prefHeight="563.0" prefWidth="846.0" styleClass="panel_login" BorderPane.alignment="CENTER" />
    </center>
    <left>
-      <AnchorPane id="panel_izquierdo" prefHeight="549.0" prefWidth="26.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_izquierdo" prefHeight="546.0" prefWidth="250.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
    </left>
 </BorderPane>
