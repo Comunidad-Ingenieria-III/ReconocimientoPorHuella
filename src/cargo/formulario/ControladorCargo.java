@@ -73,6 +73,7 @@ public class ControladorCargo implements Initializable {
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
         btnGuardar.setDisable(true);
+        estado.setDisable(true);
 
         manejarEventosI();
 
@@ -113,7 +114,6 @@ public class ControladorCargo implements Initializable {
 
     @FXML
     public void guardarCargo() {
-
 
         Cargo cargo = new Cargo(
                 txtId.getText(),
@@ -169,6 +169,8 @@ public class ControladorCargo implements Initializable {
 
     @FXML
     public void eliminarCargo() {
+
+
         int res = facadeCargo.eliminar(tblCargos.getSelectionModel().getSelectedItem().getIdCargo());
         if (res == 1) {
             cargos.remove(tblCargos.getSelectionModel().getSelectedIndex());
@@ -198,7 +200,6 @@ public class ControladorCargo implements Initializable {
         txtId.setText("");
         txtDescripcion.setText("");
         txtId.requestFocus();
-        estado.setDisable(false);
 
         btnCrear.setDisable(false);
         btnGuardar.setDisable(false);
@@ -211,7 +212,7 @@ public class ControladorCargo implements Initializable {
         txtId.setText("");
         txtDescripcion.setText("");
         txtId.requestFocus();
-        estado.setDisable(false);
+
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
         btnCrear.setDisable(false);
