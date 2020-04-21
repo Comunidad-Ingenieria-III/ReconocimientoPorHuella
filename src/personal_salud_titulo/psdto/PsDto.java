@@ -1,10 +1,7 @@
 package personal_salud_titulo.psdto;
 
 import institucionAcademica.dto.InstitucionAcademica;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import personalSalud.personalsaluddto.PersonalSalud;
 import tipoTituloAcademico.dto.TtAcademico;
 
@@ -18,20 +15,22 @@ public class PsDto {
     private StringProperty idTipoTitu = new SimpleStringProperty();
     private StringProperty idInstitucion = new SimpleStringProperty();
     private Date fechaTitulacion;
+    private BooleanProperty estado = new SimpleBooleanProperty();
 
 
-    public PsDto(int id, String idPersonal, String idTipoTitu, String idInstitucion, Date fechaTitulacion) {
+    public PsDto(int id, String idPersonal, String idTipoTitu, String idInstitucion, Date fechaTitulacion, boolean estado) {
 
         this.id.set(id);
         this.idPersonal.set(idPersonal);
         this.idTipoTitu.set(idTipoTitu);
         this.idInstitucion.set(idInstitucion);
         this.fechaTitulacion = fechaTitulacion;
+        this.estado.set(estado);
     }
 
 
    public PsDto() {
-        this(0,"", "", "", new Date(new java.util.Date().getTime()));
+        this(0,"", "", "", new Date(new java.util.Date().getTime()),false);
     }
 
 
@@ -89,6 +88,18 @@ public class PsDto {
 
     public void setFechaTitulacion(Date fechaTitulacion) {
         this.fechaTitulacion = fechaTitulacion;
+    }
+
+    public boolean isEstado() {
+        return estado.get();
+    }
+
+    public BooleanProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado.set(estado);
     }
 
     @Override
