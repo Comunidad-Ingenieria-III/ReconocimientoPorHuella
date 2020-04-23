@@ -51,6 +51,8 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     private ObservableList<InstitucionReferencia> institucionReferencias;
     @FXML
     private List<InstitucionReferencia> institucionesReferencias;
+    private String estado="1";
+    int valor=0;
 
 
     @Override
@@ -112,21 +114,50 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         });
     }
     public void validarE(){
-        institucionReferencias = FXCollections.observableArrayList(facadeInstitucionReferencia.buscar(txtId.getText()));
-        if(institucionReferencias.size()>=1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Institución de Referencia");
-            msg.setContentText("Codigo existente no es posible agregar");
-            msg.setHeaderText("Resultado");
-            msg.show();
-            txtId.setText("");
-            txtNombre.setText("");
+        if(valor==1){
+            institucionesReferencias = facadeInstitucionReferencia.buscar(txtId.getText());
 
-            txtId.requestFocus();
+            if(institucionesReferencias.size()>=1){
+                int i=0;
 
+                if (institucionesReferencias.get(0).getEstado().equals("0")) {
+
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Institución de Referencia");
+                    msg.setContentText("La institución de referencia : " + txtId.getText() + " se escuentra registrada, mas su estado es inhabilitado. Contacte a su administrador");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    txtId.setText("");
+                    txtNombre.setText("");
+                    txtId.requestFocus();
+
+                }
+                if(institucionesReferencias.get(0).getEstado().equals("1")){
+
+
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Institución de Referencia");
+                    msg.setContentText("Código: " + institucionesReferencias.get(0).getEstado() +" existente no es posible agregar" );
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    txtId.setText("");
+                    txtNombre.setText("");
+                    txtId.requestFocus();
+
+
+                }
+
+
+
+
+            }
 
         }
+
+
     }
+
+
 
     @FXML
     public void manejarEventos(){
@@ -168,7 +199,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                 txtId.getText(),
                 txtNombre.getText(),
                 txtDireccion.getText(),
-                txtTelefono.getText()
+                txtTelefono.getText(),estado
         );
         if (institucionesReferencias.isEmpty()) {
             if (txtId.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
@@ -196,6 +227,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                     msg.setContentText("No se ha podido agregar la institucion");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    cancelar();
                 }
             }
 
@@ -249,13 +281,13 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                 institucionReferencias.remove(tblInstitucionReferencia.getSelectionModel().getSelectedIndex());
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Institución Referencia");
-                msg.setContentText("La institución se ha eliminado");
+                msg.setContentText("La  referencia se ha eliminado");
                 msg.setHeaderText("Resultado");
                 msg.show();
             }else{
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Institución Referencia");
-                msg.setContentText("La institución No ha sido eliminada");
+                msg.setContentText("La referencia. No ha sido eliminada");
                 msg.setHeaderText("Resultado");
                 msg.show();
             }
@@ -265,7 +297,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         }else if(i==1){
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion No ha sido eliminada");
+            msg.setContentText("La referemcia. No ha sido eliminada");
             msg.setHeaderText("Resultado");
             msg.show();
         }
@@ -294,18 +326,42 @@ public class ControladorInstitucionReferencia extends Component implements Initi
             btnGuardar.setDisable(true);
             tblInstitucionReferencia.setEditable(false);
         } else {
+            int i = 0;
             institucionReferencias = FXCollections.observableArrayList(facadeInstitucionReferencia.buscar(txtId.getText()));
+            if (institucionReferencias.isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Institución de Referencia");
+                msg.setContentText("Código " + txtId.getText() +" de referencia no encontrado");
+                msg.setHeaderText("Resultado");
+                msg.show();
 
-            tblInstitucionReferencia.setItems(institucionReferencias);
+            } else {
 
 
-            colId.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
-            colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-            colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-            colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+                if (institucionReferencias.get(i).getEstado().equals("1")) {
+
+                    tblInstitucionReferencia.setItems(institucionReferencias);
+                    colId.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
+                    colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+                    colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+                    colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+                }
+                if (institucionReferencias.get(i).getEstado().equals("0")) {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Institución de Referencia");
+                    msg.setContentText("Código " + txtId.getText() +" de referencia no encontrado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+
+                }
+
+            }
 
         }
+
     }
+
+
 
     @FXML
     public void cancelar() {
@@ -355,6 +411,8 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         txtNombre.requestFocus();
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
+        valor =0;
+        btnGuardar.setDisable(false);
     }
 
     @FXML
@@ -367,6 +425,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
         habilitarCampos();
+        valor=1;
     }
 
     @FXML

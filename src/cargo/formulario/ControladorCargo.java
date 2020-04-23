@@ -11,20 +11,22 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class ControladorCargo implements Initializable {
-
+public class ControladorCargo extends Component implements Initializable {
     FacadeCargo facadeCargo = new FacadeCargo();
-
     @FXML
     private TableView<Cargo> tblCargos;
 
@@ -32,48 +34,30 @@ public class ControladorCargo implements Initializable {
     private TableColumn<Cargo, String> colId;
     @FXML
     private TableColumn<Cargo, String> colDescripcion;
+    @FXML
+    private TextField txtId,txtDescripcion;
 
     @FXML
-    private TextField txtId;
-    @FXML
-    private TextField txtDescripcion;
-
-    @FXML
-    private Button btnCrear;
-    @FXML
-    private Button btnConsultar;
-    @FXML
-    private Button btnModificar;
-    @FXML
-    private Button btnGuardar;
-    @FXML
-    private Button btnEliminar;
-    @FXML
-    private Button btnCancelar;
-    @FXML
-    private Button btnSalir;
+    private Button btnCrear,btnConsultar,btnModificar,btnGuardar,btnEliminar,btnCancelar,btnSalir;
     @FXML
     private RadioButton estado;
-
     private ObservableList<Cargo>cargos;
-
+    private List<Cargo> listaCargos;
+    @FXML
+    int valor=0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             validar();
-
         cargos = FXCollections.observableArrayList(facadeCargo.obtenerCargos());
-
         tblCargos.setItems(cargos);
-
         colId.setCellValueFactory(new PropertyValueFactory<>("idCargo"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-
         estado.setDisable(true);
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
         btnGuardar.setDisable(true);
-
+        deshabilitarCampos();
         manejarEventosI();
 
     }
@@ -88,13 +72,71 @@ public class ControladorCargo implements Initializable {
 
                 }
 
+                btnCrear.setDisable(true);
+                btnGuardar.setDisable(true);
                 btnModificar.setDisable(false);
                 btnEliminar.setDisable(false);
+                btnConsultar.setDisable(true);
             }
         });//Fin del Listener
 
 
     }
+
+    public void validarExistente(){
+
+        txtDescripcion.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarE();
+            }
+        });
+    }
+
+    public void validarE(){
+        if(valor==1){
+
+            listaCargos=facadeCargo.buscar(txtId.getText());
+
+            if(listaCargos.size()>=1){
+                int i=0;
+
+                if (listaCargos.get(0).isEstado()) {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Cargo");
+                    msg.setContentText("Código: " + txtId.getText() +" existente no es posible agregar" );
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    txtId.setText("");
+                    txtDescripcion.setText("");
+                    txtId.requestFocus();
+
+
+
+
+                }else{
+
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Cargo");
+                    msg.setContentText("El Cargo: " + txtId.getText() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    txtId.setText("");
+                    txtDescripcion.setText("");
+                    txtId.requestFocus();
+                }
+
+
+            }
+
+        }
+
+
+    }
+
+
+
+
 
     public void validar(){//Metodo para validar que el Id del cargo solo sean numeros
         txtId.setOnKeyTyped(new EventHandler<KeyEvent>() {
@@ -111,78 +153,165 @@ public class ControladorCargo implements Initializable {
         });
     }
 
+
+
+
     @FXML
     public void guardarCargo() {
+        listaCargos=facadeCargo.buscar(txtId.getText());
+        Cargo cargo = new Cargo(txtId.getText(), txtDescripcion.getText(), estado.isSelected());
+        if (listaCargos.isEmpty()) {
+            if (txtId.getText().isEmpty() || txtDescripcion.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Cargos");
+                msg.setContentText("Campos requeridos");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                txtId.requestFocus();
+            } else {
+
+                int res = facadeCargo.agregar(cargo);
+                if (res == 1) {
+                    cargos.add(cargo);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Cargos");
+                    msg.setContentText("El cargo se ha agregado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+
+                } else {
+
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Cargos");
+                    msg.setContentText("No se ha podido agregar el cargo");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                }
 
 
-        Cargo cargo = new Cargo(
-                txtId.getText(),
-                txtDescripcion.getText(),
-                estado.isSelected()
-        );
-
-        int res = facadeCargo.agregar(cargo);
-
-        if (res == 1) {
-            cargos.add(cargo);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Cargos");
-            msg.setContentText("El carego se ha agregado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
+            }
         } else {
 
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Cargos");
-            msg.setContentText("No se ha podido agregar el cargo");
-            msg.setHeaderText("Resultado");
-            msg.show();
+            if (txtId.getText().isEmpty() || txtDescripcion.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Tipo de título académico");
+                msg.setContentText("Nombre es un campo requerido");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                txtDescripcion.requestFocus();
 
+            } else {
+
+
+                int res = facadeCargo.modificar(cargo);
+                if (res == 1) {
+                    btnGuardar.setDisable(true);
+                    cargos.set(tblCargos.getSelectionModel().getSelectedIndex(), cargo);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Cargo");
+                    msg.setContentText("El cargo se ha modificado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                } else {
+                    btnGuardar.setDisable(true);
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Cargo");
+                    msg.setContentText("El cargo No ha sido modificado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                }
+            }
         }
     }
 
     @FXML
-    public void modificarCargo() {
-        Cargo cargo = new Cargo(
-                txtId.getText(),
-                txtDescripcion.getText(),
-                estado.isSelected()
-        );
-        int res = facadeCargo.modificar(cargo);
-        if (res == 1) {
-            cargos.set(tblCargos.getSelectionModel().getSelectedIndex(), cargo);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Cargo");
-            msg.setContentText("El cargo se ha modificado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }else{
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Cargo");
-            msg.setContentText("El cargo No ha sido modificado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-
+    public void modificar(){
+        txtId.setDisable(true);
+        txtDescripcion.setDisable(false);
+        txtDescripcion.requestFocus();
+        btnModificar.setDisable(true);
+        btnEliminar.setDisable(true);
+        valor =0;
+        btnGuardar.setDisable(false);
     }
+
 
     @FXML
     public void eliminarCargo() {
         int res = facadeCargo.eliminar(tblCargos.getSelectionModel().getSelectedItem().getIdCargo());
-        if (res == 1) {
-            cargos.remove(tblCargos.getSelectionModel().getSelectedIndex());
+        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el Tipo de título");
+        if(i==0){
+            if (res == 1) {
+                cargos.remove(tblCargos.getSelectionModel().getSelectedIndex());
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Cargo");
+                msg.setContentText("El cargo se ha eliminado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }else{
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Cargo");
+                msg.setContentText("El cargo No ha sido eliminado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }
+            limpiarFormulario();
+            cancelar();
+
+
+        }else if(i==1){
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Cargo");
-            msg.setContentText("El cargo se ha eliminado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }else{
-            Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Cargo");
             msg.setContentText("El cargo No ha sido eliminado");
             msg.setHeaderText("Resultado");
             msg.show();
+
+
+        }
+        limpiarFormulario();
+        cancelar();
+
+    }
+
+    @FXML
+    private void consultarCargo() {
+        if(txtId.getText().isEmpty()){
+            txtId.setDisable(false);
+            txtDescripcion.setDisable(true);
+            txtId.requestFocus();
+            btnCrear.setDisable(true);
+            btnGuardar.setDisable(true);
+            tblCargos.setEditable(false);
+        }else{
+            int i=0;
+            cargos = FXCollections.observableArrayList(facadeCargo.buscar(txtId.getText()));
+            if(cargos.get(i).isEstado()){
+
+
+                tblCargos.setItems(cargos);
+                colId.setCellValueFactory(new PropertyValueFactory<>("idCargo"));
+                colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+                btnConsultar.setDisable(true);
+            }else {
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Tipo de título académico");
+                msg.setContentText("Tipo de título " + txtId.getText() + " no encontrado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+
+            }
+
+
+            if (cargos.isEmpty()){
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Tipo de título académico");
+                msg.setContentText("Tipo de título " + txtId.getText() + " no encontrado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+
+            }
         }
 
     }
@@ -193,29 +322,59 @@ public class ControladorCargo implements Initializable {
 
     @FXML
     public void limpiarFormulario() {
-        txtId.setDisable(false);
-        txtDescripcion.setDisable(false);
         txtId.setText("");
         txtDescripcion.setText("");
-        txtId.requestFocus();
-        estado.setDisable(false);
-
-        btnCrear.setDisable(false);
-        btnGuardar.setDisable(false);
+        btnCrear.setDisable(true);
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
     }
 
     @FXML
-    public void cancelar(){
-        txtId.setText("");
-        txtDescripcion.setText("");
-        txtId.requestFocus();
-        estado.setDisable(false);
+    private void habilitarBotones() {
+        btnCrear.setDisable(true); //siempre ira deshabilitado
+        btnConsultar.setDisable(false);
+        btnCancelar.setDisable(false);
+        btnSalir.setDisable(false);
+        btnGuardar.setDisable(false);
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
-        btnCrear.setDisable(false);
+        habilitarCampos();
+        valor=1;
     }
+
+    @FXML
+    private void habilitarCampos() {
+        txtId.setDisable(false);
+        txtDescripcion.setDisable(false);
+        txtId.requestFocus();
+    }
+
+    @FXML
+    private void deshabilitarCampos() {
+        txtId.setDisable(true);
+        txtDescripcion.setDisable(true);
+
+    }
+
+    @FXML
+    public void cancelar() {
+        txtId.setText("");
+        txtDescripcion.setText("");
+        btnModificar.setDisable(true);
+        btnEliminar.setDisable(true);
+        btnConsultar.setDisable(false);
+        btnCrear.setDisable(false);
+        txtDescripcion.setDisable(true);
+        txtId.setDisable(true);
+        btnGuardar.setDisable(true);
+
+        cargos = FXCollections.observableArrayList(facadeCargo.obtenerCargos());
+        tblCargos.setItems(cargos);
+        colId.setCellValueFactory(new PropertyValueFactory<>("idCargo"));
+        colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    }
+
+
     @FXML
     private void salir(ActionEvent event) {
         Stage stage = (Stage) btnSalir.getScene().getWindow();

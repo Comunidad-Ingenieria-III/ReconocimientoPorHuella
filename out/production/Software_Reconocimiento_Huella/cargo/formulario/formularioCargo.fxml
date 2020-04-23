@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cargo.formulario.ControladorCargo">
+<AnchorPane prefHeight="500.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cargo.formulario.ControladorCargo">
    <children>
       <SplitPane dividerPositions="0.4899598393574297" orientation="VERTICAL" prefHeight="500.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css">
          <items>
@@ -40,9 +38,9 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtDescripcion" layoutX="238.0" layoutY="109.0" prefHeight="5.0" prefWidth="181.0" />
+                  <TextField fx:id="txtDescripcion" layoutX="238.0" layoutY="109.0" onKeyTyped="#validarExistente" prefHeight="5.0" prefWidth="181.0" />
                   <RadioButton fx:id="estado" layoutX="464.0" layoutY="65.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" text="Estado" />
-                  <Button fx:id="btnCrear" layoutX="30.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="30.0" prefWidth="90.0" text="Crear" textFill="WHITE">
+                  <Button fx:id="btnCrear" layoutX="30.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="90.0" text="Crear" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -50,7 +48,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnConsultar" layoutX="143.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
+                  <Button fx:id="btnConsultar" layoutX="143.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#consultarCargo" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -90,7 +88,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnModificar" layoutX="476.0" layoutY="131.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#modificarCargo" prefHeight="30.0" prefWidth="90.0" text="Modificar" textFill="WHITE">
+                  <Button fx:id="btnModificar" layoutX="476.0" layoutY="131.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="90.0" text="Modificar" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

@@ -1,6 +1,6 @@
 package tipodocumento.formulariotipodocumento;
 
-import institucionAcademica.dto.InstitucionAcademica;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,17 +10,22 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import tipodocumento.daotipodocumento.DaoTipoDocumento;
+
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
 import javax.swing.*;
+import java.awt.*;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class ControladorTipoDocumento implements Initializable {
+public class ControladorTipoDocumento extends Component implements Initializable {
 
     FacadeTipoDocumento facadeTipoDocumento = new FacadeTipoDocumento();
 
@@ -50,6 +55,10 @@ public class ControladorTipoDocumento implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
+    private String estado ="1";
+    private List<DtoTipoDocumento> tiposdeDocumento;
+    @FXML
+    int valor=0;
 
     private ObservableList<DtoTipoDocumento> tipoDocumentos;
 
@@ -57,19 +66,16 @@ public class ControladorTipoDocumento implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         tipoDocumentos = FXCollections.observableArrayList(facadeTipoDocumento.cargarTipoDocumento());
-
         tb_tipoDocumento.setItems(tipoDocumentos);
-
         colId.setCellValueFactory(new PropertyValueFactory<>("idTipoDocumento"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreTipoDocumento"));
-
 
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         bt_guardar.setDisable(true);
-
+        deshabilitarCampos();
         manejarEventos();
-        //deshabilitarCampos();
+
 
     }
 
@@ -83,90 +89,239 @@ public class ControladorTipoDocumento implements Initializable {
                     tf_nombre1.setText(newValue.getNombreTipoDocumento());
                     tf_Tipo.requestFocus();
 
-                    bt_crear.setDisable(false);
-                    bt_guardar.setDisable(false);
+                    bt_crear.setDisable(true);
+                    bt_guardar.setDisable(true);
                     bt_modificar.setDisable(false);
                     bt_inhabilitar.setDisable(false);
+                    bt_consultar.setDisable(true);
                 }
             }
         });//FIN DEL LISTENER
     }
 
-    @FXML
-    public void guardarTipoDocumento() {
+    public void validarExistente(){
 
-        DtoTipoDocumento dtoTipoDocumento = new DtoTipoDocumento(
-                tf_Tipo.getText(),
-                tf_nombre1.getText()
-        );
-
-        int res = facadeTipoDocumento.insertarTipoDocumento(dtoTipoDocumento);
-
-        if (res == 1) {
-            tipoDocumentos.add(dtoTipoDocumento);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Tipo de Documento");
-            msg.setContentText("El Tipo de Documento se ha agregado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
-        } else {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de Documento");
-            msg.setContentText("No se ha podido agregar El Tipo de Documento");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-        limpiarFormulario();
+        tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarE();
+            }
+        });
     }
 
-    @FXML
-    public void modificarTipoDocumento() {
+    public void validarE(){
+        if(valor==1){
 
+
+            tiposdeDocumento=facadeTipoDocumento.buscar(tf_Tipo.getText());
+
+            if(tiposdeDocumento.size()>=1){
+                int i=0;
+
+                if (tiposdeDocumento.get(0).getEstado().equals("0")) {
+
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Tipo de titulo académico");
+                    msg.setContentText("El Tipo de documento: " + tf_Tipo.getText() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    tf_Tipo.setText("");
+                    tf_nombre1.setText("");
+                    tf_Tipo.requestFocus();
+
+                }
+                if(tiposdeDocumento.get(0).getEstado().equals("1")){
+
+
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Tipo de titulo académico");
+                    msg.setContentText("Código: " + tf_Tipo.getText() +" existente no es posible agregar" );
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    tf_Tipo.setText("");
+                    tf_nombre1.setText("");
+                    tf_Tipo.requestFocus();
+
+
+                }
+
+
+
+
+            }
+
+        }
+
+
+    }
+
+
+
+
+
+    @FXML
+    public void botonGuardar() {
+        tiposdeDocumento=facadeTipoDocumento.buscar(tf_Tipo.getText());
         DtoTipoDocumento dtoTipoDocumento = new DtoTipoDocumento(
                 tf_Tipo.getText(),
-                tf_nombre1.getText()
+                tf_nombre1.getText(),estado
         );
-        int res = facadeTipoDocumento.modificarTipoDocumeto(dtoTipoDocumento);
-        if (res == 1) {
-            tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), dtoTipoDocumento);
+        if (tiposdeDocumento.isEmpty()) {
+            if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Tipo de documento");
+                msg.setContentText("Campos requeridos");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                //bt_guardar.setDisable(true);
+                tf_Tipo.requestFocus();
+            }else {
+                int res= facadeTipoDocumento.insertarTipoDocumento(dtoTipoDocumento);
+                if (res == 1) {
+                    tipoDocumentos.add(dtoTipoDocumento);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Tipo de Documento");
+                    msg.setContentText("El tipo de documento se ha agregado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
 
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Tipo de Documento");
-            msg.setContentText("Se ha Modificado El Tipo de Documento");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        } else {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de Documento");
-            msg.setContentText("No se ha podido Modificar El Tipo de Documento");
-            msg.setHeaderText("Resultado");
-            msg.show();
+                } else {
+
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Tipo de Documento");
+                    msg.setContentText("No se ha podido agregar el tipo de documento");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                }
+
+            }
+        } else{
+            if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Tipo de documento");
+                msg.setContentText("Nombre es un campo requerido");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                tf_nombre1.requestFocus();
+
+            }else{
+                int res = facadeTipoDocumento.modificarTipoDocumeto(dtoTipoDocumento);
+                if (res == 1) {
+                    tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), dtoTipoDocumento);
+
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Tipo de Documento");
+                    msg.setContentText("Se ha modificado el tipo de documento");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                } else {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Tipo de Documento");
+                    msg.setContentText("No se ha podido modificar el tipo de documento");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                }
+            }
         }
-        limpiarFormulario();
     }
+    @FXML
+    public void modificar(){
+        tf_Tipo.setDisable(true);
+        tf_nombre1.setDisable(false);
+        tf_nombre1.requestFocus();
+        bt_modificar.setDisable(true);
+        bt_inhabilitar.setDisable(true);
+        valor =0;
+        bt_guardar.setDisable(false);
+    }
+
+
 
     @FXML
     public void eliminarTipoDocumento() {
 
         int res = facadeTipoDocumento.eliminarTipoDocumento(String.valueOf(tb_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento()));
-        if (res == 1) {
-            tipoDocumentos.remove(tb_tipoDocumento.getSelectionModel().getSelectedIndex());
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Tipo de Documento");
-            msg.setContentText("El Tipo de Documento se ha eliminado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        } else {
+        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el tipo de documento");
+        if(i==0){
+            if (res == 1) {
+                tipoDocumentos.remove(tb_tipoDocumento.getSelectionModel().getSelectedIndex());
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Tipo de Documento");
+                msg.setContentText("El Tipo de documento se ha eliminado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            } else {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Tipo de Documento");
+                msg.setContentText("El Tipo de documento, No ha sido eliminada");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }
+            limpiarFormulario();
+            cancelar();
+
+        }else if(i==1){
             Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de Documento");
-            msg.setContentText("l Tipo de Documento No ha sido eliminada");
+            msg.setTitle("Gestiones - Tipo de titulo académico");
+            msg.setContentText("El Tipo de documento, No ha sido eliminada");
             msg.setHeaderText("Resultado");
             msg.show();
         }
         limpiarFormulario();
+        cancelar();
+
+
     }
+
+    @FXML
+    private void consultarTDocuemnto() {
+        if (tf_Tipo.getText().isEmpty()) {
+            tf_Tipo.setDisable(false);
+            tf_nombre1.setDisable(true);
+            tf_Tipo.requestFocus();
+            bt_crear.setDisable(true);
+            bt_guardar.setDisable(true);
+            tb_tipoDocumento.setEditable(false);
+        } else {
+            int i = 0;
+            tipoDocumentos = FXCollections.observableArrayList(facadeTipoDocumento.buscar(tf_Tipo.getText()));
+            if (tipoDocumentos.isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Tipo de Documento");
+                msg.setContentText("Tipo de documento " + tf_Tipo.getText() + " no encontrado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }else{
+
+
+                if (tipoDocumentos.get(i).getEstado().equals("1")) {
+                    tb_tipoDocumento.setItems(tipoDocumentos);
+                    colId.setCellValueFactory(new PropertyValueFactory<>("idTipoDocumento"));
+                    colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreTipoDocumento"));
+
+                }
+                if (tipoDocumentos.get(i).getEstado().equals("0")) {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Tipo de Documento");
+                    msg.setContentText("Tipo de documento " + tf_Tipo.getText() + " no encontrado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+
+                }
+
+
+            }
+
+
+        }
+
+    }
+
+
+
+
 
     @FXML
     public void validarCamposVacios() {
@@ -181,43 +336,32 @@ public class ControladorTipoDocumento implements Initializable {
     }
 
     @FXML
-    public void validarB(){
-        bt_guardar.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                validarCamposVacios();
-            }
-        });
-    }
-
-    @FXML
     public void limpiarFormulario() {
         tf_Tipo.setText("");
         tf_nombre1.setText("");
-        tf_Tipo.requestFocus();
-
-
-        bt_crear.setDisable(false);
-        bt_guardar.setDisable(false);
-        bt_cancelar.setDisable(true);
+        bt_crear.setDisable(true);
+        bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-
-        //habilitarCampos();
     }
 
     @FXML
-    public void cancelar(){
-        tf_Tipo.setText("");
-        tf_nombre1.setText("");
-
+    private void habilitarBotones() {
+        bt_crear.setDisable(true); //siempre ira deshabilitado
+        bt_consultar.setDisable(false);
+        bt_cancelar.setDisable(false);
+        bt_salir.setDisable(false);
+        bt_guardar.setDisable(false);
+        bt_modificar.setDisable(true);
+        bt_inhabilitar.setDisable(true);
+        habilitarCampos();
+        valor=1;
     }
-
 
     @FXML
     private void habilitarCampos() {
         tf_Tipo.setDisable(false);
         tf_nombre1.setDisable(false);
-
+        tf_Tipo.requestFocus();
     }
 
     @FXML
@@ -226,6 +370,26 @@ public class ControladorTipoDocumento implements Initializable {
         tf_nombre1.setDisable(true);
 
     }
+
+    @FXML
+    public void cancelar() {
+        tf_Tipo.setText("");
+        tf_nombre1.setText("");
+        bt_modificar.setDisable(true);
+        bt_inhabilitar.setDisable(true);
+        bt_consultar.setDisable(false);
+        bt_crear.setDisable(false);
+        tf_nombre1.setDisable(true);
+        tf_Tipo.setDisable(true);
+        bt_guardar.setDisable(true);
+
+        tipoDocumentos = FXCollections.observableArrayList(facadeTipoDocumento.cargarTipoDocumento());
+        tb_tipoDocumento.setItems(tipoDocumentos);
+        colId.setCellValueFactory(new PropertyValueFactory<>("idTipoDocumento"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreTipoDocumento"));
+
+    }
+
 
     @FXML
     private void cerrarTipoDocumento(ActionEvent event) {

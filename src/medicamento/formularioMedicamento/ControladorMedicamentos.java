@@ -41,7 +41,8 @@ public class ControladorMedicamentos extends Component implements Initializable 
     private ObservableList<Medicamento> medicamentos;
     @FXML
     private List<Medicamento> medicamentos1;
-
+    private String estado = "1";
+    int valor=0;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         medicamentos = FXCollections.observableArrayList(facade.obternetTodosMedicamentos());
@@ -114,20 +115,43 @@ public class ControladorMedicamentos extends Component implements Initializable 
     }
 
     public void validarE(){
-        medicamentos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
-        if(medicamentos.size()>=1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de titulo académico");
-            msg.setContentText("Codigo existente no es posible agregar");
-            msg.setHeaderText("Resultado");
-            msg.show();
-            tf_Tipo.setText("");
-            tf_nombre1.setText("");
-            tf_Tipo.requestFocus();
+        if(valor==1){
+            medicamentos1 = facade.buscar(tf_Tipo.getText());
+            if(medicamentos1.size()>=1){
+
+                int i=0;
+                if (medicamentos1.get(0).getEstado().equals("0")) {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Medicamentos");
+                    msg.setContentText("El medicamento : " + tf_Tipo.getText() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    tf_Tipo.setText("");
+                    tf_nombre1.setText("");
+                    tf_Tipo.requestFocus();
+
+                }
+                if(medicamentos1.get(0).getEstado().equals("1")){
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Medicamentos");
+                    msg.setContentText("Código: " + tf_Tipo.getText()  +" existente no es posible agregar" );
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    tf_Tipo.setText("");
+                    tf_nombre1.setText("");
+                    tf_Tipo.requestFocus();
 
 
+                }
+
+
+
+
+            }
 
         }
+
+
     }
 
 
@@ -141,7 +165,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
         medicamentos1= facade.buscar(tf_Tipo.getText());
         Medicamento medicamento = new Medicamento(
                 tf_Tipo.getText(),
-                tf_nombre1.getText()
+                tf_nombre1.getText(),estado
         );
         if (medicamentos1.isEmpty()) {
             if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
@@ -222,6 +246,8 @@ public class ControladorMedicamentos extends Component implements Initializable 
         tf_nombre1.setDisable(false);
         tf_nombre1.requestFocus();
         bt_modificar.setDisable(true);
+        valor=0;
+        bt_guardar.setDisable(false);
     }
 
 
@@ -280,12 +306,36 @@ public class ControladorMedicamentos extends Component implements Initializable 
             bt_guardar.setDisable(true);
 
         }else{
-
             medicamentos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
-            tbMedicamentos.setItems(medicamentos);
-            idCodigo.setCellValueFactory(new PropertyValueFactory<>("idMedicamento"));
-            idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-            bt_consultar.setDisable(true);
+            int i = 0;
+            if (medicamentos.isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Institución de Referencia");
+                msg.setContentText("Código " + tf_Tipo.getText() +" de referencia no encontrado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+
+            }else {
+
+
+                if (medicamentos.get(i).getEstado().equals("1")) {
+                    tbMedicamentos.setItems(medicamentos);
+                    idCodigo.setCellValueFactory(new PropertyValueFactory<>("idMedicamento"));
+                    idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+
+                }
+
+                if (medicamentos.get(i).getEstado().equals("0")) {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Institución de Referencia");
+                    msg.setContentText("Código " + tf_Tipo.getText() + " de referencia no encontrado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+
+                }
+
+            }
 
 
         }
@@ -308,10 +358,11 @@ public class ControladorMedicamentos extends Component implements Initializable 
         bt_consultar.setDisable(true);
         bt_cancelar.setDisable(false);
         bt_salir.setDisable(false);
-        // bt_guardar.setDisable(true);
+        bt_guardar.setDisable(false);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         habilitarCampos();
+        valor=1;
     }
 
 

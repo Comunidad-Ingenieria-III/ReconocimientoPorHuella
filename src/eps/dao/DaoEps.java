@@ -2,10 +2,8 @@ package eps.dao;
 
 import conexionBD.ConexionRoot;
 import eps.dto.DtoEps;
-import institucionAcademica.dto.InstitucionAcademica;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +24,7 @@ public class DaoEps {
 
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from eps";
+            String sql = "select * from eps where estado = 1";
             stmt = conn.prepareStatement(sql);//preparar consulta
             rset = stmt.executeQuery();//ejecutar la consulta y guardarla en la variabble rset
 
@@ -38,6 +36,7 @@ public class DaoEps {
                 dtoeps.setNombreEps(rset.getString("nombreEps"));
                 dtoeps.setdireccionEps(rset.getString("direccionEps"));
                 dtoeps.setTelEps(rset.getString("telEps"));
+                dtoeps.setEstado(rset.getString("estado"));
                 dtoepss.add(dtoeps);
 
             }
@@ -49,17 +48,48 @@ public class DaoEps {
         return dtoepss;
     }
 
+    public List<DtoEps> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from eps where idEps LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            dtoepss = new ArrayList<>();
+            while (rset.next()){
+                dtoeps = new DtoEps();
+                dtoeps.setIdEps(rset.getString("idEps"));
+                dtoeps.setNombreEps(rset.getString("nombreEps"));
+                dtoeps.setdireccionEps(rset.getString("direccionEps"));
+                dtoeps.setTelEps(rset.getString("telEps"));
+                dtoeps.setEstado(rset.getString("estado"));
+                dtoepss.add(dtoeps);
+            }
+
+
+
+        }catch (RuntimeException | SQLException e){
+            throw new RuntimeException("Error SQL - BucarEPS()!");
+        }
+        return dtoepss;
+    }
+
+
+
+
+
     public int agregarEps(DtoEps dtoEps) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into eps(idEps, nombreEps, direccionEps, telEps) values (?, ?, ?, ?)";
+            String sql = "insert into eps(idEps, nombreEps, direccionEps, telEps, estado) values (?, ?, ?, ?, ?)";
 
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
             stmt.setString(1, dtoEps.getIdEps());
             stmt.setString(2, dtoEps.getNombreEps());
             stmt.setString(3, dtoEps.getdireccionEps());
             stmt.setString(4, dtoEps.getTelEps());
-
+            stmt.setInt(5, Integer.parseInt(dtoEps.getEstado()));
             return stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException e) {
@@ -93,7 +123,7 @@ public class DaoEps {
     public int eliminarEps(String idEps) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from eps where idEps = ?";
+            String sql = "update eps set estado= 0 where idEps = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idEps);
             return stmt.executeUpdate();

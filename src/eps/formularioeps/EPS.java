@@ -1,10 +1,6 @@
 package eps.formularioeps;
-
-import conexionBD.ConexionRoot;
-import eps.dao.DaoEps;
 import eps.dto.DtoEps;
 import eps.facadeeps.FacadeEps;
-import institucionAcademica.dto.InstitucionAcademica;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,26 +10,22 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import personalSalud.personalsaluddto.PersonalSalud;
-
 import javax.swing.*;
+import java.awt.*;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class EPS implements Initializable {
+public class EPS  extends Component implements Initializable {
 
     FacadeEps facadeEps = new FacadeEps();
-
     @FXML
     private TableView<DtoEps> tb_eps;
-
-
     @FXML
     private TableColumn<DtoEps, String> colId;
     @FXML
@@ -42,45 +34,24 @@ public class EPS implements Initializable {
     private TableColumn<DtoEps, String> colDireccion;
     @FXML
     private TableColumn<DtoEps, String> colTelefono;
-
-
     @FXML
-    private TextField tf_Codigo;
+    private TextField tf_Codigo,tf_Nombre,tf_Direccion,tf_Telefono;
     @FXML
-    private TextField tf_Nombre;
+    private Button bt_Crear,bt_Consultar,bt_Cancelar,bt_Salir,bt_Guardar,bt_Modificar,bt_Inhabilitar;
     @FXML
-    private TextField tf_Direccion;
-    @FXML
-    private TextField tf_Telefono;
-    @FXML
-    private Button bt_Crear;
-    @FXML
-    private Button bt_Consultar;
-    @FXML
-    private Button bt_Cancelar;
-    @FXML
-    private Button bt_Salir;
-    @FXML
-    private Button bt_Guardar;
-    @FXML
-    private Button bt_Modificar;
-    @FXML
-    private Button bt_Inhabilitar;
-
+    private String estado="1";
     private ObservableList<DtoEps> epss;
+    @FXML
+    private List<DtoEps> listaEPS;
+    @FXML
+    int valor=0;
 
-    private Connection conn;
-    private PreparedStatement stmt;
-    private ResultSet rset;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         epss = FXCollections.observableArrayList(facadeEps.CargarEps());
-
-
         tb_eps.setItems(epss);
-
         colId.setCellValueFactory(new PropertyValueFactory<>("idEps"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreEps"));
         colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionEps"));
@@ -89,32 +60,11 @@ public class EPS implements Initializable {
         bt_Modificar.setDisable(true);
         bt_Inhabilitar.setDisable(true);
         bt_Guardar.setDisable(true);
-
+        deshabilitarCampos();
         manejarEventos();
     }
 
-    @FXML
-    public void buscarPorId() {
-        try {
-            conn = ConexionRoot.getConexion();
-            String sql = "select * from eps where idEps = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, tf_Codigo.getText());
-            rset = stmt.executeQuery();
 
-            if (rset.next()) {
-
-               // tf_Codigo.setText(rset.getString("idEps"));
-                tf_Nombre.setText(rset.getString("nombreEps"));
-                tf_Direccion.setText(rset.getString("direccionEps"));
-                tf_Telefono.setText(rset.getString("telEps"));
-
-            }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
-        }
-
-    }
 
     @FXML
     public void mostrarPersonal(){
@@ -126,20 +76,6 @@ public class EPS implements Initializable {
         System.out.println(tf_Nombre);
         tf_Telefono.setText(dtoEps.getTelEps());
         tf_Direccion.setText(dtoEps.getdireccionEps());
-
-
-    }
-
-    @FXML
-    private void buscarPersonalEps(){
-
-
-        String idPersona = tf_Codigo.getText();
-        facadeEps.buscarEps(idPersona);
-
-        mostrarPersonal();
-
-        JOptionPane.showMessageDialog(null, "Dato Encontrado", "INFORMACIÓN", 1);
     }
 
     public void manejarEventos() {
@@ -152,10 +88,11 @@ public class EPS implements Initializable {
                     tf_Direccion.setText(newValue.getdireccionEps());
                     tf_Telefono.setText(newValue.getTelEps());
 
-                    bt_Crear.setDisable(false);
+                    bt_Crear.setDisable(true);
                     bt_Guardar.setDisable(true);
                     bt_Modificar.setDisable(false);
                     bt_Inhabilitar.setDisable(false);
+                    bt_Consultar.setDisable(true);
                 }
 
             }
@@ -163,68 +100,98 @@ public class EPS implements Initializable {
     }
 
     @FXML
-    public void guardarEps() {
+    public void botonGuardar() {
 
-        DtoEps dtoEps = new DtoEps(
-                tf_Codigo.getText(),
-                tf_Nombre.getText(),
-                tf_Direccion.getText(),
-                tf_Telefono.getText()
-        );
+        listaEPS=facadeEps.buscar(tf_Codigo.getText());
+        DtoEps dtoEps = new DtoEps(tf_Codigo.getText(), tf_Nombre.getText(), tf_Direccion.getText(), tf_Telefono.getText(), estado);
 
-        int res = facadeEps.insertarEps(dtoEps);
+        if (listaEPS.isEmpty()) {
+            if (tf_Codigo.getText().isEmpty() || tf_Nombre.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - EPS");
+                msg.setContentText("Campos requeridos");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                //bt_guardar.setDisable(true);
+                tf_Codigo.requestFocus();
 
-        if (res == 1) {
-            epss.add(dtoEps);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - EPS");
-            msg.setContentText("La EPS se ha agregado");
-            msg.setHeaderText("Resultado");
-            msg.show();
+            }else{
+                int res = facadeEps.insertarEps(dtoEps);
+                if (res == 1) {
+                    epss.add(dtoEps);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - EPS");
+                    msg.setContentText("La EPS se ha agregado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
 
-        } else {
+                } else {
 
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - EPS Academicas");
-            msg.setContentText("No se ha podido agregar la EPS");
-            msg.setHeaderText("Resultado");
-            msg.show();
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - EPS Academicas");
+                    msg.setContentText("No se ha podido agregar la EPS");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                }
+
+
+            }
+
+        } else{
+            if (tf_Codigo.getText().isEmpty() || tf_Nombre.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Tipo de titulo académico");
+                msg.setContentText("Nombre es un campo requerido");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                tf_Codigo.requestFocus();
+
+
+
+        }else{
+                int res = facadeEps.modificarEps(dtoEps);
+                if (res == 1) {
+                    epss.set(tb_eps.getSelectionModel().getSelectedIndex(), dtoEps);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - EPS");
+                    msg.setContentText("La EPS se ha modificado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                } else {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - EPS");
+                    msg.setContentText("La EPS No ha sido modificada");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                }
+            }
         }
-        limpiarFormulario();
     }
 
+
     @FXML
-    public void modificarEps() {
-        DtoEps dtoEps = new DtoEps(
-                tf_Codigo.getText(),
-                tf_Nombre.getText(),
-                tf_Direccion.getText(),
-                tf_Telefono.getText()
-
-        );
-        int res = facadeEps.modificarEps(dtoEps);
-
-        if (res == 1) {
-            epss.set(tb_eps.getSelectionModel().getSelectedIndex(), dtoEps);
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - EPS");
-            msg.setContentText("La EPS se ha modificado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        } else {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - EPS");
-            msg.setContentText("La EPS No ha sido modificada");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-        limpiarFormulario();
+    public void modificar(){
+        tf_Codigo.setDisable(true);
+        tf_Nombre.setDisable(false);
+        tf_Direccion.setDisable(false);
+        tf_Telefono.setDisable(false);
+        tf_Nombre.requestFocus();
+        bt_Modificar.setDisable(true);
+        bt_Inhabilitar.setDisable(true);
+        valor =0;
+        bt_Guardar.setDisable(false);
     }
 
     @FXML
     public void eliminarEps() {
         int res = facadeEps.eliminarEps(tb_eps.getSelectionModel().getSelectedItem().getIdEps());
-        if (res == 1) {
+        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el Tipo de título");
+        if(i==0){
+            if (res == 1) {
             epss.remove(tb_eps.getSelectionModel().getSelectedIndex());
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
             msg.setTitle("Gestiones - EPS");
@@ -237,10 +204,132 @@ public class EPS implements Initializable {
             msg.setContentText("La EPS No ha sido eliminada");
             msg.setHeaderText("Resultado");
             msg.show();
+            }
+        }else if(i==1){
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Tipo de titulo académico");
+            msg.setContentText("La EPS, No ha sido eliminada");
+            msg.setHeaderText("Resultado");
+            msg.show();
         }
         limpiarFormulario();
+        cancelar();
 
     }
+
+
+    public void validar(){
+        tf_Nombre.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarCamposVacios();
+            }
+        });
+    }
+
+
+
+    public void validarExistente(){
+
+        tf_Nombre.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarE();
+            }
+        });
+    }
+
+    public void validarE(){
+        if(valor==1){
+
+            listaEPS=facadeEps.buscar(tf_Codigo.getText());
+            if(listaEPS.size()>=1){
+                int i=0;
+
+                if (listaEPS.get(0).getEstado().equals("0")) {
+
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - EPS");
+                    msg.setContentText("La EPS: " + listaEPS.get(0).getEstado() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    tf_Codigo.setText("");
+                    tf_Nombre.setText("");
+                    tf_Codigo.requestFocus();
+
+                }
+                if(listaEPS.get(0).getEstado().equals("1")){
+
+
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - EPS");
+                    msg.setContentText("Codigo: " + listaEPS.get(0).getEstado() +" existente no es posible agregar" );
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    tf_Codigo.setText("");
+                    tf_Nombre.setText("");
+                    tf_Codigo.requestFocus();
+
+
+                }
+
+
+
+
+            }
+
+        }
+
+
+    }
+
+    @FXML
+    private void consultarEps() {
+        if (tf_Codigo.getText().isEmpty()) {
+            tf_Codigo.setDisable(false);
+            tf_Nombre.setDisable(true);
+            tf_Telefono.setDisable(true);
+            tf_Direccion.setDisable(true);
+            tf_Codigo.requestFocus();
+            bt_Crear.setDisable(true);
+            bt_Guardar.setDisable(true);
+            tb_eps.setEditable(false);
+            valor=0;
+        } else {
+            int i = 0;
+            epss = FXCollections.observableArrayList(facadeEps.buscar(tf_Codigo.getText()));
+            if (epss.isEmpty()) {
+
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - eps");
+                msg.setContentText("EPS: " + tf_Codigo.getText() + " no encontrado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }else{
+            if (epss.get(i).getEstado().equals("1")) {
+                tb_eps.setItems(epss);
+                colId.setCellValueFactory(new PropertyValueFactory<>("idEps"));
+                colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreEps"));
+                colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionEps"));
+                colTelefono.setCellValueFactory(new PropertyValueFactory<>("telEps"));
+                bt_Consultar.setDisable(true);
+            }
+            if (epss.get(i).getEstado().equals("0")) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - EPS");
+                msg.setContentText("EPS: " + tf_Codigo.getText() + " no encontrado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+
+            }
+
+
+            }
+
+        }
+    }
+
+
 
     public void validarCamposVacios() {
         if (tf_Codigo.getText().isEmpty()) {
@@ -254,13 +343,24 @@ public class EPS implements Initializable {
     }
 
     @FXML
-    public void validarB() {
-        bt_Guardar.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                validarCamposVacios();
-            }
-        });
+    private void habilitarBotones() {
+        bt_Crear.setDisable(true); //siempre ira deshabilitado
+        bt_Consultar.setDisable(false);
+        bt_Cancelar.setDisable(false);
+        bt_Salir.setDisable(false);
+        bt_Guardar.setDisable(false);
+        bt_Modificar.setDisable(true);
+        bt_Inhabilitar.setDisable(true);
+        habilitarCampos();
+        valor=1;
+    }
+    @FXML
+    private void habilitarCampos() {
+        tf_Codigo.setDisable(false);
+        tf_Nombre.setDisable(false);
+        tf_Direccion.setDisable(false);
+        tf_Telefono.setDisable(false);
+        tf_Codigo.requestFocus();
     }
 
 
@@ -272,10 +372,18 @@ public class EPS implements Initializable {
         tf_Telefono.setText("");
         tf_Codigo.requestFocus();
 
-        bt_Crear.setDisable(false);
-        bt_Guardar.setDisable(false);
+        bt_Crear.setDisable(true);
         bt_Modificar.setDisable(true);
         bt_Inhabilitar.setDisable(true);
+    }
+
+    @FXML
+    private void deshabilitarCampos() {
+        tf_Codigo.setDisable(true);
+        tf_Nombre.setDisable(true);
+        tf_Direccion.setDisable(true);
+        tf_Telefono.setDisable(true);
+
     }
 
     @FXML
@@ -287,6 +395,21 @@ public class EPS implements Initializable {
         tf_Codigo.requestFocus();
         bt_Modificar.setDisable(true);
         bt_Inhabilitar.setDisable(true);
+        bt_Consultar.setDisable(false);
+        bt_Crear.setDisable(false);
+        tf_Nombre.setDisable(true);
+        tf_Codigo.setDisable(true);
+        tf_Direccion.setDisable(true);
+        tf_Telefono.setDisable(true);
+        bt_Guardar.setDisable(true);
+
+        epss = FXCollections.observableArrayList(facadeEps.CargarEps());
+        tb_eps.setItems(epss);
+        colId.setCellValueFactory(new PropertyValueFactory<>("idEps"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreEps"));
+        colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionEps"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telEps"));
+
     }
 
     @FXML

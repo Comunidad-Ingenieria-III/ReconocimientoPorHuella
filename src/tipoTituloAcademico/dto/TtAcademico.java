@@ -6,13 +6,15 @@ import javafx.beans.property.StringProperty;
 public class TtAcademico {
     private StringProperty idTipoTituloAcademico = new SimpleStringProperty();
     private StringProperty nombre = new SimpleStringProperty();
+    private StringProperty estado = new SimpleStringProperty();
 
-    public TtAcademico(String idTipoTituloAcademico, String nombre){
+    public TtAcademico(String idTipoTituloAcademico, String nombre,String estado){
         this.idTipoTituloAcademico.set(idTipoTituloAcademico);
         this.nombre.set(nombre);
+        this.estado.set(estado);
     }
     public TtAcademico(){
-        this("","");
+        this("","","");
     }
 
     public String getIdTipoTituloAcademico() {
@@ -25,6 +27,18 @@ public class TtAcademico {
 
     public void setIdTipoTituloAcademico(String idTipoTituloAcademico) {
         this.idTipoTituloAcademico.set(idTipoTituloAcademico);
+    }
+
+    public String getEstado() {
+        return estado.get();
+    }
+
+    public StringProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado.set(estado);
     }
 
     public String getNombre() {

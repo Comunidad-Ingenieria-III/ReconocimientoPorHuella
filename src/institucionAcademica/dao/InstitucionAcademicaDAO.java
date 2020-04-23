@@ -2,9 +2,6 @@ package institucionAcademica.dao;
 
 import conexionBD.ConexionRoot;
 import institucionAcademica.dto.InstitucionAcademica;
-import personal_salud_titulo.psdto.PsDto;
-import tipoTituloAcademico.dto.TtAcademico;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +22,7 @@ public class InstitucionAcademicaDAO {
     public List<InstitucionAcademica> obtenerTodas(){
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from institucion_academica";
+            String sql = "select * from institucion_academica where estado = 1";
             stmt = conn.prepareStatement(sql);
             rset = stmt.executeQuery();
 
@@ -37,7 +34,7 @@ public class InstitucionAcademicaDAO {
                 institucionAcademica.setNombre(rset.getString("nombre"));
                 institucionAcademica.setDireccion(rset.getString("direccion"));
                 institucionAcademica.setTelefono(rset.getString("telefono"));
-
+                institucionAcademica.setEstado(rset.getString("estado"));
                 institucionAcademicaList.add(institucionAcademica);
             }
 
@@ -53,13 +50,13 @@ public class InstitucionAcademicaDAO {
     public int agregar(InstitucionAcademica institucionAcademica) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql= "insert into institucion_academica(idInstitucion, nombre, direccion, telefono) values(?, ?, ?, ?)";
+            String sql= "insert into institucion_academica(idInstitucion, nombre, direccion, telefono, estado) values(?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, institucionAcademica.getIdInstitucion());
             stmt.setString(2, institucionAcademica.getNombre());
             stmt.setString(3, institucionAcademica.getDireccion());
             stmt.setString(4, institucionAcademica.getTelefono());
-
+            stmt.setInt(5, Integer.parseInt(institucionAcademica.getEstado()));
             return stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException e) {
@@ -78,7 +75,6 @@ public class InstitucionAcademicaDAO {
             stmt.setString(1, institucionAcademica.getNombre());
             stmt.setString(2, institucionAcademica.getDireccion());
             stmt.setString(3, institucionAcademica.getTelefono());
-
             stmt.setString(4, institucionAcademica.getIdInstitucion());
 
 
@@ -94,7 +90,7 @@ public class InstitucionAcademicaDAO {
     public int eliminar(String idInstitucion) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from institucion_academica where idInstitucion = ?";
+            String sql = "update institucion_academica set estado= 0 where idInstitucion = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idInstitucion);
             return stmt.executeUpdate();
@@ -146,6 +142,7 @@ public class InstitucionAcademicaDAO {
                 institucionAcademica.setNombre(rset.getString("nombre"));
                 institucionAcademica.setDireccion(rset.getString("direccion"));
                 institucionAcademica.setTelefono(rset.getString("telefono"));
+                institucionAcademica.setEstado(rset.getString("estado"));
                 institucionAcademicaList.add(institucionAcademica);
             }
 

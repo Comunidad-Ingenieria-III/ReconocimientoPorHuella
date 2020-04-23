@@ -9,16 +9,17 @@ public class InstitucionAcademica {
     private StringProperty nombre =  new SimpleStringProperty();
     private StringProperty direccion =  new SimpleStringProperty();
     private StringProperty telefono =  new SimpleStringProperty();
-
-    public InstitucionAcademica(String idInstitucion, String nombre, String direccion, String telefono) {
+    private StringProperty estado =  new SimpleStringProperty();
+    public InstitucionAcademica(String idInstitucion, String nombre, String direccion, String telefono, String estado) {
         this.idInstitucion.set(idInstitucion);
         this.nombre.set(nombre);
         this.direccion.set(direccion);
         this.telefono.set(telefono);
+        this.estado.set(estado);
     }
 
     public InstitucionAcademica(){
-        this("","","","");
+        this("","","","","");
     }
 
     public String getIdInstitucion() {
@@ -67,6 +68,18 @@ public class InstitucionAcademica {
 
     public void setTelefono(String telefono) {
         this.telefono.set(telefono);
+    }
+
+    public String getEstado() {
+        return estado.get();
+    }
+
+    public StringProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado.set(estado);
     }
 
     @Override

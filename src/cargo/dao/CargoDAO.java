@@ -3,6 +3,7 @@ package cargo.dao;
 import cargo.dto.Cargo;
 import conexionBD.ConexionRoot;
 import javafx.beans.property.StringProperty;
+import tipoTituloAcademico.dto.TtAcademico;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,8 +74,9 @@ public class CargoDAO {
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, cargo.getNombre());
-            stmt.setString(2, cargo.getIdCargo());
-            stmt.setBoolean(3, cargo.isEstado());
+            stmt.setBoolean(2, cargo.isEstado());
+            stmt.setString(3, cargo.getIdCargo());
+
 
             return stmt.executeUpdate();
 
@@ -87,7 +89,7 @@ public class CargoDAO {
     public int eliminar(String idCargo) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from cargo where idCargo = ?";
+            String sql = "update cargo set estado= 0  where idCargo = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, idCargo);
@@ -100,6 +102,35 @@ public class CargoDAO {
         }
         return 0;
     }//Fin del metodo eliminar
+
+    public List<Cargo> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from cargo where idCargo LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            cargos = new ArrayList<>();
+            while (rset.next()){
+                cargo = new Cargo();
+                cargo.setIdCargo(rset.getString("idCargo"));
+                cargo.setNombre(rset.getString("nombre"));
+                cargo.setEstado(rset.getBoolean("estado"));
+                cargos.add(cargo);
+            }
+
+
+
+        }catch (RuntimeException | SQLException e){
+            throw new RuntimeException("Error SQL - BucarTitulo()!");
+        }
+        return cargos;
+    }
+
+
+
+
 
     public Cargo buscarPorId(String idCargo) {
         Cargo cargo = null;

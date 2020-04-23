@@ -22,8 +22,9 @@ public class TtAcademicoDao {
     public List<TtAcademico> obterTodas(){
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from tipo_titulo_academico";
+            String sql = "select * from tipo_titulo_academico where estado= 1 ";
             stmt = conn.prepareStatement(sql);
+
             rset = stmt.executeQuery();
 
             ttAcademicoList = new ArrayList<>();
@@ -31,7 +32,7 @@ public class TtAcademicoDao {
                 ttAcademico = new TtAcademico();
                 ttAcademico.setIdTipoTituloAcademico(rset.getString("idTipoTitu"));
                 ttAcademico.setNombre(rset.getString("nombre"));
-
+                ttAcademico.setEstado(rset.getString("estado"));
                 ttAcademicoList.add(ttAcademico);
             }
 
@@ -58,7 +59,7 @@ public class TtAcademicoDao {
                 ttAcademico = new TtAcademico();
                 ttAcademico.setIdTipoTituloAcademico(rset.getString("idTipoTitu"));
                 ttAcademico.setNombre(rset.getString("nombre"));
-
+                ttAcademico.setEstado(rset.getString("estado"));
                 ttAcademicoList.add(ttAcademico);
             }
 
@@ -74,10 +75,11 @@ public class TtAcademicoDao {
     public int agregar(TtAcademico ttAcademico) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into tipo_titulo_academico(idTipoTitu,nombre) values(?, ?)";
+            String sql = "insert into tipo_titulo_academico(idTipoTitu,nombre,estado) values(?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, ttAcademico.getIdTipoTituloAcademico());
             stmt.setString(2, ttAcademico.getNombre());
+            stmt.setInt(3, Integer.parseInt(ttAcademico.getEstado()));
             return stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException e) {
@@ -89,7 +91,7 @@ public class TtAcademicoDao {
     public int modificar(TtAcademico ttAcademico) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update tipo_titulo_academico set nombre = ?  where idTipoTitu = ?";
+            String sql = "update tipo_titulo_academico set nombre = ?  where idTipoTitu = ? ";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, ttAcademico.getNombre());
             stmt.setString(2, ttAcademico.getIdTipoTituloAcademico());
@@ -104,7 +106,7 @@ public class TtAcademicoDao {
     public int eliminar(String idTipoTituloAcademico) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from tipo_titulo_academico where idTipoTitu = ?";
+            String sql = "update tipo_titulo_academico set estado =0 where idTipoTitu = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idTipoTituloAcademico);
             return stmt.executeUpdate();
@@ -118,7 +120,7 @@ public class TtAcademicoDao {
     public TtAcademico buscarPorId(String idTipoTitu) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from tipo_titulo_academico where idTipoTitu = ?";
+            String sql = "select * from tipo_titulo_academico where idTipoTitu = ? and estado = 1";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idTipoTitu);
             rset = stmt.executeQuery();

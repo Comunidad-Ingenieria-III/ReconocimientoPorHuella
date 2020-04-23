@@ -2,7 +2,7 @@ package eps.facadeeps;
 
 import eps.dao.DaoEps;
 import eps.dto.DtoEps;
-import javafx.collections.ObservableList;
+import tipoTituloAcademico.dto.TtAcademico;
 
 import java.util.List;
 
@@ -26,7 +26,10 @@ public class FacadeEps {
         return daoeps.eliminarEps(dtoEps);
     }
 
-    public void buscarEps(String idEps){
-        daoeps.buscarPorId(idEps);
+    public List<DtoEps> buscar(String buscar) {
+        return daoeps.buscar(buscar); }
+
+    public DtoEps obtenerPorId(String idTipoTitu) {
+        return daoeps.buscarPorId(idTipoTitu);
     }
 }

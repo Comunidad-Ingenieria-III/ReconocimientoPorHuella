@@ -2,6 +2,7 @@ package tipodocumento.daotipodocumento;
 
 import conexionBD.ConexionRoot;
 import institucionAcademica.dto.InstitucionAcademica;
+import tipoTituloAcademico.dto.TtAcademico;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 
 import java.sql.Connection;
@@ -24,7 +25,7 @@ public class DaoTipoDocumento {
 
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from tipo_documento";
+            String sql = "select * from tipo_documento where estado= 1";
 
             stmt = conn.prepareStatement(sql);//preparar consulta
             rset = stmt.executeQuery();//ejecutar la consulta y guardarla en la variabble rset
@@ -36,6 +37,7 @@ public class DaoTipoDocumento {
                 dtotipodocumento = new DtoTipoDocumento();
                 dtotipodocumento.setIdTipoDocumento(rset.getString("idTipoDocumento"));
                 dtotipodocumento.setNombreTipoDocumento(rset.getString("nombreTipoDocumento"));
+                dtotipodocumento.setEstado(rset.getString("estado"));
                 dtotipodocumentos.add(dtotipodocumento);
                 //System.out.println("archivos que van " + dtotipodocumentos);
             }
@@ -47,16 +49,41 @@ public class DaoTipoDocumento {
         return dtotipodocumentos;
     }
 
+    public List<DtoTipoDocumento> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from tipo_documento where idTipoDocumento LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            dtotipodocumentos = new ArrayList<>();
+            while (rset.next()){
+                dtotipodocumento = new DtoTipoDocumento();
+                dtotipodocumento.setIdTipoDocumento(rset.getString("idTipoDocumento"));
+                dtotipodocumento.setNombreTipoDocumento(rset.getString("nombreTipoDocumento"));
+                dtotipodocumento.setEstado(rset.getString("estado"));
+                dtotipodocumentos.add(dtotipodocumento);
+            }
+
+
+
+        }catch (RuntimeException | SQLException e){
+            throw new RuntimeException("Error SQL - BucarTitulo()!");
+        }
+        return dtotipodocumentos;
+    }
+
 
     public int agregarTipoDocumento(DtoTipoDocumento dtotipodocumento) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into tipo_documento(idTipoDocumento, nombreTipoDocumento) values (?, ?)";
+            String sql = "insert into tipo_documento(idTipoDocumento, nombreTipoDocumento, estado) values (?, ?, ?)";
 
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
             stmt.setString(1, dtotipodocumento.getIdTipoDocumento());
             stmt.setString(2, dtotipodocumento.getNombreTipoDocumento());
-
+            stmt.setInt(3, Integer.parseInt(dtotipodocumento.getEstado()));
             return stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException e) {
@@ -109,7 +136,7 @@ public class DaoTipoDocumento {
     public int eliminar(String idTipoDocumento) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from tipo_documento where idTipoDocumento = ?";
+            String sql = "update tipo_documento set estado = 0 where idTipoDocumento = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, Integer.parseInt(idTipoDocumento));
             return stmt.executeUpdate();

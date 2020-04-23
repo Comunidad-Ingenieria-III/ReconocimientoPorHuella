@@ -23,7 +23,7 @@ public class InstitucionReferenciaDAO {
     public List<InstitucionReferencia> obtenerTodas(){
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from institucion_referencia";
+            String sql = "select * from institucion_referencia where estado= 1";
             stmt = conn.prepareStatement(sql);
             rset = stmt.executeQuery();
 
@@ -36,7 +36,7 @@ public class InstitucionReferenciaDAO {
                 institucionReferencia.setNombre(rset.getString("nombre"));
                 institucionReferencia.setDireccion(rset.getString("direccion"));
                 institucionReferencia.setTelefono(rset.getString("telefono"));
-
+                institucionReferencia.setEstado(rset.getString("estado"));
                 institucionReferencias.add(institucionReferencia);
             }
 
@@ -50,14 +50,14 @@ public class InstitucionReferenciaDAO {
     public int agregar(InstitucionReferencia institucionReferencia) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into institucion_referencia (idInstiRefe, nombre, direccion, telefono)values(?, ?, ? ,?)";
+            String sql = "insert into institucion_referencia (idInstiRefe, nombre, direccion, telefono, estado)values(?, ?, ? ,?, ?)";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, institucionReferencia.getIdInstitucion());
             stmt.setString(2, institucionReferencia.getNombre());
             stmt.setString(3, institucionReferencia.getDireccion());
             stmt.setString(4, institucionReferencia.getTelefono());
-
+            stmt.setInt(5, Integer.parseInt(institucionReferencia.getEstado()));
             return stmt.executeUpdate();
 
         } catch (SQLException |RuntimeException e) {
@@ -90,7 +90,7 @@ public class InstitucionReferenciaDAO {
     public int eliminar(String idInstitucionR) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from institucion_referencia where idInstiRefe = ?";
+            String sql = "update institucion_referencia set estado = 0 where idInstiRefe = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, idInstitucionR);
@@ -120,7 +120,7 @@ public class InstitucionReferenciaDAO {
                 institucionReferencia.setNombre(rset.getString("nombre"));
                 institucionReferencia.setDireccion(rset.getString("direccion"));
                 institucionReferencia.setTelefono(rset.getString("telefono"));
-
+                institucionReferencia.setEstado(rset.getString("estado"));
                 institucionReferencias.add(institucionReferencia);
             }
 

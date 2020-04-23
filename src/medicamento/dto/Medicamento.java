@@ -7,17 +7,29 @@ public class Medicamento {
 
     private StringProperty idMedicamento = new SimpleStringProperty();
     private StringProperty nombre = new SimpleStringProperty();
+    private StringProperty estado = new SimpleStringProperty();
 
-    public Medicamento (String idMedicamento, String nombre){
+    public Medicamento (String idMedicamento, String nombre, String estado){
         this.idMedicamento.set(idMedicamento);
         this.nombre.set(nombre);
+        this.estado.set(estado);
 
     }
     public Medicamento(){
-        this("","");
+        this("","","");
     }
 
+    public String getEstado() {
+        return estado.get();
+    }
 
+    public StringProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado.set(estado);
+    }
 
     public String getIdMedicamento() {
         return idMedicamento.get();

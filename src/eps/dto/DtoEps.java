@@ -11,15 +11,29 @@ public class DtoEps {
     private StringProperty nombreEps = new SimpleStringProperty();
     private StringProperty direccionEps = new SimpleStringProperty();;
     private StringProperty telEps = new SimpleStringProperty();
-
+    private StringProperty estado = new SimpleStringProperty();
     public DtoEps() {
     }
 
-    public DtoEps(String idEps, String nombreEps, String direccionEps, String telEps) {
+    public DtoEps(String idEps, String nombreEps, String direccionEps, String telEps,String estado) {
         this.idEps.set(idEps);
         this.nombreEps.set(nombreEps);
         this.direccionEps.set(direccionEps);
         this.telEps.set(telEps);
+        this.estado.set(estado);
+
+    }
+
+    public String getEstado() {
+        return estado.get();
+    }
+
+    public StringProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado.set(estado);
     }
 
     public String getIdEps() {

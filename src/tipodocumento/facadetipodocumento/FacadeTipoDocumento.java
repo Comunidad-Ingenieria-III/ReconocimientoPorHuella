@@ -1,5 +1,6 @@
 package tipodocumento.facadetipodocumento;
 
+import tipoTituloAcademico.dto.TtAcademico;
 import tipodocumento.daotipodocumento.DaoTipoDocumento;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 
@@ -33,5 +34,8 @@ public class FacadeTipoDocumento {
     public DtoTipoDocumento obtenerPorId(String idTipoDocumento){
         return daotipodocumento.buscarPorId(idTipoDocumento);
     }
+
+    public List<DtoTipoDocumento> buscar(String buscar) {
+        return daotipodocumento.buscar(buscar); }
 
 }

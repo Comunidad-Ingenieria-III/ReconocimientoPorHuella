@@ -48,6 +48,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
     @FXML
     private List<InstitucionAcademica> institucionAcademicas;
     @FXML int valor =1;
+    private String estado= "1";
 
 
 
@@ -136,24 +137,50 @@ public class ControladorInstitucionAcademica extends Component implements Initia
         });
     }
 
-    public void validarE(){
-        if(valor==1){
+    public void validarE() {
+
+        if (valor == 1) {
+            institucionAcademicas = facade.buscar(txtCodigo.getText());
+            int i = 0;
+            if(institucionAcademicas.size()>=1){
+            if (institucionAcademicas.get(0).getEstado().equals("0")) {
+
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Institución académica");
+                msg.setContentText("La institución : " + institucionAcademicas.get(0).getIdInstitucion() + " se escuentra registrada, mas su estado es inhabilitado. Contacte a su administrador");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                txtCodigo.setText("");
+                txtCodigo.setText("");
+                txtCodigo.requestFocus();
+
+            }
+            if (institucionAcademicas.get(0).getEstado().equals("1")) {
 
 
-        instituciones = FXCollections.observableArrayList(facade.buscar(txtCodigo.getText()));
-        if(instituciones.size()>=1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de titulo académico");
-            msg.setContentText("Codigo existente no es posible agregar");
-            msg.setHeaderText("Resultado");
-            msg.show();
-            txtCodigo.setText("");
-            txtCodigo.requestFocus();
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Institución académica");
+                msg.setContentText("Codigo: " + institucionAcademicas.get(0).getIdInstitucion() + " existente no es posible agregar");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                txtCodigo.setText("");
+                txtCodigo.setText("");
+                txtCodigo.requestFocus();
+
+
+
+            }
+
+
+
 
             }
 
         }
+
+
     }
+
 
 
 
@@ -229,7 +256,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                 txtCodigo.getText(),
                 txtNombre.getText(),
                 txtDireccion.getText(),
-                txtTelefono.getText()
+                txtTelefono.getText(),estado
         );
         if (institucionAcademicas.isEmpty()) {
             if (txtCodigo.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
@@ -261,6 +288,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                     msg.setContentText("No se ha podido agregar la institución");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    cancelar();
                 }
 
 
@@ -330,13 +358,13 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                 instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Instituciones Academicas");
-                msg.setContentText("La institucion se ha eliminado");
+                msg.setContentText("La institución se ha eliminado");
                 msg.setHeaderText("Resultado");
                 msg.show();
             }else{
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Instituciones Academicas");
-                msg.setContentText("La institucion No ha sido eliminada");
+                msg.setContentText("La institución No ha sido eliminada");
                 msg.setHeaderText("Resultado");
                 msg.show();
             }
@@ -346,7 +374,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
         }else if(i==1){
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institucion No ha sido eliminada");
+            msg.setContentText("La institución No ha sido eliminada");
             msg.setHeaderText("Resultado");
             msg.show();
         }
@@ -370,16 +398,38 @@ public class ControladorInstitucionAcademica extends Component implements Initia
             btnCrear.setDisable(true);
             btnGuardar.setDisable(true);
             tbIinstitucionAcademica.setEditable(false);
+            valor=0;
         }else{
-
+            int i = 0;
             instituciones = FXCollections.observableArrayList(facade.buscar(txtCodigo.getText()));
-            tbIinstitucionAcademica.setItems(instituciones);
+            if (instituciones.isEmpty()) {
 
-            colId.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
-            colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-            colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-            colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-            btnConsultar.setDisable(true);
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Instituciones Academicas");
+                msg.setContentText("El código : " + txtCodigo.getText() + " no se ha encontrado");
+                msg.setHeaderText("Resultado");
+                msg.show();
+            }else{
+
+                if (instituciones.get(i).getEstado().equals("1")) {
+
+                    tbIinstitucionAcademica.setItems(instituciones);
+
+                    colId.setCellValueFactory(new PropertyValueFactory<>("idInstitucion"));
+                    colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+                    colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+                    colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+                    btnConsultar.setDisable(true);
+                }
+                if (instituciones.get(i).getEstado().equals("0")) {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Instituciones Academicas");
+                    msg.setContentText("El código : " + txtCodigo.getText() + " no se ha encontrado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                }
+
+            }
 
 
         }

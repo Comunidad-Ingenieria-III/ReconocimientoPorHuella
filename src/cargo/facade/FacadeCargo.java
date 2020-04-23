@@ -3,6 +3,7 @@ package cargo.facade;
 import cargo.dao.CargoDAO;
 import cargo.dto.Cargo;
 
+
 import java.util.List;
 
 public class FacadeCargo {
@@ -28,4 +29,8 @@ public class FacadeCargo {
     public Cargo obtenerPorId(String idCargo) {
         return cargoDAO.buscarPorId(idCargo);
     }
+
+    public List<Cargo> buscar(String buscar){ return  cargoDAO.buscar(buscar); }
 }
+
+

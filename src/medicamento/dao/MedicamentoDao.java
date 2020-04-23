@@ -19,7 +19,7 @@ public class MedicamentoDao {
     public List<Medicamento> obtenerTodas(){
         try{
             conn =ConexionRoot.getConexion();
-            String sql="select * from medicamento";
+            String sql="select * from medicamento where estado= 1";
             stmt= conn.prepareStatement(sql);
             rset= stmt.executeQuery();
             medicamentoList = new ArrayList<>();
@@ -28,7 +28,7 @@ public class MedicamentoDao {
                 medicamento = new Medicamento();
                 medicamento.setIdMedicamento(rset.getString("idMedicamento"));
                 medicamento.setNombre(rset.getString("nombre"));
-
+                medicamento.setEstado(rset.getString("estado"));
                 medicamentoList.add(medicamento);
             }
 
@@ -43,11 +43,11 @@ public class MedicamentoDao {
     public int agregar(Medicamento medicamento) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into medicamento(idMedicamento, nombre) values(?, ?)";
+            String sql = "insert into medicamento(idMedicamento, nombre, estado) values(?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, medicamento.getIdMedicamento());
             stmt.setString(2, medicamento.getNombre());
-
+            stmt.setInt(3, Integer.parseInt(medicamento.getEstado()));
 
 
             return stmt.executeUpdate();
@@ -71,7 +71,7 @@ public class MedicamentoDao {
                 medicamento = new Medicamento();
                 medicamento.setIdMedicamento(rset.getString("idMedicamento"));
                 medicamento.setNombre(rset.getString("nombre"));
-
+                medicamento.setEstado(rset.getString("estado"));
                 medicamentoList.add(medicamento);
             }
 
@@ -104,7 +104,7 @@ public class MedicamentoDao {
     public int eliminar(String idMedicamento) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from medicamento  where idMedicamento = ?";
+            String sql = "update medicamento set estado = 0 where idMedicamento = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idMedicamento);
             return stmt.executeUpdate();
