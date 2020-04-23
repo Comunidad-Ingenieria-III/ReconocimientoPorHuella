@@ -15,24 +15,24 @@
                <children>
                   <Pane layoutX="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="748.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label layoutX="32.0" layoutY="111.0" styleClass="lbl-cuerpo" text="Código">
+                        <Label layoutX="121.0" layoutY="85.0" styleClass="lbl-cuerpo" text="Código">
                            <font>
                               <Font name="System Bold Italic" size="16.0" />
                            </font>
                         </Label>
                         <TextField fx:id="tf_Tipo" layoutX="121.0" layoutY="111.0" prefHeight="25.0" prefWidth="200.0" styleClass="text-field" />
-                        <Label layoutX="380.0" layoutY="110.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
+                        <Label layoutX="433.0" layoutY="84.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
                            <font>
                               <Font name="System Bold Italic" size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="445.0" layoutY="110.0" prefHeight="20.0" prefWidth="6.0" text="*" textFill="#ee0707">
+                        <Label layoutX="498.0" layoutY="84.0" prefHeight="20.0" prefWidth="6.0" text="*" textFill="#ee0707">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_nombre1" layoutX="478.0" layoutY="111.0" prefHeight="25.0" prefWidth="200.0" />
-                        <Label layoutX="90.0" layoutY="113.0" text="*" textFill="#ee0707">
+                        <TextField fx:id="tf_nombre1" layoutX="433.0" layoutY="111.0" prefHeight="25.0" prefWidth="200.0" />
+                        <Label layoutX="179.0" layoutY="87.0" text="*" textFill="#ee0707">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
