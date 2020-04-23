@@ -60,7 +60,7 @@ public class PsDao {
         try {
 
             conn = ConexionRoot.getConexion();
-            String sql = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion) values(?, ?, ?, ?, ?)";
+            String sql = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion, estado) values(?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, psDto.getId());
             stmt.setString(2, psDto.getIdPersonal());

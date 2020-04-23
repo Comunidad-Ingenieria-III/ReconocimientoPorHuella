@@ -136,7 +136,8 @@ public class ControladorPst implements Initializable {
                 cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal(),
                 cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
                 cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
-                Date.valueOf(dp_fechatitulacion.getValue())
+                Date.valueOf(dp_fechatitulacion.getValue()),
+                true
 
         );
 

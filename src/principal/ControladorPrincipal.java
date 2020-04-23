@@ -254,7 +254,7 @@ public class ControladorPrincipal implements Initializable {
             institucion_Academica = FXMLLoader.load(getClass().getClassLoader().getResource("institucionAcademica/formulario/FormularioInstitucionAcademica.fxml"));
             //FormularioPrincipal.getChildren().setAll(institucion_Academica);
             Stage stage = new Stage();
-            institucion_Academica.getStylesheets().add("Resources/Style.css");
+            //institucion_Academica.getStylesheets().add("Resources/Style.css");
             stage.setScene(new Scene(institucion_Academica));
             stage.setTitle("MODULO INSTITUCIÓN ACADEMICA");
             stage.setResizable(false);
@@ -275,7 +275,8 @@ public class ControladorPrincipal implements Initializable {
             stage.setScene(new Scene(cargo));
             stage.setTitle("MODULO DE CARGOS");
             stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            //stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (IOException e) {
             System.out.println(e.toString());

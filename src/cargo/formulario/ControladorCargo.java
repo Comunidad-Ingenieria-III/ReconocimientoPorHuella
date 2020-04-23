@@ -57,7 +57,12 @@ public class ControladorCargo extends Component implements Initializable {
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
         btnGuardar.setDisable(true);
+<<<<<<< HEAD
         deshabilitarCampos();
+=======
+        estado.setDisable(true);
+
+>>>>>>> origin/master
         manejarEventosI();
 
     }
@@ -154,7 +159,15 @@ public class ControladorCargo extends Component implements Initializable {
     }
 
 
+<<<<<<< HEAD
 
+=======
+        Cargo cargo = new Cargo(
+                txtId.getText(),
+                txtDescripcion.getText(),
+                estado.isSelected()
+        );
+>>>>>>> origin/master
 
     @FXML
     public void guardarCargo() {
@@ -240,6 +253,8 @@ public class ControladorCargo extends Component implements Initializable {
 
     @FXML
     public void eliminarCargo() {
+
+
         int res = facadeCargo.eliminar(tblCargos.getSelectionModel().getSelectedItem().getIdCargo());
         int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el Tipo de título");
         if(i==0){
@@ -324,10 +339,14 @@ public class ControladorCargo extends Component implements Initializable {
     public void limpiarFormulario() {
         txtId.setText("");
         txtDescripcion.setText("");
+<<<<<<< HEAD
         btnCrear.setDisable(true);
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
     }
+=======
+        txtId.requestFocus();
+>>>>>>> origin/master
 
     @FXML
     private void habilitarBotones() {
@@ -360,6 +379,11 @@ public class ControladorCargo extends Component implements Initializable {
     public void cancelar() {
         txtId.setText("");
         txtDescripcion.setText("");
+<<<<<<< HEAD
+=======
+        txtId.requestFocus();
+
+>>>>>>> origin/master
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
         btnConsultar.setDisable(false);

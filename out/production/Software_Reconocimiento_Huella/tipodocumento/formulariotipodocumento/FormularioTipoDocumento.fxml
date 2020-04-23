@@ -6,37 +6,50 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
+<<<<<<< HEAD
 <AnchorPane prefHeight="500.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipodocumento.formulariotipodocumento.ControladorTipoDocumento">
+=======
+<AnchorPane prefHeight="500.0" prefWidth="748.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipodocumento.formulariotipodocumento.ControladorTipoDocumento">
+>>>>>>> origin/master
    <children>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="610.0">
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="748.0">
          <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="610.0" styleClass="panel_login">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="748.0" styleClass="panel_login">
                <children>
-                  <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="610.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane layoutX="2.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="748.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label layoutX="27.0" layoutY="81.0" styleClass="lbl-cuerpo" text="Código">
+                        <Label layoutX="121.0" layoutY="85.0" styleClass="lbl-cuerpo" text="Código">
                            <font>
                               <Font name="System Bold Italic" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_Tipo" layoutX="27.0" layoutY="109.0" prefHeight="25.0" prefWidth="200.0" styleClass="text-field" />
-                        <Label layoutX="252.0" layoutY="76.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
+                        <TextField fx:id="tf_Tipo" layoutX="121.0" layoutY="111.0" prefHeight="25.0" prefWidth="200.0" styleClass="text-field" />
+                        <Label layoutX="433.0" layoutY="84.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
                            <font>
                               <Font name="System Bold Italic" size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="303.0" layoutY="75.0" prefHeight="20.0" prefWidth="6.0" text="*" textFill="#ee0707">
+                        <Label layoutX="498.0" layoutY="84.0" prefHeight="20.0" prefWidth="6.0" text="*" textFill="#ee0707">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
+<<<<<<< HEAD
                         <TextField fx:id="tf_nombre1" layoutX="252.0" layoutY="109.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
                         <Label layoutX="69.0" layoutY="77.0" text="*" textFill="#ee0707">
+=======
+                        <TextField fx:id="tf_nombre1" layoutX="433.0" layoutY="111.0" prefHeight="25.0" prefWidth="200.0" />
+                        <Label layoutX="179.0" layoutY="87.0" text="*" textFill="#ee0707">
+>>>>>>> origin/master
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
+<<<<<<< HEAD
                         <Button fx:id="bt_guardar" layoutX="481.0" layoutY="88.0" mnemonicParsing="false" onAction="#botonGuardar" prefHeight="30.0" prefWidth="100.0" text="Guardar" textFill="WHITE">
+=======
+                        <Button fx:id="bt_guardar" layoutX="533.0" layoutY="181.0" mnemonicParsing="false" onAction="#guardarTipoDocumento" prefHeight="30.0" prefWidth="90.0" text="Guardar" textFill="WHITE">
+>>>>>>> origin/master
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -44,7 +57,11 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
+<<<<<<< HEAD
                         <Button fx:id="bt_modificar" layoutX="481.0" layoutY="134.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" text="Modificar" textFill="WHITE">
+=======
+                        <Button fx:id="bt_modificar" layoutX="433.0" layoutY="181.0" mnemonicParsing="false" onAction="#modificarTipoDocumento" prefHeight="30.0" prefWidth="90.0" text="Modificar" textFill="WHITE">
+>>>>>>> origin/master
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -52,7 +69,11 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                               </Button>
+<<<<<<< HEAD
                         <Button fx:id="bt_crear" layoutX="14.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="100.0" text="Crear" textFill="WHITE">
+=======
+                        <Button fx:id="bt_crear" layoutX="14.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="30.0" prefWidth="90.0" text="Crear" textFill="WHITE">
+>>>>>>> origin/master
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -60,7 +81,11 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
+<<<<<<< HEAD
                         <Button fx:id="bt_consultar" layoutX="129.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" onAction="#consultarTDocuemnto" prefHeight="30.0" prefWidth="100.0" text="Consultar" textFill="WHITE">
+=======
+                        <Button fx:id="bt_consultar" layoutX="121.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
+>>>>>>> origin/master
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -68,7 +93,11 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
+<<<<<<< HEAD
                         <Button fx:id="bt_cancelar" layoutX="245.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="100.0" text="Cancelar" textFill="WHITE">
+=======
+                        <Button fx:id="bt_cancelar" layoutX="228.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Cancelar" textFill="WHITE">
+>>>>>>> origin/master
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -76,7 +105,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="bt_salir" layoutX="481.0" layoutY="181.0" mnemonicParsing="false" onAction="#cerrarTipoDocumento" prefHeight="30.0" prefWidth="100.0" text="Salir" textFill="WHITE">
+                        <Button fx:id="bt_salir" layoutX="632.0" layoutY="181.0" mnemonicParsing="false" onAction="#cerrarTipoDocumento" prefHeight="30.0" prefWidth="90.0" text="Salir" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -84,7 +113,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="bt_inhabilitar" layoutX="361.0" layoutY="181.0" mnemonicParsing="false" onAction="#eliminarTipoDocumento" prefHeight="30.0" prefWidth="100.0" text="Eliminar" textFill="WHITE">
+                        <Button fx:id="bt_inhabilitar" layoutX="335.0" layoutY="181.0" mnemonicParsing="false" onAction="#eliminarTipoDocumento" prefHeight="30.0" prefWidth="90.0" text="Inhabilitar" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -92,7 +121,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Label alignment="CENTER" layoutX="-1.0" prefHeight="45.0" prefWidth="610.0" styleClass="lblTitulo2" text="Tipo de Documento">
+                        <Label alignment="CENTER" layoutX="-1.0" prefHeight="50.0" prefWidth="748.0" styleClass="panel_login" text="Tipo de Documento">
                            <font>
                               <Font name="System Bold Italic" size="20.0" />
                            </font>
@@ -109,12 +138,12 @@
                   </Pane>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="200.0" prefWidth="610.0">
+          <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="205.0" prefWidth="746.0" styleClass="panel_inferior">
                <children>
-                  <TableView fx:id="tb_tipoDocumento" layoutX="31.0" layoutY="3.0" prefHeight="200.0" prefWidth="610.0" snapToPixel="false" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tb_tipoDocumento" layoutX="31.0" layoutY="3.0" prefHeight="209.0" prefWidth="746.0" snapToPixel="false" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="colId" prefWidth="225.0" resizable="false" text="Código" />
-                      <TableColumn fx:id="colNombre" prefWidth="365.0" resizable="false" text="Nombre" />
+                      <TableColumn fx:id="colId" prefWidth="266.0" resizable="false" text="Código" />
+                      <TableColumn fx:id="colNombre" prefWidth="463.0" resizable="false" text="Nombre" />
                     </columns>
                   </TableView>
                </children>

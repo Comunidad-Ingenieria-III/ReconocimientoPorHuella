@@ -1,10 +1,7 @@
 package personalSalud.personalsaluddto;
 
 import cargo.dto.Cargo;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 
 public class PersonalSalud {
@@ -19,10 +16,11 @@ public class PersonalSalud {
     private StringProperty email = new SimpleStringProperty();
     private StringProperty tipoDocumento = new SimpleStringProperty();
     private StringProperty cargo = new SimpleStringProperty();
+    private BooleanProperty estado = new SimpleBooleanProperty();
 
 
     public PersonalSalud(String idPersonal, String nombre1, String nombre2, String apellido1, String apellido2,
-                         String sexo, String telefono, String email, String tipoDocumento, String cargo) {
+                         String sexo, String telefono, String email, String tipoDocumento, String cargo, boolean estado) {
         this.idPersonal.set(idPersonal);
         this.nombre1.set(nombre1);
         this.nombre2.set(nombre2);
@@ -33,11 +31,12 @@ public class PersonalSalud {
         this.telefono.set(telefono);
         this.tipoDocumento.set(tipoDocumento);
         this.cargo.set(cargo);
+        this.estado.set(estado);
 
     }
 
     public PersonalSalud() {
-        this("", "", "", "", "", "", "", "", "", "");
+        this("", "", "", "", "", "", "", "", "", "",false);
     }
 
 
@@ -160,6 +159,18 @@ public class PersonalSalud {
 
     public void setCargo(String cargo) {
         this.cargo.set(cargo);
+    }
+
+    public boolean isEstado() {
+        return estado.get();
+    }
+
+    public BooleanProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado.set(estado);
     }
 
     @Override

@@ -20,40 +20,46 @@ public class PersonalSaludFacade {
         return personalSaludDao.listarPersonalSalud();
     }
 
-    public List<PsDto> agregarPesonalTitulo() {
-        return personalSaludDao.listaPsdto();
-    }
-
-    public int agregarPersonal(PersonalSalud personalSalud, List<PsDto> titulos){
+    public int agregarPersonal(PersonalSalud personalSalud, List<PsDto> titulos){//funcion para gregar personal de salud y personal-salud-titulo con transaccion
         return personalSaludDao.agregarPersonal(personalSalud, titulos);
 
     }
+    public int agregarPersonal2(PersonalSalud personalSalud){//Funcion para agregar un personal de salud
+        return personalSaludDao.agregarPersonal2(personalSalud);
 
-    public boolean agregarTitulos(List<PsDto> listaps){
-        return personalSaludDao.agregarLote(listaps);
     }
 
-    public int modificarPersonal(PersonalSalud personalSalud , List<PsDto> titulos){
+    public boolean agregarPsdto(PsDto psDto){//Funcion para agregar un personal-salud-titulo
+        return personalSaludDao.agregarPsdto(psDto);
+    }
+
+    public int modificarPersonal(PersonalSalud personalSalud , List<PsDto> titulos){//Funcion para modficar personal de salud y personal de salud titulo
+        //en el mismo metodo.
         return personalSaludDao.modificarPersonal(personalSalud, titulos);
     }
+    public int modificarPersonal2(PersonalSalud personalSalud){//Funcion para modificar un personal de salud
+        return personalSaludDao.modificarPersonal2(personalSalud);
+    }
 
-    public BusquedaDePersonal buscarPersonalTitulos(String idPersonal){
+    public BusquedaDePersonal buscarPersonalTitulos(String idPersonal){//Funcion para realizar la busqueda de un personal de salud incluyendo los
+        //titulos que estan relacionados con este en la tabla personal-salud-titulo
         return personalSaludDao.buscarPersonalPorId(idPersonal);
 
     }
 
-
-    /*public PsDto buscar(PsDto psDto){return  personalSaludDao.buscarPorId(psDto);}
-
-   public PersonalSalud buscarPersonalSalud(String idPersonal){
-        return personalSaludDao.buscarPersonalSalud(idPersonal);
-    }*/
-
-    public void eliminarPersonal(String idPersonal){
-        personalSaludDao.eliminarPersonalSalud(idPersonal);
+    public boolean eliminarPersonal(String idPersonal){//Funcion para inhabilitar un personal de salud
+        return  personalSaludDao.inhabilitarPersonalSalud(idPersonal);
     }
 
-    public boolean buscarPorId(String idPersonal) {
+    public boolean buscarPorId(String idPersonal) {//Funcion para realizar la busqueda de un personal de salud por medio de su clave primaria
         return  personalSaludDao.buscarPrimaryKey(idPersonal);
+    }
+
+    public PsDto buscarPsdto (int idPs){
+        return personalSaludDao.buscarPsdto(idPs);
+    }
+
+    public int modificarPsdto(PsDto psDto) {
+        return personalSaludDao.modificarTitulos(psDto);
     }
 }
