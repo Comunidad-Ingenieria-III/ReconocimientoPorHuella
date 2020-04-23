@@ -18,7 +18,7 @@ InstitucionAcademicaDAO institucionAcademicaDAO = new InstitucionAcademicaDAO();
     public int modificar(InstitucionAcademica institucionAcademica) {
         return institucionAcademicaDAO.modificar(institucionAcademica);
     }
-    public int eliminar(String idInstitucion) {
+    public boolean eliminar(String idInstitucion) {
         return institucionAcademicaDAO.eliminar(idInstitucion);
     }
 

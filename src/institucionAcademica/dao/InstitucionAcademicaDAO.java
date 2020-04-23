@@ -87,7 +87,7 @@ public class InstitucionAcademicaDAO {
     } // Fin del método modificar()
 
 
-    public int eliminar(String idInstitucion) {
+    public int eliminarr(String idInstitucion) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "update institucion_academica set estado= 0 where idInstitucion = ?";
@@ -99,6 +99,43 @@ public class InstitucionAcademicaDAO {
             return 0;
         }
     } // Fin del método eliminar()
+
+
+    public boolean eliminar(String idInstitucion) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
+        //en otras tablas que dependan de la clave primaria de éste
+
+        boolean yes = false;
+        try {
+
+            if(yes==false) {
+                conn = ConexionRoot.getConexion();
+                String sql = "SELECT p.idPs, p.idPersonal, ps.idInstitucion as relacion from personal_salud_titulo AS p " +
+                        "INNER JOIN institucion_academica AS ps ON p.idInstitucion=ps.idInstitucion where ps.idInstitucion = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, idInstitucion);
+                rset = stmt.executeQuery();
+                if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                    yes = true;
+
+                } else {
+                    String sql2 = "update institucion_academica set estado= 0 where idInstitucion = ?";
+                    stmt = conn.prepareStatement(sql2);
+                    stmt.setString(1, idInstitucion);
+                    stmt.executeUpdate();
+                    yes = false;
+
+
+                }
+
+
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            e.printStackTrace();
+        }
+        return yes;
+    }
+
 
 
 

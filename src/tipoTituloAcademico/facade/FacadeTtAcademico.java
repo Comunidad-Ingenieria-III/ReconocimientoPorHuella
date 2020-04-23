@@ -16,7 +16,7 @@ public class FacadeTtAcademico {
     public int modificar(TtAcademico ttAcademico) {
         return ttAcademicoDao.modificar(ttAcademico);
     }
-    public int eliminar(String idTipoTituloAcdemico) {
+    public boolean eliminar(String idTipoTituloAcdemico) {
         return ttAcademicoDao.eliminar(idTipoTituloAcdemico);
     }
 

@@ -120,7 +120,7 @@ public class DaoEps {
     } // Fin del método modificar()
 
 
-    public int eliminarEps(String idEps) {
+    public int eliminarEpss(String idEps) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "update eps set estado= 0 where idEps = ?";
@@ -132,6 +132,46 @@ public class DaoEps {
             return 0;
         }
     } // Fin del método eliminar()
+
+    public boolean eliminarEps(String idEps) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
+        //en otras tablas que dependan de la clave primaria de éste
+
+        boolean yes = false;
+        try {
+
+            if(yes==false) {
+                conn = ConexionRoot.getConexion();
+                String sql = "SELECT p.idPersona, ps.idEps as relacion from datos_persona AS p " +
+                        "INNER JOIN eps AS ps ON p.idEps=ps.idEps  where ps.idEps = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, idEps);
+                rset = stmt.executeQuery();
+                if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                    yes = true;
+
+                    } else {
+                        String sql2 = "update eps set estado= 0 where idEps = ?";
+                        stmt = conn.prepareStatement(sql2);
+                        stmt.setString(1, idEps);
+                        stmt.executeUpdate();
+                        yes = false;
+
+
+                    }
+
+
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            e.printStackTrace();
+        }
+        return yes;
+    }
+
+
+
+
+
 
     public DtoEps buscarPorId(String idEps) {
         try {

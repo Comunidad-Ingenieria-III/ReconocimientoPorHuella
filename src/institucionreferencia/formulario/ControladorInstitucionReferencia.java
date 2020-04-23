@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControladorInstitucionReferencia extends Component implements Initializable  {
@@ -137,7 +138,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Institución de Referencia");
-                    msg.setContentText("Código: " + institucionesReferencias.get(0).getEstado() +" existente no es posible agregar" );
+                    msg.setContentText("Código: " + txtId.getText() +" existente no es posible agregar" );
                     msg.setHeaderText("Resultado");
                     msg.show();
                     txtId.setText("");
@@ -184,7 +185,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     }
     private void alerta(){
         Alert msg = new Alert(Alert.AlertType.ERROR);
-        msg.setTitle("Gestiones - Institución académica");
+        msg.setTitle("Gestiones - Institución de referencia");
         msg.setContentText("Campos requeridos");
         msg.setHeaderText("Resultado");
         msg.show();
@@ -274,37 +275,42 @@ public class ControladorInstitucionReferencia extends Component implements Initi
 
     @FXML
     public void eliminarInstitucionReferencia() {
-        int res = facadeInstitucionReferencia.eliminarInstitucionReferencia(tblInstitucionReferencia.getSelectionModel().getSelectedItem().getIdInstitucion());
-        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el la institución de referencia");
-        if(i==0){
-            if (res == 1) {
-                institucionReferencias.remove(tblInstitucionReferencia.getSelectionModel().getSelectedIndex());
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Institución Referencia");
-                msg.setContentText("La  referencia se ha eliminado");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }else{
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Institución Referencia");
-                msg.setContentText("La referencia. No ha sido eliminada");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }
-            limpiarFormulario();
-            cancelar();
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - Institución Referencia");
+        msg.setContentText("¿Está seguro de eliminar la referencia?");
+        msg.setHeaderText("Resultado");
+        Optional<ButtonType> action = msg.showAndWait();
+        if (action.get() == ButtonType.OK) {
+            boolean respuesta=facadeInstitucionReferencia.eliminarInstitucionReferencia(tblInstitucionReferencia.getSelectionModel().getSelectedItem().getIdInstitucion());
+            if (respuesta) {
 
-        }else if(i==1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La referemcia. No ha sido eliminada");
-            msg.setHeaderText("Resultado");
-            msg.show();
+                Alert msge = new Alert(Alert.AlertType.ERROR);
+                msge.setTitle("Gestiones - Institución Referencia");
+                msge.setContentText("Error al eliminar! \n" + "La referencia tiene registros dependientes!\n"
+                        + "Asegurese de eliminar los registros que dependen de este.");
+                msge.setHeaderText("Error.");
+                msge.show();
+                limpiarFormulario();
+                cancelar();
+
+            } else {
+                institucionReferencias.remove(tblInstitucionReferencia.getSelectionModel().getSelectedIndex());
+                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                msg2.setTitle("Gestiones - Institución Referencia");
+                msg2.setContentText("La EPS se ha eliminado");
+                msg2.setHeaderText("Resultado");
+                msg2.show();
+                limpiarFormulario();
+                cancelar();
+            }
+
         }
         limpiarFormulario();
         cancelar();
 
     }
+
+
 
 
     @FXML
@@ -329,11 +335,13 @@ public class ControladorInstitucionReferencia extends Component implements Initi
             int i = 0;
             institucionReferencias = FXCollections.observableArrayList(facadeInstitucionReferencia.buscar(txtId.getText()));
             if (institucionReferencias.isEmpty()) {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Institución de Referencia");
                 msg.setContentText("Código " + txtId.getText() +" de referencia no encontrado");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                txtId.setText("");
+                txtId.requestFocus();
 
             } else {
 
@@ -347,11 +355,13 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                     colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
                 }
                 if (institucionReferencias.get(i).getEstado().equals("0")) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Institución de Referencia");
                     msg.setContentText("Código " + txtId.getText() +" de referencia no encontrado");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    txtId.setText("");
+                    txtId.requestFocus();
 
                 }
 

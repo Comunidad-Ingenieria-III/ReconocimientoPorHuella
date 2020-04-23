@@ -25,6 +25,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControladorInstitucionAcademica extends Component implements Initializable {
@@ -147,7 +148,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
 
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Institución académica");
-                msg.setContentText("La institución : " + institucionAcademicas.get(0).getIdInstitucion() + " se escuentra registrada, mas su estado es inhabilitado. Contacte a su administrador");
+                msg.setContentText("La institución : " + txtCodigo.getText() + " se escuentra registrada, mas su estado es inhabilitado. Contacte a su administrador");
                 msg.setHeaderText("Resultado");
                 msg.show();
                 txtCodigo.setText("");
@@ -160,7 +161,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
 
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Institución académica");
-                msg.setContentText("Codigo: " + institucionAcademicas.get(0).getIdInstitucion() + " existente no es posible agregar");
+                msg.setContentText("Codigo: " + txtCodigo.getText() + " existente no es posible agregar");
                 msg.setHeaderText("Resultado");
                 msg.show();
                 txtCodigo.setText("");
@@ -351,32 +352,35 @@ public class ControladorInstitucionAcademica extends Component implements Initia
 
     @FXML
     public void eliminarInstitucion() {
-        int res = facade.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
-        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el la institución");
-        if(i==0){
-            if (res == 1) {
-                instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Instituciones Academicas");
-                msg.setContentText("La institución se ha eliminado");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }else{
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Instituciones Academicas");
-                msg.setContentText("La institución No ha sido eliminada");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }
-            limpiarFormulario();
-            cancelar();
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - Institución académica");
+        msg.setContentText("¿Está seguro de eliminar la institución?");
+        msg.setHeaderText("Resultado");
+        Optional<ButtonType> action = msg.showAndWait();
+        if (action.get() == ButtonType.OK) {
+            boolean respuesta= facade.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
+            if (respuesta) {
 
-        }else if(i==1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Instituciones Academicas");
-            msg.setContentText("La institución No ha sido eliminada");
-            msg.setHeaderText("Resultado");
-            msg.show();
+                Alert msge = new Alert(Alert.AlertType.ERROR);
+                msge.setTitle("Gestiones - Institución académica");
+                msge.setContentText("Error al eliminar! \n" + "La institución tiene registros dependientes!\n"
+                        + "Asegurese de eliminar los registros que dependen de este.");
+                msge.setHeaderText("Error.");
+                msge.show();
+                limpiarFormulario();
+                cancelar();
+
+            } else {
+                instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
+                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                msg2.setTitle("Gestiones - Institución académica");
+                msg2.setContentText("La institución se ha eliminado");
+                msg2.setHeaderText("Resultado");
+                msg2.show();
+                limpiarFormulario();
+                cancelar();
+            }
+
         }
         limpiarFormulario();
         cancelar();
@@ -404,11 +408,13 @@ public class ControladorInstitucionAcademica extends Component implements Initia
             instituciones = FXCollections.observableArrayList(facade.buscar(txtCodigo.getText()));
             if (instituciones.isEmpty()) {
 
-                Alert msg = new Alert(Alert.AlertType.ERROR);
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Instituciones Academicas");
                 msg.setContentText("El código : " + txtCodigo.getText() + " no se ha encontrado");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                txtCodigo.requestFocus();
+                txtCodigo.setText("");
             }else{
 
                 if (instituciones.get(i).getEstado().equals("1")) {
@@ -422,11 +428,13 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                     btnConsultar.setDisable(true);
                 }
                 if (instituciones.get(i).getEstado().equals("0")) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Instituciones Academicas");
                     msg.setContentText("El código : " + txtCodigo.getText() + " no se ha encontrado");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    txtCodigo.requestFocus();
+                    txtCodigo.setText("");
                 }
 
             }

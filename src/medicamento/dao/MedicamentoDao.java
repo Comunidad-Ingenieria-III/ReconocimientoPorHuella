@@ -101,7 +101,7 @@ public class MedicamentoDao {
     } // Fin del método modificar()
 
 
-    public int eliminar(String idMedicamento) {
+    public int eliminarr(String idMedicamento) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "update medicamento set estado = 0 where idMedicamento = ?";
@@ -114,6 +114,40 @@ public class MedicamentoDao {
         }
     } // Fin del método eliminar()
 
+    public boolean eliminar(String idMedicamento) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
+        //en otras tablas que dependan de la clave primaria de éste
+
+        boolean yes = false;
+        try {
+
+            if(yes==false) {
+                conn = ConexionRoot.getConexion();
+                String sql = "SELECT p.idMedicamento, ps.idMedicamento as relacion from registro_atencion_paciente AS p " +
+                        "INNER JOIN medicamento AS ps ON p.idMedicamento=ps.idMedicamento where ps.idMedicamento = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, idMedicamento);
+                rset = stmt.executeQuery();
+                if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                    yes = true;
+
+                } else {
+                    String sql2 = "update medicamento set estado = 0 where idMedicamento = ?";
+                    stmt = conn.prepareStatement(sql2);
+                    stmt.setString(1, idMedicamento);
+                    stmt.executeUpdate();
+                    yes = false;
+
+
+                }
+
+
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            e.printStackTrace();
+        }
+        return yes;
+    }
 
 
 

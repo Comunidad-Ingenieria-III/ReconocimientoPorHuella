@@ -19,6 +19,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EPS  extends Component implements Initializable {
@@ -129,7 +130,7 @@ public class EPS  extends Component implements Initializable {
                 } else {
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
-                    msg.setTitle("Gestiones - EPS Academicas");
+                    msg.setTitle("Gestiones - EPS ");
                     msg.setContentText("No se ha podido agregar la EPS");
                     msg.setHeaderText("Resultado");
                     msg.show();
@@ -142,7 +143,7 @@ public class EPS  extends Component implements Initializable {
         } else{
             if (tf_Codigo.getText().isEmpty() || tf_Nombre.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Tipo de titulo académico");
+                msg.setTitle("Gestiones - EPS");
                 msg.setContentText("Nombre es un campo requerido");
                 msg.setHeaderText("Resultado");
                 msg.show();
@@ -163,7 +164,7 @@ public class EPS  extends Component implements Initializable {
                 } else {
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - EPS");
-                    msg.setContentText("La EPS No ha sido modificada");
+                    msg.setContentText("La EPS no ha sido modificada");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     cancelar();
@@ -188,34 +189,43 @@ public class EPS  extends Component implements Initializable {
 
     @FXML
     public void eliminarEps() {
-        int res = facadeEps.eliminarEps(tb_eps.getSelectionModel().getSelectedItem().getIdEps());
-        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el Tipo de título");
-        if(i==0){
-            if (res == 1) {
-            epss.remove(tb_eps.getSelectionModel().getSelectedIndex());
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - EPS");
-            msg.setContentText("La EPS se ha eliminado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        } else {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - EPS");
-            msg.setContentText("La EPS No ha sido eliminada");
-            msg.setHeaderText("Resultado");
-            msg.show();
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - EPS");
+        msg.setContentText("¿Está seguro de eliminar la EPS?");
+        msg.setHeaderText("Resultado");
+        Optional<ButtonType> action = msg.showAndWait();
+        if (action.get() == ButtonType.OK) {
+            boolean respuesta =facadeEps.eliminarEps(tb_eps.getSelectionModel().getSelectedItem().getIdEps());
+            if (respuesta) {
+
+                Alert msge = new Alert(Alert.AlertType.ERROR);
+                msge.setTitle("Gestiones - EPS");
+                msge.setContentText("Error al eliminar! \n" + "La EPS tiene registros dependientes!\n"
+                        + "Asegurese de eliminar los registros que dependen de este.");
+                msge.setHeaderText("Error.");
+                msge.show();
+                limpiarFormulario();
+                cancelar();
+
+            } else {
+                epss.remove(tb_eps.getSelectionModel().getSelectedIndex());
+                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                msg2.setTitle("Gestiones - EPS");
+                msg2.setContentText("La EPS se ha eliminado");
+                msg2.setHeaderText("Resultado");
+                msg2.show();
+                limpiarFormulario();
+                cancelar();
             }
-        }else if(i==1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de titulo académico");
-            msg.setContentText("La EPS, No ha sido eliminada");
-            msg.setHeaderText("Resultado");
-            msg.show();
+
         }
         limpiarFormulario();
         cancelar();
 
     }
+
+
+
 
 
     public void validar(){
@@ -250,7 +260,7 @@ public class EPS  extends Component implements Initializable {
 
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - EPS");
-                    msg.setContentText("La EPS: " + listaEPS.get(0).getEstado() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
+                    msg.setContentText("La EPS: " + tf_Codigo.getText() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     tf_Codigo.setText("");
@@ -263,7 +273,7 @@ public class EPS  extends Component implements Initializable {
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - EPS");
-                    msg.setContentText("Codigo: " + listaEPS.get(0).getEstado() +" existente no es posible agregar" );
+                    msg.setContentText("Código: " + tf_Codigo.getText() +" existente no es posible agregar" );
                     msg.setHeaderText("Resultado");
                     msg.show();
                     tf_Codigo.setText("");
@@ -300,11 +310,13 @@ public class EPS  extends Component implements Initializable {
             epss = FXCollections.observableArrayList(facadeEps.buscar(tf_Codigo.getText()));
             if (epss.isEmpty()) {
 
-                Alert msg = new Alert(Alert.AlertType.ERROR);
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - eps");
                 msg.setContentText("EPS: " + tf_Codigo.getText() + " no encontrado");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                tf_Codigo.requestFocus();
+                tf_Codigo.setText("");
             }else{
             if (epss.get(i).getEstado().equals("1")) {
                 tb_eps.setItems(epss);
@@ -315,11 +327,13 @@ public class EPS  extends Component implements Initializable {
                 bt_Consultar.setDisable(true);
             }
             if (epss.get(i).getEstado().equals("0")) {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - EPS");
                 msg.setContentText("EPS: " + tf_Codigo.getText() + " no encontrado");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                tf_Codigo.requestFocus();
+                tf_Codigo.setText("");
 
             }
 

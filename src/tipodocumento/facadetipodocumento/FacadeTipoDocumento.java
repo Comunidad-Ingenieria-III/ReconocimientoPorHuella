@@ -27,7 +27,7 @@ public class FacadeTipoDocumento {
         return daotipodocumento.modificar(dtoTipoDocumento);
     }
 
-    public int eliminarTipoDocumento(String tipoDocumento) {
+    public boolean eliminarTipoDocumento(String tipoDocumento) {
         return daotipodocumento.eliminar(tipoDocumento);
     }
 

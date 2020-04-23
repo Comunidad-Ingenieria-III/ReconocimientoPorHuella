@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControladorTipoDocumento extends Component implements Initializable {
@@ -241,39 +242,47 @@ public class ControladorTipoDocumento extends Component implements Initializable
 
     @FXML
     public void eliminarTipoDocumento() {
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - Tipo de Documento");
+        msg.setContentText("¿Está seguro de eliminar el tipo de documento?");
+        msg.setHeaderText("Resultado");
+        Optional<ButtonType> action = msg.showAndWait();
+        if (action.get() == ButtonType.OK) {
+            boolean respuesta = facadeTipoDocumento.eliminarTipoDocumento(String.valueOf(tb_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento()));
+            if (respuesta) {
 
-        int res = facadeTipoDocumento.eliminarTipoDocumento(String.valueOf(tb_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento()));
-        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el tipo de documento");
-        if(i==0){
-            if (res == 1) {
-                tipoDocumentos.remove(tb_tipoDocumento.getSelectionModel().getSelectedIndex());
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Tipo de Documento");
-                msg.setContentText("El Tipo de documento se ha eliminado");
-                msg.setHeaderText("Resultado");
-                msg.show();
+                Alert msge = new Alert(Alert.AlertType.ERROR);
+                msge.setTitle("Gestiones - Tipo de Documento");
+                msge.setContentText("Error al eliminar! \n" + "El tipo de documento tiene registros dependientes!\n"
+                        + "Asegurese de eliminar los registros que dependen de este.");
+                msge.setHeaderText("Error.");
+                msge.show();
+                limpiarFormulario();
+                cancelar();
+
             } else {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Tipo de Documento");
-                msg.setContentText("El Tipo de documento, No ha sido eliminada");
-                msg.setHeaderText("Resultado");
-                msg.show();
+                tipoDocumentos.remove(tb_tipoDocumento.getSelectionModel().getSelectedIndex());
+                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                msg2.setTitle("Gestiones - Tipo de Documento");
+                msg2.setContentText("El Tipo de documento se ha eliminado");
+                msg2.setHeaderText("Resultado");
+                msg2.show();
+                limpiarFormulario();
+                cancelar();
             }
-            limpiarFormulario();
-            cancelar();
 
-        }else if(i==1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de titulo académico");
-            msg.setContentText("El Tipo de documento, No ha sido eliminada");
-            msg.setHeaderText("Resultado");
-            msg.show();
         }
         limpiarFormulario();
         cancelar();
 
-
     }
+
+
+
+      //  int res = facadeTipoDocumento.eliminarTipoDocumento(String.valueOf(tb_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento()));
+
+
+
 
     @FXML
     private void consultarTDocuemnto() {
@@ -288,11 +297,13 @@ public class ControladorTipoDocumento extends Component implements Initializable
             int i = 0;
             tipoDocumentos = FXCollections.observableArrayList(facadeTipoDocumento.buscar(tf_Tipo.getText()));
             if (tipoDocumentos.isEmpty()) {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Tipo de Documento");
                 msg.setContentText("Tipo de documento " + tf_Tipo.getText() + " no encontrado");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                tf_Tipo.requestFocus();
+                tf_Tipo.setText("");
             }else{
 
 
@@ -303,11 +314,13 @@ public class ControladorTipoDocumento extends Component implements Initializable
 
                 }
                 if (tipoDocumentos.get(i).getEstado().equals("0")) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Tipo de Documento");
                     msg.setContentText("Tipo de documento " + tf_Tipo.getText() + " no encontrado");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    tf_Tipo.requestFocus();
+                    tf_Tipo.setText("");
 
                 }
 

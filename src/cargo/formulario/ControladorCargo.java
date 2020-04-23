@@ -23,6 +23,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControladorCargo extends Component implements Initializable {
@@ -57,7 +58,8 @@ public class ControladorCargo extends Component implements Initializable {
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
         btnGuardar.setDisable(true);
-
+        txtDescripcion.setDisable(true);
+        txtId.setDisable(true);
        // deshabilitarCampos(); HEAD
 
         estado.setDisable(true);
@@ -258,41 +260,50 @@ public class ControladorCargo extends Component implements Initializable {
     @FXML
     public void eliminarCargo() {
 
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - Cargo");
+        msg.setContentText("¿Está seguro de eliminar el cargo?");
+        msg.setHeaderText("Resultado");
+        Optional<ButtonType> action = msg.showAndWait();
+        if (action.get() == ButtonType.OK) {
+            boolean respuesta =facadeCargo.eliminar(tblCargos.getSelectionModel().getSelectedItem().getIdCargo());
 
-        int res = facadeCargo.eliminar(tblCargos.getSelectionModel().getSelectedItem().getIdCargo());
-        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el Tipo de título");
-        if(i==0){
-            if (res == 1) {
+
+            if (respuesta) {
+
+                Alert msge = new Alert(Alert.AlertType.ERROR);
+                msge.setTitle("Gestiones - Cargo");
+                msge.setContentText("Error al eliminar! \n" + "El cargo  tiene registros dependientes!\n"
+                        + "Asegurese de eliminar los registros que dependen de este.");
+                msge.setHeaderText("Error.");
+                msge.show();
+                limpiarFormulario();
+                cancelar();
+
+            } else {
                 cargos.remove(tblCargos.getSelectionModel().getSelectedIndex());
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Cargo");
-                msg.setContentText("El cargo se ha eliminado");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }else{
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Cargo");
-                msg.setContentText("El cargo No ha sido eliminado");
-                msg.setHeaderText("Resultado");
-                msg.show();
+                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                msg2.setTitle("Gestiones - Cargo");
+                msg2.setContentText("El cargo se ha eliminado");
+                msg2.setHeaderText("Resultado");
+                msg2.show();
+                limpiarFormulario();
+                cancelar();
             }
-            limpiarFormulario();
-            cancelar();
-
-
-        }else if(i==1){
-            Alert msg = new Alert(Alert.AlertType.INFORMATION);
-            msg.setTitle("Gestiones - Cargo");
-            msg.setContentText("El cargo No ha sido eliminado");
-            msg.setHeaderText("Resultado");
-            msg.show();
-
 
         }
         limpiarFormulario();
         cancelar();
 
     }
+
+
+
+
+
+
+
+
 
     @FXML
     private void consultarCargo() {

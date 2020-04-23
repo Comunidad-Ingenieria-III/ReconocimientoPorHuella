@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import java.lang.*?>
-
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cargo.formulario.ControladorCargo">
+<AnchorPane prefHeight="500.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cargo.formulario.ControladorCargo">
 
    <children>
       <SplitPane dividerPositions="0.4899598393574297" orientation="VERTICAL" prefHeight="500.0" prefWidth="748.0" stylesheets="@../../Resources/Style.css">
@@ -44,9 +40,9 @@
                      </font>
                   </Label>
 
-                  <TextField fx:id="txtDescripcion" layoutX="430.0" layoutY="118.0" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="txtDescripcion" layoutX="430.0" layoutY="118.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
                   <RadioButton fx:id="estado" layoutX="666.0" layoutY="122.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="12.0" selected="true" textFill="#ee0a0a" />
-                  <Button fx:id="btnCrear" layoutX="23.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="30.0" prefWidth="90.0" text="Crear" textFill="WHITE">
+                  <Button fx:id="btnCrear" layoutX="23.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="90.0" text="Crear" textFill="WHITE">
 
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -56,7 +52,7 @@
                      </font>
                   </Button>
 
-                  <Button fx:id="btnConsultar" layoutX="126.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
+                  <Button fx:id="btnConsultar" layoutX="126.0" layoutY="174.0" minHeight="0.0" minWidth="50.0" mnemonicParsing="false" onAction="#consultarCargo" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
 
                      <cursor>
                         <Cursor fx:constant="HAND" />
