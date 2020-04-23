@@ -625,9 +625,9 @@ public class ControladorPersonalSalud implements Initializable {
                 bt_inhabilitar.setDisable(true);
                 bt_modificar.setDisable(true);
                 bt_guardar.setDisable(false);
-                mi_agregar.setDisable(false);
-                mi_modificar.setDisable(false);
-                mi_eliminar.setDisable(false);
+                //mi_agregar.setDisable(false);
+                //mi_modificar.setDisable(false);
+                //mi_eliminar.setDisable(false);
                 cmb_tipodocumento.requestFocus();
                 titulos.clear();
                 valor = 1;
@@ -746,10 +746,10 @@ public class ControladorPersonalSalud implements Initializable {
         tf_nombre1.requestFocus();
         valor = 0;            //Ingreso una variable Jose Martin campo
         bt_modificar.setDisable(true);
-        mi_modificar.setDisable(false);
+        //mi_modificar.setDisable(false);
         bt_guardar.setDisable(false);
-        mi_agregar.setDisable(false);
-        mi_eliminar.setDisable(false);
+        //mi_agregar.setDisable(false);
+        //mi_eliminar.setDisable(false);
         cbx_idtipotitulo.setDisable(false);
         cbx_idinstitucion.setDisable(false);
         dp_fechatitulacion.setDisable(false);
@@ -785,9 +785,9 @@ public class ControladorPersonalSalud implements Initializable {
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        mi_modificar.setDisable(true);
-        mi_agregar.setDisable(true);
-        mi_eliminar.setDisable(true);
+        //mi_modificar.setDisable(true);
+        //mi_agregar.setDisable(true);
+        //mi_eliminar.setDisable(true);
         cbx_idtipotitulo.setDisable(true);
         cbx_idinstitucion.setDisable(true);
         dp_fechatitulacion.setDisable(true);

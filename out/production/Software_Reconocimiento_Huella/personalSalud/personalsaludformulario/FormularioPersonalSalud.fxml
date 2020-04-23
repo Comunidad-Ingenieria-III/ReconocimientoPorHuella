@@ -1,260 +1,218 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="700.0" prefWidth="748.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
-   <bottom>
-        <AnchorPane prefHeight="300.0" prefWidth="748.0" styleClass="panel_inferior" BorderPane.alignment="CENTER">
-         <children>
-            <SplitPane dividerPositions="0.516728624535316" layoutY="-2.0" orientation="VERTICAL" prefHeight="257.0" prefWidth="748.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="155.0" prefWidth="746.0" styleClass="panel_login">
-                     <children>
-                                <ComboBox fx:id="cbx_idtipotitulo" layoutX="381.0" layoutY="49.0" prefHeight="25.0" prefWidth="180.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
-                                <ComboBox fx:id="cbx_idinstitucion" layoutX="149.0" layoutY="49.0" prefHeight="25.0" prefWidth="180.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
-                                <DatePicker fx:id="dp_fechatitulacion" layoutX="567.0" layoutY="49.0" prefHeight="25.0" prefWidth="180.0" promptText="DD/MM/AAAA" styleClass="cbx-cuerpo" />
-                        <MenuButton layoutX="650.0" layoutY="12.0" mnemonicParsing="false" text="Opciones">
-                          <items>
-                            <MenuItem fx:id="mi_agregar" mnemonicParsing="false" onAction="#agregarTitulos" text="Agregar" />
-                            <MenuItem fx:id="mi_modificar" mnemonicParsing="false" onAction="#modificarRegistroDeTabla" text="Modificar" />
-                              <MenuItem fx:id="mi_eliminar" mnemonicParsing="false" onAction="#eliminarTitulos" text="Eliminar" />
-                          </items>
-                        </MenuButton>
-                        <Label layoutX="353.0" layoutY="10.0" prefHeight="30.0" prefWidth="152.0" text="Titulos Acádemicos" />
-                        <Label layoutX="24.0" layoutY="46.0" prefHeight="30.0" prefWidth="152.0" text="Titulos Acádemicos" />
-                        <Label layoutX="299.0" layoutY="46.0" prefHeight="30.0" prefWidth="152.0" text="Institución Acádemica" />
-                        <Label layoutX="505.0" layoutY="47.0" prefHeight="30.0" prefWidth="152.0" text="Fecha de Titulación" />
-                        <Button layoutX="34.0" layoutY="80.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="211.0" layoutY="87.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="309.0" layoutY="87.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="375.0" layoutY="80.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="121.0" layoutY="80.0" mnemonicParsing="false" text="Button" />
-                     </children>
-                  </AnchorPane>
-                  <ScrollPane prefHeight="198.0" prefWidth="255.0">
-                     <content>
-                          <TableView fx:id="tb_personal" prefHeight="100.0" prefWidth="623.0" tableMenuButtonVisible="true">
-                              <columns>
-                                  <TableColumn fx:id="colIdPersonal" minWidth="-1.0" prefWidth="173.0" />
-                                    <TableColumn fx:id="colIdTipoTitu" minWidth="-1.0" prefWidth="159.0" />
-                                    <TableColumn fx:id="colIdIntitucion" minWidth="-1.0" prefWidth="177.0" />
-                                    <TableColumn fx:id="colFechaTitulacion" minWidth="-1.0" />
-                              </columns>
-                          </TableView>
-                     </content>
-                  </ScrollPane>
-              </items>
-            </SplitPane>
-         </children>
-        </AnchorPane>
-   </bottom>
+<BorderPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <top>
-          <Label id="lbl-titulo" alignment="CENTER" prefHeight="50.0" prefWidth="748.0" styleClass="panel_login" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
+          <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1300.0" styleClass="panel_login" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
               <font>
                   <Font name="System Bold Italic" size="19.0" />
               </font>
           </Label>
    </top>
+   <bottom>
+      <SplitPane dividerPositions="0.41260744985673353" prefHeight="268.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+         <items>
+          <AnchorPane prefHeight="266.0" prefWidth="450.0" styleClass="panel_login">
+               <children>
+                          <ComboBox fx:id="cbx_idtipotitulo" layoutX="35.0" layoutY="165.0" prefHeight="25.0" prefWidth="180.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
+                          <ComboBox fx:id="cbx_idinstitucion" layoutX="227.0" layoutY="96.0" prefHeight="25.0" prefWidth="180.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
+                          <DatePicker fx:id="dp_fechatitulacion" layoutX="227.0" layoutY="165.0" prefHeight="25.0" prefWidth="180.0" promptText="DD/MM/AAAA" styleClass="cbx-cuerpo" />
+                  <Label alignment="CENTER" layoutX="1.0" prefHeight="35.0" prefWidth="428.0" styleClass="lblTitulo2" text="Titulos Acádemicos" />
+                  <Label layoutX="227.0" layoutY="55.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Titulos Acádemicos" />
+                  <Label layoutX="34.0" layoutY="136.0" prefHeight="30.0" prefWidth="182.0" styleClass="lbl-cuerpo" text="Institución Acádemica" />
+                  <Label layoutX="227.0" layoutY="121.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Fecha de Titulación" />
+                  <Button fx:id="bt_agregar" layoutX="24.0" layoutY="208.0" mnemonicParsing="false" onAction="#agregarTitulos" prefWidth="80.0" text="Agregar" />
+                  <Button layoutX="204.0" layoutY="208.0" mnemonicParsing="false" prefWidth="80.0" text="Inhabilitar" />
+                  <Button layoutX="299.0" layoutY="208.0" mnemonicParsing="false" prefWidth="80.0" text="Salir" />
+                  <Button fx:id="bt_ModificarTabla" layoutX="114.0" layoutY="208.0" mnemonicParsing="false" prefWidth="80.0" text="Modificar" />
+                  <ComboBox fx:id="cbx_idpersona" layoutX="35.0" layoutY="93.0" prefHeight="25.0" prefWidth="180.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
+                  <Label layoutX="35.0" layoutY="52.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Documento" />
+               </children>
+            </AnchorPane>
+              <TableView fx:id="tb_personal" prefHeight="198.0" prefWidth="450.0" tableMenuButtonVisible="true">
+                  <columns>
+                      <TableColumn fx:id="colIdPersonal" minWidth="-1.0" prefWidth="118.0" text="Documento" />
+                        <TableColumn fx:id="colIdTipoTitu" minWidth="-1.0" prefWidth="152.0" text="Tipo Titulo" />
+                        <TableColumn fx:id="colIdIntitucion" minWidth="-1.0" prefWidth="148.0" text="Institución Academica" />
+                        <TableColumn fx:id="colFechaTitulacion" minWidth="-1.0" prefWidth="185.0" text="Fecha Titulación" />
+                  </columns>
+              </TableView>
+         </items>
+      </SplitPane>
+   </bottom>
    <center>
-      <AnchorPane prefHeight="379.0" prefWidth="748.0" styleClass="panel_inferior" BorderPane.alignment="CENTER">
-         <children>
-            <SplitPane dividerPositions="0.7014492753623188" orientation="VERTICAL" prefHeight="347.0" prefWidth="748.0">
-              <items>
-                    <AnchorPane prefHeight="336.0" prefWidth="746.0" styleClass="panel_login">
-                        <children>
-                            <Label layoutX="57.0" layoutY="35.0" prefHeight="25.0" prefWidth="200.0" styleClass="lbl-cuerpo" text="Tipo Documento">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="177.0" layoutY="19.0" text="*" textFill="#f80707" />
-                            <ComboBox fx:id="cmb_tipodocumento" layoutX="207.0" layoutY="36.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione" />
-                            <Label fx:id="lbl_tipoDocumeto" layoutX="89.0" layoutY="6.0" prefHeight="18.0" prefWidth="158.0" textFill="#f20404">
-                                <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="224.0" layoutY="11.0" text="*" textFill="#f80707" />
-                            <Label layoutX="413.0" layoutY="36.0" prefHeight="25.0" prefWidth="161.0" styleClass="lbl-cuerpo" text="Numero Documento" textFill="#1e1d1d">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <Label fx:id="lblDocumento" layoutX="226.0" layoutY="67.0" prefHeight="18.0" prefWidth="161.0" textFill="#f20404">
-                                <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                </font>
-                            </Label>
-                            <TextField fx:id="tf_numerodocumento" layoutX="573.0" layoutY="36.0" onKeyReleased="#validarExistente" prefHeight="25.0" prefWidth="135.0" />
-                            <Label fx:id="lbl_correo1" layoutX="375.0" layoutY="19.0" prefHeight="18.0" prefWidth="121.0" textFill="#eb0707">
-                                <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="57.0" layoutY="64.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer Nombre">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <TextField fx:id="tf_nombre1" layoutX="207.0" layoutY="64.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
-                            <Label layoutX="177.0" layoutY="15.0" text="*" textFill="#f80707" />
-                            <Label layoutX="57.0" layoutY="90.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <TextField fx:id="tf_nombre2" layoutX="207.0" layoutY="90.0" prefHeight="25.0" prefWidth="200.0" />
-                            <Label fx:id="lbl_nombre1" layoutX="42.0" layoutY="7.0" prefHeight="25.0" prefWidth="200.0" textFill="#eb0707">
-                                <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="57.0" layoutY="115.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer Apellido">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="199.0" layoutY="11.0" text="*" textFill="#f80707" />
-                            <TextField fx:id="tf_apellido1" layoutX="207.0" layoutY="116.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="200.0" />
-                            <Label layoutX="57.0" layoutY="142.0" prefHeight="25.0" prefWidth="146.0" styleClass="lbl-cuerpo" text="Segundo Apellido">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <TextField fx:id="tf_apellido2" layoutX="573.0" layoutY="64.0" prefHeight="25.0" prefWidth="138.0" />
-                            <Label layoutX="413.0" layoutY="90.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Sexo">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="242.0" layoutY="7.0" text="*" textFill="#f80707" />
-                            <Label fx:id="lbl_sexo" layoutX="228.0" layoutY="10.0" onMouseReleased="#validar" prefHeight="18.0" prefWidth="123.0" textFill="#eb0707">
-                                <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                </font>
-                            </Label>
-                            <ComboBox fx:id="cmb_sexo" layoutX="574.0" layoutY="90.0" prefHeight="25.0" prefWidth="144.0" promptText="Seleccione" />
-                            <Label layoutX="417.0" layoutY="64.0" prefHeight="25.0" prefWidth="153.0" styleClass="lbl-cuerpo" text="Número Telefónico">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <Label fx:id="lbl_numtelefono" layoutX="295.0" layoutY="15.0" prefHeight="18.0" prefWidth="159.0" textFill="#f20404">
-                                <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                </font>
-                            </Label>
-                            <TextField fx:id="tf_numtelefono" layoutX="207.0" layoutY="167.0" prefHeight="25.0" prefWidth="200.0" />
-                            <Label fx:id="lbl_apellido1" layoutX="430.0" layoutY="161.0" prefHeight="18.0" prefWidth="150.0" textFill="#eb0707">
-                                <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="57.0" layoutY="167.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Correo Electrónico">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="502.0" layoutY="7.0" text="*" textFill="#f80707" />
-                            <TextField fx:id="tf_correoelectronico" layoutX="207.0" layoutY="142.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="200.0" />
-                            <Label fx:id="lbl_correo" layoutX="22.0" layoutY="15.0" prefHeight="18.0" prefWidth="146.0" textFill="#eb0707">
-                                <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                </font>
-                            </Label>
-                            <Label layoutX="413.0" layoutY="117.0" prefHeight="25.0" prefWidth="151.0" styleClass="lbl-cuerpo" text="Cargo">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                            </Label>
-                            <ComboBox fx:id="cmb_cargo" layoutX="573.0" layoutY="117.0" prefHeight="25.0" prefWidth="146.0" promptText="Seleccione " />
-                            <Label layoutX="427.0" layoutY="7.0" text="*" textFill="#f80707" />
-                            <Button fx:id="bt_crear" layoutX="57.0" layoutY="200.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="20.0" prefWidth="80.0" text="Crear" textFill="WHITE">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                                <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                </cursor>
-                            </Button>
-                            <Button fx:id="bt_consultar" layoutX="143.0" layoutY="200.0" mnemonicParsing="false" onAction="#consultarPersonalTitulo" prefHeight="20.0" prefWidth="80.0" text="Consultar" textFill="WHITE">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                                <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                </cursor>
-                            </Button>
-                            <Button fx:id="bt_cancelar" layoutX="230.0" layoutY="200.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="20.0" prefWidth="80.0" text="Cancelar" textFill="WHITE">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                                <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                </cursor>
-                            </Button>
-                            <Button fx:id="bt_salir" layoutX="586.0" layoutY="200.0" mnemonicParsing="false" onAction="#cerraPersonalSalud" prefHeight="20.0" prefWidth="80.0" text="Salir" textFill="WHITE">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                                <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                </cursor>
-                            </Button>
-            
-                                              <Button fx:id="bt_modificar" layoutX="317.0" layoutY="200.0" mnemonicParsing="false" onAction="#modificar" prefHeight="20.0" prefWidth="80.0" text="Modificar" textFill="WHITE">
-            
-                                                  <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                                <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                </cursor>
-                            </Button>
-                            <Button fx:id="bt_inhabilitar" layoutX="405.0" layoutY="200.0" mnemonicParsing="false" onAction="#eliminarFamiliar" prefHeight="20.0" prefWidth="80.0" text="Inhabilitar" textFill="WHITE">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                                <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                </cursor>
-                            </Button>
-                            <Button fx:id="bt_guardar" layoutX="496.0" layoutY="200.0" mnemonicParsing="false" onAction="#guardarPersonal" prefHeight="20.0" prefWidth="80.0" text="Guardar " textFill="WHITE">
-                                <font>
-                                    <Font name="System Bold Italic" size="14.0" />
-                                </font>
-                                <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                </cursor>
-                            </Button>
-                        <Accordion layoutX="445.0" layoutY="117.0" />
-                        </children>
-                    </AnchorPane>
-                  <ScrollPane prefHeight="102.0" prefWidth="746.0">
-                     <content>
-                        <TableView editable="true" prefHeight="99.0" prefWidth="743.0" tableMenuButtonVisible="true">
-                          <columns>
-                              <TableColumn prefWidth="91.0" text="Column X" />
-                            <TableColumn minWidth="0.0" prefWidth="59.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
-                              <TableColumn prefWidth="75.0" text="Column X" />
-                              <TableColumn prefWidth="75.0" text="Column X" />
-                              <TableColumn prefWidth="75.0" text="Column X" />
-                              <TableColumn prefWidth="75.0" text="Column X" />
-                              <TableColumn prefWidth="103.0" text="Column X" />
-                              <TableColumn prefWidth="86.0" text="Column X" />
-                              <TableColumn prefWidth="36.0" text="Column X" />
-                          </columns>
-                        </TableView>
-                     </content>
-                  </ScrollPane>
-              </items>
-            </SplitPane>
-         </children>
-      </AnchorPane>
+        <AnchorPane prefHeight="320.0" prefWidth="1000.0" styleClass="panel_login" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="50.0" layoutY="30.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Tipo Documento">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="179.0" layoutY="32.0" text="*" textFill="#f80707" />
+                <ComboBox fx:id="cmb_tipodocumento" layoutX="197.0" layoutY="30.0" prefHeight="25.0" prefWidth="133.0" promptText="Seleccione" />
+                <Label fx:id="lbl_tipoDocumeto" layoutX="184.0" layoutY="34.0" prefHeight="18.0" prefWidth="15.0" textFill="#f20404">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="335.0" layoutY="30.0" prefHeight="25.0" prefWidth="77.0" styleClass="lbl-cuerpo" text="Numero " textFill="#1e1d1d">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="401.0" layoutY="29.0" text="*" textFill="#f80707" />
+                <Label fx:id="lblDocumento" layoutX="545.0" layoutY="34.0" prefHeight="18.0" prefWidth="18.0" textFill="#f20404">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="tf_numerodocumento" layoutX="407.0" layoutY="30.0" onKeyReleased="#validarExistente" prefHeight="25.0" prefWidth="135.0" />
+                <Label layoutX="52.0" layoutY="66.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer Nombre">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lbl_correo1" layoutX="542.0" layoutY="71.0" prefHeight="18.0" prefWidth="20.0" textFill="#eb0707">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="173.0" layoutY="68.0" text="*" textFill="#f80707" />
+                <TextField fx:id="tf_nombre1" layoutX="195.0" layoutY="66.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="346.0" />
+                <Label layoutX="51.0" layoutY="97.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="tf_nombre2" layoutX="196.0" layoutY="97.0" prefHeight="25.0" prefWidth="344.0" />
+                <Label layoutX="50.0" layoutY="127.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer Apellido">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lbl_nombre1" layoutX="541.0" layoutY="127.0" prefHeight="25.0" prefWidth="26.0" textFill="#eb0707">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="170.0" layoutY="128.0" text="*" textFill="#f80707" />
+                <TextField fx:id="tf_apellido1" layoutX="195.0" layoutY="127.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="347.0" />
+                <Label layoutX="50.0" layoutY="158.0" prefHeight="25.0" prefWidth="146.0" styleClass="lbl-cuerpo" text="Segundo Apellido">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="tf_apellido2" layoutX="195.0" layoutY="157.0" prefHeight="25.0" prefWidth="348.0" />
+                <Label layoutX="606.0" layoutY="68.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Sexo">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="645.0" layoutY="70.0" text="*" textFill="#f80707" />
+                <Label fx:id="lbl_sexo" layoutX="880.0" layoutY="64.0" onMouseReleased="#validar" prefHeight="18.0" prefWidth="16.0" textFill="#eb0707">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="cmb_sexo" layoutX="761.0" layoutY="70.0" prefHeight="25.0" prefWidth="160.0" promptText="Seleccione" />
+                <Label layoutX="606.0" layoutY="97.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Número Telefónico">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lbl_numtelefono" layoutX="915.0" layoutY="101.0" prefHeight="18.0" prefWidth="24.0" textFill="#f20404">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="tf_numtelefono" layoutX="761.0" layoutY="97.0" prefHeight="25.0" prefWidth="160.0" />
+                <Label layoutX="606.0" layoutY="127.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Correo Electrónico">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lbl_apellido1" layoutX="915.0" layoutY="128.0" prefHeight="18.0" prefWidth="64.0" textFill="#eb0707">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="744.0" layoutY="128.0" text="*" textFill="#f80707" />
+                <TextField fx:id="tf_correoelectronico" layoutX="763.0" layoutY="124.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="160.0" />
+                <Label layoutX="606.0" layoutY="158.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Cargo">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="658.0" layoutY="161.0" text="*" textFill="#f80707" />
+                <Label fx:id="lbl_correo" layoutX="907.0" layoutY="161.0" prefHeight="18.0" prefWidth="41.0" textFill="#eb0707">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="cmb_cargo" layoutX="765.0" layoutY="158.0" prefHeight="25.0" prefWidth="160.0" promptText="Seleccione " />
+                <Button fx:id="bt_crear" layoutX="111.0" layoutY="219.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="20.0" prefWidth="80.0" text="Crear" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="bt_consultar" layoutX="225.0" layoutY="219.0" mnemonicParsing="false" onAction="#consultarPersonalTitulo" prefHeight="20.0" prefWidth="80.0" text="Consultar" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="bt_cancelar" layoutX="351.0" layoutY="219.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="20.0" prefWidth="80.0" text="Cancelar" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="bt_salir" layoutX="790.0" layoutY="219.0" mnemonicParsing="false" onAction="#cerraPersonalSalud" prefHeight="20.0" prefWidth="80.0" text="Salir" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+
+                                                    <Button fx:id="bt_modificar" layoutX="484.0" layoutY="219.0" mnemonicParsing="false" onAction="#modificar" prefHeight="20.0" prefWidth="80.0" text="Modificar" textFill="WHITE">
+
+                                                        <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="bt_inhabilitar" layoutX="581.0" layoutY="219.0" mnemonicParsing="false" onAction="#eliminarFamiliar" prefHeight="20.0" prefWidth="80.0" text="Inhabilitar" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="bt_guardar" layoutX="681.0" layoutY="219.0" mnemonicParsing="false" onAction="#guardarPersonal" prefHeight="20.0" prefWidth="80.0" text="Guardar " textFill="WHITE">
+                    <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            </children>
+        </AnchorPane>
    </center>
 </BorderPane>
