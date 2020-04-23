@@ -6,11 +6,9 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<<<<<<< HEAD
-<AnchorPane prefHeight="500.0" prefWidth="610.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medicamento.formularioMedicamento.ControladorMedicamentos">
-=======
+
 <AnchorPane prefHeight="500.0" prefWidth="748.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medicamento.formularioMedicamento.ControladorMedicamentos">
->>>>>>> origin/master
+
    <children>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="748.0">
          <items>
@@ -39,13 +37,10 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-<<<<<<< HEAD
-                        <TextField fx:id="tf_nombre1" layoutX="252.0" layoutY="117.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="174.0" />
-                        <Button fx:id="bt_crear" layoutX="20.0" layoutY="194.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="100.0" text="Crear" textFill="WHITE">
-=======
+
                         <TextField fx:id="tf_nombre1" layoutX="432.0" layoutY="120.0" onKeyPressed="#validar" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="174.0" />
                         <Button fx:id="bt_crear" layoutX="17.0" layoutY="185.0" mnemonicParsing="false" onAction="#habilitarBotones" prefHeight="30.0" prefWidth="90.0" text="Crear" textFill="WHITE">
->>>>>>> origin/master
+
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
