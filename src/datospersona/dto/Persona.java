@@ -1,77 +1,63 @@
 package datospersona.dto;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Date;
 
 public class Persona {
 
-    private IntegerProperty idpersona;
-    private StringProperty primerNombre;
-    private StringProperty segundoNombre;
-    private StringProperty primerApellido;
-    private StringProperty segundoApellido;
+    private StringProperty idpersona = new SimpleStringProperty();
+    private StringProperty primerNombre = new SimpleStringProperty();
+    private StringProperty segundoNombre = new SimpleStringProperty();
+    private StringProperty primerApellido = new SimpleStringProperty();
+    private StringProperty segundoApellido = new SimpleStringProperty();
     private Date fechaNacimiento;
-    private StringProperty direccion;
-    private StringProperty sexo;
-    private StringProperty alergicoA;
-    private StringProperty enfermedadSufre;
-    private StringProperty observaciones;
+    private StringProperty direccion = new SimpleStringProperty();
+    private StringProperty sexo = new SimpleStringProperty();
+    private StringProperty alergicoA = new SimpleStringProperty();
+    private StringProperty enfermedadSufre = new SimpleStringProperty();
+    private StringProperty observaciones = new SimpleStringProperty();
     private ByteArrayInputStream huella;
-    private IntegerProperty huella1;
-    private StringProperty tipoDocumento;
-    private StringProperty idEps;
+    private IntegerProperty huella1 = new SimpleIntegerProperty();
+    private StringProperty tipoDocumento = new SimpleStringProperty();
+    private StringProperty idEps = new SimpleStringProperty();
+    private BooleanProperty estado = new SimpleBooleanProperty();
 
 
-    public Persona() {
-    }
+    public Persona() {}
 
-    public Persona(int idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+    public Persona(String idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
                    Date fechaNacimiento, String direccion, String sexo, String alegicoA, String enfermedadSufre, String observaciones,
-                   ByteArrayInputStream huella, int huella1, String tipoDocumento, String idEps) {
+                   ByteArrayInputStream huella, int huella1, String tipoDocumento, String idEps, boolean estado) {
 
-        this.idpersona = new SimpleIntegerProperty(idpersona);
-        this.primerNombre = new SimpleStringProperty(primerNombre);
-        this.segundoNombre = new SimpleStringProperty(segundoNombre);
-        this.primerApellido = new SimpleStringProperty(primerApellido);
-        this.segundoApellido = new SimpleStringProperty(segundoApellido);
+        this.idpersona.set(idpersona);
+        this.primerNombre.set(primerNombre);
+        this.segundoNombre.set(segundoNombre);
+        this.primerApellido.set(primerApellido);
+        this.segundoApellido.set(segundoApellido);
         this.fechaNacimiento = fechaNacimiento;
-        this.direccion = new SimpleStringProperty(direccion);
-        this.sexo = new SimpleStringProperty(sexo);
-        this.alergicoA = new SimpleStringProperty(alegicoA);
-        this.enfermedadSufre = new SimpleStringProperty(enfermedadSufre);
-        this.observaciones = new SimpleStringProperty(observaciones);
+        this.direccion.set(direccion);
+        this.sexo.set(sexo);
+        this.alergicoA.set(alegicoA);
+        this.enfermedadSufre.set(enfermedadSufre);
+        this.observaciones.set(observaciones);
         this.huella = huella;
-        this.huella1 = new SimpleIntegerProperty(huella1);
-        this.tipoDocumento = new SimpleStringProperty(tipoDocumento);
-        this.idEps = new SimpleStringProperty(idEps);
+        this.huella1.setValue(huella1);
+        this.tipoDocumento.set(tipoDocumento);
+        this.idEps.set(idEps);
+        this.estado.setValue(estado);
     }
 
-    public Persona(int idpersona, String primerNombre, String segundoNombre, String alegicoA, String enfermedadSufre,
-                   String observaciones) {
-        //this.huella1 = new SimpleIntegerProperty(huella1);
-        this.idpersona = new SimpleIntegerProperty(idpersona);
-        this.primerNombre = new SimpleStringProperty(primerNombre);
-        this.segundoNombre = new SimpleStringProperty(segundoNombre);
-        this.alergicoA = new SimpleStringProperty(alegicoA);
-        this.enfermedadSufre = new SimpleStringProperty(enfermedadSufre);
-        this.observaciones = new SimpleStringProperty(observaciones);
-
-    }
-
-    public int getIdpersona() {
+    public String getIdpersona() {
         return idpersona.get();
     }
 
-    public IntegerProperty idpersonaProperty() {
+    public StringProperty idpersonaProperty() {
         return idpersona;
     }
 
-    public void setIdpersona(int idpersona) {
+    public void setIdpersona(String idpersona) {
         this.idpersona.set(idpersona);
     }
 
@@ -135,12 +121,12 @@ public class Persona {
         return direccion.get();
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion.set(direccion);
+    public StringProperty direccionProperty() {
+        return direccion;
     }
 
-    public StringProperty direccion() {
-        return direccion;
+    public void setDireccion(String direccion) {
+        this.direccion.set(direccion);
     }
 
     public String getSexo() {
@@ -235,21 +221,20 @@ public class Persona {
         this.idEps.set(idEps);
     }
 
+    public boolean isEstado() {
+        return estado.get();
+    }
+
+    public BooleanProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado.set(estado);
+    }
+
     @Override
     public String toString() {
-        return "Persona{" +
-                "idpersona=" + idpersona +
-                ", primerNombre=" + primerNombre +
-                ", segundoNombre=" + segundoNombre +
-                ", primerApellido=" + primerApellido +
-                ", segundoApellido=" + segundoApellido +
-                ", fechaNacimiento=" + fechaNacimiento +
-                ", sexo=" + sexo +
-                ", alergicoA=" + alergicoA +
-                ", enfermedadSufre=" + enfermedadSufre +
-                ", observaciones=" + observaciones +
-                ", idTipoDocumeto=" + tipoDocumento +
-                ", idEps=" + idEps +
-                '}';
+        return (idpersona.get());
     }
 }

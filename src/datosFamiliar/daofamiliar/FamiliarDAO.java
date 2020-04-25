@@ -31,7 +31,7 @@ public class FamiliarDAO {
             while (rset.next()) {
                 familiar = new Familiar();
 
-                familiar.setIdFamiliar(rset.getInt("idFamiliar"));
+                familiar.setIdFamiliar(rset.getString("idFamiliar"));
                 familiar.setPrimerNombre(rset.getString("nombre1"));
                 familiar.setSegundoNombre(rset.getString("nombre2"));
                 familiar.setPrimerApellido(rset.getString("apellido1"));
@@ -53,16 +53,17 @@ public class FamiliarDAO {
     public int agregar(Familiar familiar) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into familiar_paciente(idFamiliar, nombre1, nombre2, apellido1, apellido2, direccion, telefono)" +
-                         " values(?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into familiar_paciente(idFamiliar, nombre1, nombre2, apellido1, apellido2, direccion, telefono, estado)" +
+                         " values(?, ?, ?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, familiar.getIdFamiliar());
+            stmt.setString(1, familiar.getIdFamiliar());
             stmt.setString(2, familiar.getPrimerNombre());
             stmt.setString(3, familiar.getSegundoNombre());
             stmt.setString(4, familiar.getPrimerApellido());
             stmt.setString(5, familiar.getSegundoApellido());
             stmt.setString(6, familiar.getDireccion());
             stmt.setString(7, familiar.getTelFamiliar());
+            stmt.setBoolean(8,familiar.isEstado());
 
             return stmt.executeUpdate();
 
@@ -87,7 +88,7 @@ public class FamiliarDAO {
             stmt.setString(5, familiar.getDireccion());
             stmt.setString(6, familiar.getTelFamiliar());
 
-            stmt.setInt(7, familiar.getIdFamiliar());
+            stmt.setString(7, familiar.getIdFamiliar());
 
             return stmt.executeUpdate();
 

@@ -145,7 +145,6 @@ public class ControladorPersonalSalud implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         titulos = FXCollections.observableArrayList();
-
         tb_personal.setItems(titulos);
 
         initializeTableColumn();
@@ -449,9 +448,7 @@ public class ControladorPersonalSalud implements Initializable {
             cbx_idtipotitulo.setDisable(true);
             cbx_idinstitucion.setDisable(true);
             dp_fechatitulacion.setDisable(true);
-            mi_agregar.setDisable(true);
-            mi_modificar.setDisable(true);
-            mi_eliminar.setDisable(true);
+
 
         } else {
             BusquedaDePersonal busqueda = personalSaludFacade.buscarPersonalTitulos(tf_numerodocumento.getText());

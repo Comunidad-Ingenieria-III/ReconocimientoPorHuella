@@ -18,7 +18,9 @@ import java.nio.file.Watchable;
 import java.util.ResourceBundle;
 
 public class ControladorDatosFamiliar implements Initializable {
+
     private Facade facade = new Facade();
+    private final boolean estado = true;
 
     @FXML
     private TableView<Familiar> tblFamiliares;
@@ -191,13 +193,14 @@ public class ControladorDatosFamiliar implements Initializable {
     @FXML
     public void guardarFamiliar() {//Este metodo toma los valores de los componenetes del formulario, crea un objeto y lo envia a la BD
         Familiar familiar= new Familiar(
-                Integer.parseInt(tf_idfamiliar.getText()),
+                tf_idfamiliar.getText(),
                 tf_nombre1.getText(),
                 tf_nombre2.getText(),
                 tf_apellido1.getText(),
                 tf_apellido2.getText(),
                 tf_direccion.getText(),
-                tf_numtelefono.getText()
+                tf_numtelefono.getText(),
+                estado
 
         );
 
@@ -227,13 +230,14 @@ public class ControladorDatosFamiliar implements Initializable {
     @FXML
     public void modificarFamiliar() {
         Familiar familiar = new Familiar(
-                Integer.parseInt(tf_idfamiliar.getText()),
+                tf_idfamiliar.getText(),
                 tf_nombre1.getText(),
                 tf_nombre2.getText(),
                 tf_apellido1.getText(),
                 tf_apellido2.getText(),
                 tf_direccion.getText(),
-                tf_numtelefono.getText()
+                tf_numtelefono.getText(),
+                estado
 
         );
         int res = facade.modificarFamiliar(familiar);
@@ -254,9 +258,9 @@ public class ControladorDatosFamiliar implements Initializable {
 
     }
 
-    @FXML
+    /*@FXML
     public void eliminarFamiliar() {
-        int res = facade.eliminarFamiliar(tblFamiliares.getSelectionModel().getSelectedItem().getIdFamiliar());
+        String res = facade.eliminarFamiliar(tblFamiliares.getSelectionModel().getSelectedItem().getIdFamiliar());
         if (res == 1) {
             familiares.remove(tblFamiliares.getSelectionModel().getSelectedIndex());
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
@@ -273,6 +277,6 @@ public class ControladorDatosFamiliar implements Initializable {
         }
 
 
-    }
+    }*/
 
 }
