@@ -54,6 +54,9 @@ public class PersonalSaludFacade {
     public boolean buscarPorId(String idPersonal) {//Funcion para realizar la busqueda de un personal de salud por medio de su clave primaria
         return  personalSaludDao.buscarPrimaryKey(idPersonal);
     }
+    public PersonalSalud buscarPorIdPersonal(String idPersonal){
+        return personalSaludDao.buscarPorIdPersonal(idPersonal);
+    }
 
     public PsDto buscarPsdto (int idPs){
         return personalSaludDao.buscarPsdto(idPs);
@@ -61,5 +64,9 @@ public class PersonalSaludFacade {
 
     public int modificarPsdto(PsDto psDto) {
         return personalSaludDao.modificarTitulos(psDto);
+    }
+
+    public boolean eliminarPsdto(int idPs, boolean estado){
+        return personalSaludDao.inhabilitarPsdto(idPs, estado);
     }
 }

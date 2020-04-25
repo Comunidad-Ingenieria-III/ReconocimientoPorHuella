@@ -53,7 +53,7 @@ public class PersonalSaludDao {
                 personalSalud.setSexo(rset.getString("sexo"));
                 personalSalud.setTelefono(rset.getString("telefono"));
                 personalSalud.setEmail(rset.getString("email"));
-                personalSalud.setTipoDocumento(rset.getString("tipoDocumento"));
+                personalSalud.setTipoDocumento(rset.getString("idTipoDocumento"));
                 personalSalud.setCargo(rset.getString("cargo"));
                 personalSalud.setEstado(rset.getBoolean("estado"));
                 personas.add(personalSalud);
@@ -329,6 +329,25 @@ public class PersonalSaludDao {
         return yes;
     }
 
+    public boolean inhabilitarPsdto(int idPs, boolean estado){//Funcion para inhabilitar un registro de la tabla personal_salud_titulo de la BBDD, cambiando su
+        //estado de activo a inactivo
+        try{
+            conn = ConexionRoot.getConexion();
+            String sql = "update personal_salud_titulo set estado = ? where idPs= ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setBoolean(1, estado);
+            stmt.setInt(2, idPs);
+            stmt.executeUpdate();
+
+
+        } catch (SQLException | RuntimeException e) {
+            e.printStackTrace();
+            return false;
+
+        }
+        return true;
+    }
+
 
     public boolean buscarPrimaryKey(String idPersonal) {//Funcion para realizar la busqueda de un personal de salud por medio de su perimary key
         boolean trpta = false;
@@ -347,9 +366,36 @@ public class PersonalSaludDao {
         }
         return trpta;
     }
+    public PersonalSalud buscarPorIdPersonal(String idPersonal) {//Funcion para realizar la busqueda de un personal de salud por medio de su perimary key
+        PersonalSalud personalSalud = null;
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from personal_salud where idPersonal = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,idPersonal);
+            rset = stmt.executeQuery();
+
+            if (rset.next()){
+                personalSalud = new PersonalSalud();
+                personalSalud.setIdPersonal(rset.getString("idPersonal"));
+                personalSalud.setNombre1(rset.getString("nombre1"));
+                personalSalud.setNombre2(rset.getString("nombre2"));
+                personalSalud.setApellido1(rset.getString("apellido1"));
+                personalSalud.setApellido2(rset.getString("apellido2"));
+                personalSalud.setSexo(rset.getString("sexo"));
+                personalSalud.setTelefono(rset.getString("telefono"));
+                personalSalud.setEmail(rset.getString("email"));
+                personalSalud.setTipoDocumento(rset.getString("idTipoDocumento"));
+                personalSalud.setCargo(rset.getString("cargo"));
+                personalSalud.setEstado(rset.getBoolean("estado"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personalSalud;
+    }
 
     public PsDto buscarPsdto(int idPs) {
-        boolean trpta = false;
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from personal_salud_titulo where idPs = ?";

@@ -35,6 +35,7 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControladorPersonalSalud implements Initializable {
@@ -110,20 +111,19 @@ public class ControladorPersonalSalud implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
-    @FXML
-    private Button bt_abrirFormularioPer;
+
+    //----------------------------------
+    //Botones que pertenecen a la tabla personal_salud_titulo
     @FXML
     private Button bt_agregar;
     @FXML
-    private Button bt_eliminar;
-    @FXML
     private Button bt_ModificarTabla;
     @FXML
-    private MenuItem mi_agregar;
+    private Button bt_eliminarTabla;
     @FXML
-    private MenuItem mi_modificar;
-    @FXML
-    private MenuItem mi_eliminar;
+    private Button bt_SalirTabla;
+    //----------------------------------
+
     @FXML
     private Label lbl_tipoDocumeto;
     @FXML
@@ -149,16 +149,17 @@ public class ControladorPersonalSalud implements Initializable {
         tb_personal.setItems(titulos);
 
         initializeTableColumn();
-
+        manejarEventosTablaTitulos();
         iniciarCbxDocumento();
         iniciarCbxSexo();
         iniciarCargo();
         deshabilitarBotones();
         deshabilitarCampos();
         iniciarCbxTipoTitulo();
+        iniciarCbxid_persona();
         iniciarInstitucion();
         validarId();
-        manejarEventosTablaTitulos();
+
     }
 
 
@@ -174,14 +175,13 @@ public class ControladorPersonalSalud implements Initializable {
     public void modificarRegistroDeTabla() {//Metodo que permite editar los registros de la tabla y asi poder actualizar en la base de datos
         PsDto psDto = new PsDto(
                 tb_personal.getSelectionModel().getSelectedItem().getId(),
-                tf_numerodocumento.getText(),
+                cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal(),
                 cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
                 cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
                 //java.sql.Date.valueOf(dp_fechatitulacion.getValue())
                 Date.valueOf(dp_fechatitulacion.getValue()),
                 estado
         );
-
 
         DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
         String convertido = fechaHora.format(psDto.getFechaTitulacion());//Formatear una fecha Date a String
@@ -203,11 +203,14 @@ public class ControladorPersonalSalud implements Initializable {
                 personalSaludFacade.modificarPsdto(psDto);
                 titulos.set(tb_personal.getSelectionModel().getSelectedIndex(), psDto);
                 limpiarComponentes();
+                cbx_idpersona.setValue(null);
+                bt_agregar.setDisable(false);
+                bt_ModificarTabla.setDisable(true);
+                bt_eliminarTabla.setDisable(true);
 
             }
 
         }
-
     }
 
 
@@ -216,7 +219,7 @@ public class ControladorPersonalSalud implements Initializable {
         // y a la tabla del formulario previamente validados para evitar registros dulicados
         PsDto psDto = new PsDto(
                 0,
-                tf_numerodocumento.getText(),
+                cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal(),
                 cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
                 cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
                 //java.sql.Date.valueOf(dp_fechatitulacion.getValue())
@@ -236,6 +239,7 @@ public class ControladorPersonalSalud implements Initializable {
         } else {
 
             if (titulos.isEmpty()) {
+                //Validamos si la lista que esta asignada a la tabla, esta vacia
                 boolean res = buscarDocumento(psDto.getIdPersonal());
                 if (res) {
                     personalSaludFacade.agregarPsdto(psDto);
@@ -282,6 +286,9 @@ public class ControladorPersonalSalud implements Initializable {
 
     @FXML
     public void eliminarTitulos() {//Metodo para eliminar el registro seleccionado en la tabla
+        int idPs = tb_personal.getSelectionModel().getSelectedItem().getId();//Extraemos en id del psDto, desde la fila seleccionada en la tabla
+        boolean estado = false;
+        personalSaludFacade.eliminarPsdto(idPs,estado);
         titulos.remove(tb_personal.getSelectionModel().getFocusedIndex());
         limpiarComponentes();
     }
@@ -331,103 +338,69 @@ public class ControladorPersonalSalud implements Initializable {
 
         boolean documento = buscarDocumento(tf_numerodocumento.getText());//Se Realiza la busqueda del registro en la base de datos
         //De esto depende si se agrega o se modifica
-        if (!documento) {
+        if (!documento) {//Condicional para crear si el registro no existe en la BBDD
             int res = personalSaludFacade.agregarPersonal2(crearPersonalSalud());
             if (res == 1) {
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Registro Agregado Correctamente");
-                msg.setHeaderText("Exito!");
-                msg.show();
-                limpiar();
-                //titulos.clear();
-                deshabilitarCampos();
-                deshabilitarBotones();
+
+                iniciarCbxid_persona();
+                Alert msg1 = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+                msg1.setTitle("Gestiones - Personal Salud");
+                msg1.setContentText("Registro Agregado Correctamente\n \n" + "Desea Ingresar Titulos Académicos ?");
+                msg1.setHeaderText("Elija Una Respuesta");
+                Optional<ButtonType> action = msg1.showAndWait();
+
+                if (action.get() == ButtonType.YES) {
+                    tb_personal.setDisable(false);
+                    cbx_idpersona.setDisable(false);
+                    cbx_idtipotitulo.setDisable(false);
+                    cbx_idinstitucion.setDisable(false);
+                    dp_fechatitulacion.setDisable(false);
+                    bt_agregar.setDisable(false);
+                    bt_SalirTabla.setDisable(false);
+                    cbx_idpersona.setValue(personalSaludFacade.buscarPorIdPersonal(tf_numerodocumento.getText()));
+                    limpiar();
+                } else if (action.get() == ButtonType.NO) {
+                    deshabilitarCampos();
+                    deshabilitarBotones();
+                    limpiar();
+                }
             } else {
 
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("No Fue Pisible Agregar El Registro");
+                msg.setContentText("No Fue Posible Agregar El Registro");
                 msg.setHeaderText("Error.");
                 msg.show();
             }
-        } else {
+        } else {//Condicional para modificar si el registro ya esta creado
             int res = personalSaludFacade.modificarPersonal2(crearPersonalSalud());
             if (res == 1) {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Personal Salud");
                 msg.setContentText("Registro Modificado Correctamente");
-                msg.setHeaderText("Exito!");
+                msg.setHeaderText("Exito.");
                 msg.show();
-                limpiar();
+
                 titulos.clear();
                 deshabilitarCampos();
                 deshabilitarBotones();
+                limpiarComponentes();
+                tb_personal.setDisable(false);
+                cbx_idpersona.setValue(null);
+                limpiar();
             } else {
-
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Personal Salud");
                 msg.setContentText("No Fue Posible Modificar El Registro ");
                 msg.setHeaderText("Error.");
                 msg.show();
             }
+
         }
+
 
     }
 
-
-    /*@FXML
-    public void guardarPersonalS(){//Metodo Para guardar o modificar un registro de personal salud en la BBDD utilizando la transaccion SQL
-        boolean documento = buscarDocumento(tf_numerodocumento.getText());//Se Realiza la busqueda del registro en la base de datos
-        //De esto depende si se agrega o se modifica
-        if(!documento){
-
-            int res = personalSaludFacade.agregarPersonal(crearPersonalSalud(), titulos);
-
-            if (res == 1) {
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Registro Agregado Correctamente");
-                msg.setHeaderText("Exito!");
-                msg.show();
-                limpiar();
-                titulos.clear();
-                deshabilitarCampos();
-                deshabilitarBotones();
-            } else {
-
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("No Fue Pisible Agregar El Registro");
-                msg.setHeaderText("Error.");
-                msg.show();
-            }
-
-        }else{
-
-            int res = personalSaludFacade.modificarPersonal(crearPersonalSalud(),titulos);
-
-            if (res == 1) {
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Registro Modificado Correctamente");
-                msg.setHeaderText("Exito!");
-                msg.show();
-                limpiar();
-                titulos.clear();
-                deshabilitarCampos();
-                deshabilitarBotones();
-            } else {
-
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("No Fue Posible Modificar El Registro ");
-                msg.setHeaderText("Error.");
-                msg.show();
-            }
-        }
-
-    }*/
 
 
     @FXML
@@ -449,41 +422,59 @@ public class ControladorPersonalSalud implements Initializable {
             cbx_idtipotitulo.setDisable(true);
             cbx_idinstitucion.setDisable(true);
             dp_fechatitulacion.setDisable(true);
-            mi_agregar.setDisable(true);
-            mi_modificar.setDisable(true);
-            mi_eliminar.setDisable(true);
+
 
         } else {
-            BusquedaDePersonal busqueda = personalSaludFacade.buscarPersonalTitulos(tf_numerodocumento.getText());
-            PersonalSalud personalSalud = busqueda.getPersonalSalud();
-            if (!personalSalud.isEstado()) {//Condicional que verifica si el objeto personal_salud
-                // que se acaba de recuperar esta en estado inactivo en la BBDD
+            //Variable que almacena el resultado de la busqueda de un personal salud por medio de su clave primaria
+            //Si el Numero de documento existe en la base de datos ejecuta la consulta, sino manda un error
+            boolean documentoBuscado = personalSaludFacade.buscarPorId(tf_numerodocumento.getText());
+            if (documentoBuscado) {
+
+                BusquedaDePersonal busqueda = personalSaludFacade.buscarPersonalTitulos(tf_numerodocumento.getText());
+                PersonalSalud personalSalud = busqueda.getPersonalSalud();
+
+                if (!personalSalud.isEstado()) {//Condicional que verifica si el objeto personal_salud
+                    // que se acaba de recuperar esta en estado inactivo en la BBDD
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Personal Salud");
+                    msg.setContentText("El Registro Se Encuentra Inactivo \n"
+                            + "Comuniquese Con El Adminsitrador Para Activar De Nuevo Este Registro");
+                    msg.setHeaderText("Error.");
+                    msg.show();
+                    tf_numerodocumento.requestFocus();
+                } else {
+
+                    tf_nombre1.setText(personalSalud.getNombre1());
+                    tf_nombre2.setText(personalSalud.getNombre2());
+                    tf_apellido1.setText(personalSalud.getApellido1());
+                    tf_apellido2.setText(personalSalud.getApellido2());
+                    cmb_sexo.setValue(personalSalud.getSexo());
+                    tf_numtelefono.setText(personalSalud.getTelefono());
+                    tf_correoelectronico.setText(personalSalud.getEmail());
+
+                    cmb_cargo.setValue(facadeCargo.obtenerPorId(personalSalud.getCargo()));
+                    cmb_tipodocumento.setValue(facadeTipoDocumento.obtenerPorId(personalSalud.getTipoDocumento()));
+
+                    titulos = FXCollections.observableArrayList(busqueda.getListaTitulos());
+                    for (int i = 0; i < titulos.size(); i++) {
+                        if (!titulos.get(i).isEstado())//Ciclo para recorrer la lista de objetos de personal-salud-titulo, y eliminar los registros que tengan
+                            //el estado inactivo en la BBDD
+                            titulos.remove(i);//si el estado esta inactivo, se elimina de la lista
+                    }
+                    tb_personal.setItems(titulos);
+
+                    initializeTableColumn();
+                    bt_consultar.setDisable(true);
+                    bt_crear.setDisable(false);
+
+                }
+            } else {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("El Registro Con Nro De Documento: " + personalSalud.getIdPersonal() + " Se Encuentra Inactivo \n"
-                + "Comuniquese Con El Adminsitrador Para Activar De Nuevo Este Registro");
+                msg.setContentText("El Número De Documento No Existe! \n" + "Ingrese Un Número De Documeto Valido");
                 msg.setHeaderText("Error.");
                 msg.show();
-            } else {
-
-                tf_nombre1.setText(personalSalud.getNombre1());
-                tf_nombre2.setText(personalSalud.getNombre2());
-                tf_apellido1.setText(personalSalud.getApellido1());
-                tf_apellido2.setText(personalSalud.getApellido2());
-                cmb_sexo.setValue(personalSalud.getSexo());
-                tf_numtelefono.setText(personalSalud.getTelefono());
-                tf_correoelectronico.setText(personalSalud.getEmail());
-
-                cmb_cargo.setValue(facadeCargo.obtenerPorId(personalSalud.getCargo()));
-                cmb_tipodocumento.setValue(facadeTipoDocumento.obtenerPorId(personalSalud.getTipoDocumento()));
-
-                titulos = FXCollections.observableArrayList(busqueda.getListaTitulos());
-
-                tb_personal.setItems(titulos);
-                initializeTableColumn();
-                bt_consultar.setDisable(true);
-                bt_crear.setDisable(true);
-
+                tf_numerodocumento.requestFocus();
             }
         }
 
@@ -515,13 +506,20 @@ public class ControladorPersonalSalud implements Initializable {
             @Override
             public void changed(ObservableValue<? extends PsDto> observable, PsDto oldValue, PsDto newValue) {
                 if (newValue != null) {
+                    cbx_idpersona.getSelectionModel().select(personalSaludFacade.buscarPorIdPersonal(
+                            tb_personal.getSelectionModel().getSelectedItem().getIdPersonal()));
 
                     cbx_idtipotitulo.getSelectionModel().select(facadeTtAcademico.obtenerPorId(
                             tb_personal.getSelectionModel().getSelectedItem().getIdTipoTitu()));
+
                     cbx_idinstitucion.getSelectionModel().select(facadeInstitucionAcademica.obtenerPorId(
                             tb_personal.getSelectionModel().getSelectedItem().getIdInstitucion()));
+
                     dp_fechatitulacion.setValue(newValue.getFechaTitulacion().toLocalDate());
 
+                    bt_agregar.setDisable(true);
+                    bt_ModificarTabla.setDisable(false);
+                    bt_eliminarTabla.setDisable(false);
 
                 }
 
@@ -625,9 +623,6 @@ public class ControladorPersonalSalud implements Initializable {
                 bt_inhabilitar.setDisable(true);
                 bt_modificar.setDisable(true);
                 bt_guardar.setDisable(false);
-                //mi_agregar.setDisable(false);
-                //mi_modificar.setDisable(false);
-                //mi_eliminar.setDisable(false);
                 cmb_tipodocumento.requestFocus();
                 titulos.clear();
                 valor = 1;
@@ -713,6 +708,18 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     @FXML
+    public void iniciarCbxid_persona() {
+
+        ObservableList<PersonalSalud> listaIdpersona = FXCollections.observableArrayList(personalSaludFacade.obtenerTodoPersonalSalud());
+        for (int i = 0; i < listaIdpersona.size(); i++) {
+            if (!listaIdpersona.get(i).isEstado())//Ciclo para recorrer la lista de objetos de personal-salud, y eliminar los registros que tengan
+                //el estado inactivo en la BBDD
+                listaIdpersona.remove(i);//si el estado esta inactivo, se elimina de la lista
+        }
+        cbx_idpersona.setItems(listaIdpersona);
+    }
+
+    @FXML
     public void iniciarCargo() {
         ObservableList<Cargo> listaCargo = FXCollections.observableArrayList(facadeCargo.obtenerCargos());
         cmb_cargo.setItems(listaCargo);
@@ -746,13 +753,17 @@ public class ControladorPersonalSalud implements Initializable {
         tf_nombre1.requestFocus();
         valor = 0;            //Ingreso una variable Jose Martin campo
         bt_modificar.setDisable(true);
-        //mi_modificar.setDisable(false);
         bt_guardar.setDisable(false);
-        //mi_agregar.setDisable(false);
-        //mi_eliminar.setDisable(false);
+        //--------------------------------
+        //Componentes de la tabla personal-salud-titulo
+        cbx_idpersona.setDisable(false);
         cbx_idtipotitulo.setDisable(false);
         cbx_idinstitucion.setDisable(false);
         dp_fechatitulacion.setDisable(false);
+        bt_agregar.setDisable(false);
+        bt_SalirTabla.setDisable(false);
+        tb_personal.setDisable(false);
+        //---------------------------------
     }
 
     @FXML
@@ -769,10 +780,6 @@ public class ControladorPersonalSalud implements Initializable {
         tf_correoelectronico.setDisable(false);
         cmb_cargo.setDisable(false);
         tf_numerodocumento.requestFocus();
-        cbx_idtipotitulo.setDisable(false);
-        cbx_idinstitucion.setDisable(false);
-        dp_fechatitulacion.setDisable(false);
-
     }
 
     @FXML
@@ -785,18 +792,24 @@ public class ControladorPersonalSalud implements Initializable {
         bt_guardar.setDisable(true);
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        //mi_modificar.setDisable(true);
-        //mi_agregar.setDisable(true);
-        //mi_eliminar.setDisable(true);
+
+        //Componentes de la tabla personal-salud-titulo
+        //------------------------------
+        cbx_idpersona.setDisable(true);
         cbx_idtipotitulo.setDisable(true);
         cbx_idinstitucion.setDisable(true);
         dp_fechatitulacion.setDisable(true);
+        bt_agregar.setDisable(true);
+        bt_ModificarTabla.setDisable(true);
+        bt_eliminarTabla.setDisable(true);
+        bt_SalirTabla.setDisable(true);
+        //-------------------------------
 
     }
 
     @FXML
     public void cancelar() {
-
+        cbx_idpersona.setValue(null);
         cmb_tipodocumento.setValue(null);
         tf_numerodocumento.setText("");
         tf_nombre1.setText("");
@@ -852,6 +865,7 @@ public class ControladorPersonalSalud implements Initializable {
         tf_numtelefono.setDisable(true);
         cmb_cargo.setDisable(true);
         tf_numerodocumento.requestFocus();
+        tb_personal.setDisable(true);
     }
     //  Inicio modificación jose Martin
 
