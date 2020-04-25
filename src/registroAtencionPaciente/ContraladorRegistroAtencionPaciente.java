@@ -121,14 +121,14 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         Persona persona = new Persona(identificacion, nombre, nombre2, alergico, sufrode, observaciones);
 
         return persona;
-    }*/
+    }
 
     public void buscarHuella() {
 
         int num = Integer.parseInt(tf_idpersonadps.getText());
         facadepersona.buscarPersona(num);
         JOptionPane.showMessageDialog(null, "Dato Encontrado", "INFORMACIÓN", 1);
-    }
+    }*/
 
 
 

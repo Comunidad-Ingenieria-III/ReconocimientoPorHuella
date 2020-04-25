@@ -3,6 +3,7 @@ package perfil.dao;
 import cargo.dto.Cargo;
 import conexionBD.ConexionRoot;
 import perfil.dtoperfil.PerfilDto;
+import tipoTituloAcademico.dto.TtAcademico;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,6 +43,35 @@ public class PerfilDAO {
         }
         return perfiles;
     }//Fin del metodo obtenerTodos
+
+    public List<PerfilDto> buscar(String buscar){
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from perfil where idperfil LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            perfiles = new ArrayList<>();
+            while (rset.next()){
+                perfilDto = new PerfilDto();
+                perfilDto.setIdperfil(rset.getString("idperfil"));
+                perfilDto.setNombre(rset.getString("nombre"));
+                perfilDto.setEstado(rset.getBoolean("estado"));
+                perfiles.add(perfilDto);
+            }
+
+
+
+        }catch (RuntimeException | SQLException e){
+            throw new RuntimeException("Error SQL - BucarPerfil()!");
+        }
+        return perfiles;
+    }
+
+
+
+
 
 
     public int agregar(PerfilDto perfilDto) {
@@ -85,10 +115,10 @@ public class PerfilDAO {
         return 0;
     }
 
-    public int eliminar(String idperfil) {
+    public int eliminarr(String idperfil) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from perfil where idperfil = ?";
+            String sql = "update perfil set estado = 0 where idperfil = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, idperfil);
@@ -101,6 +131,46 @@ public class PerfilDAO {
         }
         return 0;
     }//Fin del metodo eliminar
+
+    public boolean eliminar(String idperfil) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
+        //en otras tablas que dependan de la clave primaria de éste
+
+        boolean yes = false;
+        try {
+
+            if(yes==false) {
+                conn = ConexionRoot.getConexion();
+                String sql = "SELECT p.idUsuario ,p.idperfil ,ps.idperfil as relacion from usuario AS p " +
+                        "INNER JOIN perfil AS ps ON p.idperfil=ps.idperfil where ps.idperfil = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, idperfil);
+                rset = stmt.executeQuery();
+                if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                    yes = true;
+
+                } else {
+                    String sql2 = "update perfil set estado = 0 where idperfil = ?";
+                    stmt = conn.prepareStatement(sql2);
+                    stmt.setString(1, idperfil);
+                    stmt.executeUpdate();
+                    yes = false;
+
+
+                }
+
+
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            e.printStackTrace();
+        }
+        return yes;
+    }
+
+
+
+
+
 
     public PerfilDto buscarPorId(String idperfil) {
         PerfilDto perfilDto = null;

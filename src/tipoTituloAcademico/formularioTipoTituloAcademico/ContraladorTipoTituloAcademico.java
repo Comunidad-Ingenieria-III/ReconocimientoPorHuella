@@ -24,6 +24,7 @@ import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implements Initializable {
@@ -266,37 +267,41 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
 
     @FXML
     public void eliminarTtAcademico() {
-        int res = facade.eliminar(tb_tituloAcademico.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico());
-        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el Tipo de título");
-        if(i==0){
-            if (res == 1) {
-                ttAcademicos.remove(tb_tituloAcademico.getSelectionModel().getSelectedIndex());
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Tipo de título académico ");
-                msg.setContentText("El tipo de título  se ha eliminado");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }else{
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Tipo de título académico");
-                msg.setContentText("El Tipo de titulo académico, No ha sido eliminada");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }
-            limpiarFormulario();
-            cancelar();
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - Tipo de título académico");
+        msg.setContentText("¿Está seguro de eliminar el tipo de título?");
+        msg.setHeaderText("Resultado");
+        Optional<ButtonType> action = msg.showAndWait();
+        if (action.get() == ButtonType.OK) {
+            boolean respuesta  = facade.eliminar(tb_tituloAcademico.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico());
+            if (respuesta) {
 
-        }else if(i==1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Tipo de título académico");
-            msg.setContentText("El Tipo de título académico, No ha sido eliminada");
-            msg.setHeaderText("Resultado");
-            msg.show();
+                Alert msge = new Alert(Alert.AlertType.ERROR);
+                msge.setTitle("Gestiones - Tipo de título académico");
+                msge.setContentText("Error al eliminar! \n" + "El tipo de título tiene registros dependientes!\n"
+                        + "Asegurese de eliminar los registros que dependen de este.");
+                msge.setHeaderText("Error.");
+                msge.show();
+                limpiarFormulario();
+                cancelar();
+
+            } else {
+                ttAcademicos.remove(tb_tituloAcademico.getSelectionModel().getSelectedIndex());
+                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                msg2.setTitle("Gestiones - Tipo de título académico");
+                msg2.setContentText("El Tipo de título se ha eliminado");
+                msg2.setHeaderText("Resultado");
+                msg2.show();
+                limpiarFormulario();
+                cancelar();
+            }
+
         }
         limpiarFormulario();
         cancelar();
 
     }
+
 
 
 
@@ -312,33 +317,39 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         }else{
             int i=0;
             ttAcademicos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
-            if(ttAcademicos.get(i).getEstado().equals("1")){
-
-
-            tb_tituloAcademico.setItems(ttAcademicos);
-            idCodigo.setCellValueFactory(new PropertyValueFactory<>("idTipoTituloAcademico"));
-            idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-            bt_consultar.setDisable(true);
-            }
-            if(ttAcademicos.get(i).getEstado().equals("0")){
+            if (ttAcademicos.isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Tipo de título académico");
                 msg.setContentText("Tipo de título " + tf_Tipo.getText() + " no encontrado");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                tf_Tipo.requestFocus();
+                tf_Tipo.setText("");
+            }else {
 
-            }
-            if (ttAcademicos.isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Tipo de título académico");
-                msg.setContentText("Tipo de título " + tf_Tipo.getText() + " no encontrado");
-                msg.setHeaderText("Resultado");
-                msg.show();
 
+                if (ttAcademicos.get(i).getEstado().equals("1")) {
+
+                    tb_tituloAcademico.setItems(ttAcademicos);
+                    idCodigo.setCellValueFactory(new PropertyValueFactory<>("idTipoTituloAcademico"));
+                    idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+                    bt_consultar.setDisable(true);
+                }
+                if (ttAcademicos.get(i).getEstado().equals("0")) {
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Tipo de título académico");
+                    msg.setContentText("Tipo de título " + tf_Tipo.getText() + " no encontrado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    tf_Tipo.requestFocus();
+                    tf_Tipo.setText("");
+
+                }
             }
         }
 
     }
+
 
     @FXML
     public void limpiarFormulario() {

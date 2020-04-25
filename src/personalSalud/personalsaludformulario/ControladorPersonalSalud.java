@@ -145,7 +145,6 @@ public class ControladorPersonalSalud implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         titulos = FXCollections.observableArrayList();
-
         tb_personal.setItems(titulos);
 
         initializeTableColumn();
@@ -422,7 +421,6 @@ public class ControladorPersonalSalud implements Initializable {
             cbx_idtipotitulo.setDisable(true);
             cbx_idinstitucion.setDisable(true);
             dp_fechatitulacion.setDisable(true);
-
 
         } else {
             //Variable que almacena el resultado de la busqueda de un personal salud por medio de su clave primaria

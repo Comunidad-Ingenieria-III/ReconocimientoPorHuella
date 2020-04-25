@@ -133,18 +133,71 @@ public class DaoTipoDocumento {
     } // Fin del método modificar()
 
 
-    public int eliminar(String idTipoDocumento) {
+    //
+
+
+    public int eliminarP(String idTipoDocumento) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "update tipo_documento set estado = 0 where idTipoDocumento = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, Integer.parseInt(idTipoDocumento));
+            stmt.setString(1, idTipoDocumento);
             return stmt.executeUpdate();
         } catch (RuntimeException | SQLException e) {
             System.out.println(e.toString());
             return 0;
         }
     } // Fin del método eliminar()
+
+
+
+    public boolean eliminar(String idTipoDocumento) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
+        //en otras tablas que dependan de la clave primaria de éste
+
+        boolean yes = false;
+        try {
+
+            if(yes==false) {
+                conn = ConexionRoot.getConexion();
+
+                String sql = "SELECT p.idPersonal, ps.idTipoDocumento as relacion from personal_salud AS p " +
+                        "INNER JOIN tipo_documento AS ps ON p.idTipoDocumento=ps.idTipoDocumento where ps.idTipoDocumento = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, idTipoDocumento);
+                rset = stmt.executeQuery();
+                if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                    yes = true;
+                } else {
+                    String sql1 = "SELECT p.idPersona, ps.idTipoDocumento as relacion from datos_persona AS p " +
+                            "INNER JOIN tipo_documento AS ps ON p.idTipoDocumento=ps.idTipoDocumento where ps.idTipoDocumento = ?";
+                    stmt = conn.prepareStatement(sql1);
+                    stmt.setString(1, idTipoDocumento);
+                    rset = stmt.executeQuery();
+
+                    if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                        yes = true;
+
+                    } else {
+                        String sql2 = "update tipo_documento set estado = 0 where idTipoDocumento = ?";
+                        stmt = conn.prepareStatement(sql2);
+                        stmt.setString(1, idTipoDocumento);
+                        stmt.executeUpdate();
+                        yes = false;
+
+
+                    }
+
+                }
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            e.printStackTrace();
+        }
+        return yes;
+    }
+
+
+
 
 
 }

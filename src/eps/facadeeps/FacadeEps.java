@@ -22,7 +22,7 @@ public class FacadeEps {
         return daoeps.modificarEps(dtoEps);
     }
 
-    public int eliminarEps(String dtoEps){
+    public boolean eliminarEps(String dtoEps){
         return daoeps.eliminarEps(dtoEps);
     }
 

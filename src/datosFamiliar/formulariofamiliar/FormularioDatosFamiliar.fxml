@@ -123,7 +123,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="bt_inhabilitar" layoutX="338.0" layoutY="283.0" mnemonicParsing="false" onAction="#eliminarFamiliar" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Eliminar" textFill="WHITE">
+      <Button fx:id="bt_inhabilitar" layoutX="338.0" layoutY="283.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Eliminar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

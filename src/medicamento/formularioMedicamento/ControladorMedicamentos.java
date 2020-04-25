@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControladorMedicamentos extends Component implements Initializable {
@@ -121,7 +122,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
 
                 int i=0;
                 if (medicamentos1.get(0).getEstado().equals("0")) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Medicamentos");
                     msg.setContentText("El medicamento : " + tf_Tipo.getText() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
                     msg.setHeaderText("Resultado");
@@ -184,7 +185,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
                     bt_guardar.setDisable(true);
                     medicamentos.add(medicamento);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                    msg.setTitle("Gestiones - Medicamento");
+                    msg.setTitle("Gestiones - Medicamentos");
                     msg.setContentText("El medicamento se ha agregado");
                     msg.setHeaderText("Resultado");
                     msg.show();
@@ -219,7 +220,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
                 if (res == 1) {
                     medicamentos.set(tbMedicamentos.getSelectionModel().getSelectedIndex(), medicamento);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                    msg.setTitle("Gestiones - Medicamento");
+                    msg.setTitle("Gestiones - Medicamentos");
                     msg.setContentText("El medicamento se ha modificado");
                     msg.setHeaderText("Resultado");
                     msg.show();
@@ -253,37 +254,43 @@ public class ControladorMedicamentos extends Component implements Initializable 
 
     @FXML
     public void eliminarMedicamento() {
-        int res = facade.eliminar(tbMedicamentos.getSelectionModel().getSelectedItem().getIdMedicamento());
-        int i = JOptionPane.showConfirmDialog(this,"Esta seguro de eliminar el medicamento");
-        if(i==0){
-            if (res == 1) {
-                medicamentos.remove(tbMedicamentos.getSelectionModel().getSelectedIndex());
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Medicamentos ");
-                msg.setContentText("El medicamento  se ha eliminado");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }else{
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Medicamento");
-                msg.setContentText("El medicamento No ha sido eliminada");
-                msg.setHeaderText("Resultado");
-                msg.show();
-            }
-            limpiarFormulario();
-            cancelar();
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - Medicamentos");
+        msg.setContentText("¿Está seguro de eliminar el medicamento?");
+        msg.setHeaderText("Resultado");
+        Optional<ButtonType> action = msg.showAndWait();
+        if (action.get() == ButtonType.OK) {
+            boolean respuesta=facade.eliminar(tbMedicamentos.getSelectionModel().getSelectedItem().getIdMedicamento());
 
-        }else if(i==1){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Medicamento");
-            msg.setContentText("El medicamento, No ha sido eliminada");
-            msg.setHeaderText("Resultado");
-            msg.show();
+            if (respuesta) {
+
+                Alert msge = new Alert(Alert.AlertType.ERROR);
+                msge.setTitle("Gestiones - Medicamentos");
+                msge.setContentText("Error al eliminar! \n" + "El medicamento tiene registros dependientes!\n"
+                        + "Asegurese de eliminar los registros que dependen de este.");
+                msge.setHeaderText("Error.");
+                msge.show();
+                limpiarFormulario();
+                cancelar();
+
+            } else {
+                medicamentos.remove(tbMedicamentos.getSelectionModel().getSelectedIndex());
+                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                msg2.setTitle("Gestiones - Medicamentos");
+                msg2.setContentText("El medicamento se ha eliminado");
+                msg2.setHeaderText("Resultado");
+                msg2.show();
+                limpiarFormulario();
+                cancelar();
+            }
+
         }
         limpiarFormulario();
         cancelar();
 
     }
+
+
 
 
     @FXML
@@ -309,11 +316,13 @@ public class ControladorMedicamentos extends Component implements Initializable 
             medicamentos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
             int i = 0;
             if (medicamentos.isEmpty()) {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Institución de Referencia");
                 msg.setContentText("Código " + tf_Tipo.getText() +" de referencia no encontrado");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                tf_Tipo.requestFocus();
+                tf_Tipo.setText("");
 
             }else {
 
@@ -327,11 +336,13 @@ public class ControladorMedicamentos extends Component implements Initializable 
                 }
 
                 if (medicamentos.get(i).getEstado().equals("0")) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Institución de Referencia");
                     msg.setContentText("Código " + tf_Tipo.getText() + " de referencia no encontrado");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    tf_Tipo.requestFocus();
+                    tf_Tipo.setText("");
 
                 }
 

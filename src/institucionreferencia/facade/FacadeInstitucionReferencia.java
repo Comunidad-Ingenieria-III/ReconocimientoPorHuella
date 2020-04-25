@@ -23,7 +23,7 @@ public class FacadeInstitucionReferencia {
         return institucionReferenciaDAO.modificar(institucionReferencia);
      }
 
-     public int eliminarInstitucionReferencia(String idInstitucionR){
+     public boolean eliminarInstitucionReferencia(String idInstitucionR){
         return institucionReferenciaDAO.eliminar(idInstitucionR);
      }
 

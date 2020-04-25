@@ -1,23 +1,22 @@
 package datosFamiliar.dtofamiliar;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class Familiar {
 
-    private IntegerProperty idFamiliar = new SimpleIntegerProperty();
+    private StringProperty idFamiliar = new SimpleStringProperty();
     private StringProperty primerNombre = new SimpleStringProperty();
     private StringProperty segundoNombre = new SimpleStringProperty();
     private StringProperty primerApellido = new SimpleStringProperty();
     private StringProperty segundoApellido = new SimpleStringProperty();
     private StringProperty direccion = new SimpleStringProperty();
     private StringProperty telFamiliar = new SimpleStringProperty();
+    private BooleanProperty estado = new SimpleBooleanProperty();
 
 
-    public Familiar(int idFamiliar, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
-                       String direccion, String telFamiliar) {
+
+    public Familiar(String idFamiliar, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+                       String direccion, String telFamiliar, boolean estado) {
         this.idFamiliar.set(idFamiliar);
         this.primerNombre.set(primerNombre);
         this.segundoNombre.set(segundoNombre);
@@ -25,22 +24,23 @@ public class Familiar {
         this.segundoApellido.set(segundoApellido);
         this.direccion.set(direccion);
         this.telFamiliar.set(telFamiliar);
+        this.estado.set(estado);
 
     }
 
     public Familiar() {
-        this(0,"","","","","","");
+        this("","","","","","","",false);
     }
 
-    public int getIdFamiliar() {
+    public String getIdFamiliar() {
         return idFamiliar.get();
     }
 
-    public IntegerProperty idFamiliarProperty() {
+    public StringProperty idFamiliarProperty() {
         return idFamiliar;
     }
 
-    public void setIdFamiliar(int idFamiliar) {
+    public void setIdFamiliar(String idFamiliar) {
         this.idFamiliar.set(idFamiliar);
     }
 
@@ -114,6 +114,23 @@ public class Familiar {
 
     public void setTelFamiliar(String telFamiliar) {
         this.telFamiliar.set(telFamiliar);
+    }
+
+    public boolean isEstado() {
+        return estado.get();
+    }
+
+    public BooleanProperty estadoProperty() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado.set(estado);
+    }
+
+    @Override
+    public String toString() {
+        return (idFamiliar.get());
     }
 
 }

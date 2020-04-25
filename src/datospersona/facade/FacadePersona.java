@@ -1,14 +1,17 @@
 package datospersona.facade;
 
 import datospersona.dao.PersonaDao;
+import datospersona.dto.BusquedaDeFamiliar;
 import datospersona.dto.Persona;
 import javafx.collections.ObservableList;
+
+import java.util.List;
 
 public class FacadePersona {
 
     private PersonaDao personaDao = new PersonaDao();
 
-    public ObservableList<Persona> cargarPersona() {
+    public List<Persona> cargarPersona() {
         return personaDao.cargarPersona();
     }
 
@@ -21,8 +24,8 @@ public class FacadePersona {
         personaDao.modificar(persona);
     }
 
-   public void buscarPersona(int idenPersona) {
-        personaDao.buscarPorId(idenPersona);
+   public BusquedaDeFamiliar buscarPersona(String idpersona) {
+        return personaDao.buscarPersonalPorId(idpersona);
     }
 
     public void buscarPorNombre(String nombrepersona){

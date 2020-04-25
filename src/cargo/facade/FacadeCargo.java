@@ -22,9 +22,7 @@ public class FacadeCargo {
         return cargoDAO.modificar(cargo);
     }
 
-    public int eliminar(String idCargo){
-        return cargoDAO.eliminar(idCargo);
-    }
+    public boolean eliminar (String idCargo){ return cargoDAO.eliminar(idCargo); }
 
     public Cargo obtenerPorId(String idCargo) {
         return cargoDAO.buscarPorId(idCargo);
