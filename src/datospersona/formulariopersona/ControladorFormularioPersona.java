@@ -123,6 +123,8 @@ public class ControladorFormularioPersona implements Initializable {
     private Button bt_hulla;
     @FXML
     private Button bt_agregarfamiliar;
+    @FXML
+    private int valor = 1;
 
     private ObservableList<Per_Fami_Dto> familiares;
 
@@ -155,7 +157,7 @@ public class ControladorFormularioPersona implements Initializable {
     }
 
     public void initializeTableColumn() {
-        colIdpersona.setCellValueFactory(new PropertyValueFactory<>("idpersona"));
+        colIdpersona.setCellValueFactory(new PropertyValueFactory<>("idPersona"));
         colIdFamiliar.setCellValueFactory(new PropertyValueFactory<>("idFamiliar"));
         colFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("fechaIngreso"));
     }
@@ -388,7 +390,7 @@ public class ControladorFormularioPersona implements Initializable {
         //limpiar();
         //deshabilitarCampos();
         //deshabilitarBotones();
-       
+
     }
 
     @FXML
@@ -458,7 +460,7 @@ public class ControladorFormularioPersona implements Initializable {
                 tf_segundoNombre.setText(persona.getSegundoNombre());
                 tf_primerApellido.setText(persona.getPrimerApellido());
                 tf_segundoApellido.setText(persona.getSegundoApellido());
-                //Date.valueOf(dp_fechaNacimiento.setValue(persona.getFechaNacimiento()));
+                dp_fechaNacimiento.setValue(persona.getFechaNacimiento().toLocalDate());
                 tf_direccion.setText(persona.getDireccion());
                 cbxsexo.setValue(persona.getSexo());
                 ta_alergicoA.setText(persona.getAlergicoA());
@@ -479,11 +481,40 @@ public class ControladorFormularioPersona implements Initializable {
     }
 
     @FXML
+    public void modificar() {//Metodo que se ejecuta al presionar el boton modificar
+        cbxtipodocumento.setDisable(false);
+        tf_idpersona.setDisable(true);
+        tf_primerNombre.setDisable(false);
+        tf_segundoNombre.setDisable(false);
+        tf_primerApellido.setDisable(false);
+        tf_segundoApellido.setDisable(false);
+        dp_fechaNacimiento.setDisable(false);
+        tf_direccion.setDisable(false);
+        cbxsexo.setDisable(false);
+        cbxtipoeps.setDisable(false);
+        ta_alergicoA.setDisable(false);
+        ta_enfermedadSufre.setDisable(false);
+        ta_observaciones.setDisable(false);
+        tf_primerNombre.requestFocus();
+        valor = 0;            //Ingreso una variable Jose Martin campo
+        bt_modificar.setDisable(true);
+        bt_guardar.setDisable(false);
+        bt_hulla.setDisable(false);
+        //--------------------------------
+        //Componentes de la tabla personal-salud-titulo
+        cbx_documentopersona.setDisable(false);
+        cbx_documentofamiliar.setDisable(false);
+        dp_ingresofamiliar.setDisable(false);
+        bt_agregarfamiliar.setDisable(false);
+        tb_familiar.setDisable(false);
+        //---------------------------------
+    }
+
+    @FXML
     public void iniciarCbxSexo() {
         ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("Seleccione", "Masculino", "Femenino");
+        items.addAll("Masculino", "Femenino");
         cbxsexo.setItems(items);
-        cbxsexo.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -518,12 +549,12 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setText("");
         tf_primerApellido.setText("");
         tf_segundoApellido.setText("");
-        //dp_fechaNacimiento.setValue(null);
+        dp_fechaNacimiento.setValue(null);
         tf_direccion.setText("");
         ta_alergicoA.setText("");
         ta_enfermedadSufre.setText("");
         ta_observaciones.setText("");
-        cbxsexo.setValue("");
+        cbxsexo.setValue(null);
         cbxtipoeps.setValue(null);
         txtArea.setText("");
         colIdpersona.setText("");
@@ -531,9 +562,12 @@ public class ControladorFormularioPersona implements Initializable {
         colFechaIngreso.setText("");
         cbx_documentopersona.setValue(null);
         cbx_documentofamiliar.setValue(null);
+        dp_ingresofamiliar.setValue(null);
         colIdpersona.setText("");
         colIdFamiliar.setText("");
         colFechaIngreso.setText("");
+        deshabilitarBotones();
+        deshabilitarCampos();
     }
 
     @FXML
@@ -549,7 +583,7 @@ public class ControladorFormularioPersona implements Initializable {
         ta_alergicoA.setText("");
         ta_enfermedadSufre.setText("");
         ta_observaciones.setText("");
-        cbxsexo.setValue("");
+        cbxsexo.setValue(null);
         cbxtipoeps.setValue(null);
         txtArea.setText("");
         colIdpersona.setText("");
@@ -703,7 +737,7 @@ public class ControladorFormularioPersona implements Initializable {
         boolean resultado = false;
         for (int i = 0; i < familiares.size(); i++) {
             if (familiares.get(i).getIdPersona().equals(per_fami_dto.getIdPersona()) && familiares.get(i).getIdFamiliar().equals(per_fami_dto.getIdFamiliar())
-                   ) {
+            ) {
                 resultado = true;
                 break;
             }
@@ -753,6 +787,7 @@ public class ControladorFormularioPersona implements Initializable {
             msg.setContentText("La fecha de Ingreso del Familiar ha sido agregada correctamente");
             msg.setHeaderText("Información");
             msg.show();
+            cancelar();
 
             /*if (familiares.isEmpty()) {
                 //boolean res = buscarDocumento(per_fami_dto.getIdPersona());

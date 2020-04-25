@@ -126,6 +126,8 @@ public class PersonaDao {
                 persona.setObservaciones(rset.getString("observaciones"));
                 persona.setHuella((ByteArrayInputStream) rset.getBinaryStream("huella"));
                 persona.setHuella1(rset.getInt("huella1"));
+                persona.setTipoDocumento(rset.getString("idTipoDocumento"));
+                persona.setIdEps(rset.getString("idEps"));
                 persona.setEstado(rset.getBoolean("estado"));
             }
 
