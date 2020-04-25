@@ -22,7 +22,7 @@ public class FamiliarDAO {
     public List<Familiar> listarTodos() {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from familiar_paciente";
+            String sql = "select * from familiar_paciente where estado= 1";
             stmt = conn.prepareStatement(sql);
             rset = stmt.executeQuery();
 
@@ -48,6 +48,35 @@ public class FamiliarDAO {
         return familiares;
     } // Fin del método obtenerTodos()
 
+    public List<Familiar> buscar(String buscar) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from familiar_paciente where idFamiliar LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            familiares = new ArrayList<>();
+
+            while (rset.next()) {
+                familiar = new Familiar();
+
+                familiar.setIdFamiliar(rset.getString("idFamiliar"));
+                familiar.setPrimerNombre(rset.getString("nombre1"));
+                familiar.setSegundoNombre(rset.getString("nombre2"));
+                familiar.setPrimerApellido(rset.getString("apellido1"));
+                familiar.setSegundoApellido(rset.getString("apellido2"));
+                familiar.setDireccion(rset.getString("direccion"));
+                familiar.setTelFamiliar(rset.getString("telefono"));
+                familiar.setEstado(rset.getString("estado"));
+                familiares.add(familiar);
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - buscarPoridFamiliar()!");
+        }
+        return familiares;
+    } // Fin del método obtenerTodos()
 
 
     public int agregar(Familiar familiar) {
@@ -63,7 +92,7 @@ public class FamiliarDAO {
             stmt.setString(5, familiar.getSegundoApellido());
             stmt.setString(6, familiar.getDireccion());
             stmt.setString(7, familiar.getTelFamiliar());
-            stmt.setBoolean(8,familiar.isEstado());
+            stmt.setInt(8, Integer.parseInt(familiar.getEstado()));
 
             return stmt.executeUpdate();
 
@@ -98,7 +127,7 @@ public class FamiliarDAO {
         return 0;
     }
 
-    public int eliminar(int idFamiliar) {
+    public int eliminarr(int idFamiliar) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "delete from familiar_paciente where idFamiliar = ?";
@@ -113,6 +142,43 @@ public class FamiliarDAO {
         }
         return 0;
     }
+
+    public boolean eliminar(String idFamiliar) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
+        //en otras tablas que dependan de la clave primaria de éste
+
+        boolean yes = false;
+        try {
+
+            if(yes==false) {
+                conn = ConexionRoot.getConexion();
+                String sql = "SELECT p.idpersona ,p.idFamiliar ,ps.idFamiliar as relacion from persona_familiar AS p " +
+                        "INNER JOIN familiar_paciente AS ps ON p.idFamiliar=ps.idFamiliar where ps.idFamiliar = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, idFamiliar);
+                rset = stmt.executeQuery();
+                if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                    yes = true;
+
+                } else {
+                    String sql2 = "update familiar_paciente set estado = 0 where idFamiliar = ?";
+                    stmt = conn.prepareStatement(sql2);
+                    stmt.setString(1, idFamiliar);
+                    stmt.executeUpdate();
+                    yes = false;
+
+
+                }
+
+
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            e.printStackTrace();
+        }
+        return yes;
+    }
+
+
 
 
 }

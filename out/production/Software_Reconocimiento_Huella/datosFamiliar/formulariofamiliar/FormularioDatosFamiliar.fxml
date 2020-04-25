@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datosFamiliar.formulariofamiliar.ControladorDatosFamiliar">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datosFamiliar.formulariofamiliar.ControladorDatosFamiliar">
    <children>
       <TableView fx:id="tblFamiliares" layoutY="331.0" prefHeight="264.0" prefWidth="800.0" tableMenuButtonVisible="true">
         <columns>
@@ -45,7 +38,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_nombre1" layoutX="256.0" layoutY="127.0" prefHeight="25.0" prefWidth="166.0" />
+      <TextField fx:id="tf_nombre1" layoutX="256.0" layoutY="127.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="438.0" layoutY="129.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
@@ -86,7 +79,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_consultar" layoutX="122.0" layoutY="283.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Consultar" textFill="WHITE">
+      <Button fx:id="bt_consultar" layoutX="122.0" layoutY="283.0" mnemonicParsing="false" onAction="#consultar" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Consultar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -94,7 +87,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_cancelar" layoutX="230.0" layoutY="283.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Cancelar" textFill="WHITE">
+      <Button fx:id="bt_cancelar" layoutX="230.0" layoutY="283.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Cancelar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -118,12 +111,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_modificar" layoutX="446.0" layoutY="283.0" mnemonicParsing="false" onAction="#modificarFamiliar" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Modificar" textFill="WHITE">
+      <Button fx:id="bt_modificar" layoutX="446.0" layoutY="283.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Modificar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="bt_inhabilitar" layoutX="338.0" layoutY="283.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Eliminar" textFill="WHITE">
+      <Button fx:id="bt_inhabilitar" layoutX="338.0" layoutY="283.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Eliminar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

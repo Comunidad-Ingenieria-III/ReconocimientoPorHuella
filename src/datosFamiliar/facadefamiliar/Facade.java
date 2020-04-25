@@ -20,12 +20,15 @@ public class Facade {
         return familiarDAO.agregar(familiar);
 
     }
+    public List<Familiar> buscar(String buscar) {
+        return familiarDAO.buscar(buscar);
+    }
 
     public int modificarFamiliar(Familiar familiar){
         return familiarDAO.modificar(familiar);
     }
 
-    public int eliminarFamiliar(int idFamiliar){
+    public boolean eliminarFamiliar(String idFamiliar){
         return familiarDAO.eliminar(idFamiliar);
     }
 }

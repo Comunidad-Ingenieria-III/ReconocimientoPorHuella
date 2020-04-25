@@ -11,12 +11,13 @@ public class Familiar {
     private StringProperty segundoApellido = new SimpleStringProperty();
     private StringProperty direccion = new SimpleStringProperty();
     private StringProperty telFamiliar = new SimpleStringProperty();
-    private BooleanProperty estado = new SimpleBooleanProperty();
+    private StringProperty estado = new SimpleStringProperty();
+
 
 
 
     public Familiar(String idFamiliar, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
-                       String direccion, String telFamiliar, boolean estado) {
+                       String direccion, String telFamiliar, String estado) {
         this.idFamiliar.set(idFamiliar);
         this.primerNombre.set(primerNombre);
         this.segundoNombre.set(segundoNombre);
@@ -29,7 +30,7 @@ public class Familiar {
     }
 
     public Familiar() {
-        this("","","","","","","",false);
+        this("","","","","","","","");
     }
 
     public String getIdFamiliar() {
@@ -116,15 +117,15 @@ public class Familiar {
         this.telFamiliar.set(telFamiliar);
     }
 
-    public boolean isEstado() {
+    public String getEstado() {
         return estado.get();
     }
 
-    public BooleanProperty estadoProperty() {
+    public StringProperty estadoProperty() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado.set(estado);
     }
 
