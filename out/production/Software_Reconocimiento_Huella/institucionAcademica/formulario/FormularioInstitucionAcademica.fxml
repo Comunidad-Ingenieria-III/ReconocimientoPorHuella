@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="body" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionAcademica.formulario.ControladorInstitucionAcademica">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="body" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="institucionAcademica.formulario.ControladorInstitucionAcademica">
 
 
    <children>
@@ -141,6 +142,11 @@
                         </Label>
                      </children>
                   </Pane>
+                  <Label layoutX="36.0" layoutY="45.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+                     <font>
+                        <Font name="System Bold Italic" size="10.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="237.0" prefWidth="798.0" styleClass="panel_inferior">

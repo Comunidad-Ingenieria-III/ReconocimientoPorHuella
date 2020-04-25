@@ -115,7 +115,7 @@ public class ControladorDatosFamiliar implements Initializable {
                     tf_nombre1.setText(newValue.getPrimerNombre());
                     tf_nombre2.setText(newValue.getSegundoNombre());
                     tf_apellido1.setText(newValue.getPrimerApellido());
-                    tf_apellido2.setText(newValue.getSegundoNombre());
+                    tf_apellido2.setText(newValue.getSegundoApellido());
                     tf_direccion.setText(newValue.getDireccion());
                     tf_numtelefono.setText(newValue.getTelFamiliar());
 
@@ -164,7 +164,6 @@ public class ControladorDatosFamiliar implements Initializable {
                 }
                 if(listaFamiliares.get(0).getEstado().equals("1")){
 
-
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Familiar Paciente");
                     msg.setContentText("Familiar: " + tf_idfamiliar.getText() +" existente no es posible agregar" );
@@ -173,23 +172,38 @@ public class ControladorDatosFamiliar implements Initializable {
                     tf_idfamiliar.setText("");
                     tf_nombre1.setText("");
                     tf_idfamiliar.requestFocus();
-
-
                 }
+            }
+        }
+    }
 
+    @FXML
+    public void validarId() {//Metodo para validar que el Id del cargo solo reciba numeros
+        tf_idfamiliar.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
 
-
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
 
             }
 
-        }
+        });
+        tf_numtelefono.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
 
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
 
+            }
+
+        });
     }
-
-
-
-
 
     @FXML
     public void guardarFamiliar() {

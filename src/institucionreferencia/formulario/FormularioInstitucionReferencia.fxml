@@ -127,6 +127,11 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Button>
+                  <Label layoutX="27.0" layoutY="48.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+                     <font>
+                        <Font name="System Bold Italic" size="10.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
           <AnchorPane prefHeight="213.0" prefWidth="748.0" styleClass="panel_inferior">
