@@ -9,24 +9,24 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
-import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ControladorTipoDocumento extends Component implements Initializable {
+public class ControladorTipoDocumento extends  Component implements Initializable,  KeyListener {
 
     FacadeTipoDocumento facadeTipoDocumento = new FacadeTipoDocumento();
 
@@ -39,7 +39,8 @@ public class ControladorTipoDocumento extends Component implements Initializable
     private TableColumn<DtoTipoDocumento, String> colNombre;
 
     @FXML
-    private TextField tf_Tipo;
+    public TextField tf_Tipo;
+
     @FXML
     private TextField tf_nombre1;
     @FXML
@@ -56,10 +57,10 @@ public class ControladorTipoDocumento extends Component implements Initializable
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
-    private String estado ="1";
+    private String estado = "1";
     private List<DtoTipoDocumento> tiposdeDocumento;
     @FXML
-    int valor=0;
+    int valor = 0;
 
     private ObservableList<DtoTipoDocumento> tipoDocumentos;
 
@@ -79,6 +80,7 @@ public class ControladorTipoDocumento extends Component implements Initializable
 
 
     }
+
 
     @FXML
     public void manejarEventos() {
@@ -100,7 +102,7 @@ public class ControladorTipoDocumento extends Component implements Initializable
         });//FIN DEL LISTENER
     }
 
-    public void validarExistente(){
+    public void validarExistente() {
 
         tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -110,14 +112,15 @@ public class ControladorTipoDocumento extends Component implements Initializable
         });
     }
 
-    public void validarE(){
-        if(valor==1){
+
+    public void validarE() {
+        if (valor == 1) {
 
 
-            tiposdeDocumento=facadeTipoDocumento.buscar(tf_Tipo.getText());
+            tiposdeDocumento = facadeTipoDocumento.buscar(tf_Tipo.getText());
 
-            if(tiposdeDocumento.size()>=1){
-                int i=0;
+            if (tiposdeDocumento.size() >= 1) {
+                int i = 0;
 
                 if (tiposdeDocumento.get(0).getEstado().equals("0")) {
 
@@ -131,12 +134,12 @@ public class ControladorTipoDocumento extends Component implements Initializable
                     tf_Tipo.requestFocus();
 
                 }
-                if(tiposdeDocumento.get(0).getEstado().equals("1")){
+                if (tiposdeDocumento.get(0).getEstado().equals("1")) {
 
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Tipo de titulo académico");
-                    msg.setContentText("Código: " + tf_Tipo.getText() +" existente no es posible agregar" );
+                    msg.setContentText("Código: " + tf_Tipo.getText() + " existente no es posible agregar");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     tf_Tipo.setText("");
@@ -147,8 +150,6 @@ public class ControladorTipoDocumento extends Component implements Initializable
                 }
 
 
-
-
             }
 
         }
@@ -157,15 +158,12 @@ public class ControladorTipoDocumento extends Component implements Initializable
     }
 
 
-
-
-
     @FXML
     public void botonGuardar() {
-        tiposdeDocumento=facadeTipoDocumento.buscar(tf_Tipo.getText());
+        tiposdeDocumento = facadeTipoDocumento.buscar(tf_Tipo.getText());
         DtoTipoDocumento dtoTipoDocumento = new DtoTipoDocumento(
                 tf_Tipo.getText(),
-                tf_nombre1.getText(),estado
+                tf_nombre1.getText(), estado
         );
         if (tiposdeDocumento.isEmpty()) {
             if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
@@ -174,10 +172,10 @@ public class ControladorTipoDocumento extends Component implements Initializable
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                //bt_guardar.setDisable(true);
+
                 tf_Tipo.requestFocus();
-            }else {
-                int res= facadeTipoDocumento.insertarTipoDocumento(dtoTipoDocumento);
+            } else {
+                int res = facadeTipoDocumento.insertarTipoDocumento(dtoTipoDocumento);
                 if (res == 1) {
                     tipoDocumentos.add(dtoTipoDocumento);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
@@ -197,7 +195,7 @@ public class ControladorTipoDocumento extends Component implements Initializable
                 }
 
             }
-        } else{
+        } else {
             if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Tipo de documento");
@@ -206,7 +204,7 @@ public class ControladorTipoDocumento extends Component implements Initializable
                 msg.show();
                 tf_nombre1.requestFocus();
 
-            }else{
+            } else {
                 int res = facadeTipoDocumento.modificarTipoDocumeto(dtoTipoDocumento);
                 if (res == 1) {
                     tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), dtoTipoDocumento);
@@ -227,17 +225,17 @@ public class ControladorTipoDocumento extends Component implements Initializable
             }
         }
     }
+
     @FXML
-    public void modificar(){
+    public void modificar() {
         tf_Tipo.setDisable(true);
         tf_nombre1.setDisable(false);
         tf_nombre1.requestFocus();
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        valor =0;
+        valor = 0;
         bt_guardar.setDisable(false);
     }
-
 
 
     @FXML
@@ -279,13 +277,44 @@ public class ControladorTipoDocumento extends Component implements Initializable
 
 
 
-      //  int res = facadeTipoDocumento.eliminarTipoDocumento(String.valueOf(tb_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento()));
+
+    @FXML
+    public void buttonPressed(KeyEvent e)
+    {
+        if(e.getCode().toString().equals("ENTER"))
+        {
+            //do something
+        }
+    }
+
+
+
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+        if(e.getCode().equals(KeyCode.ENTER))
+            consultarTDocuemnto();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
+
+
+
 
 
 
 
     @FXML
     private void consultarTDocuemnto() {
+
         if (tf_Tipo.getText().isEmpty()) {
             tf_Tipo.setDisable(false);
             tf_nombre1.setDisable(true);
@@ -293,6 +322,7 @@ public class ControladorTipoDocumento extends Component implements Initializable
             bt_crear.setDisable(true);
             bt_guardar.setDisable(true);
             tb_tipoDocumento.setEditable(false);
+            valor=0;
         } else {
             int i = 0;
             tipoDocumentos = FXCollections.observableArrayList(facadeTipoDocumento.buscar(tf_Tipo.getText()));
@@ -311,7 +341,10 @@ public class ControladorTipoDocumento extends Component implements Initializable
                     tb_tipoDocumento.setItems(tipoDocumentos);
                     colId.setCellValueFactory(new PropertyValueFactory<>("idTipoDocumento"));
                     colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreTipoDocumento"));
-
+                    tf_Tipo.setText(tipoDocumentos.get(i).getIdTipoDocumento());
+                    tf_nombre1.setText(tipoDocumentos.get(i).getNombreTipoDocumento());
+                    bt_inhabilitar.setDisable(false);
+                    bt_modificar.setDisable(false);
                 }
                 if (tipoDocumentos.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
@@ -331,6 +364,7 @@ public class ControladorTipoDocumento extends Component implements Initializable
         }
 
     }
+
 
 
 
@@ -375,6 +409,7 @@ public class ControladorTipoDocumento extends Component implements Initializable
         tf_Tipo.setDisable(false);
         tf_nombre1.setDisable(false);
         tf_Tipo.requestFocus();
+
     }
 
     @FXML
@@ -408,5 +443,21 @@ public class ControladorTipoDocumento extends Component implements Initializable
     private void cerrarTipoDocumento(ActionEvent event) {
         Stage stage = (Stage) bt_salir.getScene().getWindow();
         stage.close();
+    }
+
+    @Override
+    public void keyTyped(java.awt.event.KeyEvent e) {
+
+    }
+
+
+    @Override
+    public void keyPressed(java.awt.event.KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(java.awt.event.KeyEvent e) {
+
     }
 }

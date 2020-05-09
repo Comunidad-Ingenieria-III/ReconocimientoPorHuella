@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -215,6 +216,23 @@ public class ControladorInstitucionAcademica extends Component implements Initia
         txtDireccion.setText("");
         txtTelefono.setText("");
     }
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarInstitucion();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
+
 
 
 
@@ -426,6 +444,13 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                     colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
                     colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
                     btnConsultar.setDisable(true);
+
+                    txtCodigo.setText(instituciones.get(i).getIdInstitucion());
+                    txtNombre.setText(instituciones.get(i).getNombre());
+                    txtDireccion.setText(instituciones.get(i).getDireccion());
+                    txtTelefono.setText(instituciones.get(i).getTelefono());
+                    btnInhabilitar.setDisable(false);
+                    btnModificar.setDisable(false);
                 }
                 if (instituciones.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

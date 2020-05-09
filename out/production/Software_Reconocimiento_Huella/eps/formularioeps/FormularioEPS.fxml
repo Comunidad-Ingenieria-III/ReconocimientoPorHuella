@@ -23,7 +23,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_Codigo" layoutX="31.0" layoutY="113.0" prefHeight="25.0" prefWidth="150.0" styleClass="text-field" />
+                  <TextField fx:id="tf_Codigo" layoutX="31.0" layoutY="113.0" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="150.0" styleClass="text-field" />
                   <Label layoutX="211.0" layoutY="87.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
                      <font>
                         <Font name="System Bold Italic" size="16.0" />
@@ -135,6 +135,11 @@
                            </stops>
                         </LinearGradient>
                      </textFill>
+                  </Label>
+                  <Label layoutX="29.0" layoutY="52.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+                     <font>
+                        <Font name="System Bold Italic" size="10.0" />
+                     </font>
                   </Label>
                </children>
             </Pane>

@@ -20,7 +20,7 @@
                               <Font name="System Bold Italic" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_Tipo" layoutX="121.0" layoutY="111.0" prefHeight="25.0" prefWidth="200.0" styleClass="text-field" />
+                        <TextField fx:id="tf_Tipo" layoutX="121.0" layoutY="111.0" onInputMethodTextChanged="#textESC" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="200.0" styleClass="text-field" />
                         <Label layoutX="433.0" layoutY="84.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
                            <font>
                               <Font name="System Bold Italic" size="16.0" />
@@ -32,7 +32,7 @@
                            </font>
                         </Label>
 
-                        <TextField fx:id="tf_nombre1" layoutX="433.0" layoutY="111.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
+                        <TextField fx:id="tf_nombre1" layoutX="433.0" layoutY="111.0" onKeyPressed="#textESC" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
                         <Label layoutX="179.0" layoutY="87.0" text="*" textFill="#ee0707">
 
                            <font>
@@ -70,7 +70,7 @@
                            </font>
                         </Button>
 
-                        <Button fx:id="bt_consultar" layoutX="121.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" onAction="#consultarTDocuemnto" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
+                        <Button fx:id="bt_consultar" layoutX="121.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" onAction="#consultarTDocuemnto" onKeyPressed="#textESC" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
 
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -120,6 +120,11 @@
                         </Label>
                      </children>
                   </Pane>
+                  <Label layoutX="13.0" layoutY="47.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+                     <font>
+                        <Font name="System Bold Italic" size="10.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="205.0" prefWidth="746.0" styleClass="panel_inferior">

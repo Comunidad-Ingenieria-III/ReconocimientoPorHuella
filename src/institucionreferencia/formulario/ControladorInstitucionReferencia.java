@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -193,6 +194,23 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     }
 
     @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarInsReferencia();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
+
+    @FXML
     private void botonGuardar() {
         institucionesReferencias = facadeInstitucionReferencia.buscar(txtId.getText());
 
@@ -331,6 +349,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
             btnCrear.setDisable(true);
             btnGuardar.setDisable(true);
             tblInstitucionReferencia.setEditable(false);
+            valor=0;
         } else {
             int i = 0;
             institucionReferencias = FXCollections.observableArrayList(facadeInstitucionReferencia.buscar(txtId.getText()));
@@ -353,6 +372,14 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                     colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
                     colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
                     colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+                    btnConsultar.setDisable(true);
+
+                    txtId.setText(institucionReferencias.get(i).getIdInstitucion());
+                    txtNombre.setText(institucionReferencias.get(i).getNombre());
+                    txtDireccion.setText(institucionReferencias.get(i).getDireccion());
+                    txtTelefono.setText(institucionReferencias.get(i).getTelefono());
+                    btnInhabilitar.setDisable(false);
+                    btnModificar.setDisable(false);
                 }
                 if (institucionReferencias.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

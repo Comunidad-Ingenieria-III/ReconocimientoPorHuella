@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -21,12 +22,13 @@ import login.daousuario.DaoUsuario;
 import login.dtousuario.Usuario;
 
 import javax.swing.*;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class ControladorLogin implements Initializable {
+public class ControladorLogin<escuchaTeclado> implements Initializable {
 
     DaoUsuario daoUsuario = new DaoUsuario();
     Usuario usuario = new Usuario();
@@ -48,6 +50,24 @@ public class ControladorLogin implements Initializable {
     private Label lblContraseña;
     @FXML
     private Label lblUsuario;
+
+    KeyListener escuchaTeclado = new KeyListener() {
+        @Override
+        public void keyTyped(java.awt.event.KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(java.awt.event.KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(java.awt.event.KeyEvent e) {
+
+        }
+    };
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -122,7 +142,7 @@ public class ControladorLogin implements Initializable {
                 stage.setScene(scene);
                 stage.show();
                 ((Node) (event.getSource())).getScene().getWindow().hide();
-                //al cerrar la ventana de Libros
+
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
                     public void handle(WindowEvent e) {
@@ -155,6 +175,18 @@ public class ControladorLogin implements Initializable {
         tf_Usuario.setText("");
         tf_Contrasena.setText("");
     }
+    @FXML
+    public void textAction(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ENTER)) {
+
+
+        }
+    }
+
+
+
+
 
     @FXML
     private void abrirFormularioRegistro(ActionEvent event) throws IOException {

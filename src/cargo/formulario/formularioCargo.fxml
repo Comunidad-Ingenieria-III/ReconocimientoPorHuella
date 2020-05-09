@@ -32,7 +32,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtId" layoutX="126.0" layoutY="115.0" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="txtId" layoutX="126.0" layoutY="115.0" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="200.0" />
                   <Label layoutX="430.0" layoutY="94.0" styleClass="lbl-cuerpo" text="Descripción: " />
                   <Label layoutX="522.0" layoutY="87.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#ee0404">
                      <font>
@@ -103,6 +103,11 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Button>
+                  <Label layoutX="29.0" layoutY="51.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+                     <font>
+                        <Font name="System Bold Italic" size="10.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
           <AnchorPane prefHeight="300.0" prefWidth="748.0" styleClass="panel_inferior">

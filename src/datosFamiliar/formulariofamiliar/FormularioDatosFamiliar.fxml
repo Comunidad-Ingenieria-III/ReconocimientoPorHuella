@@ -31,7 +31,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_idfamiliar" layoutX="256.0" layoutY="79.0" prefHeight="25.0" prefWidth="166.0" />
+      <TextField fx:id="tf_idfamiliar" layoutX="256.0" layoutY="79.0" onKeyPressed="#textAction" onKeyReleased="#validarId" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="177.0" layoutY="132.0" text="*" textFill="#f80707" />
       <Label layoutX="48.0" layoutY="129.0" prefHeight="25.0" prefWidth="198.0" styleClass="lbl-cuerpo" text="Primer Nombre">
          <font>
@@ -63,7 +63,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_numtelefono" layoutX="255.0" layoutY="225.0" prefHeight="25.0" prefWidth="166.0" />
+      <TextField fx:id="tf_numtelefono" layoutX="255.0" layoutY="225.0" onKeyReleased="#validarId" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="438.0" layoutY="230.0" prefHeight="20.0" prefWidth="100.0" styleClass="lbl-cuerpo" text="Dirección">
          <font>
             <Font name="System Bold Italic" size="14.0" />
@@ -123,5 +123,10 @@
       </Button>
       <Label layoutX="244.0" layoutY="78.0" text="*" textFill="#f80707" />
       <Label layoutX="206.0" layoutY="227.0" text="*" textFill="#f80707" />
+      <Label layoutX="14.0" layoutY="56.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+         <font>
+            <Font name="System Bold Italic" size="10.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

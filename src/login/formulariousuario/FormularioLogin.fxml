@@ -15,7 +15,7 @@
                   <Font name="System Bold Italic" size="12.0" />
                </font></Label>
               <TextField fx:id="tf_Usuario" layoutX="180.0" layoutY="124.0" onKeyReleased="#validar" prefHeight="30.0" prefWidth="170.0" promptText="Usuario" />
-            <PasswordField fx:id="tf_Contrasena" layoutX="180.0" layoutY="201.0" onKeyReleased="#validar" prefHeight="30.0" prefWidth="170.0" promptText="Contraseña" />
+            <PasswordField fx:id="tf_Contrasena" layoutX="180.0" layoutY="201.0" onKeyPressed="#textAction" onKeyReleased="#validar" prefHeight="30.0" prefWidth="170.0" promptText="Contraseña" />
             <Hyperlink layoutX="474.0" layoutY="61.0" onAction="#abrirFormularioRegistro" text="aqui" textFill="#a82626" />
             <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="84.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
