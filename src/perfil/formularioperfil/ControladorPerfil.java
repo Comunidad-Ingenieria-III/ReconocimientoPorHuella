@@ -254,7 +254,7 @@ public class ControladorPerfil implements Initializable {
             } else {
                 int res = perfilFacade.modificar(perfilDto);
                 if (res == 1) {
-                    perfiles.set(tbl_perfiles.getSelectionModel().getSelectedIndex(), perfilDto);
+                    //perfiles.set(tbl_perfiles.getSelectionModel().getSelectedIndex(), perfilDto);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Perfil");
                     msg.setContentText("El Perfil se ha Modificado");
@@ -288,7 +288,7 @@ public class ControladorPerfil implements Initializable {
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta = perfilFacade.eliminar(tbl_perfiles.getSelectionModel().getSelectedItem().getIdperfil());
+            boolean respuesta = perfilFacade.eliminar(txtId.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -301,7 +301,7 @@ public class ControladorPerfil implements Initializable {
                 cancelar();
 
             } else {
-                perfiles.remove(tbl_perfiles.getSelectionModel().getSelectedIndex());
+                perfiles.remove(txtId.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - Perfil");
                 msg2.setContentText("El perfil se ha eliminado");

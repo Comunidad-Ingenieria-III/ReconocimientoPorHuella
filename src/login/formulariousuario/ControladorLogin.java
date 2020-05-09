@@ -2,14 +2,11 @@ package login.formulariousuario;
 
 import conexionBD.ConexionRoot;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,7 +18,6 @@ import javafx.stage.WindowEvent;
 import login.daousuario.DaoUsuario;
 import login.dtousuario.Usuario;
 
-import javax.swing.*;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URL;
@@ -119,7 +115,7 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
     }
 
     @FXML
-    private void iniciarSesion(ActionEvent event) throws IOException {
+    private void iniciarSesion() throws IOException {
 
         try {
             conn = ConexionRoot.getConexion();
@@ -141,7 +137,7 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
 
                 stage.setScene(scene);
                 stage.show();
-                ((Node) (event.getSource())).getScene().getWindow().hide();
+               // ((Node) (event.getSource())).getScene().getWindow().hide();
 
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
@@ -150,10 +146,10 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
                         System.exit(0);
                     }
                 });
-
+                this.cerrarLogin();
 
                 //ocultar la ventana de Login
-                ((Node) (event.getSource())).getScene().getWindow().hide();
+             //   ((Node) (event.getSource())).getScene().getWindow().hide();
             } else {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("AP_Humana - Ingreso al Sistema");
@@ -175,11 +171,13 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
         tf_Usuario.setText("");
         tf_Contrasena.setText("");
     }
+
+
     @FXML
-    public void textAction(KeyEvent e){
+    public void textAction(KeyEvent e) throws IOException {
 
         if(e.getCode().equals(KeyCode.ENTER)) {
-
+            iniciarSesion();
 
         }
     }
@@ -214,7 +212,7 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
 
 
     @FXML
-    private void cerrarLogin(ActionEvent event) {
+    private void cerrarLogin() {
         Stage stage = (Stage) btnSalir.getScene().getWindow();
         stage.close();
     }

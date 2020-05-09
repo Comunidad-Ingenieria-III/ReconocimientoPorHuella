@@ -225,7 +225,7 @@ public class ControladorCargo extends Component implements Initializable {
                 int res = facadeCargo.modificar(cargo);
                 if (res == 1) {
                     btnGuardar.setDisable(true);
-                    cargos.set(tblCargos.getSelectionModel().getSelectedIndex(), cargo);
+                    //cargos.set(tblCargos.getSelectionModel().getSelectedIndex(), cargo);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Cargo");
                     msg.setContentText("El cargo se ha modificado");
@@ -282,7 +282,7 @@ public class ControladorCargo extends Component implements Initializable {
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta =facadeCargo.eliminar(tblCargos.getSelectionModel().getSelectedItem().getIdCargo());
+            boolean respuesta =facadeCargo.eliminar(txtId.getText());
 
 
             if (respuesta) {
@@ -297,7 +297,7 @@ public class ControladorCargo extends Component implements Initializable {
                 cancelar();
 
             } else {
-                cargos.remove(tblCargos.getSelectionModel().getSelectedIndex());
+                cargos.remove(txtId.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - Cargo");
                 msg2.setContentText("El cargo se ha eliminado");
