@@ -131,7 +131,8 @@ public class Familiar {
 
     @Override
     public String toString() {
-        return (idFamiliar.get());
+        return idFamiliar.get() + primerNombre.get() + telFamiliar;
     }
+
 
 }

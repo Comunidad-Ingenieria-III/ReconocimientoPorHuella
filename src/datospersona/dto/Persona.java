@@ -49,6 +49,26 @@ public class Persona {
         this.estado.setValue(estado);
     }
 
+    public Persona(String idpersona, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+                   Date fechaNacimiento, String direccion, String sexo, String alegicoA, String enfermedadSufre, String observaciones,
+                   String tipoDocumento, String idEps, boolean estado) {
+
+        this.idpersona.set(idpersona);
+        this.primerNombre.set(primerNombre);
+        this.segundoNombre.set(segundoNombre);
+        this.primerApellido.set(primerApellido);
+        this.segundoApellido.set(segundoApellido);
+        this.fechaNacimiento = fechaNacimiento;
+        this.direccion.set(direccion);
+        this.sexo.set(sexo);
+        this.alergicoA.set(alegicoA);
+        this.enfermedadSufre.set(enfermedadSufre);
+        this.observaciones.set(observaciones);
+        this.tipoDocumento.set(tipoDocumento);
+        this.idEps.set(idEps);
+        this.estado.setValue(estado);
+    }
+
     public String getIdpersona() {
         return idpersona.get();
     }

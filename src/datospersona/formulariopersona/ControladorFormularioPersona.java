@@ -49,6 +49,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControladorFormularioPersona implements Initializable {
@@ -72,6 +73,10 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private TextField tf_segundoApellido;
     @FXML
+    private TextField tf_colnombre1;
+    @FXML
+    private TextField tf_coltelefono;
+    @FXML
     private DatePicker dp_fechaNacimiento;
     @FXML
     private TextField tf_direccion;
@@ -86,6 +91,10 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private ComboBox<Familiar> cbx_documentofamiliar;
     @FXML
+    private ComboBox<Familiar> cbx_nombrefamiliar;
+    @FXML
+    private ComboBox<Familiar> cbx_telefonofamiliar;
+    @FXML
     private DatePicker dp_ingresofamiliar;
 
     @FXML
@@ -94,6 +103,10 @@ public class ControladorFormularioPersona implements Initializable {
     private TableColumn<Per_Fami_Dto, String> colIdpersona;
     @FXML
     private TableColumn<Per_Fami_Dto, String> colIdFamiliar;
+    @FXML
+    private TableColumn<Per_Fami_Dto, String> colnombre1;
+    @FXML
+    private TableColumn<Per_Fami_Dto, String> coltelefono;
     @FXML
     private TableColumn<Per_Fami_Dto, Date> colFechaIngreso;
 
@@ -159,6 +172,8 @@ public class ControladorFormularioPersona implements Initializable {
     public void initializeTableColumn() {
         colIdpersona.setCellValueFactory(new PropertyValueFactory<>("idPersona"));
         colIdFamiliar.setCellValueFactory(new PropertyValueFactory<>("idFamiliar"));
+        colnombre1.setCellValueFactory(new PropertyValueFactory<>("nombre1"));
+        coltelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         colFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("fechaIngreso"));
     }
 
@@ -321,7 +336,7 @@ public class ControladorFormularioPersona implements Initializable {
                     case TEMPLATE_STATUS_READY:    // informe de éxito y detiene  la captura de huellas
                         stop();
                         setTemplate(Reclutador.getTemplate());
-                        EnviarTexto("Listo la huella ha sido cpaturada correctamente ahora puede guardarla");
+                        EnviarTexto("Listo la huella ha sido capturada correctamente ahora puede guardarla");
                         break;
 
                     case TEMPLATE_STATUS_FAILED: // informe de fallas y reiniciar la captura de huellas
@@ -338,64 +353,91 @@ public class ControladorFormularioPersona implements Initializable {
 
     @FXML
     private void guardarHuella() {
-        int resultado;
-        ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
-        Integer tamañoHuella = template.serialize().length;
-        conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        Persona persona = null;
-        try {
-            conn = ConexionRoot.getConexion();
-            stmt = conn.prepareStatement("select idpersona, huella, huella1 from datos_persona where idpersona= ?");
-            stmt.setInt(1, Integer.parseInt(tf_idpersona.getText()));
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                //Lee la plantilla de la base de datos
-                byte templateBuffer[] = rs.getBytes(2);
-                //Crea una nueva plantilla a partir de la guardada en la base de datos
-                DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
-                //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
-                setTemplate(referenceTemplate);
-                //Compara las caracteriticas de la huella recientemente capturda con la
-                // plantilla guardada al usuario especifico en la base de datos
-                DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
+        boolean documento = buscarDocumentos(tf_idpersona.getText());
+        if (!documento) {
+            int resultado;
+            ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
+            Integer tamañoHuella = template.serialize().length;
+            conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+            Persona persona = null;
+            try {
+                conn = ConexionRoot.getConexion();
+                stmt = conn.prepareStatement("select idpersona, huella, huella1 from datos_persona where idpersona= ?");
+                stmt.setInt(1, Integer.parseInt(tf_idpersona.getText()));
+                rs = stmt.executeQuery();
+                if (rs.next()) {
+                    //Lee la plantilla de la base de datos
+                    byte templateBuffer[] = rs.getBytes(2);
+                    //Crea una nueva plantilla a partir de la guardada en la base de datos
+                    DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
+                    //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
+                    setTemplate(referenceTemplate);
+                    //Compara las caracteriticas de la huella recientemente capturda con la
+                    // plantilla guardada al usuario especifico en la base de datos
+                    DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
 
-                //compara las plantilas (actual vs bd)
-                if (result.isVerified()) {
-                    JOptionPane.showMessageDialog(null, "La huella ya existe, coloque un dedo diferente");
-                } else {
-                    PreparedStatement guardarStmt2 = conn.prepareStatement("update datos_persona set huella1=? where (idpersona=?)");
-                    guardarStmt2.setBinaryStream(1, datosHuella, tamañoHuella);
-                    guardarStmt2.setInt(2, Integer.parseInt(tf_idpersona.getText()));
+                    //compara las plantilas (actual vs bd)
+                    if (result.isVerified()) {
+                        //facadepersona.modificarPersona(modificarPersona());
+                        JOptionPane.showMessageDialog(null, "La huella ya existe, coloque un dedo diferente");
+                    } else {
+                        PreparedStatement guardarStmt2 = conn.prepareStatement("update datos_persona set huella1=? where (idpersona=?)");
+                        guardarStmt2.setBinaryStream(1, datosHuella, tamañoHuella);
+                        guardarStmt2.setInt(2, Integer.parseInt(tf_idpersona.getText()));
 
-                    //Ejecuta la sentencia
-                    guardarStmt2.execute();
-                    guardarStmt2.close();
-                    JOptionPane.showMessageDialog(null, "Huella Guardada Correctament");
+                        //Ejecuta la sentencia
+                        guardarStmt2.execute();
+                        guardarStmt2.close();
+                        JOptionPane.showMessageDialog(null, "Huella Guardada Correctament");
+                    }
+                } else if (!rs.next()) {
+
+                    try {
+                        guardarPersona();
+                        iniciarDocumentoPersona();
+                        cancelar();
+                    } catch (RuntimeException e) {
+                        throw new RuntimeException("Error SQL - Agregar()!");
+                    }
                 }
-            } else if (!rs.next()) {
-                //String nombre = JOptionPane.showInputDialog("Nombre y Apellidos:");
-                try {
-                    guardarPersona();
-                } catch (RuntimeException e) {
-                    throw new RuntimeException("Error SQL - Agregar()!");
-                }
-                //JOptionPane.showMessageDialog(null, "Huella Guardada Correctamente");
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } else {
+            int res = facadepersona.modificarPersona(modificarPersona());
+            if (res == 1) {
+                Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                msg.setTitle("Gestiones - Persona");
+                msg.setContentText("Registro Modificado Correctamente");
+                msg.setHeaderText("Exito.");
+                msg.show();
+                cancelar();
+            } else {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Persona ");
+                msg.setContentText("No Fue Posible Modificar El Registro ");
+                msg.setHeaderText("Algo Salio Mal.");
+                msg.show();
+                cancelar();
+            }
         }
-        iniciarDocumentoPersona();
-        //limpiar();
-        //deshabilitarCampos();
-        //deshabilitarBotones();
+    }
 
+    public boolean buscarDocumentos(String idPersona) {//Metodo que valida si el número de documento que se esta ingresando esxiste en la BBDD
+        boolean documento = facadepersona.buscarPersonaPrimaryKey(idPersona);
+        boolean resultado;
+        if (documento) {
+            resultado = true;
+        } else {
+            resultado = false;
+        }
+        return resultado;
     }
 
     @FXML
     private Persona crearPersona() {
-
         String idpersona = tf_idpersona.getText();
         String primerNombre = tf_primerNombre.getText();
         String segundoNombre = tf_segundoNombre.getText();
@@ -411,13 +453,29 @@ public class ControladorFormularioPersona implements Initializable {
         int huella1 = template.serialize().length;
         String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
         String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
-
-
         Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
                 fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps, estado);
-
         return persona;
+    }
 
+    @FXML
+    private Persona modificarPersona() {
+        String idpersona = tf_idpersona.getText();
+        String primerNombre = tf_primerNombre.getText();
+        String segundoNombre = tf_segundoNombre.getText();
+        String primerApellido = tf_primerApellido.getText();
+        String segundoApellido = tf_segundoApellido.getText();
+        Date fechaNacimiento = Date.valueOf(dp_fechaNacimiento.getValue());
+        String direccion = tf_direccion.getText();
+        String sexo = cbxsexo.getValue();
+        String alegicoA = ta_alergicoA.getText();
+        String enfermedadSufre = ta_enfermedadSufre.getText();
+        String observaciones = ta_observaciones.getText();
+        String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
+        String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
+        Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
+                fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, ta_tipoDocumento, ta_idEps, estado);
+        return persona;
     }
 
     @FXML
@@ -436,6 +494,7 @@ public class ControladorFormularioPersona implements Initializable {
             ta_enfermedadSufre.setDisable(true);
             ta_observaciones.setDisable(true);
             tf_idpersona.requestFocus();
+            bt_crear.setDisable(true);
             bt_modificar.setDisable(false);
             bt_inhabilitar.setDisable(false);
             cbx_documentopersona.setDisable(true);
@@ -445,16 +504,26 @@ public class ControladorFormularioPersona implements Initializable {
         } else {
             BusquedaDeFamiliar busqueda = facadepersona.buscarPersona(tf_idpersona.getText());
             Persona persona = busqueda.getPersona();
-            if (!persona.isEstado()) {//Condicional que verifica si el objeto personal_salud
+
+            if (persona == null) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Persona");
+                msg.setContentText("El Registro No Existe ");
+                msg.setHeaderText("Información.");
+                msg.show();
+                cancelar();
+
+            } else if (!persona.isEstado()) {//Condicional que verifica si el objeto personal_salud
                 // que se acaba de recuperar esta en estado inactivo en la BBDD
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Persona");
                 msg.setContentText("El Registro Con Nro De Documento: " + persona.getIdpersona() + " Se Encuentra Inactivo \n"
                         + "Comuniquese Con El Adminsitrador Para Activar De Nuevo Este Registro");
-                msg.setHeaderText("Error.");
+                msg.setHeaderText("Información.");
                 msg.show();
-            } else {
+                cancelar();
 
+            } else {
                 cbxtipodocumento.setValue(facadeTipoDocumento.obtenerPorId(persona.getTipoDocumento()));
                 tf_primerNombre.setText(persona.getPrimerNombre());
                 tf_segundoNombre.setText(persona.getSegundoNombre());
@@ -500,14 +569,42 @@ public class ControladorFormularioPersona implements Initializable {
         bt_modificar.setDisable(true);
         bt_guardar.setDisable(false);
         bt_hulla.setDisable(false);
-        //--------------------------------
-        //Componentes de la tabla personal-salud-titulo
         cbx_documentopersona.setDisable(false);
         cbx_documentofamiliar.setDisable(false);
+        cbx_nombrefamiliar.setDisable(false);
+        cbx_telefonofamiliar.setDisable(false);
         dp_ingresofamiliar.setDisable(false);
         bt_agregarfamiliar.setDisable(false);
         tb_familiar.setDisable(false);
         //---------------------------------
+    }
+
+    @FXML
+    public void eliminarPersona() {
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - Persona");
+        msg.setContentText("¿Está seguro de eliminar la Persona?");
+        msg.setHeaderText("Información");
+        Optional<ButtonType> action = msg.showAndWait();
+        if (action.get() == ButtonType.OK) {
+            boolean respuesta = facadepersona.eliminarPersonal(tf_idpersona.getText());
+            if (respuesta) {
+                Alert msge = new Alert(Alert.AlertType.WARNING);
+                msge.setTitle("Gestiones - Persona ");
+                msge.setContentText("No puedes Eliminar! \n" + "El Documento Tiene Registros Dependientes!\n"
+                        + "Asegurese De Eliminar Los Registros Que Dependen De Este.");
+                msge.setHeaderText("Infomación.");
+                msge.show();
+                cancelar();
+            } else {
+                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                msg2.setTitle("Gestiones - Persona");
+                msg2.setContentText("Registro Eliminado Correctamente");
+                msg2.setHeaderText("Información.");
+                msg2.show();
+                cancelar();
+            }
+        }
     }
 
     @FXML
@@ -539,6 +636,8 @@ public class ControladorFormularioPersona implements Initializable {
     public void iniciarFamiliar() {
         ObservableList<Familiar> listafamiliar = FXCollections.observableArrayList(facadefamiliar.obtenerTodosFamiliares());
         cbx_documentofamiliar.setItems(listafamiliar);
+        cbx_nombrefamiliar.setItems(listafamiliar);
+        cbx_telefonofamiliar.setItems(listafamiliar);
     }
 
     @FXML
@@ -557,14 +656,15 @@ public class ControladorFormularioPersona implements Initializable {
         cbxsexo.setValue(null);
         cbxtipoeps.setValue(null);
         txtArea.setText("");
-        colIdpersona.setText("");
-        colIdFamiliar.setText("");
-        colFechaIngreso.setText("");
         cbx_documentopersona.setValue(null);
         cbx_documentofamiliar.setValue(null);
         dp_ingresofamiliar.setValue(null);
         colIdpersona.setText("");
         colIdFamiliar.setText("");
+        colnombre1.setText("");
+        coltelefono.setText("");
+        cbx_nombrefamiliar.setValue(null);
+        cbx_telefonofamiliar.setValue(null);
         colFechaIngreso.setText("");
         deshabilitarBotones();
         deshabilitarCampos();
@@ -578,7 +678,7 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setText("");
         tf_primerApellido.setText("");
         tf_segundoApellido.setText("");
-        //dp_fechaNacimiento.setValue(null);
+        dp_fechaNacimiento.setValue(null);
         tf_direccion.setText("");
         ta_alergicoA.setText("");
         ta_enfermedadSufre.setText("");
@@ -641,6 +741,8 @@ public class ControladorFormularioPersona implements Initializable {
         dp_fechaNacimiento.setDisable(false);
         cbx_documentopersona.setDisable(false);
         cbx_documentofamiliar.setDisable(false);
+        cbx_nombrefamiliar.setDisable(false);
+        cbx_telefonofamiliar.setDisable(false);
         dp_ingresofamiliar.setDisable(false);
         cbxtipodocumento.requestFocus();
     }
@@ -663,7 +765,10 @@ public class ControladorFormularioPersona implements Initializable {
         txtArea.setDisable(true);
         cbx_documentopersona.setDisable(true);
         cbx_documentofamiliar.setDisable(true);
+        cbx_nombrefamiliar.setDisable(true);
+        cbx_telefonofamiliar.setDisable(true);
         dp_ingresofamiliar.setDisable(true);
+
 
     }
 
@@ -765,7 +870,11 @@ public class ControladorFormularioPersona implements Initializable {
         Per_Fami_Dto per_fami_dto = new Per_Fami_Dto(
 
                 cbx_documentopersona.getSelectionModel().getSelectedItem().getIdpersona(),
-                cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar(),
+                cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar().toString(),
+                cbx_nombrefamiliar.getSelectionModel().getSelectedItem().getPrimerNombre().toString(),
+                cbx_telefonofamiliar.getSelectionModel().getSelectedItem().getTelFamiliar().toString(),
+                //tf_colnombre1.getText(),
+                //tf_coltelefono.getText(),
                 Date.valueOf(dp_ingresofamiliar.getValue()),
                 estado
         );

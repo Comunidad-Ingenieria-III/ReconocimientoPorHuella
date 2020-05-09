@@ -20,12 +20,16 @@ public class FacadePersona {
 
     }
 
-    public void modificarPersona(Persona persona) {
-        personaDao.modificar(persona);
+    public int modificarPersona(Persona persona) {
+       return personaDao.modificar(persona);
     }
 
    public BusquedaDeFamiliar buscarPersona(String idpersona) {
         return personaDao.buscarPersonalPorId(idpersona);
+    }
+
+    public boolean buscarPersonaPrimaryKey(String idpersona){
+        return personaDao.buscarPrimaryKeyPersona(idpersona);
     }
 
     public void buscarPorNombre(String nombrepersona){
@@ -35,6 +39,10 @@ public class FacadePersona {
     public void eliminarPersona(int idCliente) {
 
         personaDao.eliminar(idCliente);
+    }
+
+    public boolean eliminarPersonal(String idpersona){//Funcion para inhabilitar un personal de salud
+        return  personaDao.inhabilitarPersona(idpersona);
     }
 
 }

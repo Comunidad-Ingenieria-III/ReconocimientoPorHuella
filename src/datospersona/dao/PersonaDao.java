@@ -98,7 +98,7 @@ public class PersonaDao {
         return persona;
     }
 
-    public BusquedaDeFamiliar buscarPersonalPorId(String idPersona){//funcion que permite la busqueda de un personal de salud, junto con los
+    public BusquedaDeFamiliar buscarPersonalPorId(String idPersona) {//funcion que permite la busqueda de un personal de salud, junto con los
         //registros que le pertenezcan en la tabla personal-salud-titulo.
         Per_Fami_Dto per_fami_dto;
         List<Per_Fami_Dto> listaFamiliares = null;
@@ -107,10 +107,10 @@ public class PersonaDao {
             conn = ConexionRoot.getConexion();
             String sql = "select * from datos_persona where idpersona = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1,idPersona);
+            stmt.setString(1, idPersona);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
+            if (rset.next()) {
                 persona = new Persona();
 
                 persona.setIdpersona(rset.getString("idpersona"));
@@ -133,11 +133,11 @@ public class PersonaDao {
 
             String sql2 = "select * from persona_familiar where idpersona = ?";
             stmt = conn.prepareStatement(sql2);
-            stmt.setString(1,idPersona);
+            stmt.setString(1, idPersona);
             rset = stmt.executeQuery();
 
             listaFamiliares = new ArrayList<>();
-            while (rset.next()){
+            while (rset.next()) {
                 per_fami_dto = new Per_Fami_Dto();
 
                 per_fami_dto.setIdPersona(rset.getString("idpersona"));
@@ -152,6 +152,24 @@ public class PersonaDao {
             e.printStackTrace();
         }
         return new BusquedaDeFamiliar(listaFamiliares, persona);
+    }
+
+    public boolean buscarPrimaryKeyPersona(String idPersona) {//Funcion para realizar la busqueda de un personal de salud por medio de su perimary key
+        boolean trpta = false;
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from datos_persona where idpersona = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idPersona);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                trpta = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return trpta;
     }
 
     public List<Persona> buscarPorNombre(String primerNombre) throws RuntimeException {
@@ -220,12 +238,12 @@ public class PersonaDao {
         }
     }
 
-    public void modificar(Persona persona) {
+    public int modificar(Persona persona) {
         try {
             int x = 0;
             conn = ConexionRoot.getConexion();
             String sql = "update datos_persona set idpersona = ?, primerNombre = ?, segundoNombre = ?, primerApellido = ?, segundoApellido = ?,"
-                    + " fechaNacimiento = ?, sexo = ?, alergicoA = ?, enfermedadSufre = ?, observaciones = ? where idpersona = ?";
+                    + " fechaNacimiento = ?, direccion = ?, sexo = ?, alergicoA = ?, enfermedadSufre = ?, observaciones = ? where idpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, persona.getIdpersona());
             stmt.setString(2, persona.getPrimerNombre());
@@ -233,23 +251,19 @@ public class PersonaDao {
             stmt.setString(4, persona.getPrimerApellido());
             stmt.setString(5, persona.getSegundoApellido());
             stmt.setDate(6, persona.getFechaNacimiento());
-            stmt.setString(7, persona.getSexo());
-            stmt.setString(8, persona.getAlergicoA());
-            stmt.setString(9, persona.getEnfermedadSufre());
-            stmt.setString(10, persona.getObservaciones());
-            stmt.setString(11, persona.getIdpersona());
+            stmt.setString(7, persona.getDireccion());
+            stmt.setString(8, persona.getSexo());
+            stmt.setString(9, persona.getAlergicoA());
+            stmt.setString(10, persona.getEnfermedadSufre());
+            stmt.setString(11, persona.getObservaciones());
+            stmt.setString(12, persona.getIdpersona());
 
-            int rta = stmt.executeUpdate();
-            if (rta != 1) {
-                throw new RuntimeException("Error al actualizar!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Registro Modificado Exitosamente", "INFORMACIÓN", 1);
-            }
+            stmt.executeUpdate();
 
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("Error SQL - actualizar()!");
         }
-
+        return 1;
     }
 
     public void eliminar(int idCliente) {
@@ -268,6 +282,36 @@ public class PersonaDao {
         } catch (RuntimeException | SQLException e) {
             throw new RuntimeException("Error SQL - eliminar()!");
         }
+    }
+
+    public boolean inhabilitarPersona(String idpersona) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
+        //en otras tablas que dependan de la clave primaria de éste
+
+        boolean yes = false;
+        try {
+            conn = ConexionRoot.getConexion();
+            //Con este query buscamos si existen registros que coincidan entre la tabla personal_salud y personal_salud_titulo por medio del idPersonal
+            String sql = "SELECT p.idpersona ,p.idFamiliar ,ps.idpersona as relacion from persona_familiar AS p " +
+                    "INNER JOIN datos_persona AS ps ON p.idpersona=ps.idpersona where ps.idpersona = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idpersona);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                yes = true;
+            } else {//Si el Id que se envía como parametro no tiene registros dependientes, actualiza el estado a false = inactivo en la BBDD
+                String sql1 = "update datos_persona set estado = ? where idpersona= ?";
+                stmt = conn.prepareStatement(sql1);
+                stmt.setBoolean(1, false);
+                stmt.setString(2, idpersona);
+                stmt.executeUpdate();
+                yes = false;
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            e.printStackTrace();
+        }
+        return yes;
     }
 
 }

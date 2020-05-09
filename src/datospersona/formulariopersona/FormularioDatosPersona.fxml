@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
    <center>
-      <AnchorPane prefHeight="470.0" prefWidth="609.0" styleClass="panel_login" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="470.0" prefWidth="721.0" styleClass="panel_login" BorderPane.alignment="CENTER">
          <children>
             <ComboBox fx:id="cbxtipodocumento" layoutX="1.0" layoutY="36.0" prefHeight="25.0" prefWidth="207.0" promptText="Seleccione" />
             <TextField fx:id="tf_idpersona" layoutX="1.0" layoutY="65.0" prefHeight="25.0" prefWidth="207.0">
@@ -27,8 +28,39 @@
             <TextArea fx:id="ta_alergicoA" layoutX="3.0" layoutY="318.0" prefHeight="40.0" prefWidth="400.0" />
             <TextArea fx:id="ta_enfermedadSufre" layoutX="3.0" layoutY="360.0" prefHeight="40.0" prefWidth="400.0" />
             <TextArea fx:id="ta_observaciones" layoutX="3.0" layoutY="402.0" prefHeight="40.0" prefWidth="400.0" />
-            <TextArea fx:id="txtArea" layoutX="230.0" layoutY="38.0" prefHeight="245.0" prefWidth="358.0" />
-            <Label alignment="CENTER" layoutX="229.0" layoutY="2.0" prefHeight="30.0" prefWidth="357.0" styleClass="lbl-cuerpo" text="Captura Huella Dactilar" />
+            <Label alignment="CENTER" layoutX="572.0" layoutY="213.0" prefHeight="30.0" prefWidth="357.0" styleClass="lbl-cuerpo" text="Captura Huella Dactilar" />
+            <TableView fx:id="tb_familiar" layoutX="253.0" layoutY="31.0" prefHeight="173.0" prefWidth="839.0" tableMenuButtonVisible="true">
+              <columns>
+                <TableColumn fx:id="colIdpersona" prefWidth="159.0">
+                     <graphic>
+                        <ComboBox fx:id="cbx_documentopersona" prefHeight="25.0" prefWidth="140.0" promptText="D. Persona" />
+                     </graphic>
+                  </TableColumn>
+                <TableColumn fx:id="colIdFamiliar" prefWidth="175.0">
+                     <graphic>
+                        <ComboBox fx:id="cbx_documentofamiliar" prefHeight="25.0" prefWidth="140.0" promptText="D. Familiar" />
+                     </graphic>
+                  </TableColumn>
+                  <TableColumn fx:id="colnombre1" prefWidth="75.0" text="Nombre familiar">
+                     <graphic>
+                        <ComboBox fx:id="cbx_nombrefamiliar" prefWidth="150.0" promptText="Nombre Familiar" />
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="coltelefono" prefWidth="75.0" text="telefono">
+                     <graphic>
+                        <ComboBox fx:id="cbx_telefonofamiliar" prefWidth="150.0" promptText="Telefono Familiar" />
+                     </graphic></TableColumn>
+                  <TableColumn fx:id="colFechaIngreso" prefWidth="167.0">
+                     <graphic>
+                        <DatePicker fx:id="dp_ingresofamiliar" prefWidth="140.0" promptText="DD/MM/AAAA" />
+                     </graphic>
+                  </TableColumn>
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <TextArea fx:id="txtArea" layoutX="572.0" layoutY="241.0" prefHeight="200.0" prefWidth="475.0" />
+            <Button fx:id="bt_agregarfamiliar" layoutX="394.0" layoutY="220.0" mnemonicParsing="false" onAction="#agregarFamiliar" prefHeight="30.0" prefWidth="110.0" text="Agregar Fecha" />
          </children>
       </AnchorPane>
    </center>
@@ -154,7 +186,7 @@
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="bt_inhabilitar" layoutX="452.0" layoutY="25.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" text="Inhabilitar" textFill="WHITE">
+            <Button fx:id="bt_inhabilitar" layoutX="452.0" layoutY="25.0" mnemonicParsing="false" onAction="#eliminarPersona" prefHeight="30.0" prefWidth="99.0" text="Inhabilitar" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -197,34 +229,4 @@
          </children>
       </AnchorPane>
    </bottom>
-   <right>
-      <AnchorPane prefHeight="470.0" prefWidth="508.0" styleClass="panel_login" BorderPane.alignment="CENTER">
-         <children>
-            <TableView fx:id="tb_familiar" layoutY="39.0" prefHeight="382.0" prefWidth="503.0" tableMenuButtonVisible="true">
-              <columns>
-                <TableColumn fx:id="colIdpersona" prefWidth="159.0">
-                     <graphic>
-                        <ComboBox fx:id="cbx_documentopersona" prefHeight="25.0" prefWidth="140.0" promptText="D. Persona" />
-                     </graphic>
-                  </TableColumn>
-                <TableColumn fx:id="colIdFamiliar" prefWidth="175.0">
-                     <graphic>
-                        <ComboBox fx:id="cbx_documentofamiliar" prefHeight="25.0" prefWidth="140.0" promptText="D. Familiar" />
-                     </graphic>
-                  </TableColumn>
-                  <TableColumn fx:id="colFechaIngreso" prefWidth="167.0">
-                     <graphic>
-                        <DatePicker fx:id="dp_ingresofamiliar" prefWidth="140.0" promptText="DD/MM/AAAA" />
-                     </graphic>
-                  </TableColumn>
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <Button fx:id="bt_agregarfamiliar" layoutX="376.0" layoutY="426.0" mnemonicParsing="false" onAction="#agregarFamiliar" prefHeight="30.0" prefWidth="110.0" text="Agregar Fecha" />
-            <Label alignment="CENTER" layoutX="7.0" layoutY="4.0" prefHeight="30.0" prefWidth="495.0" styleClass="lbl-cuerpo" text="Ingresa Fecha Inscricion" />
-         </children>
-      </AnchorPane>
-   </right>
 </BorderPane>

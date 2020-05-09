@@ -9,7 +9,10 @@ import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
 import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import conexionBD.ConexionRoot;
+import datosFamiliar.dtofamiliar.Familiar;
+import datosFamiliar.facadefamiliar.Facade;
 import datospersona.dto.Persona;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +30,8 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 public class ContraladorRegistroAtencionPaciente implements Initializable {
+
+    Facade facade = new Facade();
 
     @FXML
     private TextField tf_idpersonadps;
@@ -69,7 +74,15 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private Button bt_inhabilitar;
     @FXML
-    private Button bt_buscar_huella;
+    private Button bt_siguiente;
+    @FXML
+    private Button bt_anterior;
+    @FXML
+    private TabPane tp_datosPaciente;
+    @FXML
+    private TabPane tp_atencionPaciente;
+    @FXML
+    private TabPane tp_datosReferencia;
 
 
     private Connection conn;
@@ -100,37 +113,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
         start();
         Iniciar();
-        //buscarHuella();
 
     }
-
-    /*@FXML
-    public Persona buscarPorHuella() {
-
-
-        //int huella1 = Integer.parseInt(ta_huella.getText());
-
-        int identificacion = Integer.parseInt(tf_idpersonadps.getText());
-        String nombre = tf_primerNombredps.getText();
-        String nombre2 = tf_numerotelefonicofamiliar.getText();
-        String alergico = ta_alergicoA.getText();
-        String sufrode = ta_enfermedadSufre.getText();
-        String observaciones = ta_observaciones.getText();
-
-
-        Persona persona = new Persona(identificacion, nombre, nombre2, alergico, sufrode, observaciones);
-
-        return persona;
-    }
-
-    public void buscarHuella() {
-
-        int num = Integer.parseInt(tf_idpersonadps.getText());
-        facadepersona.buscarPersona(num);
-        JOptionPane.showMessageDialog(null, "Dato Encontrado", "INFORMACIÓN", 1);
-    }*/
-
-
 
     protected void Iniciar() {
         Lector.addDataListener(new DPFPDataAdapter() {
@@ -139,7 +123,11 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         EnviarTexto("La Huella Digital ha sido Capturada");
-                        ProcesarCaptura(e.getSample());
+                        try {
+                            ProcesarCaptura(e.getSample());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
                     }
                 });
             }
@@ -151,7 +139,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
 
-                        EnviarTexto("El Sensor de Huella Digital esta Activado o Conectado");
+                        EnviarTexto("El Sensor de Huella Digital esta Activado ");
                     }
                 });
             }
@@ -160,7 +148,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             public void readerDisconnected(final DPFPReaderStatusEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        EnviarTexto("El Sensor de Huella Digital esta Desactivado o no Conectado");
+                        EnviarTexto("El Sensor de Huella Digital esta Desactivado ");
                     }
                 });
             }
@@ -171,7 +159,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             public void fingerTouched(final DPFPSensorEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        EnviarTexto("El dedo ha sido colocado sobre el Lector de Huella");
+                        EnviarTexto("El dedo ha sido colocado sobre el Lector ");
                     }
                 });
             }
@@ -180,7 +168,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             public void fingerGone(final DPFPSensorEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        EnviarTexto("Retira el Dedo del Lector de Huella");
+                        EnviarTexto("Retira el Dedo del Lector ");
                     }
                 });
             }
@@ -244,7 +232,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     public DPFPFeatureSet featuresinscripcion;
     public DPFPFeatureSet featuresverificacion;
 
-    public void ProcesarCaptura(DPFPSample sample) {
+    public void ProcesarCaptura(DPFPSample sample) throws IOException {
         // Procesar la muestra de la huella y crear un conjunto de características con el propósito de inscripción.
         featuresinscripcion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
 
@@ -275,7 +263,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                     case TEMPLATE_STATUS_READY:    // informe de éxito y detiene  la captura de huellas
                         stop();
                         setTemplate(Reclutador.getTemplate());
-                        EnviarTexto("Listo la huella ha sido cpaturada correctamente ahora puede guardarla");
+                        EnviarTexto("La huella ha sido capturada correctamente ahora puede verificar la persona");
+                        identificarHuella();
                         break;
 
                     case TEMPLATE_STATUS_FAILED: // informe de fallas y reiniciar la captura de huellas
@@ -293,24 +282,25 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     public void identificarHuella() throws IOException {
 
-        try{
+        try {
             //Establece los valores para la sentencia SQL
             conn = ConexionRoot.getConexion();
 
             //Obtiene todas las huellas de la bd
-            PreparedStatement identificarStmt = conn.prepareStatement("SELECT idpersona, primerNombre, fechaNacimiento, alergicoA," +
-                    "enfermedadSufre, observaciones, huella FROM datos_persona" +
-                    " UNION ALL SELECT idpersona, primerNombre, fechaNacimiento, alergicoA, enfermedadSufre, observaciones, huella1 FROM datos_persona");
+            PreparedStatement identificarStmt = conn.prepareStatement("SELECT dp.idpersona, dp.primerNombre, dp.fechaNacimiento, ep.nombreEps, pf.nombre1, pf.telefono, dp.alergicoA, dp.enfermedadSufre, dp.observaciones, dp.huella\n" +
+                    "FROM datos_persona dp\n" +
+                    "inner JOIN eps ep on dp.idEps = ep.idEps\n" +
+                    "INNER JOIN persona_familiar pf ON dp.idpersona = pf.idpersona");
             //Obtiene todas las huellas de la bd
             ResultSet rsIdentificar = identificarStmt.executeQuery();
 
             //Si se encuentra el nombre en la base de datos
             //byte templateBuffer[] = null;
-            int i=0;
-            while(rsIdentificar.next()){
+            int i = 0;
+            while (rsIdentificar.next()) {
                 i++;
-                System.out.println("SQL:"+rsIdentificar.getString(1)+"\n");
-                System.out.println("Contador:"+i+"\n");
+                System.out.println("SQL:" + rsIdentificar.getString(1) + "\n");
+                System.out.println("Contador:" + i + "\n");
 
                 byte templateBuffer[] = rsIdentificar.getBytes("huella");
                 //Crea una nueva plantilla a partir de la guardada en la base de datos
@@ -325,13 +315,15 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 //compara las plantilas (actual vs bd)
                 //Si encuentra correspondencia dibuja el mapa
                 //e indica el nombre de la persona que coincidió.
-                if (result.isVerified()){
-                //crea la imagen de los datos guardado de las huellas guardadas en la base de datos
-                    //JOptionPane.showMessageDialog(null, "Me llamo: "+
-                            //rsIdentificar.getString("primerNombre"));
+                if (result.isVerified()) {
+                    //crea la imagen de los datos guardado de las huellas guardadas en la base de datos
+                    //y manda la informacion a los textfield
                     tf_idpersonadps.setText(rsIdentificar.getString("idpersona"));
                     tf_primerNombredps.setText(rsIdentificar.getString("primerNombre"));
                     tf_fechaNacimiento.setText(rsIdentificar.getString("fechaNacimiento"));
+                    tf_nombreeps.setText(rsIdentificar.getString("nombreEps"));
+                    tf_nombrefamiliar.setText(rsIdentificar.getString("nombre1"));
+                    tf_numerotelefonicofamiliar.setText(rsIdentificar.getString("telefono"));
                     ta_alergicoA.setText(rsIdentificar.getString("alergicoA"));
                     ta_enfermedadSufre.setText(rsIdentificar.getString("enfermedadSufre"));
                     ta_observaciones.setText(rsIdentificar.getString("observaciones"));
@@ -340,9 +332,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             }
             //Si no encuentra alguna huella que coincida lo indica con un mensaje
             JOptionPane.showMessageDialog(null, "No existe ningún registro que coincida con la huella.");
-        }
-        catch (SQLException e) {
-            System.out.println("Se produjo el siguiente error: "+e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Se produjo el siguiente error: " + e.getMessage());
             e.printStackTrace();
         }
         /*finally{
@@ -443,10 +434,10 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     }*/
 
-    @FXML
-    private void setCerrarFormularioRegistroAtencion() {
-        Stage stage = (Stage) bt_crear.getScene().getWindow();
-        stage.close();
+        @FXML
+        private void setCerrarFormularioRegistroAtencion () {
+            Stage stage = (Stage) bt_salir.getScene().getWindow();
+            stage.close();
+        }
     }
-}
 

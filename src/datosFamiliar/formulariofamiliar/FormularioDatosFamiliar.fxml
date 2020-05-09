@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datosFamiliar.formulariofamiliar.ControladorDatosFamiliar">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datosFamiliar.formulariofamiliar.ControladorDatosFamiliar">
    <children>
       <TableView fx:id="tblFamiliares" layoutY="331.0" prefHeight="264.0" prefWidth="800.0" tableMenuButtonVisible="true">
         <columns>
@@ -117,7 +116,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="bt_inhabilitar" layoutX="338.0" layoutY="283.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Eliminar" textFill="WHITE">
+      <Button fx:id="bt_inhabilitar" layoutX="338.0" layoutY="283.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="30.0" prefWidth="100.0" styleClass="b_Nuevo" text="Inhabilitar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
