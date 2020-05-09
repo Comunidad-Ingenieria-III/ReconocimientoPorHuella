@@ -256,6 +256,22 @@ public class ControladorCargo extends Component implements Initializable {
         btnGuardar.setDisable(false);
     }
 
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarCargo();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
 
     @FXML
     public void eliminarCargo() {
@@ -314,6 +330,7 @@ public class ControladorCargo extends Component implements Initializable {
             btnCrear.setDisable(true);
             btnGuardar.setDisable(true);
             tblCargos.setEditable(false);
+            valor=0;
         }else{
             int i=0;
             cargos = FXCollections.observableArrayList(facadeCargo.buscar(txtId.getText()));
@@ -324,6 +341,10 @@ public class ControladorCargo extends Component implements Initializable {
                 colId.setCellValueFactory(new PropertyValueFactory<>("idCargo"));
                 colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
                 btnConsultar.setDisable(true);
+                txtId.setText(cargos.get(i).getIdCargo());
+                txtDescripcion.setText(cargos.get(i).getNombre());
+                btnEliminar.setDisable(false);
+                btnModificar.setDisable(false);
             }else {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Tipo de título académico");

@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import medicamento.dto.Medicamento;
@@ -155,6 +156,23 @@ public class ControladorMedicamentos extends Component implements Initializable 
 
     }
 
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarMedicamento();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
+
 
     @FXML
     public void limpiar() {
@@ -249,6 +267,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
         bt_modificar.setDisable(true);
         valor=0;
         bt_guardar.setDisable(false);
+        bt_inhabilitar.setDisable(true);
     }
 
 
@@ -311,6 +330,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
             tf_Tipo.requestFocus();
             bt_crear.setDisable(true);
             bt_guardar.setDisable(true);
+            valor=0;
 
         }else{
             medicamentos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
@@ -331,7 +351,10 @@ public class ControladorMedicamentos extends Component implements Initializable 
                     tbMedicamentos.setItems(medicamentos);
                     idCodigo.setCellValueFactory(new PropertyValueFactory<>("idMedicamento"));
                     idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-
+                    tf_Tipo.setText(medicamentos.get(i).getIdMedicamento());
+                    tf_nombre1.setText(medicamentos.get(i).getNombre());
+                    bt_inhabilitar.setDisable(false);
+                    bt_modificar.setDisable(false);
 
                 }
 

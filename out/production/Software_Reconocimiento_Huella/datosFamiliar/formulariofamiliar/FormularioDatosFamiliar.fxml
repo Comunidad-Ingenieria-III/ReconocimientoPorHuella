@@ -31,7 +31,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tf_idfamiliar" layoutX="256.0" layoutY="79.0" onKeyReleased="#validarId" prefHeight="25.0" prefWidth="166.0" />
+      <TextField fx:id="tf_idfamiliar" layoutX="256.0" layoutY="79.0" onKeyPressed="#textAction" onKeyReleased="#validarId" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="177.0" layoutY="132.0" text="*" textFill="#f80707" />
       <Label layoutX="48.0" layoutY="129.0" prefHeight="25.0" prefWidth="198.0" styleClass="lbl-cuerpo" text="Primer Nombre">
          <font>

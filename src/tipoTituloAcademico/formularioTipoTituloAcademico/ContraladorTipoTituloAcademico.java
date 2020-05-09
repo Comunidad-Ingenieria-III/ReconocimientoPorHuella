@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import tipoTituloAcademico.dto.TtAcademico;
@@ -171,6 +172,22 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         });//FIN DEL LISTENER
     }
 
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarTitulo();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
 
 
     @FXML
@@ -314,6 +331,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
             bt_crear.setDisable(true);
             bt_guardar.setDisable(true);
             tb_tituloAcademico.setEditable(false);
+            valor=0;
         }else{
             int i=0;
             ttAcademicos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
@@ -334,6 +352,11 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                     idCodigo.setCellValueFactory(new PropertyValueFactory<>("idTipoTituloAcademico"));
                     idNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
                     bt_consultar.setDisable(true);
+
+                    tf_Tipo.setText(ttAcademicos.get(i).getIdTipoTituloAcademico());
+                    tf_nombre1.setText(ttAcademicos.get(i).getNombre());
+                    bt_inhabilitar.setDisable(false);
+                    bt_modificar.setDisable(false);
                 }
                 if (ttAcademicos.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

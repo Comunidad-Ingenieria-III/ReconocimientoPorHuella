@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="748.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eps.formularioeps.EPS">
+<AnchorPane prefHeight="500.0" prefWidth="748.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eps.formularioeps.EPS">
 
    <children>
       <SplitPane dividerPositions="0.5622489959839357" orientation="VERTICAL" prefHeight="500.0" prefWidth="748.0">
@@ -24,7 +23,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_Codigo" layoutX="31.0" layoutY="113.0" prefHeight="25.0" prefWidth="150.0" styleClass="text-field" />
+                  <TextField fx:id="tf_Codigo" layoutX="31.0" layoutY="113.0" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="150.0" styleClass="text-field" />
                   <Label layoutX="211.0" layoutY="87.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
                      <font>
                         <Font name="System Bold Italic" size="16.0" />

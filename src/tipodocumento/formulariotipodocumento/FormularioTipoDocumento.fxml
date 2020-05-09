@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="748.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipodocumento.formulariotipodocumento.ControladorTipoDocumento">
+<AnchorPane prefHeight="500.0" prefWidth="748.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tipodocumento.formulariotipodocumento.ControladorTipoDocumento">
 
    <children>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="748.0">
@@ -21,7 +20,7 @@
                               <Font name="System Bold Italic" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_Tipo" layoutX="121.0" layoutY="111.0" prefHeight="25.0" prefWidth="200.0" styleClass="text-field" />
+                        <TextField fx:id="tf_Tipo" layoutX="121.0" layoutY="111.0" onInputMethodTextChanged="#textESC" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="200.0" styleClass="text-field" />
                         <Label layoutX="433.0" layoutY="84.0" prefHeight="27.0" prefWidth="70.0" styleClass="lbl-cuerpo" text="Nombre">
                            <font>
                               <Font name="System Bold Italic" size="16.0" />
@@ -33,7 +32,7 @@
                            </font>
                         </Label>
 
-                        <TextField fx:id="tf_nombre1" layoutX="433.0" layoutY="111.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
+                        <TextField fx:id="tf_nombre1" layoutX="433.0" layoutY="111.0" onKeyPressed="#textESC" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="200.0" />
                         <Label layoutX="179.0" layoutY="87.0" text="*" textFill="#ee0707">
 
                            <font>
@@ -71,7 +70,7 @@
                            </font>
                         </Button>
 
-                        <Button fx:id="bt_consultar" layoutX="121.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" onAction="#consultarTDocuemnto" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
+                        <Button fx:id="bt_consultar" layoutX="121.0" layoutY="181.0" minHeight="0.0" minWidth="100.0" mnemonicParsing="false" onAction="#consultarTDocuemnto" onKeyPressed="#textESC" prefHeight="30.0" prefWidth="90.0" text="Consultar" textFill="WHITE">
 
                            <cursor>
                               <Cursor fx:constant="HAND" />

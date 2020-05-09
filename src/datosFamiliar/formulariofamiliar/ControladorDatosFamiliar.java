@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.net.URL;
@@ -280,6 +281,27 @@ public class ControladorDatosFamiliar implements Initializable {
     }
 
     @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultar();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
+
+
+
+
+
+    @FXML
     public void modificar(){
         tf_idfamiliar.setDisable(true);
         tf_nombre1.setDisable(false);
@@ -370,6 +392,16 @@ public class ControladorDatosFamiliar implements Initializable {
                     colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
                     colTelefono.setCellValueFactory(new PropertyValueFactory<>("telFamiliar"));
                     bt_consultar.setDisable(true);
+
+                    tf_idfamiliar.setText(familiares.get(i).getIdFamiliar());
+                    tf_nombre1.setText(familiares.get(i).getPrimerNombre());
+                    tf_nombre2.setText(familiares.get(i).getSegundoNombre());
+                    tf_apellido1.setText(familiares.get(i).getPrimerApellido());
+                    tf_apellido2.setText(familiares.get(i).getSegundoApellido());
+                    tf_numtelefono.setText(familiares.get(i).getTelFamiliar());
+                    tf_direccion.setText(familiares.get(i).getDireccion());
+                    bt_inhabilitar.setDisable(false);
+                    bt_modificar.setDisable(false);
                 }
                 if (familiares.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

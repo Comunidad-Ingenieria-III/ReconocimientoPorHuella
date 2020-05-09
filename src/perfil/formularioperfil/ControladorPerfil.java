@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import perfil.dtoperfil.PerfilDto;
@@ -174,6 +175,23 @@ public class ControladorPerfil implements Initializable {
 
     }
 
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarPerfil();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
+
 
 
 
@@ -208,6 +226,7 @@ public class ControladorPerfil implements Initializable {
                     msg.setContentText("El Perfil se ha agregado");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    cancelar();
 
                 } else {
 
@@ -216,6 +235,7 @@ public class ControladorPerfil implements Initializable {
                     msg.setContentText("No se ha podido agregar el Perfil");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    cancelar();
 
                 }
 
@@ -240,12 +260,14 @@ public class ControladorPerfil implements Initializable {
                     msg.setContentText("El Perfil se ha Modificado");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    cancelar();
                 }else{
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Perfil");
                     msg.setContentText("No se ha podido Modificar el Perfil");
                     msg.setHeaderText("Resultado");
                     msg.show();
+                    cancelar();
                 }
             }
         }
@@ -310,7 +332,7 @@ public class ControladorPerfil implements Initializable {
 
 
     @FXML
-    private void consultarTitulo() {
+    private void consultarPerfil() {
         if (txtId.getText().isEmpty()) {
             txtId.setDisable(false);
             txtDescripcion.setDisable(true);
@@ -318,6 +340,7 @@ public class ControladorPerfil implements Initializable {
             btnCrear.setDisable(true);
             btnGuardar.setDisable(true);
             tbl_perfiles.setEditable(false);
+            valor=0;
         } else {
             int i = 0;
             perfiles = FXCollections.observableArrayList(perfilFacade.buscar(txtId.getText()));
@@ -337,6 +360,11 @@ public class ControladorPerfil implements Initializable {
                     colId.setCellValueFactory(new PropertyValueFactory<>("idperfil"));
                     colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
                     btnConsultar.setDisable(true);
+
+                    txtId.setText(perfiles.get(i).getIdperfil());
+                    txtDescripcion.setText(perfiles.get(i).getNombre());
+                    btnEliminar.setDisable(false);
+                    btnModificar.setDisable(false);
                 } else {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Perfil");

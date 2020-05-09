@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javax.swing.*;
@@ -173,6 +174,25 @@ public class EPS  extends Component implements Initializable {
         }
     }
 
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarEps();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
+    }
+
+
+
 
     @FXML
     public void modificar(){
@@ -325,6 +345,14 @@ public class EPS  extends Component implements Initializable {
                 colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionEps"));
                 colTelefono.setCellValueFactory(new PropertyValueFactory<>("telEps"));
                 bt_Consultar.setDisable(true);
+
+                tf_Codigo.setText(epss.get(i).getIdEps());
+                tf_Nombre.setText(epss.get(i).getNombreEps());
+                tf_Telefono.setText(epss.get(i).getTelEps());
+                tf_Direccion.setText(epss.get(i).getdireccionEps());
+                bt_Inhabilitar.setDisable(false);
+                bt_Modificar.setDisable(false);
+
             }
             if (epss.get(i).getEstado().equals("0")) {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
