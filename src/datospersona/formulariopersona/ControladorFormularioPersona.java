@@ -177,6 +177,39 @@ public class ControladorFormularioPersona implements Initializable {
         colFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("fechaIngreso"));
     }
 
+    @FXML
+    public void iniciarCbxSexo() {
+        ObservableList<String> items = FXCollections.observableArrayList();
+        items.addAll("Masculino", "Femenino");
+        cbxsexo.setItems(items);
+    }
+
+    @FXML
+    public void iniciarCbxDocumento() {
+        ObservableList<DtoTipoDocumento> listatipodocumento = FXCollections.observableArrayList(facadeTipoDocumento.cargarTipoDocumento());
+        cbxtipodocumento.setItems(listatipodocumento);
+    }
+
+    @FXML
+    public void iniciarEps() {
+        ObservableList<DtoEps> listaeps = FXCollections.observableArrayList(facadeEps.CargarEps());
+        cbxtipoeps.setItems(listaeps);
+    }
+
+    @FXML
+    public void iniciarDocumentoPersona() {
+        ObservableList<Persona> listapersonas = FXCollections.observableArrayList(facadepersona.cargarPersona());
+        cbx_documentopersona.setItems(listapersonas);
+    }
+
+    @FXML
+    public void iniciarFamiliar() {
+        ObservableList<Familiar> listafamiliar = FXCollections.observableArrayList(facadefamiliar.obtenerTodosFamiliares());
+        cbx_documentofamiliar.setItems(listafamiliar);
+        cbx_nombrefamiliar.setItems(listafamiliar);
+        cbx_telefonofamiliar.setItems(listafamiliar);
+    }
+
     //Varible que permite iniciar el dispositivo de lector de huella conectado
     // con sus distintos metodos.
     private DPFPCapture Lector = DPFPGlobal.getCaptureFactory().createCapture();
@@ -459,6 +492,20 @@ public class ControladorFormularioPersona implements Initializable {
     }
 
     @FXML
+    private void guardarPersona() {
+        validar();
+        facadepersona.insertarPersona(crearPersona());
+
+        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+        msg.setTitle("Gestiones - Registro");
+        msg.setContentText("El Registro ha sido agregado correctamente");
+        msg.setHeaderText("Información");
+        msg.show();
+        bt_crear.setDisable(false);
+    }
+
+
+    @FXML
     private Persona modificarPersona() {
         String idpersona = tf_idpersona.getText();
         String primerNombre = tf_primerNombre.getText();
@@ -607,38 +654,83 @@ public class ControladorFormularioPersona implements Initializable {
         }
     }
 
-    @FXML
-    public void iniciarCbxSexo() {
-        ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("Masculino", "Femenino");
-        cbxsexo.setItems(items);
+    public void validarExistente() {
+
+        tf_primerNombre.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarE();
+            }
+        });
+    }
+
+    public void validarE() {
+        if (valor == 1) {
+
+            boolean busqueda = buscarDocumento(tf_idpersona.getText());
+            if (busqueda) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Persona");
+                msg.setContentText("Ya Existe Una Persona Con El Documento Nro:\n" + tf_idpersona.getText() + " Asignado");
+                msg.setHeaderText("Información.");
+                msg.show();
+                tf_idpersona.setText("");
+                tf_primerNombre.setText("");
+                tf_idpersona.requestFocus();
+            }
+        }
     }
 
     @FXML
-    public void iniciarCbxDocumento() {
-        ObservableList<DtoTipoDocumento> listatipodocumento = FXCollections.observableArrayList(facadeTipoDocumento.cargarTipoDocumento());
-        cbxtipodocumento.setItems(listatipodocumento);
+    private void eventoCrear() {
+        bt_crear.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                limpiar();
+                habilitarBotones();
+                bt_inhabilitar.setDisable(true);
+                bt_modificar.setDisable(true);
+                bt_guardar.setDisable(false);
+                bt_consultar.setDisable(true);
+
+                cbxtipodocumento.requestFocus();
+                familiares.clear();
+                //valor = 1;
+            }
+        });
     }
 
     @FXML
-    public void iniciarEps() {
-        ObservableList<DtoEps> listaeps = FXCollections.observableArrayList(facadeEps.CargarEps());
-        cbxtipoeps.setItems(listaeps);
+    public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
+        tf_idpersona.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+
+            }
+
+        });
     }
 
-    @FXML
-    public void iniciarDocumentoPersona() {
-        ObservableList<Persona> listapersonas = FXCollections.observableArrayList(facadepersona.cargarPersona());
-        cbx_documentopersona.setItems(listapersonas);
+    public void validar() {
+        //Validamos que los campos requeridos no queden vacios
+        if (cbxtipodocumento.getSelectionModel().getSelectedItem().equals(null) || tf_idpersona.getText().equals("")
+                || tf_primerNombre.getText().equals("") || tf_primerApellido.getText().equals("") || dp_fechaNacimiento.getValue().equals(null)
+                || tf_direccion.getText().equals("") || ta_alergicoA.getText().equals("") || ta_enfermedadSufre.getText().equals("")
+                || cbxsexo.getSelectionModel().getSelectedItem().equals(null) || cbxtipoeps.getSelectionModel().getSelectedItem().equals(null)
+        ) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro");
+            msg.setContentText("Hay campos vacios,Debe llenar todos los campos");
+            msg.setHeaderText("Información");
+            msg.show();
+        }
     }
 
-    @FXML
-    public void iniciarFamiliar() {
-        ObservableList<Familiar> listafamiliar = FXCollections.observableArrayList(facadefamiliar.obtenerTodosFamiliares());
-        cbx_documentofamiliar.setItems(listafamiliar);
-        cbx_nombrefamiliar.setItems(listafamiliar);
-        cbx_telefonofamiliar.setItems(listafamiliar);
-    }
 
     @FXML
     public void cancelar() {
@@ -772,70 +864,6 @@ public class ControladorFormularioPersona implements Initializable {
 
     }
 
-    @FXML
-    private void eventoCrear() {
-        bt_crear.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                limpiar();
-                habilitarBotones();
-                bt_inhabilitar.setDisable(true);
-                bt_modificar.setDisable(true);
-                bt_guardar.setDisable(false);
-                bt_consultar.setDisable(true);
-
-                cbxtipodocumento.requestFocus();
-                familiares.clear();
-                //valor = 1;
-            }
-        });
-    }
-
-    @FXML
-    private void guardarPersona() {
-        validar();
-
-        facadepersona.insertarPersona(crearPersona());
-        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
-        msg.setTitle("Pacientes - registro");
-        msg.setContentText("El Paciente ha sido agregado correctamente");
-        msg.setHeaderText("Resultado");
-        msg.show();
-        bt_crear.setDisable(false);
-
-
-    }
-
-    @FXML
-    public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
-        tf_idpersona.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                char car = event.getCharacter().charAt(0);
-
-                if (!Character.isDigit(car)) {
-                    event.consume();
-                }
-
-            }
-
-        });
-    }
-
-    public void validar() {
-        //Validamos que los campos requeridos no queden vacios
-        if (cbxtipodocumento.getSelectionModel().getSelectedItem().equals(null) || tf_idpersona.getText().equals("")
-                || tf_primerNombre.getText().equals("") || tf_primerApellido.getText().equals("") || dp_fechaNacimiento.getValue().equals(null)
-                || tf_direccion.getText().equals("") || ta_alergicoA.getText().equals("") || ta_enfermedadSufre.getText().equals("")
-                || cbxsexo.getSelectionModel().getSelectedItem().equals(null) || cbxtipoeps.getSelectionModel().getSelectedItem().equals(null)
-        ) {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Pacientes - registro");
-            msg.setContentText("Hay campos vacios,Debe llenar todos los campos");
-            msg.setHeaderText("Resultado");
-            msg.show();
-        }
-    }
 
     @FXML
     public boolean recorrerTablaTitulos(List<Per_Fami_Dto> familiares, Per_Fami_Dto per_fami_dto) {//Metodo para recorrer la tabla con el fin de no ingresar regisstros duplicados
@@ -870,11 +898,9 @@ public class ControladorFormularioPersona implements Initializable {
         Per_Fami_Dto per_fami_dto = new Per_Fami_Dto(
 
                 cbx_documentopersona.getSelectionModel().getSelectedItem().getIdpersona(),
-                cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar().toString(),
-                cbx_nombrefamiliar.getSelectionModel().getSelectedItem().getPrimerNombre().toString(),
-                cbx_telefonofamiliar.getSelectionModel().getSelectedItem().getTelFamiliar().toString(),
-                //tf_colnombre1.getText(),
-                //tf_coltelefono.getText(),
+                cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar(),
+                cbx_nombrefamiliar.getSelectionModel().getSelectedItem().getPrimerNombre(),
+                cbx_telefonofamiliar.getSelectionModel().getSelectedItem().getTelFamiliar(),
                 Date.valueOf(dp_ingresofamiliar.getValue()),
                 estado
         );
@@ -929,7 +955,6 @@ public class ControladorFormularioPersona implements Initializable {
             }*/
         }
     }
-
 
     @FXML
     private void setCerrarFormularioPersonas(ActionEvent event) {

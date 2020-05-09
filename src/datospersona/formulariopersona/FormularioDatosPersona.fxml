@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
    <center>
       <AnchorPane prefHeight="470.0" prefWidth="721.0" styleClass="panel_login" BorderPane.alignment="CENTER">
          <children>
             <ComboBox fx:id="cbxtipodocumento" layoutX="1.0" layoutY="36.0" prefHeight="25.0" prefWidth="207.0" promptText="Seleccione" />
-            <TextField fx:id="tf_idpersona" layoutX="1.0" layoutY="65.0" prefHeight="25.0" prefWidth="207.0">
+            <TextField fx:id="tf_idpersona" layoutX="1.0" layoutY="65.0" onKeyReleased="#validarExistente" prefHeight="25.0" prefWidth="207.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

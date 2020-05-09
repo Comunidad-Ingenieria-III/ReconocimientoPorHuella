@@ -142,6 +142,8 @@ public class PersonaDao {
 
                 per_fami_dto.setIdPersona(rset.getString("idpersona"));
                 per_fami_dto.setIdFamiliar(rset.getString("idFamiliar"));
+                per_fami_dto.setNombre1(rset.getString("nombre1"));
+                per_fami_dto.setTelefono(rset.getString("telefono"));
                 per_fami_dto.setFechaIngreso(rset.getDate("fechaIngreso"));
 
                 listaFamiliares.add(per_fami_dto);
