@@ -264,7 +264,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
 
                     int res = facadeInstitucionReferencia.modificarInstitucionReferencia(institucionReferencia);
                     if (res == 1) {
-                        institucionReferencias.set(tblInstitucionReferencia.getSelectionModel().getSelectedIndex(), institucionReferencia);
+                       // institucionReferencias.set(tblInstitucionReferencia.getSelectionModel().getSelectedIndex(), institucionReferencia);
                         Alert msg = new Alert(Alert.AlertType.INFORMATION);
                         msg.setTitle("Gestiones - Institución Referencia");
                         msg.setContentText("La Referencia se ha modificado");
@@ -299,7 +299,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta=facadeInstitucionReferencia.eliminarInstitucionReferencia(tblInstitucionReferencia.getSelectionModel().getSelectedItem().getIdInstitucion());
+            boolean respuesta=facadeInstitucionReferencia.eliminarInstitucionReferencia(txtId.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -312,7 +312,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                 cancelar();
 
             } else {
-                institucionReferencias.remove(tblInstitucionReferencia.getSelectionModel().getSelectedIndex());
+                institucionReferencias.remove(txtId.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - Institución Referencia");
                 msg2.setContentText("La EPS se ha eliminado");

@@ -207,7 +207,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
             } else {
                 int res = facadeTipoDocumento.modificarTipoDocumeto(dtoTipoDocumento);
                 if (res == 1) {
-                    tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), dtoTipoDocumento);
+                   // tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), dtoTipoDocumento);
 
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Tipo de Documento");
@@ -246,7 +246,8 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta = facadeTipoDocumento.eliminarTipoDocumento(String.valueOf(tb_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento()));
+
+            boolean respuesta = facadeTipoDocumento.eliminarTipoDocumento(String.valueOf(tf_Tipo.getText()));
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -259,7 +260,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                 cancelar();
 
             } else {
-                tipoDocumentos.remove(tb_tipoDocumento.getSelectionModel().getSelectedIndex());
+                tipoDocumentos.remove(tf_Tipo.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - Tipo de Documento");
                 msg2.setContentText("El Tipo de documento se ha eliminado");
@@ -343,8 +344,12 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                     colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreTipoDocumento"));
                     tf_Tipo.setText(tipoDocumentos.get(i).getIdTipoDocumento());
                     tf_nombre1.setText(tipoDocumentos.get(i).getNombreTipoDocumento());
+
                     bt_inhabilitar.setDisable(false);
                     bt_modificar.setDisable(false);
+                    manejarEventos();
+
+
                 }
                 if (tipoDocumentos.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

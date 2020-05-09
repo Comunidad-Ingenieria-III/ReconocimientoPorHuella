@@ -328,7 +328,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                 int res = facade.modificar(institucionAcademica);
                 if (res == 1) {
                     btnGuardar.setDisable(true);
-                    instituciones.set(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex(), institucionAcademica);
+                   // instituciones.set(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex(), institucionAcademica);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Institución académica");
                     msg.setContentText("La institución se ha modificado");
@@ -376,7 +376,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta= facade.eliminar(tbIinstitucionAcademica.getSelectionModel().getSelectedItem().getIdInstitucion());
+            boolean respuesta= facade.eliminar(txtCodigo.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -389,7 +389,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                 cancelar();
 
             } else {
-                instituciones.remove(tbIinstitucionAcademica.getSelectionModel().getSelectedIndex());
+                instituciones.remove(txtCodigo.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - Institución académica");
                 msg2.setContentText("La institución se ha eliminado");

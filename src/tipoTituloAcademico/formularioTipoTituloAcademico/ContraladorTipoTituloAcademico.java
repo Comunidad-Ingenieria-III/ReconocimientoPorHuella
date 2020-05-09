@@ -250,7 +250,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                     int res = facade.modificar(ttAcademico);
                     if (res == 1) {
                         bt_guardar.setDisable(true);
-                        ttAcademicos.set(tb_tituloAcademico.getSelectionModel().getSelectedIndex(), ttAcademico);
+                       // ttAcademicos.set(tb_tituloAcademico.getSelectionModel().getSelectedIndex(), ttAcademico);
                         Alert msg = new Alert(Alert.AlertType.INFORMATION);
                         msg.setTitle("Gestiones - Tipo de título académico");
                         msg.setContentText("El tipo de título  se ha modificado");
@@ -290,7 +290,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta  = facade.eliminar(tb_tituloAcademico.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico());
+            boolean respuesta  = facade.eliminar(tf_Tipo.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -303,7 +303,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                 cancelar();
 
             } else {
-                ttAcademicos.remove(tb_tituloAcademico.getSelectionModel().getSelectedIndex());
+                ttAcademicos.remove(tf_Tipo.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - Tipo de título académico");
                 msg2.setContentText("El Tipo de título se ha eliminado");

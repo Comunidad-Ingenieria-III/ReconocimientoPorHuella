@@ -260,7 +260,7 @@ public class ControladorDatosFamiliar implements Initializable {
             }else{
                 int res = facade.modificarFamiliar(familiar);
                 if (res == 1) {
-                    familiares.set(tblFamiliares.getSelectionModel().getSelectedIndex(), familiar);
+                    //familiares.set(tblFamiliares.getSelectionModel().getSelectedIndex(), familiar);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Familiar Paciente");
                     msg.setContentText("El familiar se ha modificado");
@@ -325,7 +325,7 @@ public class ControladorDatosFamiliar implements Initializable {
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta =facade.eliminarFamiliar(tblFamiliares.getSelectionModel().getSelectedItem().getIdFamiliar());
+            boolean respuesta =facade.eliminarFamiliar(tf_idfamiliar.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -338,7 +338,7 @@ public class ControladorDatosFamiliar implements Initializable {
                 cancelar();
 
             } else {
-                familiares.remove(tblFamiliares.getSelectionModel().getSelectedIndex());
+                familiares.remove(tf_idfamiliar.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - Familiar Paciente");
                 msg2.setContentText("El familiar se ha eliminado");

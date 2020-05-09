@@ -155,7 +155,7 @@ public class EPS  extends Component implements Initializable {
         }else{
                 int res = facadeEps.modificarEps(dtoEps);
                 if (res == 1) {
-                    epss.set(tb_eps.getSelectionModel().getSelectedIndex(), dtoEps);
+                   // epss.set(tb_eps.getSelectionModel().getSelectedIndex(), dtoEps);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - EPS");
                     msg.setContentText("La EPS se ha modificado");
@@ -215,7 +215,7 @@ public class EPS  extends Component implements Initializable {
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta =facadeEps.eliminarEps(tb_eps.getSelectionModel().getSelectedItem().getIdEps());
+            boolean respuesta =facadeEps.eliminarEps(tf_Codigo.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -228,7 +228,7 @@ public class EPS  extends Component implements Initializable {
                 cancelar();
 
             } else {
-                epss.remove(tb_eps.getSelectionModel().getSelectedIndex());
+                epss.remove(tf_Codigo.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - EPS");
                 msg2.setContentText("La EPS se ha eliminado");

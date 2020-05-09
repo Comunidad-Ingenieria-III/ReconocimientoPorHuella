@@ -236,7 +236,9 @@ public class ControladorMedicamentos extends Component implements Initializable 
 
                 int res = facade.modificar(medicamento);
                 if (res == 1) {
-                    medicamentos.set(tbMedicamentos.getSelectionModel().getSelectedIndex(), medicamento);
+
+
+                   // medicamentos.set(tbMedicamentos.getSelectionModel().getSelectedIndex(), medicamento);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Medicamentos");
                     msg.setContentText("El medicamento se ha modificado");
@@ -279,7 +281,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta=facade.eliminar(tbMedicamentos.getSelectionModel().getSelectedItem().getIdMedicamento());
+            boolean respuesta=facade.eliminar(tf_Tipo.getText());
 
             if (respuesta) {
 
@@ -293,7 +295,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
                 cancelar();
 
             } else {
-                medicamentos.remove(tbMedicamentos.getSelectionModel().getSelectedIndex());
+                medicamentos.remove(tf_Tipo.getText());
                 Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
                 msg2.setTitle("Gestiones - Medicamentos");
                 msg2.setContentText("El medicamento se ha eliminado");
