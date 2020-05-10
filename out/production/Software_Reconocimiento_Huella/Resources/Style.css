@@ -21,7 +21,7 @@
 }
 
 .panel_central{
-    -fx-background-color: linear-gradient(Teal,SlateGrey);    
+    -fx-background-color: linear-gradient(darkslategrey,SlateGrey);    
 }
 
 .panel_inferior {
@@ -54,7 +54,7 @@
 }
 
 .lblTitulo2{
-    -fx-background-color: linear-gradient(darkslategrey, steelblue, black);
+    -fx-background-color: linear-gradient(steelblue, black);
     -fx-font-family: Bold italic;
     -fx-font-size: 16pt;
     -fx-text-fill: white;    

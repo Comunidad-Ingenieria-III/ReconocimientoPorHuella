@@ -60,7 +60,7 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="mi_perfil" mnemonicParsing="false" onAction="#abrirPerfil" text="Administración Perfil" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Administración Usuario" />
+                  <MenuItem fx:id="mi_usario" mnemonicParsing="false" onAction="#abrirUsuario" text="Administración Usuario" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Ayudas">

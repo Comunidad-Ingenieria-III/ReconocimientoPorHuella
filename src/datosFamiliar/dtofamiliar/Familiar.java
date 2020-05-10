@@ -14,10 +14,8 @@ public class Familiar {
     private StringProperty estado = new SimpleStringProperty();
 
 
-
-
     public Familiar(String idFamiliar, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
-                       String direccion, String telFamiliar, String estado) {
+                    String direccion, String telFamiliar, String estado) {
         this.idFamiliar.set(idFamiliar);
         this.primerNombre.set(primerNombre);
         this.segundoNombre.set(segundoNombre);
@@ -30,7 +28,7 @@ public class Familiar {
     }
 
     public Familiar() {
-        this("","","","","","","","");
+        this("", "", "", "", "", "", "", "");
     }
 
     public String getIdFamiliar() {
@@ -131,8 +129,6 @@ public class Familiar {
 
     @Override
     public String toString() {
-        return idFamiliar.get() + primerNombre.get() + telFamiliar;
+        return idFamiliar.get();
     }
-
-
 }

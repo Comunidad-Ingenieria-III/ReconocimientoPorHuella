@@ -142,8 +142,6 @@ public class PersonaDao {
 
                 per_fami_dto.setIdPersona(rset.getString("idpersona"));
                 per_fami_dto.setIdFamiliar(rset.getString("idFamiliar"));
-                per_fami_dto.setNombre1(rset.getString("nombre1"));
-                per_fami_dto.setTelefono(rset.getString("telefono"));
                 per_fami_dto.setFechaIngreso(rset.getDate("fechaIngreso"));
 
                 listaFamiliares.add(per_fami_dto);
@@ -154,6 +152,44 @@ public class PersonaDao {
             e.printStackTrace();
         }
         return new BusquedaDeFamiliar(listaFamiliares, persona);
+    }
+
+    public Persona buscarPersonalPorIdPersona(String idPersona) {//funcion que permite la busqueda de un personal de salud, junto con los
+        //registros que le pertenezcan en la tabla personal-salud-titulo.
+
+        Persona persona = null;
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from datos_persona where idpersona = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idPersona);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                persona = new Persona();
+
+                persona.setIdpersona(rset.getString("idpersona"));
+                persona.setPrimerNombre(rset.getString("primerNombre"));
+                persona.setSegundoNombre(rset.getString("segundoNombre"));
+                persona.setPrimerApellido(rset.getString("primerApellido"));
+                persona.setSegundoApellido(rset.getString("segundoApellido"));
+                persona.setFechaNacimiento(rset.getDate("fechaNacimiento"));
+                persona.setDireccion(rset.getString("direccion"));
+                persona.setSexo(rset.getString("sexo"));
+                persona.setAlergicoA(rset.getString("alergicoA"));
+                persona.setEnfermedadSufre(rset.getString("enfermedadSufre"));
+                persona.setObservaciones(rset.getString("observaciones"));
+                persona.setHuella((ByteArrayInputStream) rset.getBinaryStream("huella"));
+                persona.setHuella1(rset.getInt("huella1"));
+                persona.setTipoDocumento(rset.getString("idTipoDocumento"));
+                persona.setIdEps(rset.getString("idEps"));
+                persona.setEstado(rset.getBoolean("estado"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return persona;
     }
 
     public boolean buscarPrimaryKeyPersona(String idPersona) {//Funcion para realizar la busqueda de un personal de salud por medio de su perimary key
@@ -205,7 +241,7 @@ public class PersonaDao {
         return personas;
     }
 
-    public void agregarPersona(Persona persona) throws RuntimeException {
+    public int agregarPersona(Persona persona) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "insert into datos_persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido," +
@@ -230,14 +266,12 @@ public class PersonaDao {
             stmt.setBoolean(16, persona.isEstado());
 
 
-            int rta = stmt.executeUpdate();
-            if (rta != 1) {
-                throw new RuntimeException("Error al agregar!");
-            }
+            stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException("Error SQL - Agregar()!");
         }
+        return 1;
     }
 
     public int modificar(Persona persona) {

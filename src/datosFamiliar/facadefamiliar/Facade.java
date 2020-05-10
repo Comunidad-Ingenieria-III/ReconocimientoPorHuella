@@ -24,6 +24,10 @@ public class Facade {
         return familiarDAO.buscar(buscar);
     }
 
+    public Familiar buscarPorId(String idFamiliar){
+        return familiarDAO.buscarPorId(idFamiliar);
+    }
+
     public int modificarFamiliar(Familiar familiar){
         return familiarDAO.modificar(familiar);
     }

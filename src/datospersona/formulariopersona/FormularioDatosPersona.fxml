@@ -10,47 +10,39 @@
    <center>
       <AnchorPane prefHeight="470.0" prefWidth="721.0" styleClass="panel_login" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="cbxtipodocumento" layoutX="1.0" layoutY="36.0" prefHeight="25.0" prefWidth="207.0" promptText="Seleccione" />
-            <TextField fx:id="tf_idpersona" layoutX="1.0" layoutY="65.0" onKeyReleased="#validarExistente" prefHeight="25.0" prefWidth="207.0">
+            <ComboBox fx:id="cbxtipodocumento" layoutX="2.0" layoutY="36.0" prefHeight="25.0" prefWidth="300.0" promptText="Seleccione" />
+            <TextField fx:id="tf_idpersona" layoutX="2.0" layoutY="65.0" onKeyReleased="#validarExistente" prefHeight="25.0" prefWidth="300.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </TextField>
-            <TextField fx:id="tf_primerNombre" layoutX="1.0" layoutY="92.0" prefHeight="25.0" prefWidth="207.0" />
-            <TextField fx:id="tf_segundoNombre" layoutX="2.0" layoutY="120.0" prefHeight="25.0" prefWidth="207.0" />
-            <TextField fx:id="tf_primerApellido" layoutX="1.0" layoutY="148.0" prefHeight="25.0" prefWidth="207.0" />
-            <TextField fx:id="tf_segundoApellido" layoutX="1.0" layoutY="176.0" prefHeight="25.0" prefWidth="207.0" />
-            <DatePicker fx:id="dp_fechaNacimiento" layoutX="1.0" layoutY="203.0" prefHeight="25.0" prefWidth="207.0" promptText="DD/MM/AAAA" />
-            <TextField fx:id="tf_direccion" layoutX="1.0" layoutY="232.0" prefHeight="25.0" prefWidth="207.0" />
-            <ComboBox id="cbx" fx:id="cbxsexo" layoutX="3.0" layoutY="260.0" prefHeight="25.0" prefWidth="150.0" promptText="Seleccione" />
-            <ComboBox fx:id="cbxtipoeps" layoutX="3.0" layoutY="288.0" prefHeight="25.0" prefWidth="150.0" promptText="Seleccione" />
-            <TextArea fx:id="ta_alergicoA" layoutX="3.0" layoutY="318.0" prefHeight="40.0" prefWidth="400.0" />
-            <TextArea fx:id="ta_enfermedadSufre" layoutX="3.0" layoutY="360.0" prefHeight="40.0" prefWidth="400.0" />
-            <TextArea fx:id="ta_observaciones" layoutX="3.0" layoutY="402.0" prefHeight="40.0" prefWidth="400.0" />
-            <Label alignment="CENTER" layoutX="572.0" layoutY="213.0" prefHeight="30.0" prefWidth="357.0" styleClass="lbl-cuerpo" text="Captura Huella Dactilar" />
-            <TableView fx:id="tb_familiar" layoutX="253.0" layoutY="31.0" prefHeight="173.0" prefWidth="839.0" tableMenuButtonVisible="true">
+            <TextField fx:id="tf_primerNombre" layoutX="2.0" layoutY="92.0" prefHeight="25.0" prefWidth="300.0" />
+            <TextField fx:id="tf_segundoNombre" layoutX="2.0" layoutY="120.0" prefHeight="25.0" prefWidth="300.0" />
+            <TextField fx:id="tf_primerApellido" layoutX="2.0" layoutY="148.0" prefHeight="25.0" prefWidth="300.0" />
+            <TextField fx:id="tf_segundoApellido" layoutX="2.0" layoutY="176.0" prefHeight="25.0" prefWidth="300.0" />
+            <DatePicker fx:id="dp_fechaNacimiento" layoutX="2.0" layoutY="203.0" prefHeight="25.0" prefWidth="300.0" promptText="DD/MM/AAAA" />
+            <TextField fx:id="tf_direccion" layoutX="2.0" layoutY="232.0" prefHeight="25.0" prefWidth="300.0" />
+            <ComboBox id="cbx" fx:id="cbxsexo" layoutX="3.0" layoutY="260.0" prefHeight="25.0" prefWidth="300.0" promptText="Seleccione" />
+            <ComboBox fx:id="cbxtipoeps" layoutX="3.0" layoutY="288.0" prefHeight="25.0" prefWidth="300.0" promptText="Seleccione" />
+            <TextArea fx:id="ta_alergicoA" layoutX="3.0" layoutY="318.0" prefHeight="40.0" prefWidth="300.0" />
+            <TextArea fx:id="ta_enfermedadSufre" layoutX="3.0" layoutY="360.0" prefHeight="40.0" prefWidth="300.0" />
+            <TextArea fx:id="ta_observaciones" layoutX="3.0" layoutY="402.0" prefHeight="40.0" prefWidth="300.0" />
+            <Label alignment="CENTER" layoutX="445.0" layoutY="216.0" prefHeight="30.0" prefWidth="500.0" styleClass="lbl-cuerpo" text="Captura Huella Dactilar" />
+            <TableView fx:id="tb_familiar" layoutX="442.0" layoutY="40.0" prefHeight="173.0" prefWidth="500.0" tableMenuButtonVisible="true">
               <columns>
                 <TableColumn fx:id="colIdpersona" prefWidth="159.0">
                      <graphic>
-                        <ComboBox fx:id="cbx_documentopersona" prefHeight="25.0" prefWidth="140.0" promptText="D. Persona" />
+                        <ComboBox fx:id="cbx_documentopersona" prefHeight="25.0" prefWidth="160.0" promptText="Documento Personal" />
                      </graphic>
                   </TableColumn>
                 <TableColumn fx:id="colIdFamiliar" prefWidth="175.0">
                      <graphic>
-                        <ComboBox fx:id="cbx_documentofamiliar" prefHeight="25.0" prefWidth="140.0" promptText="D. Familiar" />
+                        <ComboBox fx:id="cbx_documentofamiliar" prefHeight="25.0" prefWidth="160.0" promptText="Documento Familiar" />
                      </graphic>
                   </TableColumn>
-                  <TableColumn fx:id="colnombre1" prefWidth="75.0" text="Nombre familiar">
-                     <graphic>
-                        <ComboBox fx:id="cbx_nombrefamiliar" prefWidth="150.0" promptText="Nombre Familiar" />
-                     </graphic></TableColumn>
-                  <TableColumn fx:id="coltelefono" prefWidth="75.0" text="telefono">
-                     <graphic>
-                        <ComboBox fx:id="cbx_telefonofamiliar" prefWidth="150.0" promptText="Telefono Familiar" />
-                     </graphic></TableColumn>
                   <TableColumn fx:id="colFechaIngreso" prefWidth="167.0">
                      <graphic>
-                        <DatePicker fx:id="dp_ingresofamiliar" prefWidth="140.0" promptText="DD/MM/AAAA" />
+                        <DatePicker fx:id="dp_ingresofamiliar" prefHeight="25.0" prefWidth="140.0" promptText="DD/MM/AAAA" />
                      </graphic>
                   </TableColumn>
               </columns>
@@ -58,8 +50,67 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TextArea fx:id="txtArea" layoutX="572.0" layoutY="241.0" prefHeight="200.0" prefWidth="475.0" />
-            <Button fx:id="bt_agregarfamiliar" layoutX="394.0" layoutY="220.0" mnemonicParsing="false" onAction="#agregarFamiliar" prefHeight="30.0" prefWidth="110.0" text="Agregar Fecha" />
+            <TextArea fx:id="txtArea" layoutX="442.0" layoutY="254.0" prefHeight="187.0" prefWidth="500.0" />
+            <Button fx:id="bt_hulla" layoutX="966.0" layoutY="408.0" mnemonicParsing="false" onAction="#start" prefHeight="30.0" prefWidth="120.0" text="Capturar Huella" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="bt_agregarfamiliar" layoutX="966.0" layoutY="86.0" mnemonicParsing="false" onAction="#agregarFamiliar" prefHeight="30.0" prefWidth="80.0" text="Agregar " />
+            <Button fx:id="bt_crear" layoutX="330.0" layoutY="46.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="25.0" prefWidth="80.0" text="Crear" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="bt_consultar" layoutX="330.0" layoutY="118.0" mnemonicParsing="false" onAction="#consultarPersonaFamiliar" prefHeight="30.0" prefWidth="80.0" text="Consultar" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="bt_cancelar" layoutX="330.0" layoutY="186.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="80.0" text="Cancelar" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="bt_inhabilitar" layoutX="330.0" layoutY="257.0" mnemonicParsing="false" onAction="#eliminarPersona" prefHeight="30.0" prefWidth="80.0" text="Inhabilitar" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="bt_modificar" layoutX="330.0" layoutY="330.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="80.0" text="Modificar" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="bt_guardar" layoutX="330.0" layoutY="402.0" mnemonicParsing="false" onAction="#guardarHuella" prefHeight="30.0" prefWidth="80.0" text="Guardar" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" layoutX="441.0" layoutY="6.0" prefHeight="30.0" prefWidth="500.0" styleClass="lbl-cuerpo" text="Ingreso Documento Familiar" />
+            <Button fx:id="bt_modificarfamiliar" layoutX="966.0" layoutY="130.0" mnemonicParsing="false" onAction="#modificarRegistroDeTablaFamiliares" prefHeight="30.0" prefWidth="80.0" text="Modificar" />
+            <Button fx:id="bt_inhabilitarfamiliar" layoutX="966.0" layoutY="173.0" mnemonicParsing="false" onAction="#eliminarFamiliares" prefHeight="30.0" prefWidth="80.0" text="Inhabilitar" />
          </children>
       </AnchorPane>
    </center>
@@ -150,74 +201,18 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label text="Los campos con * Son Obligatorios" textFill="#ff8181">
+            <Label prefHeight="20.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
                <font>
-                  <Font name="System Bold Italic" size="10.0" />
+                  <Font name="System Bold Italic" size="11.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
    </left>
    <bottom>
-      <AnchorPane prefHeight="80.0" prefWidth="1200.0" styleClass="panel_login" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="60.0" prefWidth="1300.0" styleClass="panel_login" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="bt_crear" layoutX="41.0" layoutY="25.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="25.0" prefWidth="76.0" text="Crear" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="bt_consultar" layoutX="156.0" layoutY="25.0" mnemonicParsing="false" onAction="#consultarPersonaFamiliar" prefHeight="30.0" prefWidth="99.0" text="Consultar" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="bt_cancelar" layoutX="302.0" layoutY="25.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="99.0" text="Cancelar" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="bt_inhabilitar" layoutX="452.0" layoutY="25.0" mnemonicParsing="false" onAction="#eliminarPersona" prefHeight="30.0" prefWidth="99.0" text="Inhabilitar" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="bt_modificar" layoutX="621.0" layoutY="25.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="90.0" text="Modificar" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="bt_guardar" layoutX="767.0" layoutY="25.0" mnemonicParsing="false" onAction="#guardarHuella" prefHeight="30.0" prefWidth="99.0" text="Guardar" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="bt_salir" layoutX="931.0" layoutY="25.0" mnemonicParsing="false" onAction="#setCerrarFormularioPersonas" prefHeight="30.0" prefWidth="99.0" text="Salir" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="bt_hulla" layoutX="1098.0" layoutY="23.0" mnemonicParsing="false" onAction="#start" prefHeight="30.0" prefWidth="145.0" text="Capturar Huella" textFill="WHITE">
+            <Button fx:id="bt_salir" layoutX="1136.0" layoutY="15.0" mnemonicParsing="false" onAction="#setCerrarFormularioPersonas" prefHeight="30.0" prefWidth="150.0" text="Salir" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

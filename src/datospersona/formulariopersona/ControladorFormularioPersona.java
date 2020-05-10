@@ -16,6 +16,8 @@ import datospersona.dto.Persona;
 import datospersona.facade.FacadePersona;
 import eps.dto.DtoEps;
 import eps.facadeeps.FacadeEps;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,10 +75,6 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private TextField tf_segundoApellido;
     @FXML
-    private TextField tf_colnombre1;
-    @FXML
-    private TextField tf_coltelefono;
-    @FXML
     private DatePicker dp_fechaNacimiento;
     @FXML
     private TextField tf_direccion;
@@ -91,12 +89,7 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private ComboBox<Familiar> cbx_documentofamiliar;
     @FXML
-    private ComboBox<Familiar> cbx_nombrefamiliar;
-    @FXML
-    private ComboBox<Familiar> cbx_telefonofamiliar;
-    @FXML
     private DatePicker dp_ingresofamiliar;
-
     @FXML
     private TableView<Per_Fami_Dto> tb_familiar;
     @FXML
@@ -104,12 +97,7 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private TableColumn<Per_Fami_Dto, String> colIdFamiliar;
     @FXML
-    private TableColumn<Per_Fami_Dto, String> colnombre1;
-    @FXML
-    private TableColumn<Per_Fami_Dto, String> coltelefono;
-    @FXML
     private TableColumn<Per_Fami_Dto, Date> colFechaIngreso;
-
     @FXML
     private TextArea ta_alergicoA;
     @FXML
@@ -137,6 +125,10 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private Button bt_agregarfamiliar;
     @FXML
+    private Button bt_modificarfamiliar;
+    @FXML
+    private Button bt_inhabilitarfamiliar;
+
     private int valor = 1;
 
     private ObservableList<Per_Fami_Dto> familiares;
@@ -166,14 +158,13 @@ public class ControladorFormularioPersona implements Initializable {
         Iniciar();
         validarId();
         iniciarDocumentoPersona();
+        manejarEventosTablaFamiliares();
 
     }
 
     public void initializeTableColumn() {
         colIdpersona.setCellValueFactory(new PropertyValueFactory<>("idPersona"));
         colIdFamiliar.setCellValueFactory(new PropertyValueFactory<>("idFamiliar"));
-        colnombre1.setCellValueFactory(new PropertyValueFactory<>("nombre1"));
-        coltelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         colFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("fechaIngreso"));
     }
 
@@ -206,8 +197,18 @@ public class ControladorFormularioPersona implements Initializable {
     public void iniciarFamiliar() {
         ObservableList<Familiar> listafamiliar = FXCollections.observableArrayList(facadefamiliar.obtenerTodosFamiliares());
         cbx_documentofamiliar.setItems(listafamiliar);
-        cbx_nombrefamiliar.setItems(listafamiliar);
-        cbx_telefonofamiliar.setItems(listafamiliar);
+    }
+
+    @FXML
+    public void iniciarCbxid_persona() {
+
+        ObservableList<Persona> listaIdpersona = FXCollections.observableArrayList(facadepersona.cargarPersona());
+        for (int i = 0; i < listaIdpersona.size(); i++) {
+            if (!listaIdpersona.get(i).isEstado())//Ciclo para recorrer la lista de objetos de personal-salud, y eliminar los registros que tengan
+                //el estado inactivo en la BBDD
+                listaIdpersona.remove(i);//si el estado esta inactivo, se elimina de la lista
+        }
+        cbx_documentopersona.setItems(listaIdpersona);
     }
 
     //Varible que permite iniciar el dispositivo de lector de huella conectado
@@ -413,7 +414,6 @@ public class ControladorFormularioPersona implements Initializable {
 
                     //compara las plantilas (actual vs bd)
                     if (result.isVerified()) {
-                        //facadepersona.modificarPersona(modificarPersona());
                         JOptionPane.showMessageDialog(null, "La huella ya existe, coloque un dedo diferente");
                     } else {
                         PreparedStatement guardarStmt2 = conn.prepareStatement("update datos_persona set huella1=? where (idpersona=?)");
@@ -429,8 +429,6 @@ public class ControladorFormularioPersona implements Initializable {
 
                     try {
                         guardarPersona();
-                        iniciarDocumentoPersona();
-                        cancelar();
                     } catch (RuntimeException e) {
                         throw new RuntimeException("Error SQL - Agregar()!");
                     }
@@ -494,16 +492,24 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private void guardarPersona() {
         validar();
-        facadepersona.insertarPersona(crearPersona());
-
-        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
-        msg.setTitle("Gestiones - Registro");
-        msg.setContentText("El Registro ha sido agregado correctamente");
-        msg.setHeaderText("Información");
-        msg.show();
-        bt_crear.setDisable(false);
+        int res = facadepersona.insertarPersona(crearPersona());
+        if (res == 1) {
+            Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
+            msg1.setTitle("Gestiones - Persona");
+            msg1.setContentText("Registro Agregado Correctamente");
+            msg1.setHeaderText("Información");
+            msg1.show();
+            iniciarCbxid_persona();
+            cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
+            bt_crear.setDisable(false);
+        } else {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Persona");
+            msg.setContentText("No Fue Posible Agregar El Registro");
+            msg.setHeaderText("Información.");
+            msg.show();
+        }
     }
-
 
     @FXML
     private Persona modificarPersona() {
@@ -618,8 +624,6 @@ public class ControladorFormularioPersona implements Initializable {
         bt_hulla.setDisable(false);
         cbx_documentopersona.setDisable(false);
         cbx_documentofamiliar.setDisable(false);
-        cbx_nombrefamiliar.setDisable(false);
-        cbx_telefonofamiliar.setDisable(false);
         dp_ingresofamiliar.setDisable(false);
         bt_agregarfamiliar.setDisable(false);
         tb_familiar.setDisable(false);
@@ -640,7 +644,7 @@ public class ControladorFormularioPersona implements Initializable {
                 msge.setTitle("Gestiones - Persona ");
                 msge.setContentText("No puedes Eliminar! \n" + "El Documento Tiene Registros Dependientes!\n"
                         + "Asegurese De Eliminar Los Registros Que Dependen De Este.");
-                msge.setHeaderText("Infomación.");
+                msge.setHeaderText("Información.");
                 msge.show();
                 cancelar();
             } else {
@@ -731,7 +735,6 @@ public class ControladorFormularioPersona implements Initializable {
         }
     }
 
-
     @FXML
     public void cancelar() {
         cbxtipodocumento.setValue(null);
@@ -753,10 +756,7 @@ public class ControladorFormularioPersona implements Initializable {
         dp_ingresofamiliar.setValue(null);
         colIdpersona.setText("");
         colIdFamiliar.setText("");
-        colnombre1.setText("");
-        coltelefono.setText("");
-        cbx_nombrefamiliar.setValue(null);
-        cbx_telefonofamiliar.setValue(null);
+        familiares.clear();
         colFechaIngreso.setText("");
         deshabilitarBotones();
         deshabilitarCampos();
@@ -785,7 +785,6 @@ public class ControladorFormularioPersona implements Initializable {
         cbx_documentofamiliar.setValue(null);
     }
 
-
     @FXML
     private void habilitarBotones() {
         bt_crear.setDisable(true); //siempre ira deshabilitado
@@ -811,9 +810,7 @@ public class ControladorFormularioPersona implements Initializable {
         bt_inhabilitar.setDisable(true);
         bt_hulla.setDisable(true);
         bt_agregarfamiliar.setDisable(true);
-
     }
-
 
     @FXML
     private void habilitarCampos() {
@@ -833,8 +830,6 @@ public class ControladorFormularioPersona implements Initializable {
         dp_fechaNacimiento.setDisable(false);
         cbx_documentopersona.setDisable(false);
         cbx_documentofamiliar.setDisable(false);
-        cbx_nombrefamiliar.setDisable(false);
-        cbx_telefonofamiliar.setDisable(false);
         dp_ingresofamiliar.setDisable(false);
         cbxtipodocumento.requestFocus();
     }
@@ -857,8 +852,6 @@ public class ControladorFormularioPersona implements Initializable {
         txtArea.setDisable(true);
         cbx_documentopersona.setDisable(true);
         cbx_documentofamiliar.setDisable(true);
-        cbx_nombrefamiliar.setDisable(true);
-        cbx_telefonofamiliar.setDisable(true);
         dp_ingresofamiliar.setDisable(true);
 
 
@@ -899,8 +892,6 @@ public class ControladorFormularioPersona implements Initializable {
 
                 cbx_documentopersona.getSelectionModel().getSelectedItem().getIdpersona(),
                 cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar(),
-                cbx_nombrefamiliar.getSelectionModel().getSelectedItem().getPrimerNombre(),
-                cbx_telefonofamiliar.getSelectionModel().getSelectedItem().getTelFamiliar(),
                 Date.valueOf(dp_ingresofamiliar.getValue()),
                 estado
         );
@@ -924,36 +915,106 @@ public class ControladorFormularioPersona implements Initializable {
             msg.show();
             cancelar();
 
-            /*if (familiares.isEmpty()) {
-                //boolean res = buscarDocumento(per_fami_dto.getIdPersona());
+            if (familiares.isEmpty()) {
+                boolean res = buscarDocumento(per_fami_dto.getIdPersona());
                 if (res) {
                     per_fami_facade.agregar(per_fami_dto);
                     familiares.add(per_fami_dto);
                     //limpiarComponentes();
                 } else {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
-                    msg.setTitle("Gestiones - Personal Salud");
-                    msg.setContentText("El Documento Nro. " + per_fami_dto.getIdPersona() + " No Se Encuentra Registrado!\n" +
-                            "Debe Registrarlo Para Poder Asignarle Titulos");
-                    msg.show();
+                    Alert msge = new Alert(Alert.AlertType.ERROR);
+                    msge.setTitle("Gestiones - Persona");
+                    msge.setContentText("El Documento Nro. " + per_fami_dto.getIdPersona() + " No Se Encuentra Registrado!\n" +
+                            "Debe Registrarlo Para Poder Asignarle Familiar");
+                    msge.show();
 
                 }
             } else {
                 boolean resultado = recorrerTablaTitulos(familiares, per_fami_dto);
                 if (resultado) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
-                    msg.setTitle("Gestiones - Personal Salud");
-                    msg.setContentText("El Registro Ya Existe ");
-                    msg.show();
+                    Alert msg1 = new Alert(Alert.AlertType.ERROR);
+                    msg1.setTitle("Gestiones - Persona");
+                    msg1.setContentText("El Registro Ya Existe ");
+                    msg1.show();
                 } else {
                     per_fami_facade.agregar(per_fami_dto);
                     familiares.add(per_fami_dto);
                     //limpiarComponentes();
+                }
+
+            }
+        }
+    }
+
+    @FXML
+    public void modificarRegistroDeTablaFamiliares() {//Metodo que permite editar los registros de la tabla y asi poder actualizar en la base de datos
+        Per_Fami_Dto per_fami_dto = new Per_Fami_Dto(
+                cbx_documentopersona.getSelectionModel().getSelectedItem().getIdpersona(),
+                cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar(),
+                Date.valueOf(dp_ingresofamiliar.getValue()),
+                estado
+        );
+
+        DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
+        String convertido = fechaHora.format(per_fami_dto.getFechaIngreso());//Formatear una fecha Date a String
+
+        if (per_fami_dto.getFechaIngreso().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Persona");
+            msg.setContentText("Debe Ingresar Una Fecha Valida: \n" + "La Fecha: " + convertido + " Es Superior A La Fecha De Hoy");
+            msg.show();
+            dp_ingresofamiliar.requestFocus();
+        } else {
+            boolean resultado = recorrerTablaTitulos(familiares, per_fami_dto);
+            if (resultado) {
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Persona");
+                msg.setContentText("El Registro Ya Existe ");
+                msg.show();
+            } else {
+                per_fami_facade.modificar(per_fami_dto);
+                familiares.set(tb_familiar.getSelectionModel().getSelectedIndex(), per_fami_dto);
+                cancelar();
+                cbx_documentopersona.setValue(null);
+                bt_agregarfamiliar.setDisable(false);
+                bt_modificarfamiliar.setDisable(true);
+                bt_inhabilitarfamiliar.setDisable(true);
+
+            }
+
+        }
+    }
+
+    @FXML
+    public void eliminarFamiliares() {//Metodo para eliminar el registro seleccionado en la tabla
+        String idPs = tb_familiar.getSelectionModel().getSelectedItem().getIdPersona();//Extraemos en id del psDto, desde la fila seleccionada en la tabla
+        boolean estado = false;
+        per_fami_facade.eliminar(idPs, estado);
+        familiares.remove(tb_familiar.getSelectionModel().getFocusedIndex());
+        //cancelar();
+    }
+
+    public void manejarEventosTablaFamiliares() {//Metodo para que cuando se seleccione un registro de la tabla se asigne a los componentes
+        tb_familiar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Per_Fami_Dto>() {
+            @Override
+            public void changed(ObservableValue<? extends Per_Fami_Dto> observable, Per_Fami_Dto oldValue, Per_Fami_Dto newValue) {
+                if (newValue != null) {
+                    cbx_documentopersona.getSelectionModel().select(facadepersona.buscarIdPersona(
+                            tb_familiar.getSelectionModel().getSelectedItem().getIdPersona()));
+
+                    cbx_documentofamiliar.getSelectionModel().select(facadefamiliar.buscarPorId(
+                            tb_familiar.getSelectionModel().getSelectedItem().getIdFamiliar()));
+
+                    dp_ingresofamiliar.setValue(newValue.getFechaIngreso().toLocalDate());
+
+                    bt_agregarfamiliar.setDisable(true);
+                    bt_modificarfamiliar.setDisable(false);
+                    bt_inhabilitarfamiliar.setDisable(false);
 
                 }
 
-            }*/
-        }
+            }
+        });//FIN DEL LISTENER
     }
 
     @FXML

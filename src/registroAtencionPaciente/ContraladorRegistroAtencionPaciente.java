@@ -287,10 +287,13 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             conn = ConexionRoot.getConexion();
 
             //Obtiene todas las huellas de la bd
-            PreparedStatement identificarStmt = conn.prepareStatement("SELECT dp.idpersona, dp.primerNombre, dp.fechaNacimiento, ep.nombreEps, pf.nombre1, pf.telefono, dp.alergicoA, dp.enfermedadSufre, dp.observaciones, dp.huella\n" +
-                    "FROM datos_persona dp\n" +
-                    "inner JOIN eps ep on dp.idEps = ep.idEps\n" +
-                    "INNER JOIN persona_familiar pf ON dp.idpersona = pf.idpersona");
+            PreparedStatement identificarStmt = conn.prepareStatement("SELECT p.idpersona, p.primerNombre, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones, p.huella, \n" +
+                    "ep.nombreEps AS nombreEps, \n" +
+                    "f.nombre1, f.telefono as telefono \n" +
+                    "FROM persona_familiar AS pf\n" +
+                    "INNER JOIN datos_persona AS p ON p.idpersona = pf.idpersona\n" +
+                    "INNER JOIN familiar_paciente AS f ON f.idFamiliar = pf.idFamiliar\n" +
+                    "INNER JOIN eps AS ep ON p.idEps = ep.idEps");
             //Obtiene todas las huellas de la bd
             ResultSet rsIdentificar = identificarStmt.executeQuery();
 

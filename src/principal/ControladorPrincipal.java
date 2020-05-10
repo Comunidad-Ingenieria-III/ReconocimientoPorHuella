@@ -85,6 +85,8 @@ public class ControladorPrincipal implements Initializable {
     private MenuItem mi_DatosFamiliar;
     @FXML
     private MenuItem mi_perfil;
+    @FXML
+    private MenuItem mi_usario;
 
 
     @Override
@@ -101,6 +103,26 @@ public class ControladorPrincipal implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Perfil)");
             stage.setScene(new Scene(formulario_Perfil));
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.show();
+            //Hide this current window (if this is what you want)
+            //((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void abrirUsuario(ActionEvent event) throws IOException {
+        try {
+            Parent formulario_Usuario;
+            formulario_Usuario = FXMLLoader.load(getClass().getClassLoader().getResource("login/formulariousuario/FormularioRegistro.fxml"));
+            //FormularioPrincipal.getChildren().setAll(formulario_tipo_documento);
+            Stage stage = new Stage();
+            stage.setTitle("AP_Humana (Gestión Perfil)");
+            stage.setScene(new Scene(formulario_Usuario));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);
@@ -142,8 +164,8 @@ public class ControladorPrincipal implements Initializable {
             formulario_datos_persona = FXMLLoader.load(getClass().getClassLoader().getResource("datospersona/formulariopersona/FormularioDatosPersona.fxml"));
             //FormularioPrincipal.getChildren().setAll(formulario_datos_persona);
             Stage stage = new Stage();
-            AnchorPane panel_principal = new AnchorPane();
-            Scene scene = new Scene(panel_principal);
+            //AnchorPane panel_principal = new AnchorPane();
+            //Scene scene = new Scene(panel_principal);
             stage.setTitle("AP_Humana (Gestión Datos Persona)");
             stage.setScene(new Scene(formulario_datos_persona));
             stage.setResizable(false);
