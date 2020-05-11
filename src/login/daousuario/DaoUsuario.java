@@ -3,24 +3,86 @@ package login.daousuario;
 import conexionBD.ConexionRoot;
 import javafx.collections.ObservableList;
 import login.dtousuario.Usuario;
+import perfil.dtoperfil.PerfilDto;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DaoUsuario {
 
     private Usuario user = new Usuario();
-    private ObservableList<Usuario> usuarios;
+    private List<Usuario> usuarios;
 
     private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rset;
 
+    public List<Usuario> obtenerTodosLosUsuarios() {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from usuario where estado = 1";
+            stmt = conn.prepareStatement(sql);
+            rset = stmt.executeQuery();
 
-    public void crearUsuario(Usuario usuario) throws RuntimeException {
+            usuarios = new ArrayList<>();
+
+            while (rset.next()) {
+                user = new Usuario();
+
+                user.setIdUsuario(rset.getString("idUsuario"));
+                user.setPrimerNombre(rset.getString("primerNombre"));
+                user.setSegundoNombre(rset.getString("segundoNombre"));
+                user.setPrimerApellido(rset.getString("primerApellido"));
+                user.setSegundoApellido(rset.getString("segundoApellido"));
+                user.setUsername(rset.getString("username"));
+                user.setContrasena(rset.getString("contrasena"));
+                user.setIdperfil(rset.getString("idperfil"));
+                user.setEstado(rset.getBoolean("estado"));
+
+                usuarios.add(user);
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - obtenerTodos");
+        }
+        return usuarios;
+    }//Fin del metodo obtenerTodos
+
+    public List<Usuario> buscarUsuario(String buscar) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from usuario where idUsuario LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rset = stmt.executeQuery();
+
+            usuarios = new ArrayList<>();
+            while (rset.next()) {
+                user.setIdUsuario(rset.getString("idUsuario"));
+                user.setPrimerNombre(rset.getString("primerNombre"));
+                user.setSegundoNombre(rset.getString("segundoNombre"));
+                user.setPrimerApellido(rset.getString("primerApellido"));
+                user.setSegundoApellido(rset.getString("segundoApellido"));
+                user.setUsername(rset.getString("username"));
+                user.setContrasena(rset.getString("contrasena"));
+                user.setIdperfil(rset.getString("idperfil"));
+                user.setEstado(rset.getBoolean("estado"));
+
+                usuarios.add(user);
+            }
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - BucarPerfil()!");
+        }
+        return usuarios;
+    }
+
+
+    public int crearUsuario(Usuario usuario) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "insert into usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido," +
@@ -38,15 +100,97 @@ public class DaoUsuario {
             stmt.setString(8, usuario.getIdperfil());
             stmt.setBoolean(9, usuario.isEstado());
 
-            int rta = stmt.executeUpdate();
-            if (rta != 1) {
-                throw new RuntimeException("Error al agregar!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Registro Guardado Con Exito", "INFORMACIÓN", 1);
-            }
+            stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException("Error SQL - Agregar()!");
         }
+        return 1;
+    }
+
+    public int modificarUsuario(Usuario user) {
+
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "update usuario set primerNombre = ?, segundoNombre = ?, primerApellido = ?, segundoApellido = ?, username = ?," +
+                    "contrasena = ?, idperfil = ?, estado = ? where idUsuario = ? ";
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, user.getPrimerNombre());
+            stmt.setString(2, user.getSegundoNombre());
+            stmt.setString(3, user.getPrimerApellido());
+            stmt.setString(4, user.getSegundoApellido());
+            stmt.setString(5, user.getUsername());
+            stmt.setString(6,user.getContrasena());
+            stmt.setString(7, user.getIdperfil());
+            stmt.setBoolean(8, user.isEstado());
+
+            stmt.setString(9, user.getIdUsuario());
+
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException | RuntimeException e) {
+            System.out.println(e.toString());
+        }
+        return 0;
+    }
+
+    public boolean eliminar(String idUsuario) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
+        //en otras tablas que dependan de la clave primaria de éste
+
+        boolean yes = false;
+        try {
+
+            if(yes==false) {
+                conn = ConexionRoot.getConexion();
+                String sql = "SELECT p.idUsuario ,p.idperfil ,ps.idperfil as relacion from usuario AS p " +
+                        "INNER JOIN perfil AS ps ON p.idperfil=ps.idperfil where ps.idperfil = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, idUsuario);
+                rset = stmt.executeQuery();
+                if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+                    yes = true;
+
+                } else {
+                    String sql2 = "update usuario set estado = 0 where idUsuario = ?";
+                    stmt = conn.prepareStatement(sql2);
+                    stmt.setString(1, idUsuario);
+                    stmt.executeUpdate();
+                    yes = false;
+                }
+            }
+        } catch (RuntimeException | SQLException e) {
+            e.printStackTrace();
+        }
+        return yes;
+    }
+
+    public Usuario buscarPorIdUsuario(String idUsuario) {
+        Usuario usuario = null;
+        try {
+            conn = ConexionRoot.getConexion();
+            String query = "select * from usurio where idUsuario=?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1,idUsuario);
+            rset = stmt.executeQuery();
+
+            if (rset.next()){
+                user = new Usuario();
+                user.setIdUsuario(rset.getString("idUsuario"));
+                user.setPrimerNombre(rset.getString("primerNombre"));
+                user.setSegundoNombre(rset.getString("segundoNombre"));
+                user.setPrimerApellido(rset.getString("primerApellido"));
+                user.setSegundoApellido(rset.getString("segundoApellido"));
+                user.setUsername(rset.getString("username"));
+                user.setContrasena(rset.getString("contrasena"));
+                user.setIdperfil(rset.getString("idperfil"));
+                user.setEstado(rset.getBoolean("estado"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuario;
     }
 }

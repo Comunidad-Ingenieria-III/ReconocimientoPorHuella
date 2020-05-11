@@ -49,7 +49,7 @@
 
 .lbl-cuerpo{
     -fx-font: bold 16px italic;       
-    -fx-text-fill: -fx-secondary;
+    -fx-text-fill: white;
     
 }
 

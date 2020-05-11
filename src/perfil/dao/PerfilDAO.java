@@ -60,19 +60,11 @@ public class PerfilDAO {
                 perfilDto.setEstado(rset.getBoolean("estado"));
                 perfiles.add(perfilDto);
             }
-
-
-
         }catch (RuntimeException | SQLException e){
             throw new RuntimeException("Error SQL - BucarPerfil()!");
         }
         return perfiles;
     }
-
-
-
-
-
 
     public int agregar(PerfilDto perfilDto) {
         try {
@@ -154,23 +146,13 @@ public class PerfilDAO {
                     stmt.setString(1, idperfil);
                     stmt.executeUpdate();
                     yes = false;
-
-
                 }
-
-
             }
-
         } catch (RuntimeException | SQLException e) {
             e.printStackTrace();
         }
         return yes;
     }
-
-
-
-
-
 
     public PerfilDto buscarPorId(String idperfil) {
         PerfilDto perfilDto = null;

@@ -182,10 +182,6 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
         }
     }
 
-
-
-
-
     @FXML
     private void abrirFormularioRegistro(ActionEvent event) throws IOException {
 

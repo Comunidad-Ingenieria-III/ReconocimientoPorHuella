@@ -118,7 +118,7 @@ public class ControladorPrincipal implements Initializable {
     private void abrirUsuario(ActionEvent event) throws IOException {
         try {
             Parent formulario_Usuario;
-            formulario_Usuario = FXMLLoader.load(getClass().getClassLoader().getResource("login/formulariousuario/FormularioRegistro.fxml"));
+            formulario_Usuario = FXMLLoader.load(getClass().getClassLoader().getResource("login/formulariousuario/AdministracionUsuario.fxml"));
             //FormularioPrincipal.getChildren().setAll(formulario_tipo_documento);
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Perfil)");
