@@ -59,7 +59,7 @@
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="bt_agregarfamiliar" layoutX="966.0" layoutY="86.0" mnemonicParsing="false" onAction="#agregarFamiliar" prefHeight="30.0" prefWidth="80.0" text="Agregar " />
+            <Button fx:id="bt_agregarfamiliar" layoutX="966.0" layoutY="86.0" mnemonicParsing="false" onAction="#agregarFamiliar" prefHeight="30.0" prefWidth="80.0" />
             <Button fx:id="bt_crear" layoutX="330.0" layoutY="46.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="25.0" prefWidth="80.0" text="Crear" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -109,8 +109,8 @@
                </font>
             </Button>
             <Label alignment="CENTER" layoutX="441.0" layoutY="6.0" prefHeight="30.0" prefWidth="500.0" styleClass="lbl-cuerpo" text="Ingreso Documento Familiar" />
-            <Button fx:id="bt_modificarfamiliar" layoutX="966.0" layoutY="130.0" mnemonicParsing="false" onAction="#modificarRegistroDeTablaFamiliares" prefHeight="30.0" prefWidth="80.0" text="Modificar" />
-            <Button fx:id="bt_inhabilitarfamiliar" layoutX="966.0" layoutY="173.0" mnemonicParsing="false" onAction="#eliminarFamiliares" prefHeight="30.0" prefWidth="80.0" text="Inhabilitar" />
+            <Button fx:id="bt_modificarfamiliar" layoutX="966.0" layoutY="130.0" mnemonicParsing="false" onAction="#modificarRegistroDeTablaFamiliares" prefHeight="30.0" prefWidth="80.0" />
+            <Button fx:id="bt_inhabilitarfamiliar" layoutX="966.0" layoutY="173.0" mnemonicParsing="false" onAction="#eliminarFamiliares" prefHeight="30.0" prefWidth="80.0" />
          </children>
       </AnchorPane>
    </center>

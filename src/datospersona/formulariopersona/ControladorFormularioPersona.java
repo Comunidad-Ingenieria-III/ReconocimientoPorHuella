@@ -30,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -159,6 +160,7 @@ public class ControladorFormularioPersona implements Initializable {
         validarId();
         iniciarDocumentoPersona();
         manejarEventosTablaFamiliares();
+        colocarImagenBotones();
 
     }
 
@@ -439,18 +441,26 @@ public class ControladorFormularioPersona implements Initializable {
         } else {
             int res = facadepersona.modificarPersona(modificarPersona());
             if (res == 1) {
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Persona");
-                msg.setContentText("Registro Modificado Correctamente");
-                msg.setHeaderText("Exito.");
-                msg.show();
-                cancelar();
-            } else {
-                Alert msg = new Alert(Alert.AlertType.WARNING);
-                msg.setTitle("Gestiones - Persona ");
-                msg.setContentText("No Fue Posible Modificar El Registro ");
-                msg.setHeaderText("Algo Salio Mal.");
-                msg.show();
+                iniciarCbxid_persona();
+                Alert msg1 = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+                msg1.setTitle("Gestiones - Persona");
+                msg1.setContentText("Registro Agregado Correctamente\n \n" + "Desea Modificar su Familiar ?");
+                msg1.setHeaderText("Información");
+                Optional<ButtonType> action = msg1.showAndWait();
+
+                if (action.get() == ButtonType.YES) {
+                    tb_familiar.setDisable(false);
+                    cbx_documentopersona.setDisable(false);
+                    cbx_documentofamiliar.setDisable(false);
+                    dp_ingresofamiliar.setDisable(false);
+                    bt_agregarfamiliar.setDisable(false);
+                    cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
+                    bt_crear.setDisable(false);
+                } else if (action.get() == ButtonType.NO) {
+                    deshabilitarCampos();
+                    deshabilitarBotones();
+                    limpiar();
+                }
                 cancelar();
             }
         }
@@ -796,6 +806,8 @@ public class ControladorFormularioPersona implements Initializable {
         bt_inhabilitar.setDisable(true);
         bt_hulla.setDisable(false);
         bt_agregarfamiliar.setDisable(false);
+        bt_modificarfamiliar.setDisable(false);
+        bt_inhabilitarfamiliar.setDisable(false);
         habilitarCampos();
     }
 
@@ -810,6 +822,8 @@ public class ControladorFormularioPersona implements Initializable {
         bt_inhabilitar.setDisable(true);
         bt_hulla.setDisable(true);
         bt_agregarfamiliar.setDisable(true);
+        bt_modificarfamiliar.setDisable(true);
+        bt_inhabilitarfamiliar.setDisable(true);
     }
 
     @FXML
@@ -854,6 +868,21 @@ public class ControladorFormularioPersona implements Initializable {
         cbx_documentofamiliar.setDisable(true);
         dp_ingresofamiliar.setDisable(true);
 
+
+    }
+
+    public void colocarImagenBotones(){
+
+        URL linkbt_guardar = getClass().getResource("/imagenes/disquete.png");
+        URL linkbt_modificar = getClass().getResource("/imagenes/btGuardar.png");
+        URL linkbt_inhabilitar = getClass().getResource("/imagenes/eliminar.png");
+
+        Image imagenGuardar = new Image(linkbt_guardar.toString(),24,24,false,true);
+        bt_agregarfamiliar.setGraphic(new ImageView(imagenGuardar));
+        Image imagenModificar = new Image(linkbt_modificar.toString(),24,24,false,true);
+        bt_modificarfamiliar.setGraphic(new ImageView(imagenModificar));
+        Image imagenInhabilitar = new Image(linkbt_inhabilitar.toString(),24,24,false,true);
+        bt_inhabilitarfamiliar.setGraphic(new ImageView(imagenInhabilitar));
 
     }
 
