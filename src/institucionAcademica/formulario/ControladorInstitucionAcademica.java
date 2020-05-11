@@ -451,6 +451,7 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                     txtTelefono.setText(instituciones.get(i).getTelefono());
                     btnInhabilitar.setDisable(false);
                     btnModificar.setDisable(false);
+                    txtCodigo.setDisable(true);
                 }
                 if (instituciones.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

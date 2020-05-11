@@ -402,6 +402,7 @@ public class ControladorDatosFamiliar implements Initializable {
                     tf_direccion.setText(familiares.get(i).getDireccion());
                     bt_inhabilitar.setDisable(false);
                     bt_modificar.setDisable(false);
+                    tf_idfamiliar.setDisable(true);
                 }
                 if (familiares.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

@@ -357,6 +357,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                     tf_nombre1.setText(ttAcademicos.get(i).getNombre());
                     bt_inhabilitar.setDisable(false);
                     bt_modificar.setDisable(false);
+                    tf_Tipo.setDisable(true);
                 }
                 if (ttAcademicos.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

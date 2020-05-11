@@ -380,6 +380,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                     txtTelefono.setText(institucionReferencias.get(i).getTelefono());
                     btnInhabilitar.setDisable(false);
                     btnModificar.setDisable(false);
+                    txtId.setDisable(true);
                 }
                 if (institucionReferencias.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);

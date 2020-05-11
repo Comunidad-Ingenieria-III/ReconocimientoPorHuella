@@ -345,6 +345,7 @@ public class ControladorCargo extends Component implements Initializable {
                 txtDescripcion.setText(cargos.get(i).getNombre());
                 btnEliminar.setDisable(false);
                 btnModificar.setDisable(false);
+                txtId.setDisable(true);
             }else {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Tipo de título académico");

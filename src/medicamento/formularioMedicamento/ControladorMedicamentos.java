@@ -357,7 +357,7 @@ public class ControladorMedicamentos extends Component implements Initializable 
                     tf_nombre1.setText(medicamentos.get(i).getNombre());
                     bt_inhabilitar.setDisable(false);
                     bt_modificar.setDisable(false);
-
+                    tf_Tipo.setDisable(true);
                 }
 
                 if (medicamentos.get(i).getEstado().equals("0")) {
