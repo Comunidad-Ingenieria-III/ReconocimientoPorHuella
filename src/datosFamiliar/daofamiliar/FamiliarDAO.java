@@ -78,6 +78,36 @@ public class FamiliarDAO {
         return familiares;
     } // Fin del método obtenerTodos()
 
+    public Familiar buscarPorId(String idFamiliar) {
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from familiar_paciente where idFamiliar = ? and estado = 1";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idFamiliar);
+            rset = stmt.executeQuery();
+
+            familiares = new ArrayList<>();
+
+            while (rset.next()) {
+                familiar = new Familiar();
+
+                familiar.setIdFamiliar(rset.getString("idFamiliar"));
+                familiar.setPrimerNombre(rset.getString("nombre1"));
+                familiar.setSegundoNombre(rset.getString("nombre2"));
+                familiar.setPrimerApellido(rset.getString("apellido1"));
+                familiar.setSegundoApellido(rset.getString("apellido2"));
+                familiar.setDireccion(rset.getString("direccion"));
+                familiar.setTelFamiliar(rset.getString("telefono"));
+                familiar.setEstado(rset.getString("estado"));
+                familiares.add(familiar);
+            }
+
+        } catch (RuntimeException | SQLException e) {
+            throw new RuntimeException("Error SQL - buscarPoridFamiliar()!");
+        }
+        return familiar;
+    } // Fin del método obtenerTodos()
+
 
     public int agregar(Familiar familiar) {
         try {

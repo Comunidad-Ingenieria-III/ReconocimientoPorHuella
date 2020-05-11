@@ -287,7 +287,7 @@ public class ControladorPersonalSalud implements Initializable {
     public void eliminarTitulos() {//Metodo para eliminar el registro seleccionado en la tabla
         int idPs = tb_personal.getSelectionModel().getSelectedItem().getId();//Extraemos en id del psDto, desde la fila seleccionada en la tabla
         boolean estado = false;
-        personalSaludFacade.eliminarPsdto(idPs,estado);
+        personalSaludFacade.eliminarPsdto(idPs, estado);
         titulos.remove(tb_personal.getSelectionModel().getFocusedIndex());
         limpiarComponentes();
     }

@@ -15,9 +15,8 @@ public class FacadePersona {
         return personaDao.cargarPersona();
     }
 
-    public void insertarPersona(Persona persona) {
-        personaDao.agregarPersona(persona);
-
+    public int insertarPersona(Persona persona) {
+        return personaDao.agregarPersona(persona);
     }
 
     public int modificarPersona(Persona persona) {
@@ -26,6 +25,10 @@ public class FacadePersona {
 
    public BusquedaDeFamiliar buscarPersona(String idpersona) {
         return personaDao.buscarPersonalPorId(idpersona);
+    }
+
+    public Persona buscarIdPersona(String idpersona) {
+        return personaDao.buscarPersonalPorIdPersona(idpersona);
     }
 
     public boolean buscarPersonaPrimaryKey(String idpersona){

@@ -1,4 +1,5 @@
 package persona_familiar.per_fami_dao;
+
 import conexionBD.ConexionRoot;
 import persona_familiar.per_fami_dto.Per_Fami_Dto;
 import personal_salud_titulo.psdto.PsDto;
@@ -36,8 +37,6 @@ public class Per_Fami_Dao {
 
                 per_fami_dto.setIdPersona(rset.getString("idpersona"));
                 per_fami_dto.setIdFamiliar(rset.getString("idFamiliar"));
-                per_fami_dto.setNombre1(rset.getString("nombre1"));
-                per_fami_dto.setTelefono(rset.getString("telefono"));
                 per_fami_dto.setFechaIngreso(rset.getDate("fechaIngreso"));
                 per_fami_dto.setEstado(rset.getBoolean("estado"));
 
@@ -56,15 +55,13 @@ public class Per_Fami_Dao {
         try {
 
             conn = ConexionRoot.getConexion();
-            String sql = "insert into persona_familiar(idpersona, idFamiliar, nombre1, telefono, fechaIngreso, estado) values(?, ?, ?, ?, ?, ?)";
+            String sql = "insert into persona_familiar(idpersona, idFamiliar, fechaIngreso, estado) values(?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, per_fami_dto.getIdPersona());
             stmt.setString(2, per_fami_dto.getIdFamiliar());
-            stmt.setString(3, per_fami_dto.getNombre1());
-            stmt.setString(4, per_fami_dto.getTelefono());
-            stmt.setDate(5, new java.sql.Date(per_fami_dto.getFechaIngreso().getTime()));
-            stmt.setBoolean(6, per_fami_dto.isEstado());
+            stmt.setDate(3, new java.sql.Date(per_fami_dto.getFechaIngreso().getTime()));
+            stmt.setBoolean(4, per_fami_dto.isEstado());
 
 
             return stmt.executeUpdate();
@@ -79,18 +76,16 @@ public class Per_Fami_Dao {
     public int modificar(Per_Fami_Dto per_fami_dto) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update persona-familiar set idPersonal = ?, idFamiliar = ?, nombre1 = ?, telefono = ?, fechaIngreso = ?, estado  where idpersona = ?";
+            String sql = "update persona_familiar set idPersonal = ?, idFamiliar = ?, fechaIngreso = ?, estado  where idpersona = ?";
             stmt = conn.prepareStatement(sql);
 
 
             stmt.setString(1, per_fami_dto.getIdPersona());
             stmt.setString(2, per_fami_dto.getIdFamiliar());
-            stmt.setString(3, per_fami_dto.getNombre1());
-            stmt.setString(4, per_fami_dto.getTelefono());
-            stmt.setDate(5, per_fami_dto.getFechaIngreso());
-            stmt.setBoolean(6, per_fami_dto.isEstado());
+            stmt.setDate(3, per_fami_dto.getFechaIngreso());
+            stmt.setBoolean(4, per_fami_dto.isEstado());
 
-            stmt.setString(7, per_fami_dto.getIdPersona());
+            stmt.setString(5, per_fami_dto.getIdPersona());
 
 
             return stmt.executeUpdate();
@@ -112,11 +107,8 @@ public class Per_Fami_Dao {
             if (rset.next()) {
                 per_fami_dto = new Per_Fami_Dto();
 
-                //psDto.setId(rset.getInt("idPst"));
                 per_fami_dto.setIdPersona(rset.getString("idpersona"));
                 per_fami_dto.setIdFamiliar(rset.getString("idFamiliar"));
-                per_fami_dto.setNombre1(rset.getString("nombre1"));
-                per_fami_dto.setTelefono(rset.getString("telefono"));
                 per_fami_dto.setFechaIngreso(rset.getDate("fechaIngreso"));
                 per_fami_dto.setEstado(rset.getBoolean("estado"));
 
@@ -134,10 +126,10 @@ public class Per_Fami_Dao {
             conn = ConexionRoot.getConexion();
             String sql = "select * from persona_familiar where idpersona = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1,idpersona);
+            stmt.setString(1, idpersona);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
+            if (rset.next()) {
                 trpta = true;
             }
         } catch (SQLException e) {
@@ -147,18 +139,20 @@ public class Per_Fami_Dao {
     }
 
 
-
-    public int eliminar(String idpersona) {
+    public boolean eliminar(String idps, boolean estado) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "delete from persona_familiar where idPst = ?";
+            String sql = "update persona_familiar set estado = ? where idpersona = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, idpersona);
-            return stmt.executeUpdate();
+            stmt.setBoolean(1, estado);
+            stmt.setString(2, idps);
+            stmt.executeUpdate();
+
         } catch (RuntimeException | SQLException e) {
-            System.out.println(e.toString());
-            return 0;
+            e.printStackTrace();
+            return false;
         }
+        return true;
     } // Fin del método eliminar()*/
 
 

@@ -5,114 +5,114 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="443.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ContraladorRegistro">
+<AnchorPane prefHeight="443.0" prefWidth="582.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ContraladorRegistro">
    <children>
-      <Label alignment="CENTER" prefHeight="53.0" prefWidth="582.0" style="-fx-background-color: #057DB9;" text="Administración Usuario" textFill="#f5f4f4">
+      <Label alignment="CENTER" prefHeight="45.0" prefWidth="582.0" styleClass="panel_login" text="Administración Usuario" textFill="#f5f4f4">
          <font>
-            <Font name="System Bold Italic" size="24.0" />
+            <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="65.0" layoutY="76.0" prefHeight="20.0" prefWidth="93.0" text="Codigo Perfil">
-         <font>
-            <Font name="System Bold Italic" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="157.0" layoutY="76.0" text="*" textFill="#f20707">
+      <Label layoutX="29.0" layoutY="76.0" prefHeight="25.0" prefWidth="128.0" styleClass="lbl-cuerpo" text="Codigo Perfil">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <ComboBox layoutX="238.0" layoutY="74.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="65.0" layoutY="105.0" text="Estado">
+      <Label layoutX="133.0" layoutY="76.0" text="*" textFill="#f20707">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="110.0" layoutY="105.0" text="*" textFill="#f20707">
+      <ComboBox fx:id="cmb_perfil" layoutX="238.0" layoutY="74.0" prefHeight="25.0" prefWidth="170.0" />
+      <Label layoutX="29.0" layoutY="105.0" styleClass="lbl-cuerpo" text="Estado">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <RadioButton fx:id="cb_estado" layoutX="238.0" layoutY="107.0" mnemonicParsing="false" text="Activo" />
-      <Label layoutX="62.0" layoutY="137.0" text="Número Documento">
+      <Label layoutX="84.0" layoutY="108.0" text="*" textFill="#f20707">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="197.0" layoutY="137.0" text="*" textFill="#f20707">
+      <RadioButton fx:id="cb_estado" layoutX="238.0" layoutY="107.0" mnemonicParsing="false" selected="true" text="Activo" textFill="WHITE" />
+      <Label layoutX="26.0" layoutY="137.0" styleClass="lbl-cuerpo" text="Número Documento">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="184.0" layoutY="137.0" text="*" textFill="#f20707">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_idUsuario" layoutX="238.0" layoutY="134.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="63.0" layoutY="171.0" text="Primer Nombre">
+      <Label layoutX="27.0" layoutY="171.0" styleClass="lbl-cuerpo" text="Primer Nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="166.0" layoutY="171.0" text="*" textFill="#f20707">
+      <Label layoutX="148.0" layoutY="173.0" text="*" textFill="#f20707">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_primerNombre" layoutX="238.0" layoutY="168.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="65.0" layoutY="206.0" text="Segundo Nombre">
+      <Label layoutX="29.0" layoutY="206.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_segundoNombre" layoutX="238.0" layoutY="204.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="176.0" layoutY="241.0" text="*" textFill="#f20707">
+      <Label layoutX="150.0" layoutY="241.0" text="*" textFill="#f20707">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="65.0" layoutY="241.0" text="Primer Apellido">
+      <Label layoutX="29.0" layoutY="241.0" styleClass="lbl-cuerpo" text="Primer Apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_primerApellido" layoutX="238.0" layoutY="239.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="64.0" layoutY="272.0" text="Segundo Apellido">
+      <Label layoutX="28.0" layoutY="272.0" styleClass="lbl-cuerpo" text="Segundo Apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_segundoApellido" layoutX="238.0" layoutY="270.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="65.0" layoutY="308.0" text="Usuario">
+      <Label layoutX="29.0" layoutY="308.0" styleClass="lbl-cuerpo" text="Usuario">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="122.0" layoutY="309.0" text="*" textFill="#f20707">
+      <Label layoutX="100.0" layoutY="309.0" text="*" textFill="#f20707">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_Usuario" layoutX="238.0" layoutY="306.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="64.0" layoutY="341.0" text="Contraseña">
+      <Label layoutX="28.0" layoutY="341.0" styleClass="lbl-cuerpo" text="Contraseña">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <PasswordField fx:id="tf_Contrasena" layoutX="238.0" layoutY="339.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="144.0" layoutY="342.0" text="*" textFill="#f20707">
+      <Label layoutX="117.0" layoutY="342.0" text="*" textFill="#f20707">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="11.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" style="-fx-background-color: #2E64FE;" text="Crear" textFill="#fcf8f8">
+      <Button fx:id="bt_crear" layoutX="11.0" layoutY="394.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="25.0" prefWidth="109.0" text="Crear" textFill="#fcf8f8">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="bt_salir" layoutX="448.0" layoutY="394.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #2E64FE;" text="Salir" textFill="#fcfcfc">
+      <Button fx:id="bt_salir" layoutX="448.0" layoutY="394.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="109.0" text="Salir" textFill="#fcfcfc">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font></Button>
-      <Button layoutX="150.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" style="-fx-background-color: #2E64FE;" text="Consultar" textFill="#fcf8f8">
+      <Button fx:id="bt_consultar" layoutX="150.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Consultar" textFill="#fcf8f8">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -120,7 +120,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="299.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" style="-fx-background-color: #2E64FE;" text="Cancelar" textFill="#fcf8f8">
+      <Button fx:id="bt_cancelar" layoutX="299.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Cancelar" textFill="#fcf8f8">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -128,17 +128,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="bt_salir1" layoutX="448.0" layoutY="132.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #2E64FE;" text="Guardar" textFill="#fcfcfc">
+      <Button fx:id="bt_guardar" layoutX="448.0" layoutY="168.0" mnemonicParsing="false" onAction="#guardarUsuario" prefHeight="30.0" prefWidth="109.0" text="Guardar" textFill="#fcfcfc">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="bt_salir11" layoutX="448.0" layoutY="202.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #2E64FE;" text="Modificar" textFill="#fcfcfc">
+      <Button fx:id="bt_modificar" layoutX="448.0" layoutY="236.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="109.0" text="Modificar" textFill="#fcfcfc">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="bt_salir111" layoutX="448.0" layoutY="280.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: #2E64FE;" text="Inhabilitar" textFill="#fcfcfc">
+      <Button fx:id="bt_inhabilitar" layoutX="448.0" layoutY="306.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="109.0" text="Inhabilitar" textFill="#fcfcfc">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

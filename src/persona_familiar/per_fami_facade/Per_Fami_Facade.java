@@ -29,7 +29,11 @@ public class Per_Fami_Facade {
         return  per_fami_dao.buscarPrimaryKey(idPersonal);
     }
 
-    public int eliminar(String idpersona) {
-        return per_fami_dao.eliminar(idpersona);
+    public Per_Fami_Dto buscarPorIdTabla(String idPersona){
+        return per_fami_dao.buscarPorId(idPersona);
+    }
+
+    public boolean eliminar(String idPs, boolean estado) {
+        return per_fami_dao.eliminar(idPs, estado);
     }
 }
