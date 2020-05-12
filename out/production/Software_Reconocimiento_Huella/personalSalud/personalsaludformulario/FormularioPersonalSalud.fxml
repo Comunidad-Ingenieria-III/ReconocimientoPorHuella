@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <top>
           <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1300.0" styleClass="panel_login" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
               <font>
@@ -28,10 +29,10 @@
                   <Label layoutX="215.0" layoutY="40.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Titulo Acádemico" />
                   <Label layoutX="13.0" layoutY="116.0" prefHeight="30.0" prefWidth="182.0" styleClass="lbl-cuerpo" text="Institución Acádemica" />
                   <Label layoutX="249.0" layoutY="116.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Fecha de Titulación" />
-                  <Button fx:id="bt_agregar" layoutX="24.0" layoutY="208.0" mnemonicParsing="false" onAction="#agregarTitulos" prefWidth="80.0" text="Agregar" />
-                  <Button fx:id="bt_eliminarTabla" layoutX="204.0" layoutY="208.0" mnemonicParsing="false" onAction="#eliminarTitulos" prefWidth="80.0" text="Eliminar" />
+                  <Button fx:id="bt_agregar" layoutX="24.0" layoutY="208.0" mnemonicParsing="false" onAction="#agregarTitulos" prefWidth="80.0" />
+                  <Button fx:id="bt_eliminarTabla" layoutX="204.0" layoutY="208.0" mnemonicParsing="false" onAction="#eliminarTitulos" prefWidth="80.0" />
                   <Button fx:id="bt_SalirTabla" layoutX="299.0" layoutY="208.0" mnemonicParsing="false" prefWidth="80.0" text="Salir" />
-                  <Button fx:id="bt_ModificarTabla" layoutX="114.0" layoutY="208.0" mnemonicParsing="false" onAction="#modificarRegistroDeTabla" prefWidth="80.0" text="Modificar" />
+                  <Button fx:id="bt_ModificarTabla" layoutX="114.0" layoutY="208.0" mnemonicParsing="false" onAction="#modificarRegistroDeTabla" prefWidth="80.0" />
                   <ComboBox fx:id="cbx_idpersona" layoutX="13.0" layoutY="70.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
                   <Label layoutX="14.0" layoutY="40.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Documento" />
                </children>

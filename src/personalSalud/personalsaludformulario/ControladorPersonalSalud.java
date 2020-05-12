@@ -2,6 +2,7 @@ package personalSalud.personalsaludformulario;
 
 import cargo.dto.Cargo;
 import cargo.facade.FacadeCargo;
+import datospersona.formulariopersona.ControladorFormularioPersona;
 import institucionAcademica.dao.FacadeInstitucionAcademica;
 import institucionAcademica.dto.InstitucionAcademica;
 import javafx.beans.value.ChangeListener;
@@ -14,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -158,6 +161,7 @@ public class ControladorPersonalSalud implements Initializable {
         iniciarCbxid_persona();
         iniciarInstitucion();
         validarId();
+        colocarImagenBotones();
 
     }
 
@@ -188,7 +192,7 @@ public class ControladorPersonalSalud implements Initializable {
         if (psDto.getFechaTitulacion().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Debe Ingresar Una Fecha Valida: \n" + "La Fecha: " + convertido + " Es Superior A La Fecha De Hoy");
+            msg.setContentText("Debe ingresar una fecha valida: \n" + "La fecha: " + convertido + " es superior a la fecha de hoy");
             msg.show();
             dp_fechatitulacion.requestFocus();
         } else {
@@ -196,7 +200,7 @@ public class ControladorPersonalSalud implements Initializable {
             if (resultado) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("El Registro Ya Existe ");
+                msg.setContentText("El registro ya existe ");
                 msg.show();
             } else {
                 personalSaludFacade.modificarPsdto(psDto);
@@ -226,13 +230,13 @@ public class ControladorPersonalSalud implements Initializable {
                 estado
         );
 
-        DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
-        String convertido = fechaHora.format(psDto.getFechaTitulacion());//Formatear una fecha Date a String
+        DateFormat date = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
+        String dateConverted = date.format(psDto.getFechaTitulacion());//Formatear una fecha Date a String
 
         if (psDto.getFechaTitulacion().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Debe Ingresar Una Fecha Valida: \n" + "La Fecha: " + convertido + " Es Superior A La Fecha De Hoy");
+            msg.setContentText("Debe ingresar una fecha valida: \n" + "La fecha: " + dateConverted + " es superior a la fecha de hoy");
             msg.show();
             dp_fechatitulacion.requestFocus();
         } else {
@@ -243,12 +247,13 @@ public class ControladorPersonalSalud implements Initializable {
                 if (res) {
                     personalSaludFacade.agregarPsdto(psDto);
                     titulos.add(psDto);
+                    //colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>(cbx_idinstitucion.getSelectionModel().getSelectedItem().getNombre()));
                     limpiarComponentes();
                 } else {
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Personal Salud");
-                    msg.setContentText("El Documento Nro. " + psDto.getIdPersonal() + " No Se Encuentra Registrado!\n" +
-                            "Debe Registrarlo Para Poder Asignarle Titulos");
+                    msg.setContentText("El docuemnto Nro. " + psDto.getIdPersonal() + " no se encuentra registrado.!\n" +
+                            "Debe registrarlo para poder asignarle títulos");
                     msg.show();
 
                 }
@@ -257,7 +262,7 @@ public class ControladorPersonalSalud implements Initializable {
                 if (resultado) {
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Personal Salud");
-                    msg.setContentText("El Registro Ya Existe ");
+                    msg.setContentText("El registro ya existe ");
                     msg.show();
                 } else {
                     personalSaludFacade.agregarPsdto(psDto);
@@ -270,7 +275,7 @@ public class ControladorPersonalSalud implements Initializable {
         }
     }
 
-    public boolean recorrerTablaTitulos(List<PsDto> titulos, PsDto psDto) {//Metodo para recorrer la tabla con el fin de no ingresar regisstros duplicados
+    public boolean recorrerTablaTitulos(List<PsDto> titulos, PsDto psDto) {//Método para recorrer la tabla con el fin de no ingresar registros duplicados
         boolean resultado = false;
         for (int i = 0; i < titulos.size(); i++) {
             if (titulos.get(i).getIdPersonal().equals(psDto.getIdPersonal()) && titulos.get(i).getIdTipoTitu().equals(psDto.getIdTipoTitu())
@@ -336,17 +341,17 @@ public class ControladorPersonalSalud implements Initializable {
     public void guardarPersonal() {//Metodo Para guardar o modificar un registro de personal salud en la BBDD
 
         boolean documento = buscarDocumento(tf_numerodocumento.getText());//Se Realiza la busqueda del registro en la base de datos
-        //De esto depende si se agrega o se modifica
-        if (!documento) {//Condicional para crear si el registro no existe en la BBDD
+        //De esto depende si se agrega o se modifica el registro
+        if (!documento) {//Esta condición se cumple solo si el registro no existe en la BBDD, asi se podra guardar
             int res = personalSaludFacade.agregarPersonal2(crearPersonalSalud());
             if (res == 1) {
 
                 iniciarCbxid_persona();
-                Alert msg1 = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
-                msg1.setTitle("Gestiones - Personal Salud");
-                msg1.setContentText("Registro Agregado Correctamente\n \n" + "Desea Ingresar Titulos Académicos ?");
-                msg1.setHeaderText("Elija Una Respuesta");
-                Optional<ButtonType> action = msg1.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+                alert.setTitle("Gestiones - Personal Salud");
+                alert.setHeaderText("Elija una opción");
+                alert.setContentText("Registro agregado correctamente\n \n" + "Desea ingresar títulos académicos ?");
+                Optional<ButtonType> action = alert.showAndWait();
 
                 if (action.get() == ButtonType.YES) {
                     tb_personal.setDisable(false);
@@ -357,7 +362,7 @@ public class ControladorPersonalSalud implements Initializable {
                     bt_agregar.setDisable(false);
                     bt_SalirTabla.setDisable(false);
                     cbx_idpersona.setValue(personalSaludFacade.buscarPorIdPersonal(tf_numerodocumento.getText()));
-                    limpiar();
+
                 } else if (action.get() == ButtonType.NO) {
                     deshabilitarCampos();
                     deshabilitarBotones();
@@ -367,7 +372,7 @@ public class ControladorPersonalSalud implements Initializable {
 
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("No Fue Posible Agregar El Registro");
+                msg.setContentText("No fue posible agregar el registro");
                 msg.setHeaderText("Error.");
                 msg.show();
             }
@@ -376,7 +381,7 @@ public class ControladorPersonalSalud implements Initializable {
             if (res == 1) {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Registro Modificado Correctamente");
+                msg.setContentText("Registro modificado correctamente");
                 msg.setHeaderText("Exito.");
                 msg.show();
 
@@ -390,7 +395,7 @@ public class ControladorPersonalSalud implements Initializable {
             } else {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("No Fue Posible Modificar El Registro ");
+                msg.setContentText("No fue posible modificar el registro ");
                 msg.setHeaderText("Error.");
                 msg.show();
             }
@@ -433,11 +438,11 @@ public class ControladorPersonalSalud implements Initializable {
 
                 if (!personalSalud.isEstado()) {//Condicional que verifica si el objeto personal_salud
                     // que se acaba de recuperar esta en estado inactivo en la BBDD
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.WARNING);
                     msg.setTitle("Gestiones - Personal Salud");
-                    msg.setContentText("El Registro Se Encuentra Inactivo \n"
-                            + "Comuniquese Con El Adminsitrador Para Activar De Nuevo Este Registro");
-                    msg.setHeaderText("Error.");
+                    msg.setContentText("El registro se encuentra inactivo \n"
+                            + "Comuniquese con el adminsitrador del sistema para activar de nuevo este registro");
+                    msg.setHeaderText("Advertencia.");
                     msg.show();
                     tf_numerodocumento.requestFocus();
                 } else {
@@ -469,7 +474,7 @@ public class ControladorPersonalSalud implements Initializable {
             } else {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("El Número De Documento No Existe! \n" + "Ingrese Un Número De Documeto Valido");
+                msg.setContentText("El número de documento no existe.! \n" + "Ingrese un número de documeto valido");
                 msg.setHeaderText("Error.");
                 msg.show();
                 tf_numerodocumento.requestFocus();
@@ -484,14 +489,14 @@ public class ControladorPersonalSalud implements Initializable {
         if (respuesta) {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Error Al Eliminar! \n" + "El Documento Tiene Registros Dependientes!\n"
-                    + "Asegurese De Eliminar Los Registros Que Dependen De Este.");
+            msg.setContentText("Error al eliminar! \n" + "El documento tiene registros dependientes!\n"
+                    + "Asegurese de eliminar los registros que dependen de este.");
             msg.setHeaderText("Error.");
             msg.show();
         } else {
             Alert msg = new Alert(Alert.AlertType.INFORMATION);
             msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Registro Eliminado Correctamente");
+            msg.setContentText("Registro eliminado correctamente");
             msg.setHeaderText("Error.");
             msg.show();
 
@@ -884,7 +889,7 @@ public class ControladorPersonalSalud implements Initializable {
             if (busqueda) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Ya Existe Una Persona Con El Documento Nro:\n" + tf_numerodocumento.getText() + " Asignado");
+                msg.setContentText("Ya existe una persona con el documento Nro:\n" + tf_numerodocumento.getText() + " asignado");
                 msg.setHeaderText("Error.");
                 msg.show();
                 tf_numerodocumento.setText("");
@@ -907,7 +912,7 @@ public class ControladorPersonalSalud implements Initializable {
                 if (busqueda) {
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Personal Salud");
-                    msg.setContentText("Ya Existe Una Persona Con El Documento Nro:\n" + tf_numerodocumento.getText() + " Asignado");
+                    msg.setContentText("Ya existe una Persona con el documento Nro:\n" + tf_numerodocumento.getText() + " asignado");
                     msg.setHeaderText("Error.");
                     msg.show();
                     tf_numerodocumento.setText("");
@@ -918,7 +923,20 @@ public class ControladorPersonalSalud implements Initializable {
             }
         });
     }
+    public void colocarImagenBotones(){
 
+        URL linkbt_guardar = getClass().getResource("/imagenes/disquete.png");
+        URL linkbt_modificar = getClass().getResource("/imagenes/btGuardar.png");
+        URL linkbt_inhabilitar = getClass().getResource("/imagenes/eliminar.png");
+
+        Image imagenGuardar = new Image(linkbt_guardar.toString(),24,24,false,true);
+        bt_agregar.setGraphic(new ImageView(imagenGuardar));
+        Image imagenModificar = new Image(linkbt_modificar.toString(),24,24,false,true);
+        bt_ModificarTabla.setGraphic(new ImageView(imagenModificar));
+        Image imagenInhabilitar = new Image(linkbt_inhabilitar.toString(),24,24,false,true);
+        bt_eliminarTabla.setGraphic(new ImageView(imagenInhabilitar));
+
+    }
 
     @FXML
     private void cerraPersonalSalud(ActionEvent event) {

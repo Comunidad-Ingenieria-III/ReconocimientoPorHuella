@@ -19,7 +19,7 @@ import perfil.facadeperfil.PerfilFacade;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ContraladorRegistro implements Initializable {
+public class ContraladorUsuario implements Initializable {
 
     FacadeUsuario facadeUsuario = new FacadeUsuario();
     PerfilFacade perfilFacade = new PerfilFacade();

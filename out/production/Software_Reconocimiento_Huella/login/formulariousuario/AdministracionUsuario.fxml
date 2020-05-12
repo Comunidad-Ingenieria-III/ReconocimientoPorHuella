@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="443.0" prefWidth="582.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ContraladorRegistro">
+<AnchorPane prefHeight="443.0" prefWidth="582.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ContraladorUsuario">
    <children>
       <Label alignment="CENTER" prefHeight="45.0" prefWidth="582.0" styleClass="panel_login" text="Administración Usuario" textFill="#f5f4f4">
          <font>

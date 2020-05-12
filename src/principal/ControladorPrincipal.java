@@ -237,7 +237,7 @@ public class ControladorPrincipal implements Initializable {
             stage.setScene(new Scene(formulario_Personal_salud));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
-            stage.initStyle(StageStyle.UNDECORATED);
+            //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
             //((Node) (event.getSource())).getScene().getWindow().hide();
