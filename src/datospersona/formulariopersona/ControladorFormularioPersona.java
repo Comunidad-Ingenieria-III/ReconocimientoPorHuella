@@ -31,6 +31,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -502,6 +503,14 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private void guardarPersona() {
         validar();
+        if(tf_idpersona.getText().isEmpty()){
+            Alert msg2 = new Alert(Alert.AlertType.ERROR);
+            msg2.setTitle("Gestiones - Persona");
+            msg2.setContentText("Campos requeridos");
+            msg2.setHeaderText("Información.");
+            msg2.show();
+            tf_idpersona.requestFocus();
+
         int res = facadepersona.insertarPersona(crearPersona());
         if (res == 1) {
             Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
@@ -518,6 +527,7 @@ public class ControladorFormularioPersona implements Initializable {
             msg.setContentText("No Fue Posible Agregar El Registro");
             msg.setHeaderText("Información.");
             msg.show();
+        }
         }
     }
 
@@ -563,7 +573,7 @@ public class ControladorFormularioPersona implements Initializable {
             cbx_documentopersona.setDisable(true);
             cbx_documentofamiliar.setDisable(true);
             dp_ingresofamiliar.setDisable(true);
-
+            valor=0;
         } else {
             BusquedaDeFamiliar busqueda = facadepersona.buscarPersona(tf_idpersona.getText());
             Persona persona = busqueda.getPersona();
@@ -571,20 +581,22 @@ public class ControladorFormularioPersona implements Initializable {
             if (persona == null) {
                 Alert msg = new Alert(Alert.AlertType.WARNING);
                 msg.setTitle("Gestiones - Persona");
-                msg.setContentText("El Registro No Existe ");
+                msg.setContentText("El registro ro existe ");
                 msg.setHeaderText("Información.");
                 msg.show();
-                cancelar();
+                tf_idpersona.setText("");
+                tf_idpersona.requestFocus();
 
             } else if (!persona.isEstado()) {//Condicional que verifica si el objeto personal_salud
                 // que se acaba de recuperar esta en estado inactivo en la BBDD
                 Alert msg = new Alert(Alert.AlertType.WARNING);
                 msg.setTitle("Gestiones - Persona");
-                msg.setContentText("El Registro Con Nro De Documento: " + persona.getIdpersona() + " Se Encuentra Inactivo \n"
-                        + "Comuniquese Con El Adminsitrador Para Activar De Nuevo Este Registro");
+                msg.setContentText("El Registro Nro: " + persona.getIdpersona() + " Se encuentra inactivo \n"
+                        + "Comuniquese con el adminsitrador para activar de nuevo este registro");
                 msg.setHeaderText("Información.");
                 msg.show();
-                cancelar();
+                tf_idpersona.setText("");
+                tf_idpersona.requestFocus();
 
             } else {
                 cbxtipodocumento.setValue(facadeTipoDocumento.obtenerPorId(persona.getTipoDocumento()));
@@ -601,12 +613,13 @@ public class ControladorFormularioPersona implements Initializable {
                 cbxtipoeps.setValue(facadeEps.obtenerPorId(persona.getIdEps()));
 
                 familiares = FXCollections.observableArrayList(busqueda.getListafamiliar());
-
+                cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
+                cbx_documentopersona.setDisable(true);
                 tb_familiar.setItems(familiares);
                 initializeTableColumn();
                 bt_consultar.setDisable(true);
                 bt_crear.setDisable(true);
-
+                tf_idpersona.setDisable(true);
             }
         }
 
@@ -632,7 +645,7 @@ public class ControladorFormularioPersona implements Initializable {
         bt_modificar.setDisable(true);
         bt_guardar.setDisable(false);
         bt_hulla.setDisable(false);
-        cbx_documentopersona.setDisable(false);
+        cbx_documentopersona.setDisable(true);
         cbx_documentofamiliar.setDisable(false);
         dp_ingresofamiliar.setDisable(false);
         bt_agregarfamiliar.setDisable(false);
@@ -916,6 +929,20 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     public void agregarFamiliar() {//Metodo para agregar titulos a la tabla personal-salud-titulo de la BBDD
         // y a la tabla del formulario previamente validados para evitar registros dulicados
+        if(cbx_documentofamiliar.getSelectionModel().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Título");
+            msg.setContentText("Debe seleccionar un familiar");
+            msg.show();
+            cbx_documentofamiliar.requestFocus();
+        }else if(dp_ingresofamiliar.getValue() == null) {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Título");
+            msg.setContentText("Debe seleccionar una fecha");
+            msg.show();
+            cbx_documentofamiliar.requestFocus();
+        }else{
+
 
         Per_Fami_Dto per_fami_dto = new Per_Fami_Dto(
 
@@ -942,7 +969,7 @@ public class ControladorFormularioPersona implements Initializable {
             msg.setContentText("La fecha de Ingreso del Familiar ha sido agregada correctamente");
             msg.setHeaderText("Información");
             msg.show();
-            cancelar();
+
 
             if (familiares.isEmpty()) {
                 boolean res = buscarDocumento(per_fami_dto.getIdPersona());
@@ -972,6 +999,7 @@ public class ControladorFormularioPersona implements Initializable {
                 }
 
             }
+        }
         }
     }
 
@@ -1021,6 +1049,22 @@ public class ControladorFormularioPersona implements Initializable {
         per_fami_facade.eliminar(idPs, estado);
         familiares.remove(tb_familiar.getSelectionModel().getFocusedIndex());
         //cancelar();
+    }
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarPersonaFamiliar();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
     }
 
     public void manejarEventosTablaFamiliares() {//Metodo para que cuando se seleccione un registro de la tabla se asigne a los componentes
