@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <top>
           <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1300.0" styleClass="panel_login" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
               <font>
@@ -83,7 +82,7 @@
                         <Font name="System Bold Italic" size="12.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tf_numerodocumento" layoutX="407.0" layoutY="30.0" onKeyReleased="#validarExistente" prefHeight="25.0" prefWidth="135.0" />
+                <TextField fx:id="tf_numerodocumento" layoutX="407.0" layoutY="30.0" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="135.0" />
                 <Label layoutX="52.0" layoutY="66.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer Nombre">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
