@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane prefHeight="450.0" prefWidth="900.0" stylesheets="@../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registroAtencionPaciente.ContraladorRegistroAtencionPaciente">
+<TabPane prefHeight="450.0" prefWidth="900.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registroAtencionPaciente.formularioregistro.ContraladorRegistroAtencionPaciente">
    <tabs>
       <Tab text="Datos del Paciente">
          <content>
@@ -17,60 +17,60 @@
                         <Font name="System Bold Italic" size="23.0" />
                      </font>
                   </Label>
-                  <Label layoutX="36.0" layoutY="58.0" prefHeight="25.0" prefWidth="149.0" styleClass="lbl-cuerpo" text="Mi Documento Es:">
+                  <Label layoutX="36.0" layoutY="48.0" prefHeight="25.0" prefWidth="263.0" styleClass="lbl-cuerpo" text="Documento de Identidad">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_idpersonadps" layoutX="35.0" layoutY="82.0" />
-                  <Label layoutX="203.0" layoutY="59.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="Me llamo:">
+                  <TextField fx:id="tf_idpersonadps" layoutX="35.0" layoutY="74.0" prefHeight="25.0" prefWidth="232.0" />
+                  <Label layoutX="36.0" layoutY="104.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="Nombre">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_primerNombredps" layoutX="203.0" layoutY="82.0" prefHeight="25.0" prefWidth="177.0" />
-                  <Label layoutX="407.0" layoutY="61.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="Mi EPS Es:">
+                  <TextField fx:id="tf_primerNombredps" layoutX="36.0" layoutY="129.0" prefHeight="25.0" prefWidth="177.0" />
+                  <Label layoutX="406.0" layoutY="98.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="EPS ">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_nombreeps" layoutX="406.0" layoutY="82.0" />
-                  <Label layoutX="35.0" layoutY="112.0" prefHeight="25.0" prefWidth="163.0" styleClass="lbl-cuerpo" text="Nombre Familiar">
+                  <TextField fx:id="tf_nombreeps" layoutX="407.0" layoutY="129.0" />
+                  <Label layoutX="35.0" layoutY="154.0" prefHeight="25.0" prefWidth="163.0" styleClass="lbl-cuerpo" text="Nombre Familiar">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_nombrefamiliar" layoutX="35.0" layoutY="134.0" />
-                  <Label layoutX="202.0" layoutY="113.0" prefHeight="20.0" prefWidth="136.0" styleClass="lbl-cuerpo" text="Su teléfono Es: ">
+                  <TextField fx:id="tf_nombrefamiliar" layoutX="35.0" layoutY="176.0" />
+                  <Label layoutX="202.0" layoutY="155.0" prefHeight="20.0" prefWidth="136.0" styleClass="lbl-cuerpo" text="Su teléfono Es: ">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="406.0" layoutY="113.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="Nací el:">
+                  <Label layoutX="406.0" layoutY="155.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="Nací el:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_fechaNacimiento" layoutX="406.0" layoutY="133.0" prefHeight="25.0" prefWidth="148.0" />
-                  <TextField fx:id="tf_numerotelefonicofamiliar" layoutX="202.0" layoutY="133.0" prefHeight="25.0" prefWidth="176.0" />
-                  <Label layoutX="36.0" layoutY="164.0" prefHeight="25.0" prefWidth="133.0" styleClass="lbl-cuerpo" text="Soy Alérgico A:">
+                  <TextField fx:id="tf_fechaNacimiento" layoutX="395.0" layoutY="175.0" prefHeight="25.0" prefWidth="148.0" />
+                  <TextField fx:id="tf_numerotelefonicofamiliar" layoutX="202.0" layoutY="175.0" prefHeight="25.0" prefWidth="176.0" />
+                  <Label layoutX="36.0" layoutY="206.0" prefHeight="25.0" prefWidth="133.0" styleClass="lbl-cuerpo" text="Soy Alérgico A:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="ta_alergicoA" layoutX="36.0" layoutY="186.0" prefHeight="45.0" prefWidth="516.0" />
-                  <Label layoutX="36.0" layoutY="235.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="Sufro De:">
+                  <TextArea fx:id="ta_alergicoA" layoutX="36.0" layoutY="228.0" prefHeight="45.0" prefWidth="516.0" />
+                  <Label layoutX="36.0" layoutY="277.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="Sufro De:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="ta_enfermedadSufre" layoutX="35.0" layoutY="255.0" prefHeight="45.0" prefWidth="520.0" />
-                  <Label layoutX="34.0" layoutY="300.0" prefHeight="25.0" prefWidth="130.0" styleClass="lbl-cuerpo" text="Observaciones:">
+                  <TextArea fx:id="ta_enfermedadSufre" layoutX="35.0" layoutY="297.0" prefHeight="45.0" prefWidth="520.0" />
+                  <Label layoutX="34.0" layoutY="342.0" prefHeight="25.0" prefWidth="130.0" styleClass="lbl-cuerpo" text="Observaciones:">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="ta_observaciones" layoutX="35.0" layoutY="324.0" prefHeight="45.0" prefWidth="518.0" />
+                  <TextArea fx:id="ta_observaciones" layoutX="35.0" layoutY="366.0" prefHeight="45.0" prefWidth="518.0" />
                   <Label layoutX="650.0" layoutY="85.0" styleClass="lbl-cuerpo" text="Huella Digital">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
@@ -90,6 +90,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Label layoutX="221.0" layoutY="104.0" prefHeight="20.0" prefWidth="99.0" styleClass="lbl-cuerpo" text="Apellido">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_primerApellidodps" layoutX="221.0" layoutY="129.0" prefHeight="25.0" prefWidth="177.0" />
                </children></AnchorPane>
          </content>
       </Tab>
@@ -107,7 +113,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <DatePicker layoutX="26.0" layoutY="97.0" prefHeight="25.0" prefWidth="185.0" />
+                  <DatePicker fx:id="dp_fechaAtencionPaciente" layoutX="26.0" layoutY="97.0" prefHeight="25.0" prefWidth="185.0" />
                   <Label layoutX="150.0" layoutY="72.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
                   <Label layoutX="233.0" layoutY="71.0" prefHeight="17.0" prefWidth="159.0" text="Estado Paciente">
                      <font>
@@ -115,35 +121,34 @@
                      </font>
                   </Label>
                   <Label layoutX="339.0" layoutY="74.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
-                  <ComboBox id="cbx" layoutX="233.0" layoutY="97.0" prefHeight="25.0" prefWidth="185.0" />
+                  <ComboBox id="cbx" fx:id="cbx_estadoPaciente" layoutX="233.0" layoutY="97.0" prefHeight="25.0" prefWidth="185.0" />
                   <Label layoutX="479.0" layoutY="75.0" prefHeight="17.0" prefWidth="159.0" text="Glasgow">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="540.0" layoutY="77.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
-                  <ComboBox layoutX="479.0" layoutY="95.0" prefHeight="25.0" prefWidth="185.0" />
+                  <ComboBox fx:id="cbx_gasglowPaciente" layoutX="479.0" layoutY="95.0" prefHeight="25.0" prefWidth="185.0" />
                   <Label layoutX="32.0" layoutY="145.0" prefHeight="20.0" prefWidth="159.0" text="Signos Vitales">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="127.0" layoutY="148.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
-                  <ComboBox layoutX="32.0" layoutY="165.0" prefHeight="25.0" prefWidth="185.0" />
+                  <ComboBox fx:id="cbx_signosVitalesPaciente" layoutX="32.0" layoutY="165.0" prefHeight="25.0" prefWidth="185.0" />
                   <Label layoutX="236.0" layoutY="143.0" text="Hora Atención">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="333.0" layoutY="145.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
-                  <TextField layoutX="233.0" layoutY="163.0" prefHeight="25.0" prefWidth="185.0" />
                   <Label layoutX="479.0" layoutY="143.0" prefHeight="20.0" prefWidth="159.0" text="Dirección Accidente" textFill="#323232">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="613.0" layoutY="145.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
-                  <TextField layoutX="479.0" layoutY="163.0" prefHeight="25.0" prefWidth="185.0">
+                  <TextField fx:id="tf_direccionAccidente" layoutX="479.0" layoutY="163.0" prefHeight="25.0" prefWidth="185.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -153,20 +158,18 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="32.0" layoutY="240.0" prefHeight="25.0" prefWidth="185.0" />
                   <Label layoutX="243.0" layoutY="219.0" text="Dosis">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="241.0" layoutY="237.0" prefHeight="25.0" prefWidth="185.0" />
+                  <TextField fx:id="tf_dosisMedicamento" layoutX="241.0" layoutY="237.0" prefHeight="25.0" prefWidth="185.0" />
                   <Label layoutX="479.0" layoutY="219.0" text="Documento APH">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="594.0" layoutY="220.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
-                  <TextField layoutX="479.0" layoutY="240.0" prefHeight="25.0" prefWidth="185.0" />
                   <Button layoutX="636.0" layoutY="331.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2E2EFE;" text="Siguiente" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
@@ -175,6 +178,9 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <ComboBox fx:id="cbx_medicamentoSuministrado" layoutX="33.0" layoutY="240.0" prefHeight="25.0" prefWidth="189.0" />
+                  <ComboBox fx:id="cbx_documentoAPH" layoutX="484.0" layoutY="240.0" prefHeight="25.0" prefWidth="185.0" />
+                  <DatePicker fx:id="dp_horaAtencionPaciente" layoutX="233.0" layoutY="163.0" />
                </children>
             </AnchorPane>
          </content>
@@ -193,91 +199,84 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox layoutX="191.0" layoutY="73.0" prefHeight="25.0" prefWidth="169.0" />
+                  <ComboBox fx:id="cbx_institucionReferencia" layoutX="191.0" layoutY="73.0" prefHeight="25.0" prefWidth="169.0" />
                   <Label layoutX="22.0" layoutY="103.0" prefHeight="20.0" prefWidth="90.0" text="Documento">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox layoutX="190.0" layoutY="101.0" prefHeight="25.0" prefWidth="171.0" />
+                  <ComboBox fx:id="cbx_tipodocumento" layoutX="190.0" layoutY="101.0" prefHeight="25.0" prefWidth="171.0" />
                   <Label layoutX="20.0" layoutY="133.0" prefHeight="20.0" prefWidth="153.0" text="Número Documento">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="190.0" layoutY="131.0" prefHeight="25.0" prefWidth="170.0" />
+                  <TextField fx:id="tf_idPersonalRecibe" layoutX="190.0" layoutY="131.0" prefHeight="25.0" prefWidth="170.0" />
                   <Label layoutX="23.0" layoutY="164.0" prefHeight="20.0" prefWidth="116.0" text="Primer Nombre">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="190.0" layoutY="162.0" prefHeight="25.0" prefWidth="170.0" />
+                  <TextField fx:id="tf_primerNombreRecibe" layoutX="190.0" layoutY="162.0" prefHeight="25.0" prefWidth="170.0" />
                   <Label layoutX="22.0" layoutY="192.0" prefHeight="20.0" prefWidth="149.0" text="Segundo Nombre">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="190.0" layoutY="190.0" prefHeight="25.0" prefWidth="171.0" />
+                  <TextField fx:id="tf_segundoNombreRecibe" layoutX="190.0" layoutY="190.0" prefHeight="25.0" prefWidth="171.0" />
                   <Label layoutX="23.0" layoutY="222.0" prefHeight="20.0" prefWidth="116.0" text="Primer Apellido">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="190.0" layoutY="220.0" prefHeight="25.0" prefWidth="171.0" />
+                  <TextField fx:id="tf_primerApellidoRecibe" layoutX="190.0" layoutY="220.0" prefHeight="25.0" prefWidth="171.0" />
                   <Label layoutX="22.0" layoutY="254.0" prefHeight="20.0" prefWidth="149.0" text="Segundo Apellido">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="189.0" layoutY="251.0" prefHeight="25.0" prefWidth="172.0" />
+                  <TextField fx:id="tf_segundoApellidoRecibe" layoutX="189.0" layoutY="251.0" prefHeight="25.0" prefWidth="172.0" />
                   <Label layoutX="390.0" layoutY="75.0" prefHeight="20.0" prefWidth="74.0" text="Cargo">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox layoutX="537.0" layoutY="73.0" prefHeight="25.0" prefWidth="172.0" />
+                  <ComboBox fx:id="cbx_idCargo" layoutX="537.0" layoutY="73.0" prefHeight="25.0" prefWidth="172.0" />
                   <Label layoutX="391.0" layoutY="104.0" prefHeight="20.0" prefWidth="124.0" text="Fecha Recibido">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <DatePicker layoutX="536.0" layoutY="102.0" />
+                  <DatePicker fx:id="dp_fechaRecepcionPaciente" layoutX="536.0" layoutY="102.0" />
                   <Label layoutX="390.0" layoutY="133.0" prefHeight="20.0" prefWidth="171.0" text="Hora Recibido">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="537.0" layoutY="131.0" prefHeight="25.0" prefWidth="172.0" />
                   <Label layoutX="25.0" layoutY="289.0" prefHeight="20.0" prefWidth="171.0" text="Observaciones">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
                   <TextArea layoutX="25.0" layoutY="309.0" prefHeight="37.0" prefWidth="686.0" />
-                  <Label layoutX="390.0" layoutY="164.0" prefHeight="20.0" prefWidth="137.0" text="Documento Paciente">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                  </Label>
-                  <ComboBox layoutX="538.0" layoutY="162.0" prefHeight="25.0" prefWidth="171.0" />
                   <Label layoutX="391.0" layoutY="193.0" prefHeight="20.0" prefWidth="136.0" text="Número Documento">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="539.0" layoutY="191.0" prefHeight="25.0" prefWidth="170.0" />
+                  <TextField fx:id="tf_idpersonadpsc" layoutX="539.0" layoutY="191.0" prefHeight="25.0" prefWidth="170.0" />
                   <Label layoutX="391.0" layoutY="223.0" prefHeight="20.0" prefWidth="136.0" text="Nombres Paciente">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="539.0" layoutY="221.0" prefHeight="25.0" prefWidth="170.0" />
+                  <TextField fx:id="tf_primerNombredpsc" layoutX="539.0" layoutY="221.0" prefHeight="25.0" prefWidth="170.0" />
                   <Label layoutX="392.0" layoutY="254.0" prefHeight="20.0" prefWidth="136.0" text="Apellidos Paciente">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="540.0" layoutY="252.0" prefHeight="25.0" prefWidth="170.0" />
+                  <TextField fx:id="tf_primerApellidodpsc" layoutX="540.0" layoutY="252.0" prefHeight="25.0" prefWidth="170.0" />
                   <Button layoutX="17.0" layoutY="361.0" mnemonicParsing="false" prefWidth="100.0" text="Crear" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
@@ -326,7 +325,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="539.0" layoutY="361.0" mnemonicParsing="false" prefWidth="100.0" text="Guardar" textFill="WHITE">
+                  <Button fx:id="bt_guardar" layoutX="539.0" layoutY="361.0" mnemonicParsing="false" onAction="#guardarRegistro" prefWidth="100.0" text="Guardar" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -374,11 +373,6 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="526.0" layoutY="164.0" prefHeight="20.0" prefWidth="10.0" text="*" textFill="#e80909">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                  </Label>
                   <Label layoutX="524.0" layoutY="193.0" prefHeight="20.0" prefWidth="10.0" text="*" textFill="#e80909">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
@@ -394,6 +388,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
+                  <DatePicker fx:id="dp_horaRecepcionPaciente" layoutX="538.0" layoutY="131.0" />
                </children></AnchorPane>
          </content>
       </Tab>

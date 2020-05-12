@@ -368,7 +368,7 @@ public class ControladorPrincipal implements Initializable {
 
         try {
             Parent formulario_Registro_Atencion_Paciente;
-            formulario_Registro_Atencion_Paciente = FXMLLoader.load(getClass().getClassLoader().getResource("registroAtencionPaciente/FormularioRegistroAtencion.fxml"));
+            formulario_Registro_Atencion_Paciente = FXMLLoader.load(getClass().getClassLoader().getResource("registroAtencionPaciente/formularioregistro/FormularioRegistroAtencion.fxml"));
             //FormularioPrincipal.getChildren().setAll(formulario_Registro_Atencion_Paciente);
             Stage stage = new Stage();
             stage.setTitle("AP_Humana (Gestión Registro Atención)");
