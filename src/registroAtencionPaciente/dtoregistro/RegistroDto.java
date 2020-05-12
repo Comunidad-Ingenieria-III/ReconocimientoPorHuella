@@ -4,10 +4,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 import java.util.Date;
 
 
-public class RegistroDto{
+public class RegistroDto {
 
     private Date fechaAtencionPaciente;
     private Date horaAtencionPaciente;
@@ -18,29 +19,23 @@ public class RegistroDto{
     private StringProperty idMedicamento = new SimpleStringProperty();
     private StringProperty dosis = new SimpleStringProperty();
     private StringProperty idPersonal = new SimpleStringProperty();
-    private StringProperty idTipoDocumento = new SimpleStringProperty();
-    private StringProperty idPersonaRecibe = new SimpleStringProperty();
-    private StringProperty nombre1PersonaRecibe = new SimpleStringProperty();
-    private StringProperty nombre2PersonaRecibe = new SimpleStringProperty();
-    private StringProperty apellido1PersonaRecibe = new SimpleStringProperty();
-    private StringProperty apellido2PersonaRecibe = new SimpleStringProperty();
-    private StringProperty idCargo = new SimpleStringProperty();
-    private Date fechaRecepcionPaciente;
-    private Date horaRecepcionPaciente;
+    private StringProperty idInstiRefe = new SimpleStringProperty();
+    private StringProperty codigoRemision = new SimpleStringProperty();
     private StringProperty idpersona = new SimpleStringProperty();
     private StringProperty nombrePaciente = new SimpleStringProperty();
     private StringProperty apellidoPaciente = new SimpleStringProperty();
     private BooleanProperty estado = new SimpleBooleanProperty();
 
-    public RegistroDto(){this(new Date(new java.util.Date().getTime()), new Date(new java.util.Date().getTime()), "", "", "", "", "", "", "", "",
-    "", "", "", "", "", "", new Date(new java.util.Date().getTime()), new Date(new java.util.Date().getTime()), "", "", "",
-    false);}
+    public RegistroDto() {
+        this(new Date(new java.util.Date().getTime()), new Date(new java.util.Date().getTime()), "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                false);
+    }
 
     public RegistroDto(Date fechaAtencionPaciente, Date horaAtencionPaciente, String condicionPaciente, String glasgow, String signosVitales,
-                       String  lugarAccidente, String idMedicamento, String dosis, String idPersonal, String idTipoDocumeto, String idPersonaRecibe, String nombre1PersonaRecibe,
-                       String nombre2PersonaRecibe, String apellido1PersonaRecibe, String apellido2PersonaRecibe, String idCargo,
-                       Date fechaRecepcionPaciente, Date horaRecepcionPaciente,  String idpersona, String nombrePaciente, String apellidoPaciente,
-                       boolean estado){
+                       String lugarAccidente, String idMedicamento, String dosis, String idPersonal, String idInstiRefe,
+                       String codigoRemision, String idpersona, String nombrePaciente, String apellidoPaciente,
+                       boolean estado) {
         this.fechaAtencionPaciente = fechaAtencionPaciente;
         this.horaAtencionPaciente = horaAtencionPaciente;
         this.condicionPaciente.set(condicionPaciente);
@@ -50,15 +45,8 @@ public class RegistroDto{
         this.idMedicamento.set(idMedicamento);
         this.dosis.set(dosis);
         this.idPersonal.set(idPersonal);
-        this.idTipoDocumento.set(idTipoDocumeto);
-        this.idPersonaRecibe.set(idPersonaRecibe);
-        this.nombre1PersonaRecibe.set(nombre1PersonaRecibe);
-        this.nombre2PersonaRecibe.set(nombre2PersonaRecibe);
-        this.apellido1PersonaRecibe.set(apellido1PersonaRecibe);
-        this.apellido2PersonaRecibe.set(apellido2PersonaRecibe);
-        this.idCargo.set(idCargo);
-        this.fechaRecepcionPaciente = fechaRecepcionPaciente;
-        this.horaRecepcionPaciente = horaRecepcionPaciente;
+        this.idInstiRefe.set(idInstiRefe);
+        this.codigoRemision.set(codigoRemision);
         this.idpersona.set(idpersona);
         this.nombrePaciente.set(nombrePaciente);
         this.apellidoPaciente.set(apellidoPaciente);
@@ -165,104 +153,28 @@ public class RegistroDto{
         this.idPersonal.set(idPersonal);
     }
 
-    public String getIdTipoDocumento() {
-        return idTipoDocumento.get();
+    public String getIdInstiRefe() {
+        return idInstiRefe.get();
     }
 
-    public StringProperty idTipoDocumentoProperty() {
-        return idTipoDocumento;
+    public StringProperty idInstiRefeProperty() {
+        return idInstiRefe;
     }
 
-    public void setIdTipoDocumento(String idTipoDocumento) {
-        this.idTipoDocumento.set(idTipoDocumento);
+    public void setIdInstiRefe(String idInstiRefe) {
+        this.idInstiRefe.set(idInstiRefe);
     }
 
-    public String getIdPersonaRecibe() {
-        return idPersonaRecibe.get();
+    public String getCodigoRemision() {
+        return codigoRemision.get();
     }
 
-    public StringProperty idPersonaRecibeProperty() {
-        return idPersonaRecibe;
+    public StringProperty codigoRemisionProperty() {
+        return codigoRemision;
     }
 
-    public void setIdPersonaRecibe(String idPersonaRecibe) {
-        this.idPersonaRecibe.set(idPersonaRecibe);
-    }
-
-    public String getNombre1PersonaRecibe() {
-        return nombre1PersonaRecibe.get();
-    }
-
-    public StringProperty nombre1PersonaRecibeProperty() {
-        return nombre1PersonaRecibe;
-    }
-
-    public void setNombre1PersonaRecibe(String nombre1PersonaRecibe) {
-        this.nombre1PersonaRecibe.set(nombre1PersonaRecibe);
-    }
-
-    public String getNombre2PersonaRecibe() {
-        return nombre2PersonaRecibe.get();
-    }
-
-    public StringProperty nombre2PersonaRecibeProperty() {
-        return nombre2PersonaRecibe;
-    }
-
-    public void setNombre2PersonaRecibe(String nombre2PersonaRecibe) {
-        this.nombre2PersonaRecibe.set(nombre2PersonaRecibe);
-    }
-
-    public String getApellido1PersonaRecibe() {
-        return apellido1PersonaRecibe.get();
-    }
-
-    public StringProperty apellido1PersonaRecibeProperty() {
-        return apellido1PersonaRecibe;
-    }
-
-    public void setApellido1PersonaRecibe(String apellido1PersonaRecibe) {
-        this.apellido1PersonaRecibe.set(apellido1PersonaRecibe);
-    }
-
-    public String getApellido2PersonaRecibe() {
-        return apellido2PersonaRecibe.get();
-    }
-
-    public StringProperty apellido2PersonaRecibeProperty() {
-        return apellido2PersonaRecibe;
-    }
-
-    public void setApellido2PersonaRecibe(String apellido2PersonaRecibe) {
-        this.apellido2PersonaRecibe.set(apellido2PersonaRecibe);
-    }
-
-    public String getIdCargo() {
-        return idCargo.get();
-    }
-
-    public StringProperty idCargoProperty() {
-        return idCargo;
-    }
-
-    public void setIdCargo(String idCargo) {
-        this.idCargo.set(idCargo);
-    }
-
-    public Date getFechaRecepcionPaciente() {
-        return fechaRecepcionPaciente;
-    }
-
-    public void setFechaRecepcionPaciente(Date fechaRecepcionPaciente) {
-        this.fechaRecepcionPaciente = fechaRecepcionPaciente;
-    }
-
-    public Date getHoraRecepcionPaciente() {
-        return horaRecepcionPaciente;
-    }
-
-    public void setHoraRecepcionPaciente(Date horaRecepcionPaciente) {
-        this.horaRecepcionPaciente = horaRecepcionPaciente;
+    public void setCodigoRemision(String codigoRemision) {
+        this.codigoRemision.set(codigoRemision);
     }
 
     public String getIdpersona() {
@@ -315,29 +227,6 @@ public class RegistroDto{
 
     @Override
     public String toString() {
-        return "RegistroDto{" +
-                "fechaAtencionPaciente=" + fechaAtencionPaciente +
-                ", horaAtencionPaciente=" + horaAtencionPaciente +
-                ", condicionPaciente=" + condicionPaciente +
-                ", glasgow=" + glasgow +
-                ", signosVitales=" + signosVitales +
-                ", lugarAccidente=" + lugarAccidente +
-                ", idMedicamento=" + idMedicamento +
-                ", dosis=" + dosis +
-                ", idPersonal=" + idPersonal +
-                ", idTipoDocumento=" + idTipoDocumento +
-                ", idPersonaRecibe=" + idPersonaRecibe +
-                ", nombre1PersonaRecibe=" + nombre1PersonaRecibe +
-                ", nombre2PersonaRecibe=" + nombre2PersonaRecibe +
-                ", apellido1PersonaRecibe=" + apellido1PersonaRecibe +
-                ", apellido2PersonaRecibe=" + apellido2PersonaRecibe +
-                ", idCargo=" + idCargo +
-                ", fechaRecepcionPaciente=" + fechaRecepcionPaciente +
-                ", horaRecepcionPaciente=" + horaRecepcionPaciente +
-                ", idpersona=" + idpersona +
-                ", nombrePaciente=" + nombrePaciente +
-                ", apellidoPaciente=" + apellidoPaciente +
-                ", estado=" + estado +
-                '}';
+        return codigoRemision.get();
     }
 }
