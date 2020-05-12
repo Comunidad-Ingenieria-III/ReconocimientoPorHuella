@@ -11,32 +11,26 @@ import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
 import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import conexionBD.ConexionRoot;
-import datosFamiliar.dtofamiliar.Familiar;
-import datosFamiliar.facadefamiliar.Facade;
-import datospersona.dto.Persona;
-import eps.dto.DtoEps;
 import institucionreferencia.dto.InstitucionReferencia;
 import institucionreferencia.facade.FacadeInstitucionReferencia;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import datospersona.facade.FacadePersona;
 import medicamento.dto.Medicamento;
 import medicamento.facade.FacadeMedicamento;
 import personalSalud.personalsaluddto.PersonalSalud;
 import personalSalud.personalsaludfacade.PersonalSaludFacade;
-import registroAtencionPaciente.daoregistro.RegistroDao;
+import documento_entrega.documentoentregadto.DocumentoEntregaDto;
+import documento_entrega.documentoentregafacade.DocumentoEntregaFacade;
 import registroAtencionPaciente.dtoregistro.RegistroDto;
+import registroAtencionPaciente.facaderegistro.RegistroFacade;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
 import javax.swing.*;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -48,13 +42,13 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     private PreparedStatement stmt;
     private ResultSet rset;
 
-    RegistroDao registroDao = new RegistroDao();
-    FacadePersona facadepersona = new FacadePersona();
+    RegistroFacade registroFacade = new RegistroFacade();
     FacadeMedicamento facadeMedicamento = new FacadeMedicamento();
     PersonalSaludFacade personalSaludFacade = new PersonalSaludFacade();
     FacadeInstitucionReferencia facadeInstitucionReferencia = new FacadeInstitucionReferencia();
     FacadeTipoDocumento facadeTipoDocumento = new FacadeTipoDocumento();
     FacadeCargo facadeCargo = new FacadeCargo();
+    DocumentoEntregaFacade documentoEntregaFacade = new DocumentoEntregaFacade();
 
     private final boolean estado = true;
 
@@ -105,16 +99,25 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private ComboBox<PersonalSalud> cbx_documentoAPH;
     @FXML
+    private ComboBox<InstitucionReferencia> cbx_institucionReferencia;
+    @FXML
     private TextField tf_direccionAccidente;
     @FXML
     private TextField tf_dosisMedicamento;
+    @FXML
+    private TextField tf_codigoRemision;
+    @FXML
+    private TextField tf_idpersonadpsc;
+    @FXML
+    private TextField tf_primerNombredpsc;
+    @FXML
+    private TextField tf_primerApellidodpsc;
 
 
     //=========Tercera Ficha del TabPane==========
+
     @FXML
-    private ComboBox<InstitucionReferencia> cbx_institucionReferencia;
-    @FXML
-    private ComboBox<DtoTipoDocumento> cbx_tipodocumento;
+    private ComboBox<DtoTipoDocumento> cbx_tipoDocumento;
     @FXML
     private TextField tf_idPersonalRecibe;
     @FXML
@@ -132,11 +135,10 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private DatePicker dp_horaRecepcionPaciente;
     @FXML
-    private TextField tf_idpersonadpsc;
+    private ComboBox<RegistroDto> cbx_codigoRemision;
     @FXML
-    private TextField tf_primerNombredpsc;
-    @FXML
-    private TextField tf_primerApellidodpsc;
+    private TextArea ta_observacionesPr;
+
 
     @FXML
     private Button bt_crear;
@@ -148,6 +150,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     private Button bt_salir;
     @FXML
     private Button bt_guardar;
+    @FXML
+    private Button bt_guardarPr;
     @FXML
     private Button bt_modificar;
     @FXML
@@ -188,6 +192,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         iniciarCbxInstitucionReferencia();
         iniciarCbxTipoDocumento();
         iniciarCbxCargo();
+        iniciarCbxRemision();
     }
 
     protected void Iniciar() {
@@ -433,29 +438,63 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         String idMedicamento = cbx_medicamentoSuministrado.getSelectionModel().getSelectedItem().getIdMedicamento();
         String dosis = tf_dosisMedicamento.getText();
         String idPersonal = cbx_documentoAPH.getSelectionModel().getSelectedItem().getIdPersonal();
-        String idTipoDocumento = cbx_tipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
-        String idPersonaRecibe = tf_idPersonalRecibe.getText();
-        String nombre1PersonaRecibe = tf_primerNombreRecibe.getText();
-        String nombre2personaRecibe = tf_segundoNombreRecibe.getText();
-        String apellido1PersonaRecibe = tf_primerApellidoRecibe.getText();
-        String apellido2PersonaRecibe = tf_segundoApellidoRecibe.getText();
-        String idCargo = cbx_idCargo.getSelectionModel().getSelectedItem().getIdCargo();
-        Date fechaRecepcionPaciente = Date.valueOf(dp_fechaRecepcionPaciente.getValue());
-        Date horaRecepcionPaciente = Date.valueOf(dp_horaAtencionPaciente.getValue());
+        String idInstiRefe = cbx_institucionReferencia.getSelectionModel().getSelectedItem().getIdInstitucion();
+        String codigoAutorizacion = tf_codigoRemision.getText();
         String idpersona = tf_idpersonadpsc.getText();
         String nombrePaciente = tf_primerNombredpsc.getText();
         String apellidoPaciente = tf_primerApellidodpsc.getText();
 
         RegistroDto registroDto = new RegistroDto(fechaAtencionPaciente, horaAtencionPaciente, condicionPaciente, glasgow, signosVitales,
-                lugarAccidente, idMedicamento, dosis, idPersonal, idTipoDocumento, idPersonaRecibe, nombre1PersonaRecibe, nombre2personaRecibe, apellido1PersonaRecibe,
-                apellido2PersonaRecibe, idCargo, fechaRecepcionPaciente, horaRecepcionPaciente, idpersona, nombrePaciente, apellidoPaciente, estado);
+                lugarAccidente, idMedicamento, dosis, idPersonal, idInstiRefe, codigoAutorizacion, idpersona, nombrePaciente, apellidoPaciente, estado);
         return registroDto;
     }
 
     @FXML
     private void guardarRegistro() {
 
-        int res = registroDao.agregarRegistroAtencion(crearRegistro());
+        int res = registroFacade.insertarRegistro(crearRegistro());
+        if (res == 1) {
+            Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
+            msg1.setTitle("Gestiones - Registro Atención Paciente");
+            msg1.setContentText("Registro de atencion agregado correctamente");
+            msg1.setHeaderText("Información");
+            msg1.show();
+            iniciarCbxRemision();
+            //cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
+            //bt_crear.setDisable(false);
+        } else {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Atención Paciente");
+            msg.setContentText("No Fue Posible Agregar El Registro");
+            msg.setHeaderText("Algo salio mal.");
+            msg.show();
+        }
+    }
+
+    @FXML
+    public DocumentoEntregaDto crearPersonalReferencia(){
+
+        String tipoDocumento = cbx_tipoDocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
+        String idPersonaRecibe = tf_idPersonalRecibe.getText();
+        String nombre1 = tf_primerNombreRecibe.getText();
+        String nombre2 = tf_segundoNombreRecibe.getText();
+        String apellido1 = tf_primerApellidoRecibe.getText();
+        String apellido2 = tf_segundoApellidoRecibe.getText();
+        String idCargo = cbx_idCargo.getSelectionModel().getSelectedItem().getIdCargo();
+        Date fechaRecepcionPaciente = Date.valueOf(dp_fechaRecepcionPaciente.getValue());
+        Date horaRecepcionPaciente = Date.valueOf(dp_horaRecepcionPaciente.getValue());
+        String codigoRemisionPR = cbx_codigoRemision.getSelectionModel().getSelectedItem().getCodigoRemision();
+        String observaciones = ta_observaciones.getText();
+
+        DocumentoEntregaDto documentoEntregaDto = new DocumentoEntregaDto(tipoDocumento, idPersonaRecibe, nombre1, nombre2, apellido1, apellido2, idCargo,
+                fechaRecepcionPaciente, horaRecepcionPaciente, codigoRemisionPR, observaciones, estado);
+        return documentoEntregaDto;
+    }
+
+    @FXML
+    private void guardarPersonalReferencia() {
+
+        int res = documentoEntregaFacade.agregarPersonalReferencia(crearPersonalReferencia());
         if (res == 1) {
             Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
             msg1.setTitle("Gestiones - Registro Atención Paciente");
@@ -464,7 +503,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             msg1.show();
             //iniciarCbxid_persona();
             //cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
-            bt_crear.setDisable(false);
+            //bt_crear.setDisable(false);
         } else {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
@@ -473,6 +512,10 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             msg.show();
         }
     }
+
+
+
+
 
     @FXML
     public void iniciarCbxCondicionPaciente() {
@@ -516,13 +559,19 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     public void iniciarCbxTipoDocumento() {
         ObservableList<DtoTipoDocumento> listatipodocumentos = FXCollections.observableArrayList(facadeTipoDocumento.cargarTipoDocumento());
-        cbx_tipodocumento.setItems(listatipodocumentos);
+        cbx_tipoDocumento.setItems(listatipodocumentos);
     }
 
     @FXML
     public void iniciarCbxCargo() {
         ObservableList<Cargo> listacargos = FXCollections.observableArrayList(facadeCargo.obtenerCargos());
         cbx_idCargo.setItems(listacargos);
+    }
+
+    @FXML
+    public void iniciarCbxRemision() {
+        ObservableList<RegistroDto> listaremisiones = FXCollections.observableArrayList(registroFacade.CargarTodosRegistros());
+        cbx_codigoRemision.setItems(listaremisiones);
     }
 
     /*@FXML
