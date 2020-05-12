@@ -284,6 +284,12 @@ public class ControladorPersonalSalud implements Initializable {
         boolean estado = false;
         personalSaludFacade.eliminarPsdto(idPs, estado);
         titulos.remove(tb_personal.getSelectionModel().getFocusedIndex());
+
+        if (titulos.isEmpty()){
+            bt_agregar.setDisable(false);
+            bt_ModificarTabla.setDisable(true);
+            bt_eliminarTabla.setDisable(true);
+        }
         limpiarComponentes();
     }
 
@@ -503,10 +509,13 @@ public class ControladorPersonalSalud implements Initializable {
 
                     cmb_cargo.setValue(facadeCargo.obtenerPorId(personalSalud.getCargo()));
                     cmb_tipodocumento.setValue(facadeTipoDocumento.obtenerPorId(personalSalud.getTipoDocumento()));
+
                     tf_numerodocumento.setDisable(true);
+                    cbx_idpersona.setDisable(true);
+
                     titulos = FXCollections.observableArrayList(busqueda.getListaTitulos());
                     cbx_idpersona.setValue(personalSaludFacade.buscarPorIdPersonal(tf_numerodocumento.getText()));
-                    cbx_idpersona.setDisable(true);
+
                     for (int i = 0; i < titulos.size(); i++) {
                         if (!titulos.get(i).isEstado())//Ciclo para recorrer la lista de objetos de personal-salud-titulo, y eliminar los registros que tengan
                             //el estado inactivo en la BBDD
@@ -522,7 +531,7 @@ public class ControladorPersonalSalud implements Initializable {
             } else {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("El número de documento no existe!");
+                msg.setContentText("Ingrese un número de cedula valido!");
                 msg.setHeaderText("Error.");
                 msg.show();
                 tf_numerodocumento.requestFocus();
@@ -553,6 +562,7 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     public void manejarEventosTablaTitulos() {//Metodo para que cuando se seleccione un registro de la tabla se asigne a los componentes
+
         tb_personal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PsDto>() {
             @Override
             public void changed(ObservableValue<? extends PsDto> observable, PsDto oldValue, PsDto newValue) {
@@ -976,13 +986,20 @@ public class ControladorPersonalSalud implements Initializable {
         URL linkbt_guardar = getClass().getResource("/imagenes/disquete.png");
         URL linkbt_modificar = getClass().getResource("/imagenes/btGuardar.png");
         URL linkbt_inhabilitar = getClass().getResource("/imagenes/eliminar.png");
+        URL linkbt_refrescar = getClass().getResource("/imagenes/refrescar.png");
 
-        Image imagenGuardar = new Image(linkbt_guardar.toString(),24,24,false,true);
+        Image imagenGuardar = new Image(linkbt_guardar.toString(),25,25,false,true);
         bt_agregar.setGraphic(new ImageView(imagenGuardar));
-        Image imagenModificar = new Image(linkbt_modificar.toString(),24,24,false,true);
+
+        Image imagenModificar = new Image(linkbt_modificar.toString(),25,25,false,true);
         bt_ModificarTabla.setGraphic(new ImageView(imagenModificar));
-        Image imagenInhabilitar = new Image(linkbt_inhabilitar.toString(),24,24,false,true);
+
+        Image imagenInhabilitar = new Image(linkbt_inhabilitar.toString(),25,25,false,true);
         bt_eliminarTabla.setGraphic(new ImageView(imagenInhabilitar));
+
+        Image imagenSalir = new Image(linkbt_refrescar.toString(),25, 25, false, true);
+        bt_SalirTabla.setGraphic(new ImageView(imagenSalir));
+
 
     }
 
