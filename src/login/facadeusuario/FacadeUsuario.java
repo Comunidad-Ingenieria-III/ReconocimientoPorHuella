@@ -1,5 +1,6 @@
 package login.facadeusuario;
 
+import javafx.beans.property.BooleanProperty;
 import login.daousuario.DaoUsuario;
 import login.dtousuario.Usuario;
 
@@ -13,16 +14,15 @@ public class FacadeUsuario {
         return daousuario.obtenerTodosLosUsuarios();
     }
 
-    public int crearUsuario(Usuario usuario) {
-
-        return daousuario.crearUsuario(usuario);
+    public int agregarUsuario(Usuario usuario) {
+        return daousuario.agregarUsuario(usuario);
     }
 
     public int modificarUsuario(Usuario usuario){
         return daousuario.modificarUsuario(usuario);
     }
 
-    public boolean eliminarUsurio(String idUsuario){
+    public boolean eliminarUsuario(String idUsuario ){
         return daousuario.eliminar(idUsuario);
     }
 

@@ -53,7 +53,7 @@ public class DaoUsuario {
         return usuarios;
     }//Fin del metodo obtenerTodos
 
-    public List<Usuario> buscarUsuario(String buscar) {
+    public List<Usuario>buscarUsuario(String buscar) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from usuario where idUsuario LIKE ?";
@@ -82,7 +82,7 @@ public class DaoUsuario {
     }
 
 
-    public int crearUsuario(Usuario usuario) throws RuntimeException {
+    public int agregarUsuario(Usuario usuario) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "insert into usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido," +
@@ -136,41 +136,33 @@ public class DaoUsuario {
         return 0;
     }
 
-    public boolean eliminar(String idUsuario) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
-        //en otras tablas que dependan de la clave primaria de éste
+
+
+    public boolean eliminar(String idUsuario) {//Funcion que inhabilita un registro en la tabla usuario de la BBDD
 
         boolean yes = false;
         try {
-
-            if(yes==false) {
                 conn = ConexionRoot.getConexion();
-                String sql = "SELECT p.idUsuario ,p.idperfil ,ps.idperfil as relacion from usuario AS p " +
-                        "INNER JOIN perfil AS ps ON p.idperfil=ps.idperfil where ps.idperfil = ?";
+                String sql = "update usuario set estado = ? where idusuario = ?";
                 stmt = conn.prepareStatement(sql);
-                stmt.setString(1, idUsuario);
-                rset = stmt.executeQuery();
-                if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
-                    yes = true;
+                stmt.setBoolean(1, false);
+                stmt.setString(2, idUsuario);
+                stmt.executeUpdate();
+                yes = true;
 
-                } else {
-                    String sql2 = "update usuario set estado = 0 where idUsuario = ?";
-                    stmt = conn.prepareStatement(sql2);
-                    stmt.setString(1, idUsuario);
-                    stmt.executeUpdate();
-                    yes = false;
-                }
-            }
-        } catch (RuntimeException | SQLException e) {
+            } catch (SQLException  | RuntimeException e) {
             e.printStackTrace();
         }
         return yes;
     }
 
+
+
     public Usuario buscarPorIdUsuario(String idUsuario) {
-        Usuario usuario = null;
+            user = null;
         try {
             conn = ConexionRoot.getConexion();
-            String query = "select * from usurio where idUsuario=?";
+            String query = "select * from usuario where idUsuario=?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1,idUsuario);
             rset = stmt.executeQuery();
@@ -191,6 +183,6 @@ public class DaoUsuario {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return usuario;
+        return user;
     }
 }
