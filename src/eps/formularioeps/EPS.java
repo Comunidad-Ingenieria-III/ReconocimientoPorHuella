@@ -352,6 +352,7 @@ public class EPS  extends Component implements Initializable {
                 tf_Direccion.setText(epss.get(i).getdireccionEps());
                 bt_Inhabilitar.setDisable(false);
                 bt_Modificar.setDisable(false);
+                tf_Codigo.setDisable(true);
 
             }
             if (epss.get(i).getEstado().equals("0")) {

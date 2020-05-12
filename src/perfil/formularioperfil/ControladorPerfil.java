@@ -365,6 +365,7 @@ public class ControladorPerfil implements Initializable {
                     txtDescripcion.setText(perfiles.get(i).getNombre());
                     btnEliminar.setDisable(false);
                     btnModificar.setDisable(false);
+                    txtId.setDisable(true);
                 } else {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Perfil");
@@ -402,6 +403,7 @@ public class ControladorPerfil implements Initializable {
         btnEliminar.setDisable(true);
         habilitarCampos();
         valor=1;
+        estado.isPressed();
     }
 
     @FXML

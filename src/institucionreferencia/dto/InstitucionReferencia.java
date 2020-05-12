@@ -85,11 +85,6 @@ public class InstitucionReferencia {
 
     @Override
     public String toString() {
-        return "InstitucionReferencia{" +
-                "idInstitucion=" + idInstitucion +
-                ", nombre=" + nombre +
-                ", direccion=" + direccion +
-                ", telefono=" + telefono +
-                '}';
+        return nombre.get();
     }
 }

@@ -347,7 +347,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
 
                     bt_inhabilitar.setDisable(false);
                     bt_modificar.setDisable(false);
-                    manejarEventos();
+                    tf_Tipo.setDisable(true);
 
 
                 }

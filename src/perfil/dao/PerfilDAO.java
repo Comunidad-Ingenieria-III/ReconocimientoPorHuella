@@ -91,7 +91,7 @@ public class PerfilDAO {
 
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update perfil set nombre = ?, estado = ?  where idCargo = ?";
+            String sql = "update perfil set nombre = ?, estado = ?  where idperfil = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, perfilDto.getNombre());
