@@ -4,10 +4,15 @@ import datospersona.dto.Persona;
 import registroAtencionPaciente.daoregistro.RegistroDao;
 import registroAtencionPaciente.dtoregistro.RegistroDto;
 
+import java.util.List;
+
 public class RegistroFacade {
 
     private RegistroDao registroDao = new RegistroDao();
 
+    public List<RegistroDto> CargarTodosRegistros(){
+        return registroDao.cargarRegistroAtencion();
+    }
 
     public int insertarRegistro(RegistroDto registroDto) {
         return registroDao.agregarRegistroAtencion(registroDto);
