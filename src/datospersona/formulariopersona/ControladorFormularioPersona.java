@@ -480,23 +480,35 @@ public class ControladorFormularioPersona implements Initializable {
 
     @FXML
     private Persona crearPersona() {
-        String idpersona = tf_idpersona.getText();
-        String primerNombre = tf_primerNombre.getText();
-        String segundoNombre = tf_segundoNombre.getText();
-        String primerApellido = tf_primerApellido.getText();
-        String segundoApellido = tf_segundoApellido.getText();
-        Date fechaNacimiento = Date.valueOf(dp_fechaNacimiento.getValue());
-        String direccion = tf_direccion.getText();
-        String sexo = cbxsexo.getValue();
-        String alegicoA = ta_alergicoA.getText();
-        String enfermedadSufre = ta_enfermedadSufre.getText();
-        String observaciones = ta_observaciones.getText();
-        ByteArrayInputStream huella = new ByteArrayInputStream(template.serialize());
-        int huella1 = template.serialize().length;
-        String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
-        String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
-        Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
-                fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps, estado);
+        if (tf_idpersona.getText().isEmpty()) {
+            Alert msg2 = new Alert(Alert.AlertType.ERROR);
+            msg2.setTitle("Gestiones - Persona");
+            msg2.setContentText("Campos requeridos");
+            msg2.setHeaderText("Información.");
+            msg2.show();
+            tf_idpersona.requestFocus();
+        } else {
+
+
+            String idpersona = tf_idpersona.getText();
+            String primerNombre = tf_primerNombre.getText();
+            String segundoNombre = tf_segundoNombre.getText();
+            String primerApellido = tf_primerApellido.getText();
+            String segundoApellido = tf_segundoApellido.getText();
+            Date fechaNacimiento = Date.valueOf(dp_fechaNacimiento.getValue());
+            String direccion = tf_direccion.getText();
+            String sexo = cbxsexo.getValue();
+            String alegicoA = ta_alergicoA.getText();
+            String enfermedadSufre = ta_enfermedadSufre.getText();
+            String observaciones = ta_observaciones.getText();
+            ByteArrayInputStream huella = new ByteArrayInputStream(template.serialize());
+            int huella1 = template.serialize().length;
+            String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
+            String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
+            Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
+                    fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps, estado);
+
+        }
         return persona;
     }
 

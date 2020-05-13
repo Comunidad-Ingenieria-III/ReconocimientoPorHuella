@@ -130,14 +130,14 @@ public class ControladorPersonalSalud implements Initializable {
 
     @FXML
     public void modificarRegistroDeTabla() {//Metodo que permite editar los registros de la tabla y asi poder actualizar en la base de datos
-        if(dp_fechatitulacion.getValue() == null || cbx_idtipotitulo.getSelectionModel().isEmpty() || cbx_idinstitucion.getSelectionModel().isEmpty() ){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Debe seleccionar un registro de la tabla ");
-            msg.show();
+        //if(dp_fechatitulacion.getValue() == null || cbx_idtipotitulo.getSelectionModel().isEmpty() || cbx_idinstitucion.getSelectionModel().isEmpty() ){
+           // Alert msg = new Alert(Alert.AlertType.ERROR);
+            //msg.setTitle("Gestiones - Personal Salud");
+            //msg.setContentText("Debe seleccionar un registro de la tabla ");
+           // msg.show();
 
 
-        }else{
+       // }else{
 
 
         PsDto psDto = new PsDto(
@@ -178,7 +178,7 @@ public class ControladorPersonalSalud implements Initializable {
             }
 
         }
-        }
+    //    }
     }
 
 
@@ -298,6 +298,9 @@ public class ControladorPersonalSalud implements Initializable {
         cbx_idtipotitulo.setValue(null);
         cbx_idinstitucion.setValue(null);
         dp_fechatitulacion.setValue(null);
+        bt_agregar.setDisable(false);
+        bt_ModificarTabla.setDisable(true);
+        bt_eliminarTabla.setDisable(true);
     }
 
     @FXML
@@ -380,6 +383,16 @@ public class ControladorPersonalSalud implements Initializable {
             if (res == 1) {
 
                 iniciarCbxid_persona();
+                tf_numerodocumento.setDisable(true);
+                tf_nombre1.setDisable(true);
+                tf_nombre2.setDisable(true);
+                tf_apellido1.setDisable(true);
+                tf_apellido2.setDisable(true);
+                cmb_sexo.setDisable(true);
+                tf_numtelefono.setDisable(true);
+                tf_correoelectronico.setDisable(true);
+                cmb_tipodocumento.setDisable(true);
+                cmb_cargo.setDisable(true);
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
                 alert.setTitle("Gestiones - Personal Salud");
                 alert.setHeaderText("Elija una opción");
