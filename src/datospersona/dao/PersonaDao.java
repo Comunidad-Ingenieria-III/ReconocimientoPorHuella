@@ -1,6 +1,7 @@
 package datospersona.dao;
 
 import conexionBD.ConexionRoot;
+import datosFamiliar.dtofamiliar.Familiar;
 import datospersona.dto.BusquedaDeFamiliar;
 import datospersona.dto.Persona;
 
@@ -12,6 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import eps.dto.DtoEps;
+import eps.formularioeps.EPS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persona_familiar.per_fami_dto.Per_Fami_Dto;
@@ -24,6 +27,8 @@ import javax.swing.JOptionPane;
 public class PersonaDao {
 
     private Persona persona;
+    private Familiar familiar;
+    private DtoEps eps;
     private List<Persona> personas;
 
     private Connection conn;
@@ -67,29 +72,38 @@ public class PersonaDao {
         return personas;
     }
 
-    public Persona buscarPorId(String idenpersona) {
+    public Persona ConsultaRegistroAtencion(String idenpersona) {
+
+
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from datos_persona where idpersona = ?";
+            String sql = "SELECT p.idpersona, p.primerNombre, p.primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones, p.huella,\n" +
+                    "ep.nombreEps AS nombreEps,\n" +
+                    "f.nombre1, f.telefono as telefono \n" +
+                    "FROM persona_familiar AS pf\n" +
+                    "INNER JOIN datos_persona AS p ON p.idpersona = pf.idpersona\n" +
+                    "INNER JOIN familiar_paciente AS f ON f.idFamiliar = pf.idFamiliar\n" +
+                    "INNER JOIN eps AS ep ON p.idEps = ep.idEps\n" +
+                    "WHERE p.idpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idenpersona);
             rset = stmt.executeQuery();
 
             if (rset.next()) {
-
+                persona = new Persona();
+                familiar = new Familiar();
+                eps = new DtoEps();
 
                 persona.setIdpersona(rset.getString("idpersona"));
                 persona.setPrimerNombre(rset.getString("primerNombre"));
-                //persona.setSegundoNombre(rset.getString("segundoNombre"));
-                //persona.setPrimerApellido(rset.getString("primerApellido"));
-                //persona.setSegundoApellido(rset.getString("segundoApellido"));
-                //persona.setFechaNacimiento(rset.getDate("fechaNacimiento"));
-                //persona.setSexo(rset.getString("sexo"));
+                persona.setPrimerApellido(rset.getString("primerApellido"));
+                persona.setFechaNacimiento(rset.getDate("fechaNacimiento"));
+                eps.setNombreEps(rset.getString("nombreEps"));
+                familiar.setPrimerNombre(rset.getString("nombre1"));
+                familiar.setTelFamiliar(rset.getString("telefon"));
                 persona.setAlergicoA(rset.getString("alergicoA"));
                 persona.setEnfermedadSufre(rset.getString("enfermedadSufre"));
                 persona.setObservaciones(rset.getString("observaciones"));
-                //stmt.setBinaryStream(12,persona.getHuella());
-                //stmt.setInt(13,persona.getHuella1());
 
             }
         } catch (RuntimeException | SQLException e) {

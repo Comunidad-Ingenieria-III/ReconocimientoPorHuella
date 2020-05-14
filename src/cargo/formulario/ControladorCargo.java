@@ -313,14 +313,6 @@ public class ControladorCargo extends Component implements Initializable {
 
     }
 
-
-
-
-
-
-
-
-
     @FXML
     private void consultarCargo() {
         if(txtId.getText().isEmpty()){

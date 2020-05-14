@@ -93,4 +93,28 @@ public class RegistroDao {
         }
         return 1;
     }
+
+    public RegistroDto buscarCodigoRemision(String codigoRemision) {
+
+        RegistroDto registroDto = null;
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select codigoRemision from registro_atencion_paciente where codigoRemision = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, codigoRemision);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                registroDto = new RegistroDto();
+
+                registroDto.setCodigoRemision(rset.getString("codigoRemision"));
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return registroDto;
+    }
+
 }

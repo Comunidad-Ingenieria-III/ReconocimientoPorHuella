@@ -31,6 +31,10 @@ public class FacadePersona {
         return personaDao.buscarPersonalPorIdPersona(idpersona);
     }
 
+    public Persona consultarRegistroAtencion(String idpersona) {
+        return personaDao.ConsultaRegistroAtencion(idpersona);
+    }
+
     public boolean buscarPersonaPrimaryKey(String idpersona){
         return personaDao.buscarPrimaryKeyPersona(idpersona);
     }
