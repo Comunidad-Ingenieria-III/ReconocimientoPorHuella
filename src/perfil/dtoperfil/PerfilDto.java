@@ -3,8 +3,9 @@ package perfil.dtoperfil;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import perfil.facadeperfil.PerfilFacade;
 
-public class PerfilDto {
+public class PerfilDto extends PerfilFacade {
 
     private StringProperty idperfil =  new SimpleStringProperty();
     private StringProperty nombre = new SimpleStringProperty();

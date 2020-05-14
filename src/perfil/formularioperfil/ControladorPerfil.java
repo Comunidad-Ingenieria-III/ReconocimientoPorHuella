@@ -35,6 +35,8 @@ public class ControladorPerfil implements Initializable {
     private TableColumn<PerfilDto, String> colId;
     @FXML
     private TableColumn<PerfilDto, String> colDescripcion;
+    @FXML
+    private TableColumn<PerfilDto, String> colEstado;
 
     @FXML
     private TextField txtId;
@@ -67,14 +69,14 @@ public class ControladorPerfil implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             validar();
-
+        String estado1;
         perfiles = FXCollections.observableArrayList(perfilFacade.obtenerCargos());
 
         tbl_perfiles.setItems(perfiles);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("idperfil"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
         estado.setDisable(false);
         btnModificar.setDisable(true);
         btnEliminar.setDisable(true);
@@ -92,6 +94,8 @@ public class ControladorPerfil implements Initializable {
                 if (newValue != null){
                     txtId.setText(newValue.getIdperfil());
                     txtDescripcion.setText(newValue.getNombre());
+                    estado.setSelected(newValue.isEstado());
+
 
                 }
 
@@ -100,6 +104,9 @@ public class ControladorPerfil implements Initializable {
                 btnModificar.setDisable(false);
                 btnEliminar.setDisable(false);
                 btnConsultar.setDisable(true);
+                estado.setDisable(true);
+
+
             }
         });//Fin del Listener
 
@@ -137,22 +144,6 @@ public class ControladorPerfil implements Initializable {
             listaPerfiles=perfilFacade.buscar(txtId.getText());
 
             if(listaPerfiles.size()>=1){
-                int i=0;
-
-                if (listaPerfiles.get(0).isEstado()) {
-
-                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                    msg.setTitle("Gestiones - Perfil");
-                    msg.setContentText("El Perfil: " + txtId.getText() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
-                    msg.setHeaderText("Resultado");
-                    msg.show();
-                    txtId.setText("");
-                    colDescripcion.setText("");
-                    txtId.requestFocus();
-
-                }else{
-
-
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Perfil");
                     msg.setContentText("Código: " + txtId.getText() +" existente no es posible agregar" );
@@ -170,10 +161,10 @@ public class ControladorPerfil implements Initializable {
 
             }
 
-        }
-
-
     }
+
+
+
 
     @FXML
     public void textAction(KeyEvent e){
@@ -215,8 +206,13 @@ public class ControladorPerfil implements Initializable {
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                //bt_guardar.setDisable(true);
-                txtId.requestFocus();
+                if(txtId.getText().isEmpty()){
+                    txtId.requestFocus();
+                }else if(txtDescripcion.getText().isEmpty()){
+                    txtDescripcion.requestFocus();
+
+                }
+
 
             }else { int res = perfilFacade.agregar(perfilDto);
                 if (res == 1) {
@@ -243,13 +239,16 @@ public class ControladorPerfil implements Initializable {
 
 
             }else {
-            if (txtId.getText().isEmpty() || txtDescripcion.getText().isEmpty()) {
+            if (txtDescripcion.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Perfil");
-                msg.setContentText("Nombre es un campo requerido");
+                msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                txtDescripcion.requestFocus();
+                if(txtDescripcion.getText().isEmpty()){
+                    txtDescripcion.requestFocus();
+
+                }
 
             } else {
                 int res = perfilFacade.modificar(perfilDto);
@@ -257,14 +256,14 @@ public class ControladorPerfil implements Initializable {
                     //perfiles.set(tbl_perfiles.getSelectionModel().getSelectedIndex(), perfilDto);
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Perfil");
-                    msg.setContentText("El Perfil se ha Modificado");
+                    msg.setContentText("El Perfil se ha modificado");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     cancelar();
                 }else{
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Perfil");
-                    msg.setContentText("No se ha podido Modificar el Perfil");
+                    msg.setContentText("No se ha podido modificar el Perfil");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     cancelar();
@@ -327,6 +326,7 @@ public class ControladorPerfil implements Initializable {
         btnEliminar.setDisable(true);
         valor =0;
         btnGuardar.setDisable(false);
+        estado.setDisable(false);
     }
 
 
@@ -343,7 +343,8 @@ public class ControladorPerfil implements Initializable {
             valor=0;
         } else {
             int i = 0;
-            perfiles = FXCollections.observableArrayList(perfilFacade.buscar(txtId.getText()));
+            PerfilDto perfil = perfilFacade.obtenerPorId(txtId.getText());
+            perfiles = FXCollections.observableArrayList(perfilFacade.obtenerPorId(txtId.getText()));
             if (perfiles.isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Perfil");
@@ -353,9 +354,11 @@ public class ControladorPerfil implements Initializable {
                 txtId.requestFocus();
                 txtId.setText("");
             } else {
-                if (perfiles.get(i).isEstado()) {
-
-
+                if(perfil.isEstado()){
+                    estado.setSelected(true);
+                } else {
+                    estado.setSelected(false);
+                }
                     tbl_perfiles.setItems(perfiles);
                     colId.setCellValueFactory(new PropertyValueFactory<>("idperfil"));
                     colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -366,20 +369,11 @@ public class ControladorPerfil implements Initializable {
                     btnEliminar.setDisable(false);
                     btnModificar.setDisable(false);
                     txtId.setDisable(true);
-                } else {
-                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                    msg.setTitle("Gestiones - Perfil");
-                    msg.setContentText("Perfil " + txtId.getText() + " no encontrado");
-                    msg.setHeaderText("Resultado");
-                    msg.show();
-                    txtId.requestFocus();
-                    txtId.setText("");
-
-
+                    estado.setDisable(true);
                 }
             }
 
-        }
+
     }
 
 
@@ -403,7 +397,7 @@ public class ControladorPerfil implements Initializable {
         btnEliminar.setDisable(true);
         habilitarCampos();
         valor=1;
-        estado.isPressed();
+        estado.setSelected(true);
     }
 
     @FXML
@@ -436,6 +430,7 @@ public class ControladorPerfil implements Initializable {
         tbl_perfiles.setItems(perfiles);
         colId.setCellValueFactory(new PropertyValueFactory<>("idperfil"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
     }
 
     @FXML

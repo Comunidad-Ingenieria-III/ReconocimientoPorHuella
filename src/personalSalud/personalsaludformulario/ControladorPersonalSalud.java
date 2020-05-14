@@ -186,14 +186,7 @@ public class ControladorPersonalSalud implements Initializable {
     public void agregarTitulos() {//Metodo para agregar titulos a la tabla personal-salud-titulo de la BBDD
         // y a la tabla del formulario previamente validados para evitar registros dulicados
 
-         if(dp_fechatitulacion.getValue() == null){
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Debe seleccionar una fecha");
-            msg.show();
-             dp_fechatitulacion.requestFocus();
-
-        } else if(cbx_idtipotitulo.getSelectionModel().isEmpty()){
+         if(cbx_idtipotitulo.getSelectionModel().isEmpty()){
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Personal Salud");
             msg.setContentText("Debe seleccionar una tipo de título");
@@ -207,10 +200,14 @@ public class ControladorPersonalSalud implements Initializable {
             msg.show();
             cbx_idinstitucion.requestFocus();
 
+         } else if(dp_fechatitulacion.getValue() == null){
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Personal Salud");
+            msg.setContentText("Debe seleccionar una fecha");
+            msg.show();
+            dp_fechatitulacion.requestFocus();
 
-
-
-        }else {
+        } else {
 
              PsDto psDto = new PsDto(
                      0,
@@ -349,7 +346,19 @@ public class ControladorPersonalSalud implements Initializable {
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                tf_numerodocumento.requestFocus();
+
+                if(tf_numerodocumento.getText().isEmpty()){
+                    tf_numerodocumento.requestFocus();
+
+                } else if(tf_nombre1.getText().isEmpty()){
+                    tf_nombre1.requestFocus();
+                } else if(tf_apellido1.getText().isEmpty()){
+                    tf_apellido1.requestFocus();
+                }else if(tf_numtelefono.getText().isEmpty()){
+                    tf_numtelefono.requestFocus();
+
+                }
+
 
             } else if(cmb_tipodocumento.getSelectionModel().isEmpty()){
                 Alert msg = new Alert(Alert.AlertType.ERROR);
@@ -357,7 +366,7 @@ public class ControladorPersonalSalud implements Initializable {
                 msg.setContentText("Debe seleccionar un tipo de documento");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                cmb_sexo.requestFocus();
+                cmb_tipodocumento.requestFocus();
 
             }else if(cmb_sexo.getSelectionModel().isEmpty()){
                 Alert msg = new Alert(Alert.AlertType.ERROR);
@@ -425,7 +434,52 @@ public class ControladorPersonalSalud implements Initializable {
             }
 
         } else {//Condicional para modificar si el registro ya esta creado
+            if(tf_numerodocumento.getText().isEmpty() || tf_nombre1.getText().isEmpty() || tf_apellido1.getText().isEmpty() || tf_numtelefono.getText().isEmpty()){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Personal Salud");
+                msg.setContentText("Campos requeridos");
+                msg.setHeaderText("Resultado");
+                msg.show();
+
+                if(tf_nombre1.getText().isEmpty()){
+                    tf_nombre1.requestFocus();
+                } else if(tf_apellido1.getText().isEmpty()){
+                    tf_apellido1.requestFocus();
+                }else if(tf_numtelefono.getText().isEmpty()){
+                    tf_numtelefono.requestFocus();
+
+                }
+
+            } else if(cmb_tipodocumento.getSelectionModel().isEmpty()){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Personal Salud");
+                msg.setContentText("Debe seleccionar un tipo de documento");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                cmb_sexo.requestFocus();
+
+            }else if(cmb_sexo.getSelectionModel().isEmpty()){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Personal Salud");
+                msg.setContentText("Debe seleccionar un sexo");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                cmb_sexo.requestFocus();
+
+            }else if(cmb_cargo.getSelectionModel().isEmpty()){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Personal Salud");
+                msg.setContentText("Debe seleccionar un cargo");
+                msg.setHeaderText("Resultado");
+                msg.show();
+                cmb_cargo.requestFocus();
+            }else{
+
+
+
+
             int res = personalSaludFacade.modificarPersonal2(crearPersonalSalud());
+
             if (res == 1) {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Personal Salud");
@@ -446,6 +500,8 @@ public class ControladorPersonalSalud implements Initializable {
                 msg.setContentText("No fue posible modificar el registro ");
                 msg.setHeaderText("Error.");
                 msg.show();
+            }
+
             }
 
         }
@@ -554,7 +610,7 @@ public class ControladorPersonalSalud implements Initializable {
     }
 
     @FXML
-    public void eliminarFamiliar() {
+    public void eliminar() {
         boolean respuesta = personalSaludFacade.eliminarPersonal(tf_numerodocumento.getText());
         if (respuesta) {
             Alert msg = new Alert(Alert.AlertType.ERROR);

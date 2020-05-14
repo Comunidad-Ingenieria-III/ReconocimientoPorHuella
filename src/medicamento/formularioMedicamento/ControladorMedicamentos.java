@@ -193,8 +193,12 @@ public class ControladorMedicamentos extends Component implements Initializable 
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                tf_Tipo.requestFocus();
-                bt_guardar.setDisable(true);
+                if(tf_Tipo.getText().isEmpty()){
+                    tf_Tipo.requestFocus();
+                }else if(tf_nombre1.getText().isEmpty()){
+                    tf_nombre1.requestFocus();
+
+                }
 
             } else {
 
@@ -223,10 +227,10 @@ public class ControladorMedicamentos extends Component implements Initializable 
             }
         } else {
 
-            if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
+            if (tf_nombre1.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Medicamentos");
-                msg.setContentText("Nombre es un campo requerido");
+                msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
                 tf_nombre1.requestFocus();

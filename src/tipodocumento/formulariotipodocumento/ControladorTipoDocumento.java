@@ -172,8 +172,14 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
+                if(tf_Tipo.getText().isEmpty()){
+                    tf_Tipo.requestFocus();
 
-                tf_Tipo.requestFocus();
+                } else if(tf_nombre1.getText().isEmpty()){
+                    tf_nombre1.requestFocus();
+                }
+
+
             } else {
                 int res = facadeTipoDocumento.insertarTipoDocumento(dtoTipoDocumento);
                 if (res == 1) {
@@ -196,10 +202,10 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
 
             }
         } else {
-            if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
+            if ( tf_nombre1.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Tipo de documento");
-                msg.setContentText("Nombre es un campo requerido");
+                msg.setContentText("Campos  requerido");
                 msg.setHeaderText("Resultado");
                 msg.show();
                 tf_nombre1.requestFocus();

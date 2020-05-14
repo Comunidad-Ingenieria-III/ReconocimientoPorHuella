@@ -218,8 +218,18 @@ public class ControladorDatosFamiliar implements Initializable {
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                //bt_guardar.setDisable(true);
-                tf_idfamiliar.requestFocus();
+                if(tf_idfamiliar.getText().isEmpty()){
+                    tf_idfamiliar.requestFocus();
+                }else if(tf_nombre1.getText().isEmpty()){
+                    tf_nombre1.requestFocus();
+
+                }else if(tf_apellido1.getText().isEmpty()){
+                    tf_apellido1.requestFocus();
+                }else if(tf_numtelefono.getText().isEmpty()){
+                    tf_numtelefono.requestFocus();
+                }else if(tf_direccion.getText().isEmpty()){
+                    tf_direccion.requestFocus();
+                }
 
             }else{
                 int res = facade.agregarFamiliar(familiar);
@@ -248,13 +258,22 @@ public class ControladorDatosFamiliar implements Initializable {
                  }
 
         } else{
-            if (tf_idfamiliar.getText().isEmpty() || tf_nombre1.getText().isEmpty() || tf_apellido1.getText().isEmpty() || tf_direccion.getText().isEmpty() || tf_numtelefono.getText().isEmpty()) {
+            if ( tf_nombre1.getText().isEmpty() || tf_apellido1.getText().isEmpty() || tf_direccion.getText().isEmpty() || tf_numtelefono.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Familiar Paciente");
-                msg.setContentText("Nombre es un campo requerido");
+                msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                tf_idfamiliar.requestFocus();
+                 if(tf_nombre1.getText().isEmpty()){
+                    tf_nombre1.requestFocus();
+
+                }else if(tf_apellido1.getText().isEmpty()){
+                    tf_apellido1.requestFocus();
+                }else if(tf_numtelefono.getText().isEmpty()){
+                    tf_numtelefono.requestFocus();
+                }else if(tf_direccion.getText().isEmpty()){
+                     tf_direccion.requestFocus();
+                 }
 
 
             }else{

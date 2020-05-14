@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import login.daousuario.DaoUsuario;
@@ -17,6 +19,7 @@ import perfil.dtoperfil.PerfilDto;
 import perfil.facadeperfil.PerfilFacade;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -60,6 +63,7 @@ public class ContraladorUsuario implements Initializable {
     private RadioButton cb_estado;
 
     ObservableList<PerfilDto> listaPerfiles;
+    int valor=0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,6 +74,58 @@ public class ContraladorUsuario implements Initializable {
             deshabilitarBotones();
             deshabilitarCampos();
 
+    }
+
+
+    public void validarExistente(){
+
+        tf_primerNombre.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarE();
+            }
+        });
+    }
+
+    public void validarE(){
+        if(valor==1){
+
+
+            Usuario usuario = facadeUsuario.obtenerUsuarioPorId(tf_idUsuario.getText());
+
+            if(usuario !=null){
+                int i=0;
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Tipo de título académico");
+                    msg.setContentText("El Tipo de título: " + tf_idUsuario.getText() + " se escuentra registrado ");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    tf_idUsuario.setText("");
+                    tf_primerNombre.setText("");
+                    tf_idUsuario.requestFocus();
+
+                }
+
+        }
+
+
+    }
+
+    @FXML
+    public void textAction(KeyEvent e){
+        if (valor ==0){
+
+
+            if(e.getCode().equals(KeyCode.ENTER))
+                consultarUsuario();
+        }
+    }
+
+    @FXML
+    public void textESC(KeyEvent e){
+
+        if(e.getCode().equals(KeyCode.ESCAPE))
+            cancelar();
     }
 
     @FXML
@@ -88,11 +144,69 @@ public class ContraladorUsuario implements Initializable {
         return usuario;
 
     }
+    public Boolean validarContraseña(String contraseña){
+        boolean cumple=false;
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+        if(contraseña.matches(pattern)){
+            cumple=true;
+        }else{
+            cumple=false;
+        }
+        return  cumple;
+    }
 
     @FXML
     private void guardarUsuario() {
         Usuario usuario = facadeUsuario.obtenerUsuarioPorId(tf_idUsuario.getText());
+        Boolean cumple=validarContraseña(tf_Contrasena.getText());
         if (usuario == null) {
+          if(tf_idUsuario.getText().isEmpty() || tf_primerNombre.getText().isEmpty() || tf_primerApellido.getText().isEmpty() || tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty() ){
+              Alert msg1 = new Alert(Alert.AlertType.ERROR);
+              msg1.setTitle("Gestiones - Usuario");
+              msg1.setContentText("Campos requeridos");
+              msg1.setHeaderText("Información");
+              msg1.show();
+              if(tf_idUsuario.getText().isEmpty()) {
+                  tf_idUsuario.requestFocus();
+              }else if(tf_primerNombre.getText().isEmpty()){
+                  tf_primerNombre.requestFocus();
+
+              } else if(tf_primerApellido.getText().isEmpty()){
+                  tf_primerApellido.requestFocus();
+
+              }else if(tf_Usuario.getText().isEmpty()){
+                  tf_Usuario.requestFocus();
+
+              }else if(tf_Contrasena.getText().isEmpty()){
+                  tf_Contrasena.requestFocus();
+
+              }
+
+          }else if(cmb_perfil.getSelectionModel().isEmpty()){
+              Alert msg1 = new Alert(Alert.AlertType.ERROR);
+              msg1.setTitle("Gestiones - Usuario");
+              msg1.setContentText("Debe seleccionar un perfil");
+              msg1.setHeaderText("Información");
+              msg1.show();
+              cmb_perfil.requestFocus();
+          }else if(cumple.booleanValue()==false){
+              Alert msg = new Alert(Alert.AlertType.ERROR);
+              msg.setTitle("Gestiones - Usuario");
+              msg.setContentText("La contraseña debe tener por lo menos ocho (8) caracteres\n" +
+                      "Letras minúsculas y mayúsculas al menos una vez\n" +
+                      "Un carácter especial debe aparecer al menos una vez\n" +
+                      "No se permiten espacios en blanco.");
+              msg.setHeaderText("Algo salió mal.");
+              msg.show();
+              tf_Contrasena.setText("");
+              tf_Contrasena.requestFocus();
+          }
+
+
+
+          else{
+
+
             int res = facadeUsuario.agregarUsuario(crearUsuario());
             if (res == 1) {
                 Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
@@ -108,7 +222,49 @@ public class ContraladorUsuario implements Initializable {
                 msg.setHeaderText("Algo salio mal.");
                 msg.show();
             }
+          }
         }else{
+            if( tf_primerNombre.getText().isEmpty() || tf_primerApellido.getText().isEmpty() || tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty() ){
+                Alert msg1 = new Alert(Alert.AlertType.ERROR);
+                msg1.setTitle("Gestiones - Usuario");
+                msg1.setContentText("Campos requeridos");
+                msg1.setHeaderText("Información");
+                msg1.show();
+                if(tf_primerNombre.getText().isEmpty()){
+                    tf_primerNombre.requestFocus();
+
+                } else if(tf_primerApellido.getText().isEmpty()){
+                    tf_primerApellido.requestFocus();
+
+                }else if(tf_Usuario.getText().isEmpty()){
+                    tf_Usuario.requestFocus();
+
+                }else if(tf_Contrasena.getText().isEmpty()){
+                    tf_Contrasena.requestFocus();
+
+                }
+
+            }else if(cmb_perfil.getSelectionModel().isEmpty()){
+                Alert msg1 = new Alert(Alert.AlertType.ERROR);
+                msg1.setTitle("Gestiones - Usuario");
+                msg1.setContentText("Debe seleccionar un perfil");
+                msg1.setHeaderText("Información");
+                msg1.show();
+                cmb_perfil.requestFocus();
+            }else if(cumple.booleanValue()==false){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Usuario");
+                msg.setContentText("La contraseña debe tener por lo menos ocho (8) caracteres\n" +
+                        "Letras minúsculas y mayúsculas al menos una vez\n" +
+                        "Un carácter especial debe aparecer al menos una vez\n" +
+                        "No se permiten espacios en blanco.");
+                msg.setHeaderText("Algo salió mal.");
+                msg.show();
+                tf_Contrasena.setText("");
+                tf_Contrasena.requestFocus();
+            }else{
+
+
             int res = facadeUsuario.modificarUsuario(crearUsuario());
             if (res == 1) {
                 Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
@@ -124,6 +280,8 @@ public class ContraladorUsuario implements Initializable {
                 msg.setContentText("No fue posible modificar el usuario");
                 msg.setHeaderText("Error!");
                 msg.show();
+            }
+
             }
         }
     }
@@ -163,6 +321,7 @@ public class ContraladorUsuario implements Initializable {
             tf_Usuario.setDisable(true);
             tf_Contrasena.setDisable(true);
             bt_guardar.setDisable(true);
+            valor=0;
 
         }else {
 
@@ -211,6 +370,8 @@ public class ContraladorUsuario implements Initializable {
         bt_guardar.setDisable(false);
         bt_inhabilitar.setDisable(true);
         tf_primerNombre.requestFocus();
+        bt_modificar.setDisable(true);
+        valor=0;
     }
 
     @FXML
@@ -304,6 +465,7 @@ public class ContraladorUsuario implements Initializable {
                 limpiarR();
                 habilitarCampos();
                 bt_guardar.setDisable(false);
+                valor=1;
             }
         });
     }

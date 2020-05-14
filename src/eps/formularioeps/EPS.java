@@ -108,14 +108,22 @@ public class EPS  extends Component implements Initializable {
         DtoEps dtoEps = new DtoEps(tf_Codigo.getText(), tf_Nombre.getText(), tf_Direccion.getText(), tf_Telefono.getText(), estado);
 
         if (listaEPS.isEmpty()) {
-            if (tf_Codigo.getText().isEmpty() || tf_Nombre.getText().isEmpty()) {
+            if (tf_Codigo.getText().isEmpty() || tf_Nombre.getText().isEmpty() || tf_Direccion.getText().isEmpty() || tf_Telefono.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - EPS");
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                //bt_guardar.setDisable(true);
-                tf_Codigo.requestFocus();
+                if(tf_Codigo.getText().isEmpty()){
+                    tf_Codigo.requestFocus();
+                }else if(tf_Nombre.getText().isEmpty()){
+                    tf_Nombre.requestFocus();
+                }else if(tf_Direccion.getText().isEmpty()){
+                    tf_Direccion.requestFocus();
+                }else if(tf_Telefono.getText().isEmpty()){
+
+                    tf_Telefono.requestFocus();
+                }
 
             }else{
                 int res = facadeEps.insertarEps(dtoEps);
@@ -142,14 +150,20 @@ public class EPS  extends Component implements Initializable {
             }
 
         } else{
-            if (tf_Codigo.getText().isEmpty() || tf_Nombre.getText().isEmpty()) {
+            if (tf_Nombre.getText().isEmpty() || tf_Direccion.getText().isEmpty() || tf_Telefono.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - EPS");
-                msg.setContentText("Nombre es un campo requerido");
+                msg.setContentText("Campos requerido");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                tf_Codigo.requestFocus();
+                if(tf_Nombre.getText().isEmpty()){
+                    tf_Nombre.requestFocus();
+                }else if(tf_Direccion.getText().isEmpty()){
+                    tf_Direccion.requestFocus();
+                }else if(tf_Telefono.getText().isEmpty()){
 
+                    tf_Telefono.requestFocus();
+                }
 
 
         }else{

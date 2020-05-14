@@ -1,9 +1,9 @@
 package perfil.dao;
 
-import cargo.dto.Cargo;
+
 import conexionBD.ConexionRoot;
 import perfil.dtoperfil.PerfilDto;
-import tipoTituloAcademico.dto.TtAcademico;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +24,7 @@ public class PerfilDAO {
     public List<PerfilDto> obtenerTodos() {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from perfil where estado = 1";
+            String sql = "select * from perfil";
             stmt = conn.prepareStatement(sql);
             rset = stmt.executeQuery();
 
@@ -35,6 +35,7 @@ public class PerfilDAO {
 
                 perfilDto.setIdperfil(rset.getString("idperfil"));
                 perfilDto.setNombre(rset.getString("nombre"));
+                perfilDto.setEstado(rset.getBoolean("estado"));
                 perfiles.add(perfilDto);
             }
 
@@ -167,6 +168,7 @@ public class PerfilDAO {
                 perfilDto = new PerfilDto();
                 perfilDto.setIdperfil(rset.getString("idperfil"));
                 perfilDto.setNombre(rset.getString("nombre"));
+                perfilDto.setEstado(rset.getBoolean("estado"));
             }
 
         } catch (SQLException e) {

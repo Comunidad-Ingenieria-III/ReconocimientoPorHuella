@@ -285,7 +285,18 @@ public class ControladorInstitucionAcademica extends Component implements Initia
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                txtCodigo.requestFocus();
+
+                if(txtCodigo.getText().isEmpty()){
+                    txtCodigo.requestFocus();
+                } else if(txtNombre.getText().isEmpty()){
+                    txtNombre.requestFocus();
+                } else if(txtDireccion.getText().isEmpty()){
+                    txtDireccion.requestFocus();
+                } else if(txtTelefono.getText().isEmpty()){
+                    txtTelefono.requestFocus();
+
+                }
+
             } else {
 
                 int res = facade.agregar(institucionAcademica);
@@ -314,13 +325,19 @@ public class ControladorInstitucionAcademica extends Component implements Initia
             }
         } else {
 
-            if (txtCodigo.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+            if (txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Institución cadémica");
                 msg.setContentText("campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                txtCodigo.requestFocus();
+                if(txtNombre.getText().isEmpty()){
+                    txtNombre.requestFocus();
+                } else if(txtDireccion.getText().isEmpty()){
+                    txtDireccion.requestFocus();
+                } else if(txtTelefono.getText().isEmpty()){
+                    txtTelefono.requestFocus();
+                }
 
             } else {
 
