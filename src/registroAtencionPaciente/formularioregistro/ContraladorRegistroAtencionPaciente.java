@@ -101,8 +101,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     private TextArea ta_observaciones;
     @FXML
     private TextArea ta_huella;
-    @FXML
-    private Button bt_buscardatos;
+
 
     //=========Segundo Ficha del TabPane==========
     @FXML
@@ -629,13 +628,12 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         Date fechaRecepcionPaciente = Date.valueOf(dp_fechaRecepcionPaciente.getValue());
         Date horaRecepcionPaciente = Date.valueOf(dp_horaRecepcionPaciente.getValue());
         String codigoRemisionPR = cbx_codigoRemision.getSelectionModel().getSelectedItem().getCodigoRemision();
-        String observaciones = ta_observaciones.getText();
+        String observaciones = ta_observacionesPr.getText();
 
         DocumentoEntregaDto documentoEntregaDto = new DocumentoEntregaDto(tipoDocumento, idPersonaRecibe, nombre1, nombre2, apellido1, apellido2, idCargo,
                 fechaRecepcionPaciente, horaRecepcionPaciente, codigoRemisionPR, observaciones, estado);
         return documentoEntregaDto;
     }
-
 
     @FXML
     public void buscarRegistros() {

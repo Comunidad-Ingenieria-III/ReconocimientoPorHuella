@@ -207,8 +207,13 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                     msg.setContentText("Campos requeridos");
                     msg.setHeaderText("Resultado");
                     msg.show();
-                    //bt_guardar.setDisable(true);
-                    tf_Tipo.requestFocus();
+                    if(tf_Tipo.getText().isEmpty()){
+                        tf_Tipo.requestFocus();
+                    } else if(tf_nombre1.getText().isEmpty()){
+                        tf_nombre1.requestFocus();
+
+                    }
+
                     } else {
 
                             int res = facade.agregar(ttAcademico);
@@ -236,10 +241,10 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                     }
             } else {
 
-                if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
+                if (tf_nombre1.getText().isEmpty()) {
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Tipo de título académico");
-                    msg.setContentText("Nombre es un campo requerido");
+                    msg.setContentText("Campos requeridos");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     tf_nombre1.requestFocus();

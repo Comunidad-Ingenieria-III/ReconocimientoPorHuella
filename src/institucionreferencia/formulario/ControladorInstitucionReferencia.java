@@ -210,6 +210,8 @@ public class ControladorInstitucionReferencia extends Component implements Initi
             cancelar();
     }
 
+
+
     @FXML
     private void botonGuardar() {
         institucionesReferencias = facadeInstitucionReferencia.buscar(txtId.getText());
@@ -223,7 +225,18 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         if (institucionesReferencias.isEmpty()) {
             if (txtId.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
                 alerta();
-                txtId.requestFocus();
+                if(txtId.getText().isEmpty()){
+                    txtId.requestFocus();
+                }else if(txtNombre.getText().isEmpty()){
+                    txtNombre.requestFocus();
+
+                }else if(txtDireccion.getText().isEmpty()){
+                    txtDireccion.requestFocus();
+
+                }else if(txtTelefono.getText().isEmpty()){
+                    txtTelefono.requestFocus();
+
+                }
 
             } else {
 
@@ -251,13 +264,18 @@ public class ControladorInstitucionReferencia extends Component implements Initi
             }
 
             } else{
-                if (txtId.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
-                    msg.setTitle("Gestiones - Institución Referencia");
-                    msg.setContentText("campos requeridos");
-                    msg.setHeaderText("Resultado");
-                    msg.show();
-                    txtId.requestFocus();
+                if (txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
+                    alerta();
+                    if(txtNombre.getText().isEmpty()){
+                        txtNombre.requestFocus();
+
+                    }else if(txtDireccion.getText().isEmpty()){
+                        txtDireccion.requestFocus();
+
+                    }else if(txtTelefono.getText().isEmpty()){
+                        txtTelefono.requestFocus();
+
+                    }
 
                 } else {
 

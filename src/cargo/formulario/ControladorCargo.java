@@ -141,10 +141,6 @@ public class ControladorCargo extends Component implements Initializable {
 
     }
 
-
-
-
-
     public void validar(){//Metodo para validar que el Id del cargo solo sean numeros
         txtId.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
@@ -160,21 +156,6 @@ public class ControladorCargo extends Component implements Initializable {
         });
     }
 
-
-
-
-
-    /* Metodo desconocido
-        Cargo cargo = new Cargo(
-                txtId.getText(),
-                txtDescripcion.getText(),
-                estado.isSelected()
-      //  );
-      */
-
-
-
-
     @FXML
     public void guardarCargo() {
         listaCargos=facadeCargo.buscar(txtId.getText());
@@ -186,7 +167,13 @@ public class ControladorCargo extends Component implements Initializable {
                 msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
-                txtId.requestFocus();
+
+                if(txtId.getText().isEmpty()){
+                    txtId.requestFocus();
+                }else if(txtDescripcion.getText().isEmpty()){
+                    txtDescripcion.requestFocus();
+                }
+
             } else {
 
                 int res = facadeCargo.agregar(cargo);
@@ -197,7 +184,7 @@ public class ControladorCargo extends Component implements Initializable {
                     msg.setContentText("El cargo se ha agregado");
                     msg.setHeaderText("Resultado");
                     msg.show();
-
+                    cancelar();
                 } else {
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
@@ -214,7 +201,7 @@ public class ControladorCargo extends Component implements Initializable {
             if (txtId.getText().isEmpty() || txtDescripcion.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Tipo de título académico");
-                msg.setContentText("Nombre es un campo requerido");
+                msg.setContentText("Campos requeridos");
                 msg.setHeaderText("Resultado");
                 msg.show();
                 txtDescripcion.requestFocus();

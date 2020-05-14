@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <top>
           <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1300.0" styleClass="panel_login" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
               <font>
@@ -209,7 +208,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="bt_inhabilitar" layoutX="567.0" layoutY="219.0" mnemonicParsing="false" onAction="#eliminarFamiliar" prefHeight="20.0" prefWidth="80.0" text="Eliminar" textFill="WHITE">
+                <Button fx:id="bt_inhabilitar" layoutX="567.0" layoutY="219.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="20.0" prefWidth="80.0" text="Eliminar" textFill="WHITE">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
