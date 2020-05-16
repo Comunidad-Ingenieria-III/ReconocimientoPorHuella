@@ -1,6 +1,5 @@
 package login.formulariousuario;
 
-import conexionBD.ConexionRoot;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import login.daousuario.DaoUsuario;
 import login.dtousuario.Usuario;
+import login.facadeusuario.FacadeUsuario;
 
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
 
     DaoUsuario daoUsuario = new DaoUsuario();
     Usuario usuario = new Usuario();
-
+    FacadeUsuario facadeUsuario = new FacadeUsuario();
 
     private Connection conn;
     private PreparedStatement stmt;
@@ -114,56 +114,46 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
 
     }
 
+
     @FXML
-    private void iniciarSesion() throws IOException {
+    public void validarCredenciales() throws IOException {
 
-        try {
-            conn = ConexionRoot.getConexion();
-            String sql = "select * from usuario where username = '" + tf_Usuario.getText().trim() + "' and contrasena = '"
-                    + tf_Contrasena.getText().trim() + "' ";
-            stmt = conn.prepareStatement(sql);
-            rset = stmt.executeQuery();
+        Usuario usuario = facadeUsuario.validarUsuario(tf_Usuario.getText(),tf_Contrasena.getText());
 
-            if (rset.next()) {
-                Stage stage = new Stage();
-                Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
-                Scene scene = new Scene(formulario_principal, 1200, 650);
-                stage.setResizable(false);
-                //stage.setMaximized(false);
-                stage.centerOnScreen();
-                stage.getIcons().add(new Image("estrella_vida.jpg"));
-                stage.setTitle("AP_Humana Menú Principal");
-                stage.getIcons().add(new Image("estrella_vida.jpg"));
+        if (usuario.getUsername().equals(tf_Usuario.getText()) && usuario.getContrasena().equals(tf_Contrasena.getText())){
 
-                stage.setScene(scene);
-                stage.show();
-               // ((Node) (event.getSource())).getScene().getWindow().hide();
+            Stage stage = new Stage();
+            Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
+            Scene scene = new Scene(formulario_principal, 1200, 650);
+            stage.setResizable(false);
+            stage.centerOnScreen();
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            stage.setTitle("AP_Humana Menú Principal");
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            stage.setScene(scene);
+            stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent e) {
+                    Platform.exit();
+                    System.exit(0);
+                }
+            });
 
-                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                    @Override
-                    public void handle(WindowEvent e) {
-                        Platform.exit();
-                        System.exit(0);
-                    }
-                });
-                this.cerrarLogin();
-
-                //ocultar la ventana de Login
-             //   ((Node) (event.getSource())).getScene().getWindow().hide();
-            } else {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("AP_Humana - Ingreso al Sistema");
-                msg.setContentText("Usuario Y/O Contraseña Incorrecta.");
-                msg.setHeaderText("Verifica tus Datos");
-                msg.show();
-                limpiar();
-            }
-
-        } catch (RuntimeException |
-                SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
+            this.cerrarLogin();
+        } else {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("AP_Humana - Ingreso al Sistema");
+            msg.setContentText("Usuario Y/O contraseña incorrecta.");
+            msg.setHeaderText("Verifica tus datos");
+            msg.show();
         }
+
+
+
     }
+
+
 
 
     @FXML
@@ -177,7 +167,7 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
     public void textAction(KeyEvent e) throws IOException {
 
         if(e.getCode().equals(KeyCode.ENTER)) {
-            iniciarSesion();
+            validarCredenciales();
 
         }
     }
@@ -200,10 +190,6 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //ocultar la ventana de Login
-        //((Node) (event.getSource())).getScene().getWindow().hide();
-
     }
 
 

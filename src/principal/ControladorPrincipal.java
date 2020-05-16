@@ -4,24 +4,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import login.formulariousuario.ControladorLogin;
+import login.dtousuario.Usuario;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.ResourceBundle;
 
-public class ControladorPrincipal implements Initializable {
+public class ControladorPrincipal implements Initializable{
 
     @FXML
     private AnchorPane FormularioPrincipal;
@@ -87,12 +86,15 @@ public class ControladorPrincipal implements Initializable {
     private MenuItem mi_perfil;
     @FXML
     private MenuItem mi_usario;
+    @FXML
+    private Menu mnuGestiones;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
 
     @FXML
     private void abrirPerfil(ActionEvent event) throws IOException {
@@ -137,6 +139,8 @@ public class ControladorPrincipal implements Initializable {
 
     @FXML
     private void abrirTipoDocumento(ActionEvent event) throws IOException {
+
+
         try {
             Parent formulario_tipo_documento;
             formulario_tipo_documento = FXMLLoader.load(getClass().getClassLoader().getResource("tipodocumento/formulariotipodocumento/FormularioTipoDocumento.fxml"));
@@ -550,6 +554,7 @@ public class ControladorPrincipal implements Initializable {
         System.exit(0);
 
     }
+
 
 }
 

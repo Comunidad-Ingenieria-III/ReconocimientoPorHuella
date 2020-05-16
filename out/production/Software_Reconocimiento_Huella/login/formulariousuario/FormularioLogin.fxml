@@ -32,7 +32,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnEntrar" layoutX="111.0" layoutY="265.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="37.0" prefWidth="157.0" text="Iniciar" textFill="#f8f7f7">
+            <Button fx:id="btnEntrar" layoutX="111.0" layoutY="265.0" mnemonicParsing="false" onAction="#validarCredenciales" prefHeight="37.0" prefWidth="157.0" text="Iniciar" textFill="#f8f7f7">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>

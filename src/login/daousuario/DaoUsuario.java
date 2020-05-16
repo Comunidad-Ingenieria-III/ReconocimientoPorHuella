@@ -4,6 +4,7 @@ import conexionBD.ConexionRoot;
 import javafx.collections.ObservableList;
 import login.dtousuario.Usuario;
 import perfil.dtoperfil.PerfilDto;
+import perfil.facadeperfil.PerfilFacade;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -14,13 +15,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoUsuario {
-
+    PerfilFacade perfilFacade = new PerfilFacade();
     private Usuario user = new Usuario();
     private List<Usuario> usuarios;
 
     private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rset;
+
+
+    public Usuario validarIngreso(String usuario, String contrasena){
+
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select * from usuario where username = ? and contrasena = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, usuario);
+            stmt.setString(2, contrasena);
+            rset = stmt.executeQuery();
+
+            if (rset.next()){
+                user.setIdUsuario(rset.getString("idUsuario"));
+                user.setPrimerNombre(rset.getString("primerNombre"));
+                user.setSegundoNombre(rset.getString("segundoNombre"));
+                user.setPrimerNombre(rset.getString("primerApellido"));
+                user.setSegundoApellido(rset.getString("segundoApellido"));
+                user.setUsername(rset.getString("username"));
+                user.setContrasena(rset.getString("contrasena"));
+                user.setIdperfil(rset.getString("idperfil"));
+                user.setEstado(rset.getBoolean("estado"));
+
+                user.setPerfil(perfilFacade.obtenerPorId(user.getIdperfil()));
+            }
+
+        } catch (SQLException | RuntimeException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+
 
     public List<Usuario> obtenerTodosLosUsuarios() {
         try {
@@ -53,33 +87,6 @@ public class DaoUsuario {
         return usuarios;
     }//Fin del metodo obtenerTodos
 
-    public List<Usuario>buscarUsuario(String buscar) {
-        try {
-            conn = ConexionRoot.getConexion();
-            String sql = "select * from usuario where idUsuario LIKE ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, buscar);
-            rset = stmt.executeQuery();
-
-            usuarios = new ArrayList<>();
-            while (rset.next()) {
-                user.setIdUsuario(rset.getString("idUsuario"));
-                user.setPrimerNombre(rset.getString("primerNombre"));
-                user.setSegundoNombre(rset.getString("segundoNombre"));
-                user.setPrimerApellido(rset.getString("primerApellido"));
-                user.setSegundoApellido(rset.getString("segundoApellido"));
-                user.setUsername(rset.getString("username"));
-                user.setContrasena(rset.getString("contrasena"));
-                user.setIdperfil(rset.getString("idperfil"));
-                user.setEstado(rset.getBoolean("estado"));
-
-                usuarios.add(user);
-            }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - BucarPerfil()!");
-        }
-        return usuarios;
-    }
 
 
     public int agregarUsuario(Usuario usuario) throws RuntimeException {

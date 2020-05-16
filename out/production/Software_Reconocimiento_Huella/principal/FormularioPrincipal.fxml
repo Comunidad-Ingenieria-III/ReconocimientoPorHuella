@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
+<BorderPane prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
    <top>
       <MenuBar prefHeight="50.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
         <menus>
-            <Menu mnemonicParsing="false" text="Gestiones">
+            <Menu fx:id="mnuGestiones" mnemonicParsing="false" text="Gestiones">
               <items>
                 <MenuItem fx:id="mi_tipo_documeto" mnemonicParsing="false" onAction="#abrirTipoDocumento" text="Tipo Documento" />
                   <SeparatorMenuItem mnemonicParsing="false" />

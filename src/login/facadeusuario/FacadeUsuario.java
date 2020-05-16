@@ -10,6 +10,10 @@ public class FacadeUsuario {
 
     private DaoUsuario daousuario = new DaoUsuario();
 
+    public Usuario validarUsuario(String user, String contrasena){
+        return daousuario.validarIngreso(user,contrasena);
+    }
+
     public List<Usuario> obtenerUsuarios() {
         return daousuario.obtenerTodosLosUsuarios();
     }
@@ -30,8 +34,5 @@ public class FacadeUsuario {
         return daousuario.buscarPorIdUsuario(idUsuario);
     }
 
-    public List<Usuario> buscarUsurio(String buscarusuario){
-        return daousuario.buscarUsuario(buscarusuario);
-    }
 
 }
