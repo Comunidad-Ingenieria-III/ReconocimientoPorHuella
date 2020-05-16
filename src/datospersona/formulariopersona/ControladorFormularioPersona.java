@@ -718,11 +718,20 @@ public class ControladorFormularioPersona implements Initializable {
                 ta_enfermedadSufre.setText(persona.getEnfermedadSufre());
                 ta_observaciones.setText(persona.getObservaciones());
                 cbxtipoeps.setValue(facadeEps.obtenerPorId(persona.getIdEps()));
-
-                familiares = FXCollections.observableArrayList(busqueda.getListafamiliar());
                 cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
-                cbx_documentopersona.setDisable(true);
+
+                ObservableList<Per_Fami_Dto>familiaresActivos;//Lista para recibir los familiares desde la BBDD
+                familiaresActivos= FXCollections.observableArrayList(busqueda.getListafamiliar());
+
+                for (int i = 0; i<familiaresActivos.size(); i++){//Ciclo para recorrer la lista de objetos de personal_familiar, para agregar a la lista que estara
+                    //enlazada con tb_familiar solamente los se encuentres en estado activo.
+                    if(familiaresActivos.get(i).isEstado()){
+                       familiares.add(familiaresActivos.get(i));
+                    }
+                }
                 tb_familiar.setItems(familiares);
+
+                cbx_documentopersona.setDisable(true);
                 initializeTableColumn();
                 bt_consultar.setDisable(true);
                 bt_crear.setDisable(true);
@@ -1057,36 +1066,38 @@ public class ControladorFormularioPersona implements Initializable {
             DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
             String convertido = fechaHora.format(per_fami_dto.getFechaIngreso());//Formatear una fecha Date a String
 
-            if (per_fami_dto.getFechaIngreso().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Fecha Ingreso - Familiar");
-                msg.setContentText("Debe Ingresar Una Fecha Valida: \n" + "La Fecha: " + convertido + " Es Superior A La Fecha De Hoy");
-                msg.show();
-                dp_ingresofamiliar.requestFocus();
-            } else {
-                per_fami_facade.agregar(per_fami_dto);
-                familiares.add(per_fami_dto);
-                Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
-                msg.setTitle("Fecha Ingreso - Familiar");
-                msg.setContentText("La fecha de Ingreso del Familiar ha sido agregada correctamente");
-                msg.setHeaderText("Información");
-                msg.show();
+
+        if (per_fami_dto.getFechaIngreso().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Fecha Ingreso - Familiar");
+            msg.setContentText("Debe ingresar una fecha valida: \n" + "La fecha: " + convertido + " es superior a la fecha de hoy");
+            msg.show();
+            dp_ingresofamiliar.requestFocus();
+        } else {
+            per_fami_facade.agregar(per_fami_dto);
+            familiares.add(per_fami_dto);
+            Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+            msg.setTitle("Fecha Ingreso - Familiar");
+            msg.setContentText("Se ha registrado el familiar");
+            msg.setHeaderText("Información");
+            msg.show();
 
 
-                if (familiares.isEmpty()) {
-                    boolean res = buscarDocumento(per_fami_dto.getIdPersona());
-                    if (res) {
-                        per_fami_facade.agregar(per_fami_dto);
-                        familiares.add(per_fami_dto);
-                        //limpiarComponentes();
-                    } else {
-                        Alert msge = new Alert(Alert.AlertType.ERROR);
-                        msge.setTitle("Gestiones - Persona");
-                        msge.setContentText("El Documento Nro. " + per_fami_dto.getIdPersona() + " No Se Encuentra Registrado!\n" +
-                                "Debe Registrarlo Para Poder Asignarle Familiar");
-                        msge.show();
+            if (familiares.isEmpty()) {
+                boolean res = buscarDocumento(per_fami_dto.getIdPersona());
+                if (res) {
+                    per_fami_facade.agregar(per_fami_dto);
+                    familiares.add(per_fami_dto);
+                    //limpiarComponentes();
+                } else {
+                    Alert msge = new Alert(Alert.AlertType.ERROR);
+                    msge.setTitle("Gestiones - Persona");
+                    msge.setContentText("El documento Nro. " + per_fami_dto.getIdPersona() + " no se encuentra registrado!\n" +
+                            "Debe registrarlo para poder asignarle familiar");
+                    msge.show();
 
-                    }
+                }
+           
                 } else {
                     boolean resultado = recorrerTablaTitulos(familiares, per_fami_dto);
                     if (resultado) {
@@ -1120,7 +1131,7 @@ public class ControladorFormularioPersona implements Initializable {
         if (per_fami_dto.getFechaIngreso().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Persona");
-            msg.setContentText("Debe Ingresar Una Fecha Valida: \n" + "La Fecha: " + convertido + " Es Superior A La Fecha De Hoy");
+            msg.setContentText("Debe ingresar una fecha valida: \n" + "La fecha: " + convertido + " es superior a la fecha de hoy");
             msg.show();
             dp_ingresofamiliar.requestFocus();
         } else {
@@ -1128,7 +1139,7 @@ public class ControladorFormularioPersona implements Initializable {
             if (resultado) {
                 Alert msg = new Alert(Alert.AlertType.ERROR);
                 msg.setTitle("Gestiones - Persona");
-                msg.setContentText("El Registro Ya Existe ");
+                msg.setContentText("El registro ya existe ");
                 msg.show();
             } else {
                 per_fami_facade.modificar(per_fami_dto);

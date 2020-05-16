@@ -237,7 +237,6 @@ public class ControladorPersonalSalud implements Initializable {
                      if (res) {
                          personalSaludFacade.agregarPsdto(psDto);
                          titulos.add(psDto);
-                         //colIdIntitucion.setCellValueFactory(new PropertyValueFactory<>(cbx_idinstitucion.getSelectionModel().getSelectedItem().getNombre()));
                          limpiarComponentes();
                      }
 
@@ -582,15 +581,26 @@ public class ControladorPersonalSalud implements Initializable {
                     tf_numerodocumento.setDisable(true);
                     cbx_idpersona.setDisable(true);
 
-                    titulos = FXCollections.observableArrayList(busqueda.getListaTitulos());
+                    ObservableList<PsDto> titulosActivos;//Lista para recibir los titulos desde la BBDD
+                    titulosActivos = FXCollections.observableArrayList(busqueda.getListaTitulos());
+
                     cbx_idpersona.setValue(personalSaludFacade.buscarPorIdPersonal(tf_numerodocumento.getText()));
 
-                    for (int i = 0; i < titulos.size(); i++) {
-                        if (!titulos.get(i).isEstado())//Ciclo para recorrer la lista de objetos de personal-salud-titulo, y eliminar los registros que tengan
-                            //el estado inactivo en la BBDD
-                            titulos.remove(i);//si el estado esta inactivo, se elimina de la lista
+                    for (int i = 0; i < titulosActivos.size(); i++) {
+                        if (titulosActivos.get(i).isEstado())//Ciclo para recorrer la lista de objetos de personal-salud-titulo, para agregar a la lista que estara
+                            //enlazada con ltb_personal solamente los que se encuentren en estado activo.
+                            titulos.add(titulosActivos.get(i));
                     }
+
                     tb_personal.setItems(titulos);
+
+                    if (titulos.isEmpty()){
+                        Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                        msg.setTitle("Gestiones - Personal Salud");
+                        msg.setContentText("Esta persona no tiene titulos asignados o se encuentran inactivos.");
+                        msg.setHeaderText("Información.");
+                        msg.show();
+                    }
 
                     initializeTableColumn();
                     bt_consultar.setDisable(true);

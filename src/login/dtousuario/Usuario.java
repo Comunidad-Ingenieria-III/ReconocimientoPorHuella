@@ -1,6 +1,7 @@
 package login.dtousuario;
 
 import javafx.beans.property.*;
+import perfil.dtoperfil.PerfilDto;
 
 public class Usuario {
 
@@ -13,6 +14,7 @@ public class Usuario {
     private SimpleStringProperty contrasena = new SimpleStringProperty();
     private SimpleStringProperty idperfil = new SimpleStringProperty();
     private SimpleBooleanProperty estado = new SimpleBooleanProperty();
+    private PerfilDto perfil;
 
     public Usuario(String username, String contrasena) {
         this.username.set(username);
@@ -142,6 +144,14 @@ public class Usuario {
 
     public void setEstado(boolean estado) {
         this.estado.set(estado);
+    }
+
+    public PerfilDto getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(PerfilDto perfil) {
+        this.perfil = perfil;
     }
 
     @Override
