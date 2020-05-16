@@ -5,13 +5,15 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.sql.Time;
 import java.util.Date;
+
 
 
 public class RegistroDto {
 
     private Date fechaAtencionPaciente;
-    private Date horaAtencionPaciente;
+    private Time horaAtencionPaciente;
     private StringProperty condicionPaciente = new SimpleStringProperty();
     private StringProperty glasgow = new SimpleStringProperty();
     private StringProperty signosVitales = new SimpleStringProperty();
@@ -27,12 +29,12 @@ public class RegistroDto {
     private BooleanProperty estado = new SimpleBooleanProperty();
 
     public RegistroDto() {
-        this(new Date(new java.util.Date().getTime()), new Date(new java.util.Date().getTime()), "", "",
+        this(new Date(new java.util.Date().getTime()), new Time(new java.util.Date().getTime()), "", "",
                 "", "", "", "", "", "", "", "", "", "",
                 false);
     }
 
-    public RegistroDto(Date fechaAtencionPaciente, Date horaAtencionPaciente, String condicionPaciente, String glasgow, String signosVitales,
+    public RegistroDto(Date fechaAtencionPaciente, Time horaAtencionPaciente, String condicionPaciente, String glasgow, String signosVitales,
                        String lugarAccidente, String idMedicamento, String dosis, String idPersonal, String idInstiRefe,
                        String codigoRemision, String idpersona, String nombrePaciente, String apellidoPaciente,
                        boolean estado) {
@@ -61,11 +63,11 @@ public class RegistroDto {
         this.fechaAtencionPaciente = fechaAtencionPaciente;
     }
 
-    public Date getHoraAtencionPaciente() {
+    public Time getHoraAtencionPaciente() {
         return horaAtencionPaciente;
     }
 
-    public void setHoraAtencionPaciente(Date horaAtencionPaciente) {
+    public void setHoraAtencionPaciente(Time horaAtencionPaciente) {
         this.horaAtencionPaciente = horaAtencionPaciente;
     }
 

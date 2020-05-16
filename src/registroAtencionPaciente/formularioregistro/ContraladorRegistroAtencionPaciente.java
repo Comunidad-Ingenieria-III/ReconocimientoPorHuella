@@ -16,11 +16,19 @@ import datospersona.dto.Persona;
 import eps.dto.DtoEps;
 import institucionreferencia.dto.InstitucionReferencia;
 import institucionreferencia.facade.FacadeInstitucionReferencia;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,7 +37,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import medicamento.dto.Medicamento;
 import medicamento.facade.FacadeMedicamento;
 import personalSalud.personalsaluddto.PersonalSalud;
@@ -38,6 +48,7 @@ import documento_entrega.documentoentregadto.DocumentoEntregaDto;
 import documento_entrega.documentoentregafacade.DocumentoEntregaFacade;
 import registroAtencionPaciente.dtoregistro.RegistroDto;
 import registroAtencionPaciente.facaderegistro.RegistroFacade;
+import sun.util.calendar.LocalGregorianCalendar;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
@@ -46,10 +57,14 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -71,11 +86,13 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     private final boolean estado = true;
 
     @FXML
-    private TabPane tp_datosPaciente;
+    private TabPane registroPacientes;
     @FXML
-    private TabPane tp_atencionPaciente;
+    private Tab tp_datosPaciente;
     @FXML
-    private TabPane tp_datosReferencia;
+    private Tab tp_atencionPaciente;
+    @FXML
+    private Tab tp_datosReferencia;
 
     //=========Primera Ficha del TabPane============
 
@@ -105,9 +122,9 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     //=========Segundo Ficha del TabPane==========
     @FXML
-    private DatePicker dp_fechaAtencionPaciente;
+    private TextField tf_fechaAtencionPaciente;
     @FXML
-    private DatePicker dp_horaAtencionPaciente;
+    private TextField tf_horaAtencionPaciente;
     @FXML
     private ComboBox<String> cbx_estadoPaciente;
     @FXML
@@ -151,9 +168,9 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private ComboBox<Cargo> cbx_idCargo;
     @FXML
-    private DatePicker dp_fechaRecepcionPaciente;
+    private TextField tf_fechaRecepcionPaciente;
     @FXML
-    private DatePicker dp_horaRecepcionPaciente;
+    private TextField tf_horaRecepcionPaciente;
     @FXML
     private ComboBox<RegistroDto> cbx_codigoRemision;
     @FXML
@@ -180,6 +197,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private Button bt_anterior;
 
+    private int valor = 1;
+
 
     //Varible que permite iniciar el dispositivo de lector de huella conectado
     // con sus distintos metodos.
@@ -197,15 +216,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     // necesarias de la huella si no ha ocurrido ningun problema
     private DPFPTemplate template;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
-        dp_fechaRecepcionPaciente.setValue(LocalDate.now());
-        dp_fechaAtencionPaciente.setValue(LocalDate.now());
-        dp_horaAtencionPaciente.setValue(LocalDate.now());
-        dp_horaRecepcionPaciente.setValue(LocalDate.now());
 
         start();
         Iniciar();
@@ -220,18 +232,56 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         iniciarCbxRemision();
         buscarR();
         //metodoFechaHora();
+        horaAtencion();
+        fechaAtencion();
+
+    }
+
+    private void horaAtencion() {
+
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            tf_horaAtencionPaciente.setText(LocalDateTime.now().format(formatter));
+            tf_horaRecepcionPaciente.setText(LocalDateTime.now().format(formatter));
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
+    }
+
+    private void fechaAtencion() {
+
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            tf_fechaAtencionPaciente.setText(LocalDateTime.now().format(formatter));
+            tf_fechaRecepcionPaciente.setText(LocalDateTime.now().format(formatter));
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 
     @FXML
     public void metodoFechaHora() {
 
-        Calendar fecha = Calendar.getInstance();
-        int hora = fecha.get(Calendar.HOUR_OF_DAY);
-        int minuto = fecha.get(Calendar.MINUTE);
-        dp_horaAtencionPaciente.getValue().atTime(hora, minuto);
+        Thread clock = new Thread(() -> {
+            while (true) {
+                //SimpleDateFormat simpli = new SimpleDateFormat("HH:mm:ss");
+                Calendar cal = Calendar.getInstance();
+                int second = cal.get(Calendar.SECOND);
+                int minute = cal.get(Calendar.MINUTE);
+                int hour = cal.get(Calendar.HOUR);
 
+                Platform.runLater(() -> {
+                    tf_horaRecepcionPaciente.setText(hour + ":" + (minute) + ":" + second);
+                });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    //...
+                }
+            }
+        });
+        clock.start();
     }
-
 
     protected void Iniciar() {
         Lector.addDataListener(new DPFPDataAdapter() {
@@ -467,8 +517,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     @FXML
     private RegistroDto crearRegistro() {
-        Date fechaAtencionPaciente = Date.valueOf(dp_fechaAtencionPaciente.getValue());
-        Date horaAtencionPaciente = Date.valueOf(dp_horaAtencionPaciente.getValue());
+        Date fechaAtencionPaciente = Date.valueOf(tf_fechaAtencionPaciente.getText());//Date.valueOf(dp_fechaAtencionPaciente.getValue());
+        Time horaAtencionPaciente = Time.valueOf(tf_horaAtencionPaciente.getText());//Date.valueOf(dp_horaAtencionPaciente.getValue());
         String condicionPaciente = cbx_estadoPaciente.getValue();
         String glasgow = cbx_gasglowPaciente.getValue();
         String signosVitales = cbx_signosVitalesPaciente.getValue();
@@ -559,7 +609,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
             alert.setTitle("Gestiones - Registro Atención Paciente");
             alert.setHeaderText("Esta seguro de guardar el registro");
-            alert.setContentText("No tiene vuelta atras");
+            alert.setContentText("Este no puede ser modificado después de guardarlo");
             Optional<ButtonType> action = alert.showAndWait();
 
             if (action.get() == ButtonType.YES) {
@@ -625,8 +675,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         String apellido1 = tf_primerApellidoRecibe.getText();
         String apellido2 = tf_segundoApellidoRecibe.getText();
         String idCargo = cbx_idCargo.getSelectionModel().getSelectedItem().getIdCargo();
-        Date fechaRecepcionPaciente = Date.valueOf(dp_fechaRecepcionPaciente.getValue());
-        Date horaRecepcionPaciente = Date.valueOf(dp_horaRecepcionPaciente.getValue());
+        Date fechaRecepcionPaciente = Date.valueOf(tf_fechaRecepcionPaciente.getText());
+        Time horaRecepcionPaciente = Time.valueOf(tf_horaRecepcionPaciente.getText());
         String codigoRemisionPR = cbx_codigoRemision.getSelectionModel().getSelectedItem().getCodigoRemision();
         String observaciones = ta_observacionesPr.getText();
 
@@ -688,6 +738,45 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 }
             }
         });
+    }
+
+    @FXML
+    public boolean buscarDocumento(String codigoRemision) {//Metodo que valida si el número de documento que se esta ingresando esxiste en la BBDD
+        boolean documento = registroFacade.buscarPrimaryKeyCodigoRemision(codigoRemision);
+        boolean resultado;
+        if (documento) {
+            resultado = true;
+        } else {
+            resultado = false;
+
+        }
+        return resultado;
+    }
+
+    public void validarExistente() {
+
+        tf_codigoRemision.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                validarE();
+            }
+        });
+    }
+
+    public void validarE() {
+        if (valor == 1) {
+
+            boolean busqueda = buscarDocumento(tf_codigoRemision.getText());
+            if (busqueda) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Atención Paciente");
+                msg.setContentText("Ya existe un paciente con código de remisión Nro:\n" + tf_codigoRemision.getText() + " Asignado");
+                msg.setHeaderText("Información.");
+                msg.show();
+                tf_codigoRemision.setText("");
+                tf_codigoRemision.requestFocus();
+            }
+        }
     }
 
     @FXML
@@ -839,6 +928,22 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     }*/
 
+    @FXML
+    public void abrirtab2() throws IOException {
+
+        bt_siguiente.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                tp_datosReferencia.setOnSelectionChanged(new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+
+                    }
+                });
+            }
+        });
+    }
 
     @FXML
     private void setCerrarFormularioRegistroAtencion() {
@@ -846,4 +951,5 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         stage.close();
     }
 }
+
 

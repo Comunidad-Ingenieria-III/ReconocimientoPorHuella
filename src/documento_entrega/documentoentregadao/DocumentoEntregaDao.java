@@ -2,6 +2,7 @@ package documento_entrega.documentoentregadao;
 
 import conexionBD.ConexionRoot;
 import documento_entrega.documentoentregadto.DocumentoEntregaDto;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,7 +40,7 @@ public class DocumentoEntregaDao {
                 documentoEntregaDto.setApellido2(rset.getString("apellido2"));
                 documentoEntregaDto.setIdCargo(rset.getString("idCargo"));
                 documentoEntregaDto.setFechaRecepcionPaciente(rset.getDate("fechaRecepcionPaciente"));
-                documentoEntregaDto.setHoraRecepcionPaciente(rset.getDate("horaRecepcionPaciente"));
+                documentoEntregaDto.setHoraRecepcionPaciente(rset.getTime("horaRecepcionPaciente"));
                 documentoEntregaDto.setCodigoRemision(rset.getString("codigoRemision"));
                 documentoEntregaDto.setObsevaciones(rset.getString("observacion"));
                 documentoEntregaDto.setEstado(rset.getBoolean("estado"));
@@ -48,8 +49,12 @@ public class DocumentoEntregaDao {
                 listaPersonal.add(documentoEntregaDto);
             }
 
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerTodos()!");
+        } catch (RuntimeException | SQLException ex) {
+            //throw new RuntimeException("Error SQL - obtenerTodos()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return listaPersonal;
     } // Fin del método obtenerTodos()
@@ -131,15 +136,19 @@ public class DocumentoEntregaDao {
             stmt.setString(6, documentoEntregaDto.getApellido2());
             stmt.setString(7, documentoEntregaDto.getIdCargo());
             stmt.setDate(8, new java.sql.Date(documentoEntregaDto.getFechaRecepcionPaciente().getTime()));
-            stmt.setDate(9, new java.sql.Date(documentoEntregaDto.getHoraRecepcionPaciente().getTime()));
+            stmt.setTime(9, new java.sql.Time(documentoEntregaDto.getHoraRecepcionPaciente().getTime()));
             stmt.setString(10, documentoEntregaDto.getCodigoRemision());
             stmt.setString(11, documentoEntregaDto.getObsevaciones());
             stmt.setBoolean(12, documentoEntregaDto.isEstado());
 
             stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error SQL - Agregar()!");
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Agregar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return 1;
     } // Fin del método agregar()

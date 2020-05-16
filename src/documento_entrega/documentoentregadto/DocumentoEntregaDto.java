@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class DocumentoEntregaDto {
@@ -17,14 +18,14 @@ public class DocumentoEntregaDto {
     private StringProperty apellido2 = new SimpleStringProperty();
     private StringProperty idCargo = new SimpleStringProperty();
     private Date fechaRecepcionPaciente;
-    private Date horaRecepcionPaciente;
+    private Time horaRecepcionPaciente;
     private StringProperty codigoRemision = new SimpleStringProperty();
     private StringProperty obsevaciones = new SimpleStringProperty();
     private BooleanProperty estado = new SimpleBooleanProperty();
 
 
     public DocumentoEntregaDto(String idTipoDocumento, String idPersonaRecibe, String nombre1, String nombre2, String apellido1, String apellido2,
-                               String idCargo, Date fechaRecepcionPaciente, Date horaRecepcionPaciente, String codigoRemision, String observaciones, boolean estado) {
+                               String idCargo, Date fechaRecepcionPaciente, Time horaRecepcionPaciente, String codigoRemision, String observaciones, boolean estado) {
         this.idTipoDocumento.set(idTipoDocumento);
         this.idPersonaRecibe.set(idPersonaRecibe);
         this.nombre1.set(nombre1);
@@ -41,7 +42,7 @@ public class DocumentoEntregaDto {
     }
 
     public DocumentoEntregaDto() {
-        this("","", "", "", "", "", "", new Date(new java.util.Date().getTime()), new Date(new java.util.Date().getTime()),"", "", false);
+        this("","", "", "", "", "", "", new Date(new java.util.Date().getTime()), new Time(new java.util.Date().getTime()),"", "", false);
     }
 
     public String getIdTipoDocumento() {
@@ -136,11 +137,11 @@ public class DocumentoEntregaDto {
         this.fechaRecepcionPaciente = fechaRecepcionPaciente;
     }
 
-    public Date getHoraRecepcionPaciente() {
+    public Time getHoraRecepcionPaciente() {
         return horaRecepcionPaciente;
     }
 
-    public void setHoraRecepcionPaciente(Date horaRecepcionPaciente) {
+    public void setHoraRecepcionPaciente(Time horaRecepcionPaciente) {
         this.horaRecepcionPaciente = horaRecepcionPaciente;
     }
 

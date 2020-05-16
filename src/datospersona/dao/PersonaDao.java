@@ -17,6 +17,7 @@ import eps.dto.DtoEps;
 import eps.formularioeps.EPS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import persona_familiar.per_fami_dto.Per_Fami_Dto;
 import personalSalud.personalsaluddto.BusquedaDePersonal;
 import personalSalud.personalsaluddto.PersonalSalud;
@@ -200,8 +201,12 @@ public class PersonaDao {
                 persona.setEstado(rset.getBoolean("estado"));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Agregar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return persona;
     }
@@ -218,8 +223,12 @@ public class PersonaDao {
             if (rset.next()) {
                 trpta = true;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Buscar Primary Key()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return trpta;
     }
@@ -249,8 +258,12 @@ public class PersonaDao {
                 persona.setTipoDocumento(rset.getString("idTipoDocumento"));
 
             }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Buscar Todos()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return personas;
     }
@@ -282,8 +295,12 @@ public class PersonaDao {
 
             stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error SQL - Agregar()!");
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Agregar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return 1;
     }
@@ -310,8 +327,12 @@ public class PersonaDao {
 
             stmt.executeUpdate();
 
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - actualizar()!");
+        }catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Modificar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return 1;
     }
@@ -329,8 +350,12 @@ public class PersonaDao {
             } else {
                 JOptionPane.showMessageDialog(null, "El Registro Fue Eliminado Exitosamente ", "INFORMACIÓN", 1);
             }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - eliminar()!");
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Eliminar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
     }
 
@@ -358,8 +383,12 @@ public class PersonaDao {
                 yes = false;
             }
 
-        } catch (RuntimeException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Inhabilitar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return yes;
     }

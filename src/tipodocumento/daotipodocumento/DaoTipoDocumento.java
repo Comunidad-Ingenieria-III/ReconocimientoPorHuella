@@ -2,6 +2,7 @@ package tipodocumento.daotipodocumento;
 
 import conexionBD.ConexionRoot;
 import institucionAcademica.dto.InstitucionAcademica;
+import javafx.scene.control.Alert;
 import tipoTituloAcademico.dto.TtAcademico;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 
@@ -43,8 +44,12 @@ public class DaoTipoDocumento {
             }
 
 
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerTodos()!");
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - cargarTipoDocumento()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return dtotipodocumentos;
     }
@@ -68,8 +73,12 @@ public class DaoTipoDocumento {
 
 
 
-        }catch (RuntimeException | SQLException e){
-            throw new RuntimeException("Error SQL - BucarTitulo()!");
+        }catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - buscar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return dtotipodocumentos;
     }
@@ -107,8 +116,12 @@ public class DaoTipoDocumento {
                 documento.setNombreTipoDocumento(rset.getString("nombreTipoDocumento"));
 
             }
-        } catch (RuntimeException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - buscarPorId()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return documento;
     }
@@ -126,8 +139,12 @@ public class DaoTipoDocumento {
 
             return stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            System.out.println(e.toString());
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - modificar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
             return 0;
         }
     } // Fin del método modificar()
@@ -143,8 +160,12 @@ public class DaoTipoDocumento {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idTipoDocumento);
             return stmt.executeUpdate();
-        } catch (RuntimeException | SQLException e) {
-            System.out.println(e.toString());
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - eliminar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
             return 0;
         }
     } // Fin del método eliminar()
@@ -190,15 +211,14 @@ public class DaoTipoDocumento {
                 }
             }
 
-        } catch (RuntimeException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - eliminar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return yes;
     }
-
-
-
-
-
 }
 

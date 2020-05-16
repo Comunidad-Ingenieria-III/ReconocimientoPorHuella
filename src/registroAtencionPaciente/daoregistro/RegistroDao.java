@@ -2,6 +2,7 @@ package registroAtencionPaciente.daoregistro;
 
 import conexionBD.ConexionRoot;
 import datospersona.dto.Persona;
+import javafx.scene.control.Alert;
 import registroAtencionPaciente.dtoregistro.RegistroDto;
 
 import java.io.ByteArrayInputStream;
@@ -37,7 +38,7 @@ public class RegistroDao {
                 registroDto = new RegistroDto();
 
                 registroDto.setFechaAtencionPaciente(rset.getDate("fechaAtencionPaciente"));
-                registroDto.setHoraAtencionPaciente(rset.getDate("horaAtencionPaciente"));
+                registroDto.setHoraAtencionPaciente(rset.getTime("horaAtencionPaciente"));
                 registroDto.setCondicionPaciente(rset.getString("condicionPaciente"));
                 registroDto.setGlasgow(rset.getString("glasgow"));
                 registroDto.setSignosVitales(rset.getString("signosVitales"));
@@ -55,8 +56,12 @@ public class RegistroDao {
                 registrosAtencion.add(registroDto);
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Agregar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return registrosAtencion;
     }
@@ -71,7 +76,7 @@ public class RegistroDao {
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
 
             stmt.setDate(1, new java.sql.Date(registroDto.getFechaAtencionPaciente().getTime()));
-            stmt.setDate(2, new java.sql.Date(registroDto.getHoraAtencionPaciente().getTime()));
+            stmt.setTime(2, new java.sql.Time(registroDto.getHoraAtencionPaciente().getTime()));
             stmt.setString(3, registroDto.getCondicionPaciente());
             stmt.setString(4, registroDto.getGlasgow());
             stmt.setString(5, registroDto.getSignosVitales());
@@ -88,8 +93,12 @@ public class RegistroDao {
 
             stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error SQL - Agregar()!");
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Agregar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return 1;
     }
@@ -111,10 +120,37 @@ public class RegistroDao {
 
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Buscar Codigo Remision()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
         return registroDto;
+    }
+
+    public boolean buscarPrimaryKeyRegistro(String codigoRemision) {//Funcion para realizar la busqueda de un personal de salud por medio de su perimary key
+        boolean trpta = false;
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select codigoRemision from registro_atencion_paciente where codigoRemision = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, codigoRemision);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+                trpta = true;
+            }
+
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Buscar Primary Key()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
+        }
+        return trpta;
     }
 
 }

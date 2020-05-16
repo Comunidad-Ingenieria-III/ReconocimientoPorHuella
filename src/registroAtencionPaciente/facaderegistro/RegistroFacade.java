@@ -21,5 +21,9 @@ public class RegistroFacade {
     public RegistroDto buscarCodigoRemision(String codigoRemision){
         return registroDao.buscarCodigoRemision(codigoRemision);
     }
+
+    public boolean buscarPrimaryKeyCodigoRemision(String codigoRemision){
+        return registroDao.buscarPrimaryKeyRegistro(codigoRemision);
+    }
 }
 

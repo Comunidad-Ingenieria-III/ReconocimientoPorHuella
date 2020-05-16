@@ -11,7 +11,7 @@
       <AnchorPane prefHeight="470.0" prefWidth="721.0" styleClass="panel_login" BorderPane.alignment="CENTER">
          <children>
             <ComboBox fx:id="cbxtipodocumento" layoutX="2.0" layoutY="36.0" prefHeight="25.0" prefWidth="300.0" promptText="Seleccione" />
-            <TextField fx:id="tf_idpersona" layoutX="2.0" layoutY="65.0" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="300.0">
+            <TextField fx:id="tf_idpersona" layoutX="2.0" layoutY="65.0" prefHeight="25.0" prefWidth="300.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

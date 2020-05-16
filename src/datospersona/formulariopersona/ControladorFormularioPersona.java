@@ -162,6 +162,7 @@ public class ControladorFormularioPersona implements Initializable {
         iniciarDocumentoPersona();
         manejarEventosTablaFamiliares();
         colocarImagenBotones();
+        consultarEnter();
 
     }
 
@@ -390,54 +391,162 @@ public class ControladorFormularioPersona implements Initializable {
 
     @FXML
     private void guardarHuella() {
+
         boolean documento = buscarDocumentos(tf_idpersona.getText());
         if (!documento) {
-            int resultado;
-            ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
-            Integer tamañoHuella = template.serialize().length;
-            conn = null;
-            PreparedStatement stmt = null;
-            ResultSet rs = null;
-            Persona persona = null;
-            try {
-                conn = ConexionRoot.getConexion();
-                stmt = conn.prepareStatement("select idpersona, huella, huella1 from datos_persona where idpersona= ?");
-                stmt.setInt(1, Integer.parseInt(tf_idpersona.getText()));
-                rs = stmt.executeQuery();
-                if (rs.next()) {
-                    //Lee la plantilla de la base de datos
-                    byte templateBuffer[] = rs.getBytes(2);
-                    //Crea una nueva plantilla a partir de la guardada en la base de datos
-                    DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
-                    //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
-                    setTemplate(referenceTemplate);
-                    //Compara las caracteriticas de la huella recientemente capturda con la
-                    // plantilla guardada al usuario especifico en la base de datos
-                    DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
+            
+            if (cbxtipodocumento.getSelectionModel().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo tipo documento requerido");
+                msg.setHeaderText("Debes llenar el tipo de documento");
+                msg.show();
+                cbxtipodocumento.setStyle("-fx-border-color: red;");
+                cbxtipodocumento.requestFocus();
 
-                    //compara las plantilas (actual vs bd)
-                    if (result.isVerified()) {
-                        JOptionPane.showMessageDialog(null, "La huella ya existe, coloque un dedo diferente");
-                    } else {
-                        PreparedStatement guardarStmt2 = conn.prepareStatement("update datos_persona set huella1=? where (idpersona=?)");
-                        guardarStmt2.setBinaryStream(1, datosHuella, tamañoHuella);
-                        guardarStmt2.setInt(2, Integer.parseInt(tf_idpersona.getText()));
+            } else if (tf_idpersona.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo número documento requerido");
+                msg.setHeaderText("Debes llenar el campo número de documento");
+                msg.show();
+                tf_idpersona.setStyle("-fx-border-color: red;");
+                tf_idpersona.requestFocus();
 
-                        //Ejecuta la sentencia
-                        guardarStmt2.execute();
-                        guardarStmt2.close();
-                        JOptionPane.showMessageDialog(null, "Huella Guardada Correctament");
+            } else if (tf_primerNombre.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo primer nombre requerido");
+                msg.setHeaderText("Debes llenar el campo primer nombre");
+                msg.show();
+                tf_primerNombre.setStyle("-fx-border-color: red;");
+                tf_primerNombre.requestFocus();
+
+            } else if (tf_primerApellido.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo primer apellido requerido");
+                msg.setHeaderText("Debes llenar el campo primer apellido");
+                msg.show();
+                tf_primerApellido.setStyle("-fx-border-color: red;");
+                tf_primerApellido.requestFocus();
+
+            } else if (tf_direccion.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo dirección requerido");
+                msg.setHeaderText("Debes llenar el campo dirección");
+                msg.show();
+                tf_direccion.setStyle("-fx-border-color: red;");
+                tf_direccion.requestFocus();
+
+            } else if (cbxsexo.getSelectionModel().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo sexo requerido");
+                msg.setHeaderText("Debes llenar el campo sexo");
+                msg.show();
+                cbxsexo.setStyle("-fx-border-color: red;");
+                cbxsexo.requestFocus();
+
+            } else if (cbxtipoeps.getSelectionModel().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo EPS requerido");
+                msg.setHeaderText("Debes llenar el campo EPS");
+                msg.show();
+                cbxtipoeps.setStyle("-fx-border-color: red;");
+                cbxtipoeps.requestFocus();
+
+            } else if (ta_alergicoA.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo alergico  requerido");
+                msg.setHeaderText("Debes llenar el campo alergico");
+                msg.show();
+                ta_alergicoA.setStyle("-fx-border-color: red;");
+                ta_alergicoA.requestFocus();
+
+            } else if (ta_enfermedadSufre.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo enfermedad que sufre requerido");
+                msg.setHeaderText("Debes llenar el campo enfermedad que sufre");
+                msg.show();
+                ta_enfermedadSufre.setStyle("-fx-border-color: red;");
+                ta_enfermedadSufre.requestFocus();
+
+            } else if (txtArea.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Captura de huella requerida");
+                msg.setHeaderText("Debes Capturar la huella");
+                msg.show();
+                txtArea.setStyle("-fx-border-color: red;");
+                bt_hulla.requestFocus();
+
+
+            } else {
+
+                int resultado;
+                ByteArrayInputStream datosHuella = new ByteArrayInputStream(template.serialize());
+                Integer tamañoHuella = template.serialize().length;
+                conn = null;
+                PreparedStatement stmt = null;
+                ResultSet rs = null;
+                Persona persona = null;
+                try {
+                    conn = ConexionRoot.getConexion();
+                    stmt = conn.prepareStatement("select idpersona, huella, huella1 from datos_persona where idpersona= ?");
+                    stmt.setInt(1, Integer.parseInt(tf_idpersona.getText()));
+                    rs = stmt.executeQuery();
+                    if (rs.next()) {
+                        //Lee la plantilla de la base de datos
+                        byte templateBuffer[] = rs.getBytes(2);
+                        //Crea una nueva plantilla a partir de la guardada en la base de datos
+                        DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
+                        //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
+                        setTemplate(referenceTemplate);
+                        //Compara las caracteriticas de la huella recientemente capturda con la
+                        // plantilla guardada al usuario especifico en la base de datos
+                        DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
+
+                        //compara las plantilas (actual vs bd)
+                        if (result.isVerified()) {
+                            JOptionPane.showMessageDialog(null, "La huella ya existe, coloque un dedo diferente");
+                        } else {
+                            PreparedStatement guardarStmt2 = conn.prepareStatement("update datos_persona set huella1=? where (idpersona=?)");
+                            guardarStmt2.setBinaryStream(1, datosHuella, tamañoHuella);
+                            guardarStmt2.setInt(2, Integer.parseInt(tf_idpersona.getText()));
+
+                            //Ejecuta la sentencia
+                            guardarStmt2.execute();
+                            guardarStmt2.close();
+                            Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                            msg.setTitle("Gestiones - Persona");
+                            msg.setContentText("Huella Guardada Correctamente");
+                            msg.setHeaderText("Información.");
+                            msg.show();
+                        }
+                    } else if (!rs.next()) {
+
+                        try {
+                            guardarPersona();
+                        } catch (RuntimeException ex) {
+                            //throw new RuntimeException("Error SQL - Buscar Primary Key()!");
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Ocurrio el Error:");
+                            alert.setContentText(ex.getLocalizedMessage());
+                        }
                     }
-                } else if (!rs.next()) {
-
-                    try {
-                        guardarPersona();
-                    } catch (RuntimeException e) {
-                        throw new RuntimeException("Error SQL - Agregar()!");
-                    }
+                } catch (SQLException | RuntimeException ex) {
+                    //throw new RuntimeException("Error SQL - Buscar Primary Key()!");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Ocurrio el Error:");
+                    alert.setContentText(ex.getLocalizedMessage());
                 }
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
         } else {
             int res = facadepersona.modificarPersona(modificarPersona());
@@ -467,6 +576,7 @@ public class ControladorFormularioPersona implements Initializable {
         }
     }
 
+
     public boolean buscarDocumentos(String idPersona) {//Metodo que valida si el número de documento que se esta ingresando esxiste en la BBDD
         boolean documento = facadepersona.buscarPersonaPrimaryKey(idPersona);
         boolean resultado;
@@ -480,48 +590,32 @@ public class ControladorFormularioPersona implements Initializable {
 
     @FXML
     private Persona crearPersona() {
-        if (tf_idpersona.getText().isEmpty()) {
-            Alert msg2 = new Alert(Alert.AlertType.ERROR);
-            msg2.setTitle("Gestiones - Persona");
-            msg2.setContentText("Campos requeridos");
-            msg2.setHeaderText("Información.");
-            msg2.show();
-            tf_idpersona.requestFocus();
-        } else {
+
+        String idpersona = tf_idpersona.getText();
+        String primerNombre = tf_primerNombre.getText();
+        String segundoNombre = tf_segundoNombre.getText();
+        String primerApellido = tf_primerApellido.getText();
+        String segundoApellido = tf_segundoApellido.getText();
+        Date fechaNacimiento = Date.valueOf(dp_fechaNacimiento.getValue());
+        String direccion = tf_direccion.getText();
+        String sexo = cbxsexo.getValue();
+        String alegicoA = ta_alergicoA.getText();
+        String enfermedadSufre = ta_enfermedadSufre.getText();
+        String observaciones = ta_observaciones.getText();
+        ByteArrayInputStream huella = new ByteArrayInputStream(template.serialize());
+        int huella1 = template.serialize().length;
+        String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
+        String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
+
+        Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
+                fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps, estado);
 
 
-            String idpersona = tf_idpersona.getText();
-            String primerNombre = tf_primerNombre.getText();
-            String segundoNombre = tf_segundoNombre.getText();
-            String primerApellido = tf_primerApellido.getText();
-            String segundoApellido = tf_segundoApellido.getText();
-            Date fechaNacimiento = Date.valueOf(dp_fechaNacimiento.getValue());
-            String direccion = tf_direccion.getText();
-            String sexo = cbxsexo.getValue();
-            String alegicoA = ta_alergicoA.getText();
-            String enfermedadSufre = ta_enfermedadSufre.getText();
-            String observaciones = ta_observaciones.getText();
-            ByteArrayInputStream huella = new ByteArrayInputStream(template.serialize());
-            int huella1 = template.serialize().length;
-            String ta_tipoDocumento = cbxtipodocumento.getSelectionModel().getSelectedItem().getIdTipoDocumento();
-            String ta_idEps = cbxtipoeps.getSelectionModel().getSelectedItem().getIdEps();
-            Persona persona = new Persona(idpersona, primerNombre, segundoNombre, primerApellido, segundoApellido,
-                    fechaNacimiento, direccion, sexo, alegicoA, enfermedadSufre, observaciones, huella, huella1, ta_tipoDocumento, ta_idEps, estado);
-
-        }
         return persona;
     }
 
     @FXML
     private void guardarPersona() {
-        validar();
-        if(tf_idpersona.getText().isEmpty()){
-            Alert msg2 = new Alert(Alert.AlertType.ERROR);
-            msg2.setTitle("Gestiones - Persona");
-            msg2.setContentText("Campos requeridos");
-            msg2.setHeaderText("Información.");
-            msg2.show();
-            tf_idpersona.requestFocus();
 
         int res = facadepersona.insertarPersona(crearPersona());
         if (res == 1) {
@@ -533,13 +627,13 @@ public class ControladorFormularioPersona implements Initializable {
             iniciarCbxid_persona();
             cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
             bt_crear.setDisable(false);
+            cancelar();
         } else {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Persona");
             msg.setContentText("No Fue Posible Agregar El Registro");
-            msg.setHeaderText("Información.");
+            msg.setHeaderText("Algo salio mal.");
             msg.show();
-        }
         }
     }
 
@@ -585,15 +679,16 @@ public class ControladorFormularioPersona implements Initializable {
             cbx_documentopersona.setDisable(true);
             cbx_documentofamiliar.setDisable(true);
             dp_ingresofamiliar.setDisable(true);
-            valor=0;
+            valor = 0;
         } else {
+
             BusquedaDeFamiliar busqueda = facadepersona.buscarPersona(tf_idpersona.getText());
             Persona persona = busqueda.getPersona();
 
             if (persona == null) {
                 Alert msg = new Alert(Alert.AlertType.WARNING);
                 msg.setTitle("Gestiones - Persona");
-                msg.setContentText("El registro ro existe ");
+                msg.setContentText("El registro ya existe ");
                 msg.setHeaderText("Información.");
                 msg.show();
                 tf_idpersona.setText("");
@@ -755,37 +850,32 @@ public class ControladorFormularioPersona implements Initializable {
         });
     }
 
-    public void validar() {
-        //Validamos que los campos requeridos no queden vacios
-        if (cbxtipodocumento.getSelectionModel().getSelectedItem().equals(null) || tf_idpersona.getText().equals("")
-                || tf_primerNombre.getText().equals("") || tf_primerApellido.getText().equals("") || dp_fechaNacimiento.getValue().equals(null)
-                || tf_direccion.getText().equals("") || ta_alergicoA.getText().equals("") || ta_enfermedadSufre.getText().equals("")
-                || cbxsexo.getSelectionModel().getSelectedItem().equals(null) || cbxtipoeps.getSelectionModel().getSelectedItem().equals(null)
-        ) {
-            Alert msg = new Alert(Alert.AlertType.WARNING);
-            msg.setTitle("Gestiones - Registro");
-            msg.setContentText("Hay campos vacios,Debe llenar todos los campos");
-            msg.setHeaderText("Información");
-            msg.show();
-        }
-    }
-
     @FXML
     public void cancelar() {
         cbxtipodocumento.setValue(null);
+        cbxtipodocumento.setStyle(null);
         tf_idpersona.setText("");
+        tf_idpersona.setStyle(null);
         tf_primerNombre.setText("");
+        tf_primerNombre.setStyle(null);
         tf_segundoNombre.setText("");
         tf_primerApellido.setText("");
+        tf_primerApellido.setStyle(null);
         tf_segundoApellido.setText("");
         dp_fechaNacimiento.setValue(null);
         tf_direccion.setText("");
+        tf_direccion.setStyle(null);
         ta_alergicoA.setText("");
+        ta_alergicoA.setStyle(null);
         ta_enfermedadSufre.setText("");
+        ta_enfermedadSufre.setStyle(null);
         ta_observaciones.setText("");
         cbxsexo.setValue(null);
+        cbxsexo.setStyle(null);
         cbxtipoeps.setValue(null);
+        cbxtipoeps.setStyle(null);
         txtArea.setText("");
+        txtArea.setStyle(null);
         cbx_documentopersona.setValue(null);
         cbx_documentofamiliar.setValue(null);
         dp_ingresofamiliar.setValue(null);
@@ -805,7 +895,7 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setText("");
         tf_primerApellido.setText("");
         tf_segundoApellido.setText("");
-        dp_fechaNacimiento.setValue(null);
+        //dp_fechaNacimiento.setValue(null);
         tf_direccion.setText("");
         ta_alergicoA.setText("");
         ta_enfermedadSufre.setText("");
@@ -896,17 +986,17 @@ public class ControladorFormularioPersona implements Initializable {
 
     }
 
-    public void colocarImagenBotones(){
+    public void colocarImagenBotones() {
 
         URL linkbt_guardar = getClass().getResource("/imagenes/disquete.png");
         URL linkbt_modificar = getClass().getResource("/imagenes/btGuardar.png");
         URL linkbt_inhabilitar = getClass().getResource("/imagenes/eliminar.png");
 
-        Image imagenGuardar = new Image(linkbt_guardar.toString(),24,24,false,true);
+        Image imagenGuardar = new Image(linkbt_guardar.toString(), 24, 24, false, true);
         bt_agregarfamiliar.setGraphic(new ImageView(imagenGuardar));
-        Image imagenModificar = new Image(linkbt_modificar.toString(),24,24,false,true);
+        Image imagenModificar = new Image(linkbt_modificar.toString(), 24, 24, false, true);
         bt_modificarfamiliar.setGraphic(new ImageView(imagenModificar));
-        Image imagenInhabilitar = new Image(linkbt_inhabilitar.toString(),24,24,false,true);
+        Image imagenInhabilitar = new Image(linkbt_inhabilitar.toString(), 24, 24, false, true);
         bt_inhabilitarfamiliar.setGraphic(new ImageView(imagenInhabilitar));
 
     }
@@ -941,77 +1031,77 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     public void agregarFamiliar() {//Metodo para agregar titulos a la tabla personal-salud-titulo de la BBDD
         // y a la tabla del formulario previamente validados para evitar registros dulicados
-        if(cbx_documentofamiliar.getSelectionModel().isEmpty()) {
+        if (cbx_documentofamiliar.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Título");
             msg.setContentText("Debe seleccionar un familiar");
             msg.show();
             cbx_documentofamiliar.requestFocus();
-        }else if(dp_ingresofamiliar.getValue() == null) {
+        } else if (dp_ingresofamiliar.getValue() == null) {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Título");
             msg.setContentText("Debe seleccionar una fecha");
             msg.show();
             cbx_documentofamiliar.requestFocus();
-        }else{
-
-
-        Per_Fami_Dto per_fami_dto = new Per_Fami_Dto(
-
-                cbx_documentopersona.getSelectionModel().getSelectedItem().getIdpersona(),
-                cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar(),
-                Date.valueOf(dp_ingresofamiliar.getValue()),
-                estado
-        );
-
-        DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
-        String convertido = fechaHora.format(per_fami_dto.getFechaIngreso());//Formatear una fecha Date a String
-
-        if (per_fami_dto.getFechaIngreso().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Fecha Ingreso - Familiar");
-            msg.setContentText("Debe Ingresar Una Fecha Valida: \n" + "La Fecha: " + convertido + " Es Superior A La Fecha De Hoy");
-            msg.show();
-            dp_ingresofamiliar.requestFocus();
         } else {
-            per_fami_facade.agregar(per_fami_dto);
-            familiares.add(per_fami_dto);
-            Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
-            msg.setTitle("Fecha Ingreso - Familiar");
-            msg.setContentText("La fecha de Ingreso del Familiar ha sido agregada correctamente");
-            msg.setHeaderText("Información");
-            msg.show();
 
 
-            if (familiares.isEmpty()) {
-                boolean res = buscarDocumento(per_fami_dto.getIdPersona());
-                if (res) {
-                    per_fami_facade.agregar(per_fami_dto);
-                    familiares.add(per_fami_dto);
-                    //limpiarComponentes();
-                } else {
-                    Alert msge = new Alert(Alert.AlertType.ERROR);
-                    msge.setTitle("Gestiones - Persona");
-                    msge.setContentText("El Documento Nro. " + per_fami_dto.getIdPersona() + " No Se Encuentra Registrado!\n" +
-                            "Debe Registrarlo Para Poder Asignarle Familiar");
-                    msge.show();
+            Per_Fami_Dto per_fami_dto = new Per_Fami_Dto(
 
-                }
+                    cbx_documentopersona.getSelectionModel().getSelectedItem().getIdpersona(),
+                    cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar(),
+                    Date.valueOf(dp_ingresofamiliar.getValue()),
+                    estado
+            );
+
+            DateFormat fechaHora = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
+            String convertido = fechaHora.format(per_fami_dto.getFechaIngreso());//Formatear una fecha Date a String
+
+            if (per_fami_dto.getFechaIngreso().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Fecha Ingreso - Familiar");
+                msg.setContentText("Debe Ingresar Una Fecha Valida: \n" + "La Fecha: " + convertido + " Es Superior A La Fecha De Hoy");
+                msg.show();
+                dp_ingresofamiliar.requestFocus();
             } else {
-                boolean resultado = recorrerTablaTitulos(familiares, per_fami_dto);
-                if (resultado) {
-                    Alert msg1 = new Alert(Alert.AlertType.ERROR);
-                    msg1.setTitle("Gestiones - Persona");
-                    msg1.setContentText("El Registro Ya Existe ");
-                    msg1.show();
-                } else {
-                    per_fami_facade.agregar(per_fami_dto);
-                    familiares.add(per_fami_dto);
-                    //limpiarComponentes();
-                }
+                per_fami_facade.agregar(per_fami_dto);
+                familiares.add(per_fami_dto);
+                Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+                msg.setTitle("Fecha Ingreso - Familiar");
+                msg.setContentText("La fecha de Ingreso del Familiar ha sido agregada correctamente");
+                msg.setHeaderText("Información");
+                msg.show();
 
+
+                if (familiares.isEmpty()) {
+                    boolean res = buscarDocumento(per_fami_dto.getIdPersona());
+                    if (res) {
+                        per_fami_facade.agregar(per_fami_dto);
+                        familiares.add(per_fami_dto);
+                        //limpiarComponentes();
+                    } else {
+                        Alert msge = new Alert(Alert.AlertType.ERROR);
+                        msge.setTitle("Gestiones - Persona");
+                        msge.setContentText("El Documento Nro. " + per_fami_dto.getIdPersona() + " No Se Encuentra Registrado!\n" +
+                                "Debe Registrarlo Para Poder Asignarle Familiar");
+                        msge.show();
+
+                    }
+                } else {
+                    boolean resultado = recorrerTablaTitulos(familiares, per_fami_dto);
+                    if (resultado) {
+                        Alert msg1 = new Alert(Alert.AlertType.ERROR);
+                        msg1.setTitle("Gestiones - Persona");
+                        msg1.setContentText("El Registro Ya Existe ");
+                        msg1.show();
+                    } else {
+                        per_fami_facade.agregar(per_fami_dto);
+                        familiares.add(per_fami_dto);
+                        //limpiarComponentes();
+                    }
+
+                }
             }
-        }
         }
     }
 
@@ -1062,20 +1152,23 @@ public class ControladorFormularioPersona implements Initializable {
         familiares.remove(tb_familiar.getSelectionModel().getFocusedIndex());
         //cancelar();
     }
+
     @FXML
-    public void textAction(KeyEvent e){
-        if (valor ==0){
-
-
-            if(e.getCode().equals(KeyCode.ENTER))
-                consultarPersonaFamiliar();
-        }
+    public void consultarEnter() {
+        tf_idpersona.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    consultarPersonaFamiliar();
+                }
+            }
+        });
     }
 
     @FXML
-    public void textESC(KeyEvent e){
+    public void textESC(KeyEvent e) {
 
-        if(e.getCode().equals(KeyCode.ESCAPE))
+        if (e.getCode().equals(KeyCode.ESCAPE))
             cancelar();
     }
 
