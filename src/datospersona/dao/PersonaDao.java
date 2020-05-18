@@ -67,8 +67,12 @@ public class PersonaDao {
                 personas.add(persona);
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return personas;
     }
@@ -107,8 +111,12 @@ public class PersonaDao {
                 persona.setObservaciones(rset.getString("observaciones"));
 
             }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return persona;
     }
@@ -164,8 +172,12 @@ public class PersonaDao {
             }
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return new BusquedaDeFamiliar(listaFamiliares, persona);
     }
@@ -203,13 +215,36 @@ public class PersonaDao {
             }
 
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Agregar()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Ocurrio el Error:");
+            alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return persona;
+    }
+
+    public boolean buscarIdPersonaEstado(String idPersona) {
+        boolean consulta = false;
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "select estado, idpersona from datos_persona where idpersona = ? and estado = 0";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, idPersona);
+            rset = stmt.executeQuery();
+
+            if (rset.next()) {
+               consulta = true;
+            }
+
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
+        }
+        return consulta;
     }
 
     public boolean buscarPrimaryKeyPersona(String idPersona) {//Funcion para realizar la busqueda de un personal de salud por medio de su perimary key
@@ -225,11 +260,11 @@ public class PersonaDao {
                 trpta = true;
             }
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Buscar Primary Key()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Ocurrio el Error:");
+            alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return trpta;
     }
@@ -260,11 +295,11 @@ public class PersonaDao {
 
             }
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Buscar Todos()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Ocurrio el Error:");
+            alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return personas;
     }
@@ -297,11 +332,11 @@ public class PersonaDao {
             stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Agregar()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Ocurrio el Error:");
+            alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 1;
     }
@@ -328,36 +363,33 @@ public class PersonaDao {
 
             stmt.executeUpdate();
 
-        }catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Modificar()!");
+        } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Ocurrio el Error:");
+            alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 1;
     }
 
-    public void eliminar(int idCliente) {
+    public int eliminar(int idCliente) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "delete from datos_persona where idpersona = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idCliente);
 
-            int rta = stmt.executeUpdate();
-            if (rta != 1) {
-                throw new RuntimeException("Error al eliminar!");
-            } else {
-                JOptionPane.showMessageDialog(null, "El Registro Fue Eliminado Exitosamente ", "INFORMACIÓN", 1);
-            }
+            stmt.executeUpdate();
+
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Eliminar()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Ocurrio el Error:");
+            alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
+        return 1;
     }
 
     public boolean inhabilitarPersona(String idpersona) {//Funcion que inhabilita un registro en la BBDD siempre y cuando no existas registros
@@ -385,11 +417,11 @@ public class PersonaDao {
             }
 
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Inhabilitar()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Ocurrio el Error:");
+            alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return yes;
     }

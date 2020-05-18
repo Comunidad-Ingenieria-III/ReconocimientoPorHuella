@@ -197,7 +197,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private Button bt_anterior;
 
-    private int valor = 1;
+    private int valor = 0;
 
 
     //Varible que permite iniciar el dispositivo de lector de huella conectado
@@ -234,6 +234,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         //metodoFechaHora();
         horaAtencion();
         fechaAtencion();
+        validarId();
 
     }
 
@@ -544,65 +545,73 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
             msg.setContentText("Campo dirección accidente requerido");
-            msg.setHeaderText("Faltan campos por llenar");
+            msg.setHeaderText("Debes llenar el campo dirección del accidente");
             msg.show();
+            tf_direccionAccidente.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             tf_direccionAccidente.requestFocus();
 
-        } else if (tf_codigoRemision.getText().isEmpty()) {
+        } else if (cbx_signosVitalesPaciente.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo remisión paciente requerido");
-            msg.setHeaderText("Faltan campos por llenar");
+            msg.setContentText("Campo signos vitales requerido");
+            msg.setHeaderText("Debes llenar el campo signos vitales");
             msg.show();
-            tf_codigoRemision.requestFocus();
+            cbx_signosVitalesPaciente.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            cbx_signosVitalesPaciente.requestFocus();
 
         } else if (cbx_estadoPaciente.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Debe Ingresar la condición del paciente");
-            msg.setHeaderText("Campo requerido");
+            msg.setContentText("Campo condición del paciente requerido");
+            msg.setHeaderText("Debes llenar el campo condición del paciente");
             msg.show();
+            cbx_estadoPaciente.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_estadoPaciente.requestFocus();
 
         } else if (cbx_gasglowPaciente.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Debe Ingresar el glasgow del paciente");
-            msg.setHeaderText("Campo requerido");
+            msg.setContentText("Campo glasgow requerido");
+            msg.setHeaderText("Debes llenar el campo glasgow");
             msg.show();
+            cbx_gasglowPaciente.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_gasglowPaciente.requestFocus();
-
-        } else if (cbx_signosVitalesPaciente.getSelectionModel().isEmpty()) {
-            Alert msg = new Alert(Alert.AlertType.WARNING);
-            msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Debe Ingresar los signos vitales del paciente");
-            msg.setHeaderText("Campo requerido");
-            msg.show();
-            cbx_signosVitalesPaciente.requestFocus();
 
         } else if (cbx_medicamentoSuministrado.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Debe Ingresar el medicamento suministrado al paciente");
-            msg.setHeaderText("Campo requerido");
+            msg.setContentText("Campo medicamento suministrado requerido");
+            msg.setHeaderText("Debes llenar el campo medicamento suministrado");
             msg.show();
+            cbx_medicamentoSuministrado.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_medicamentoSuministrado.requestFocus();
 
         } else if (cbx_documentoAPH.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Debe Ingresar documento personal APH");
-            msg.setHeaderText("Campo requerido");
+            msg.setContentText("Campo documento personal APH requerido");
+            msg.setHeaderText("Debes llenar el Campo personal APH");
             msg.show();
+            cbx_documentoAPH.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_documentoAPH.requestFocus();
+
+        } else if (tf_codigoRemision.getText().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Atención Paciente");
+            msg.setContentText("Campo código remisión requerido");
+            msg.setHeaderText("Debes llenar el campo código remisión");
+            msg.show();
+            tf_codigoRemision.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            tf_codigoRemision.requestFocus();
 
         } else if (cbx_institucionReferencia.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Debe Ingresar la Institución de Referencia");
-            msg.setHeaderText("Campo requerido");
+            msg.setContentText("Campo Institución de Referencia requerido");
+            msg.setHeaderText("Debes llenar el campo institución de referencia");
             msg.show();
-            cbx_estadoPaciente.requestFocus();
+            cbx_institucionReferencia.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            cbx_institucionReferencia.requestFocus();
 
         } else {
 
@@ -624,6 +633,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                     msg.show();
                     iniciarCbxRemision();
                     cbx_codigoRemision.setValue(registroFacade.buscarCodigoRemision(tf_codigoRemision.getText()));
+                    cbx_codigoRemision.setDisable(true);
                 } else {
 
                     Alert msg = new Alert(Alert.AlertType.WARNING);
@@ -634,8 +644,6 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 }
 
             } else if (action.get() == ButtonType.NO) {
-                //deshabilitarCampos();
-                //deshabilitarBotones();
                 limpiar();
             }
 
@@ -645,23 +653,71 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private void guardarDocumentoReferencia() {
 
-        int res = documentoEntregaFacade.agregarPersonalReferencia(crearDocumetoReferencia());
-
-        if (res == 1) {
-            Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
-            msg1.setTitle("Gestiones - Registro Atención Paciente");
-            msg1.setContentText("Registro de atencion agregado correctamente");
-            msg1.setHeaderText("Información");
-            msg1.show();
-            iniciarCbxRemision();
-            //cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
-            //bt_crear.setDisable(false);
-        } else {
+        if (cbx_tipoDocumento.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
-            msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("No Fue Posible Agregar El Registro");
-            msg.setHeaderText("Algo salio mal.");
+            msg.setTitle("Gestiones - Registro Entrega");
+            msg.setContentText("Campo tipo documento requerido");
+            msg.setHeaderText("Debes llenar el campo tipo de documento");
             msg.show();
+            cbx_tipoDocumento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            cbx_tipoDocumento.requestFocus();
+
+        } else if (tf_idPersonalRecibe.getText().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Entrega");
+            msg.setContentText("Campo número documento requerido");
+            msg.setHeaderText("Debes llenar el campo número de documento");
+            msg.show();
+            tf_idPersonalRecibe.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            tf_idPersonalRecibe.requestFocus();
+
+        } else if (tf_primerNombreRecibe.getText().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Entrega");
+            msg.setContentText("Campo primer nombre requerido");
+            msg.setHeaderText("Debes llenar el campo primer nombre");
+            msg.show();
+            tf_primerNombreRecibe.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            tf_primerNombreRecibe.requestFocus();
+
+        } else if (tf_primerApellidoRecibe.getText().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Entrega");
+            msg.setContentText("Campo primer apellido requerido");
+            msg.setHeaderText("Debes llenar el campo primer apellido");
+            msg.show();
+            tf_primerApellidoRecibe.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            tf_primerApellidoRecibe.requestFocus();
+
+        } else if (cbx_idCargo.getSelectionModel().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Entrega");
+            msg.setContentText("Campo cargo requerido");
+            msg.setHeaderText("Debes llenar el campo cargo");
+            msg.show();
+            cbx_idCargo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            cbx_idCargo.requestFocus();
+
+        } else {
+
+            int res = documentoEntregaFacade.agregarPersonalReferencia(crearDocumetoReferencia());
+
+            if (res == 1) {
+                Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
+                msg1.setTitle("Gestiones - Registro Entrega");
+                msg1.setContentText("Registro de entrega agregado correctamente");
+                msg1.setHeaderText("Información");
+                msg1.show();
+                iniciarCbxRemision();
+                stop();
+
+            } else {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Entrega");
+                msg.setContentText("No fue posible agregar el registro de entrega");
+                msg.setHeaderText("Algo salio mal.");
+                msg.show();
+            }
         }
     }
 
@@ -723,8 +779,12 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 ta_observaciones.setText(rset.getString("observaciones"));
 
             }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - buscarRegistros()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
         }
     }
 
@@ -735,6 +795,19 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
                     buscarRegistros();
+                }
+            }
+        });
+    }
+
+    @FXML
+    public void validarId() {//Metodo para validar que el Id del cargo solo sean numeros
+        tf_idPersonalRecibe.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+                if (!Character.isDigit(car)) {
+                    event.consume();
                 }
             }
         });
@@ -764,7 +837,6 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     }
 
     public void validarE() {
-        if (valor == 1) {
 
             boolean busqueda = buscarDocumento(tf_codigoRemision.getText());
             if (busqueda) {
@@ -776,7 +848,6 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 tf_codigoRemision.setText("");
                 tf_codigoRemision.requestFocus();
             }
-        }
     }
 
     @FXML
@@ -851,104 +922,11 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     }
 
-    /*@FXML
-    private void habilitarBotones() {
-        bt_crear.setDisable(true); //siempre ira deshabilitado
-        bt_consultar.setDisable(true);
-        bt_cancelar.setDisable(true);
-        bt_salir.setDisable(false);
-        bt_guardar.setDisable(false);
-        bt_modificar.setDisable(true);
-        bt_inhabilitar.setDisable(true);
-        habilitarCampos();
-    }
-
     @FXML
-    private void deshabilitarBotones() {
-        bt_crear.setDisable(false); //siempre ira deshabilitado
-        bt_consultar.setDisable(false);
-        bt_cancelar.setDisable(false);
-        bt_salir.setDisable(false);
-        bt_guardar.setDisable(true);
-        bt_modificar.setDisable(true);
-        bt_inhabilitar.setDisable(true);
-    }
-
-
-    @FXML
-    private void habilitarCampos() {
-        cbxtipodocumento.setDisable(false);
-        tf_nombretipodocumento.setDisable(false);
-        tf_idpersona.setDisable(false);
-        tf_primerNombre.setDisable(false);
-        tf_segundoNombre.setDisable(false);
-        tf_primerApellido.setDisable(false);
-        tf_segundoApellido.setDisable(false);
-        cbxsexo.setDisable(false);
-        cbxtipoeps.setDisable(false);
-        tf_nombreeps.setDisable(false);
-        cbxdocumentofamiliar.setDisable(false);
-        tf_nombrefamiliar.setDisable(false);
-        tf_numerotelefonicofamiliar.setDisable(false);
-        ta_alergicoA.setDisable(false);
-        ta_enfermedadSufre.setDisable(false);
-        ta_observaciones.setDisable(false);
-        dp_fechaNacimiento.setDisable(false);
-        cbxtipodocumento.requestFocus();
-    }
-
-    @FXML
-    private void deshabilitarCampos() {
-        cbxtipodocumento.setDisable(true);
-        tf_nombretipodocumento.setDisable(true);
-        tf_idpersona.setDisable(true);
-        tf_primerNombre.setDisable(true);
-        tf_segundoNombre.setDisable(true);
-        tf_primerApellido.setDisable(true);
-        tf_segundoApellido.setDisable(true);
-        cbxtipoeps.setDisable(true);
-        tf_nombreeps.setDisable(true);
-        cbxdocumentofamiliar.setDisable(true);
-        tf_nombrefamiliar.setDisable(true);
-        tf_numerotelefonicofamiliar.setDisable(true);
-        ta_alergicoA.setDisable(true);
-        ta_enfermedadSufre.setDisable(true);
-        ta_observaciones.setDisable(true);
-        dp_fechaNacimiento.setDisable(true);
-        cbxsexo.setDisable(true);
-
-    }
-
-    @FXML
-    private void btnNuevo_click(ActionEvent event) {
-        habilitarBotones();
-        limpiar();
-        habilitarCampos();
-        //habilitarBotones();
-
-    }*/
-
-    @FXML
-    public void abrirtab2() throws IOException {
-
-        bt_siguiente.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                tp_datosReferencia.setOnSelectionChanged(new EventHandler<Event>() {
-                    @Override
-                    public void handle(Event event) {
-
-                    }
-                });
-            }
-        });
-    }
-
-    @FXML
-    private void setCerrarFormularioRegistroAtencion() {
+    private void cerrarFormularioRegistroAtencion() {
         Stage stage = (Stage) bt_salir.getScene().getWindow();
         stage.close();
+        stop();
     }
 }
 

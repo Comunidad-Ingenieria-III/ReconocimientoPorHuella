@@ -1,5 +1,7 @@
 package conexionBD;
 
+import javafx.scene.control.Alert;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,9 +18,14 @@ public class ConexionRoot {
                 cnxR = DriverManager.getConnection("jdbc:mysql://db4free.net/datos_por_huella", "negisaro", "nelson2020");
             }
             return cnxR;
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException("Error al crear la conexion!", e);
+        } catch (ClassNotFoundException | SQLException ex) {
+                //throw new RuntimeException("Error al crear la conexion!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Ocurrio el Error:");
+                alert.setContentText(ex.getLocalizedMessage());
         }
+        return null;
     }
 
     static class ShutdownHook extends Thread {
