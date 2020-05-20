@@ -1,4 +1,4 @@
-package Informes.novedadatencionpaciente;
+package Informes.InformePersonal;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControladorInformeNovedadAtencion implements Initializable {
+public class ControladorNovedadTitulos implements Initializable {
     @FXML
     private Button bt_salir;
 
@@ -20,7 +20,7 @@ public class ControladorInformeNovedadAtencion implements Initializable {
     }
 
     @FXML
-    private void cerrarInformeNovedadPaciente(ActionEvent event) {
+    private void cerrarInformeNovedadTitulos(ActionEvent event) {
         Stage stage = (Stage) bt_salir.getScene().getWindow();
         stage.close();
     }

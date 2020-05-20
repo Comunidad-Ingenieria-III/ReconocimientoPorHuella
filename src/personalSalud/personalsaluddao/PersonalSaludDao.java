@@ -11,6 +11,7 @@ import personalSalud.personalsaluddto.PersonalSalud;
 import personal_salud_titulo.psdto.PsDto;
 
 import javax.swing.*;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +71,9 @@ public class PersonalSaludDao {
         }
         return personas;
     } // Fin del método listarPersonalSalud()
+
+
+
 
 
     public int agregarPersonal2(PersonalSalud personalSalud) {//Funcion para agregar  registros de la tabla personal_salud de la BBDD

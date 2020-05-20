@@ -1,5 +1,6 @@
 package principal;
 
+import Informes.InformesPacientes.controllerP.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +15,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import login.dtousuario.Usuario;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -541,6 +545,15 @@ public class ControladorPrincipal implements Initializable{
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void generarReporte(ActionEvent event) throws JRException {
+        JasperPrint reporteLleno = Controller.generarReportePersonal();
+        JasperViewer viewer = new JasperViewer(reporteLleno);
+        viewer.setVisible(true);
+    }
+
+
 
 
     @FXML
