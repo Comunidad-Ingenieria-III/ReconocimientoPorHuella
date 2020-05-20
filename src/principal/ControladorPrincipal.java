@@ -1,14 +1,14 @@
 package principal;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -17,10 +17,11 @@ import javafx.stage.StageStyle;
 import login.dtousuario.Usuario;
 
 import java.io.IOException;
+import java.lang.management.MemoryNotificationInfo;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControladorPrincipal implements Initializable{
+public class ControladorPrincipal implements Initializable {
 
     @FXML
     private AnchorPane FormularioPrincipal;
@@ -88,11 +89,67 @@ public class ControladorPrincipal implements Initializable{
     private MenuItem mi_usario;
     @FXML
     private Menu mnuGestiones;
+    @FXML
+    private Menu mnuHeramientas;
+    @FXML
+    private Label lblUsuario;
+
+
+    public static Usuario usuario;//Creamos una variable static esto significa que NO depende de la clase para poder mantener la sesion del usuario
+    //que este logeado
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        lblUsuario.setText(usuario.getPrimerNombre() + " " +  usuario.getPrimerApellido());//Asignamos el nombre y apellido del usuario a un label
+        // en la pantalla principal del sistema.
 
+        if (usuario.getPerfil().getNombre().equals("APH")){//Validamos que tipo de perfil tiene el usuario logueado, con el fin de restringir los permisos
+            permisosUsuario();
+        }
+
+    }
+
+
+    @FXML
+    public void permisosUsuario(){//Funcion para retringir acciones al usuario
+
+        mi_perfil.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Acceso denegado");
+                alert.setContentText("No tiene permisos para relalizar esta acción");
+                alert.show();
+            }
+        });
+        mi_usario.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Acceso denegado");
+                alert.setContentText("No tiene permisos para realizar esta acción");
+                alert.show();
+            }
+        });
+
+        mi_datos_persona.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Acceso denegado");
+                alert.setContentText("No tiene permisos para realizar esta acción");
+                alert.show();
+            }
+        });
     }
 
 

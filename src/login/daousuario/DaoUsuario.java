@@ -38,7 +38,7 @@ public class DaoUsuario {
                 user.setIdUsuario(rset.getString("idUsuario"));
                 user.setPrimerNombre(rset.getString("primerNombre"));
                 user.setSegundoNombre(rset.getString("segundoNombre"));
-                user.setPrimerNombre(rset.getString("primerApellido"));
+                user.setPrimerApellido(rset.getString("primerApellido"));
                 user.setSegundoApellido(rset.getString("segundoApellido"));
                 user.setUsername(rset.getString("username"));
                 user.setContrasena(rset.getString("contrasena"));
