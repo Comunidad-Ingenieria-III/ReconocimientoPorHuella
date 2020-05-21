@@ -52,9 +52,10 @@ public class DocumentoEntregaDao {
         } catch (RuntimeException | SQLException ex) {
             //throw new RuntimeException("Error SQL - obtenerTodos()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return listaPersonal;
     } // Fin del método obtenerTodos()
@@ -144,11 +145,11 @@ public class DocumentoEntregaDao {
             stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Agregar()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 1;
     } // Fin del método agregar()

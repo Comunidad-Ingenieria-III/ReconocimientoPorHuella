@@ -39,6 +39,10 @@ public class FacadePersona {
         return personaDao.buscarPrimaryKeyPersona(idpersona);
     }
 
+    public boolean buscarIdEstado(String idpersona){
+       return personaDao.buscarIdPersonaEstado(idpersona);
+    }
+
     public void buscarPorNombre(String nombrepersona){
         personaDao.buscarPorNombre(nombrepersona);
     }

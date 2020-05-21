@@ -1,6 +1,7 @@
 package persona_familiar.per_fami_dao;
 
 import conexionBD.ConexionRoot;
+import javafx.scene.control.Alert;
 import persona_familiar.per_fami_dto.Per_Fami_Dto;
 import personal_salud_titulo.psdto.PsDto;
 
@@ -45,8 +46,13 @@ public class    Per_Fami_Dao {
             }
 
 
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerTodos()!");
+        }catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - cargartodas()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return listaPer_fami;
     }
@@ -66,8 +72,13 @@ public class    Per_Fami_Dao {
 
             return stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            System.out.println(e.toString());
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Inhabilitar()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
             return 0;
         }
     } // Fin del método agregar()
@@ -76,32 +87,35 @@ public class    Per_Fami_Dao {
     public int modificar(Per_Fami_Dto per_fami_dto) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "update persona_familiar set idPersonal = ?, idFamiliar = ?, fechaIngreso = ?, estado  where idpersona = ?";
+            String sql = "update persona_familiar set idpersona = ?, idFamiliar = ?, fechaIngreso = ? where idpersona = ?";
             stmt = conn.prepareStatement(sql);
 
 
             stmt.setString(1, per_fami_dto.getIdPersona());
             stmt.setString(2, per_fami_dto.getIdFamiliar());
             stmt.setDate(3, per_fami_dto.getFechaIngreso());
-            stmt.setBoolean(4, per_fami_dto.isEstado());
+            //stmt.setBoolean(4, per_fami_dto.isEstado());
 
-            stmt.setString(5, per_fami_dto.getIdPersona());
-
-
+            stmt.setString(4, per_fami_dto.getIdPersona());
             return stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            System.out.println(e.toString());
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
             return 0;
         }
+
     } // Fin del método modificar()
 
-    public Per_Fami_Dto buscarPorId(String idPersona) {
+    public Per_Fami_Dto buscarPorId(String idpersona) {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from persona_familiar where idpersona = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, idPersona);
+            stmt.setString(1, idpersona);
             rset = stmt.executeQuery();
 
             if (rset.next()) {
@@ -114,8 +128,12 @@ public class    Per_Fami_Dao {
 
 
             }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return per_fami_dto;
     }
@@ -132,8 +150,12 @@ public class    Per_Fami_Dao {
             if (rset.next()) {
                 trpta = true;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return trpta;
     }
@@ -148,8 +170,12 @@ public class    Per_Fami_Dao {
             stmt.setString(2, idps);
             stmt.executeUpdate();
 
-        } catch (RuntimeException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
             return false;
         }
         return true;

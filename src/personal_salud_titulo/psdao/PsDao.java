@@ -4,6 +4,7 @@ import conexionBD.JdbcHelper;
 import datospersona.dto.Persona;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.cell.PropertyValueFactory;
 import personalSalud.personalsaluddto.PersonalSalud;
 import personal_salud_titulo.psdto.PsDto;
@@ -50,8 +51,12 @@ public class PsDao {
             }
 
 
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerTodos()!");
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return listaPs;
     }
@@ -70,10 +75,14 @@ public class PsDao {
 
             return stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            System.out.println(e.toString());
-            return 0;
+        }catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
+        return 0;
     } // Fin del método agregar()
 
 
@@ -94,10 +103,14 @@ public class PsDao {
 
             return stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            System.out.println(e.toString());
-            return 0;
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
+        return 0;
     } // Fin del método modificar()
 
     public PsDto buscarPorId(String idPersonal) {
@@ -118,8 +131,12 @@ public class PsDao {
                 psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
 
             }
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerPorId()!");
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return psDto;
     }
@@ -133,10 +150,14 @@ public class PsDao {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idPst);
             return stmt.executeUpdate();
-        } catch (RuntimeException | SQLException e) {
-            System.out.println(e.toString());
-            return 0;
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
+        return 0;
     } // Fin del método eliminar()*/
 
 

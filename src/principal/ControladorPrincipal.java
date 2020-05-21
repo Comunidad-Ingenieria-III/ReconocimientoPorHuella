@@ -100,7 +100,6 @@ public class ControladorPrincipal implements Initializable{
 
     }
 
-
     @FXML
     private void abrirPerfil(ActionEvent event) throws IOException {
         try {

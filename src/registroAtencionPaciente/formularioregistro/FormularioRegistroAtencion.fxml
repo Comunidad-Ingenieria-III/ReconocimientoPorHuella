@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane prefHeight="500.0" prefWidth="800.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registroAtencionPaciente.formularioregistro.ContraladorRegistroAtencionPaciente">
+<TabPane prefHeight="500.0" prefWidth="800.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registroAtencionPaciente.formularioregistro.ContraladorRegistroAtencionPaciente">
    <tabs>
       <Tab text="Datos del Paciente">
          <content>
@@ -77,14 +78,6 @@
                      </font>
                   </Label>
                   <TextArea fx:id="ta_huella" editable="false" layoutX="414.0" layoutY="237.0" prefHeight="182.0" prefWidth="360.0" />
-                  <Button fx:id="bt_siguiente" layoutX="666.0" layoutY="427.0" mnemonicParsing="false" onAction="#abrirtab2" prefHeight="30.0" prefWidth="100.0" text="Siguiente" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
                   <Label layoutX="593.0" layoutY="60.0" prefHeight="20.0" prefWidth="175.0" styleClass="lbl-cuerpo" text="Apellido Paciente">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
@@ -203,15 +196,7 @@
                   </Label>
                   <Label layoutX="468.0" layoutY="332.0" prefHeight="0.0" prefWidth="12.0" text="*" textFill="#f81f1f" />
                   <ComboBox fx:id="cbx_institucionReferencia" layoutX="301.0" layoutY="353.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione" />
-                  <Button fx:id="bt_guardar" layoutX="452.0" layoutY="411.0" mnemonicParsing="false" onAction="#guardarRegistro" prefWidth="100.0" text="Guardar" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button layoutX="594.0" layoutY="411.0" mnemonicParsing="false" prefWidth="100.0" text="Siguiente" textFill="WHITE">
+                  <Button fx:id="bt_guardar" layoutX="552.0" layoutY="410.0" mnemonicParsing="false" onAction="#guardarRegistro" prefHeight="30.0" prefWidth="200.0" text="Guardar Registro" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -292,15 +277,7 @@
                      </font>
                   </Label>
                   <TextArea fx:id="ta_observacionesPr" layoutX="24.0" layoutY="311.0" prefHeight="70.0" prefWidth="733.0" />
-                  <Button layoutX="279.0" layoutY="391.0" mnemonicParsing="false" prefWidth="100.0" text="Atrás" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="bt_guardarPr" layoutX="482.0" layoutY="391.0" mnemonicParsing="false" onAction="#guardarDocumentoReferencia" prefHeight="30.0" prefWidth="100.0" text="Guardar" textFill="WHITE">
+                  <Button fx:id="bt_guardarPr" layoutX="203.0" layoutY="412.0" mnemonicParsing="false" onAction="#guardarDocumentoReferencia" prefHeight="30.0" prefWidth="329.0" text="Guardar Documento de Entrega " textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -353,15 +330,8 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="bt_salir" layoutX="649.0" layoutY="391.0" mnemonicParsing="false" onAction="#setCerrarFormularioRegistroAtencion" prefHeight="30.0" prefWidth="100.0" text="Salir" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
                   <ComboBox fx:id="cbx_codigoRemision" layoutX="560.0" layoutY="252.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione" />
+                  <Button fx:id="bt_salir" layoutX="593.0" layoutY="415.0" mnemonicParsing="false" onAction="#cerrarFormularioRegistroAtencion" prefHeight="30.0" prefWidth="165.0" text="Salir" />
                </children></AnchorPane>
          </content>
       </Tab>
