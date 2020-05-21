@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -549,8 +550,10 @@ public class ControladorPrincipal implements Initializable{
     @FXML
     private void generarReporte(ActionEvent event) throws JRException {
         JasperPrint reporteLleno = Controller.generarReportePersonal();
-        JasperViewer viewer = new JasperViewer(reporteLleno);
+        //JasperExportManager.exportReportToPdfFile(reporteLleno, "reporteEmpleados.pdf");
+       JasperViewer viewer = new JasperViewer(reporteLleno);
         viewer.setVisible(true);
+
     }
 
 
