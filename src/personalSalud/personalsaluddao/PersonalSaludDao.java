@@ -11,6 +11,7 @@ import personalSalud.personalsaluddto.PersonalSalud;
 import personal_salud_titulo.psdto.PsDto;
 
 import javax.swing.*;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,22 +55,23 @@ public class PersonalSaludDao {
                 personalSalud.setTelefono(rset.getString("telefono"));
                 personalSalud.setEmail(rset.getString("email"));
                 personalSalud.setTipoDocumento(rset.getString("idTipoDocumento"));
-                personalSalud.setCargo(rset.getString("cargo"));
+                personalSalud.setCargo(rset.getString("idCargo"));
                 personalSalud.setEstado(rset.getBoolean("estado"));
                 personas.add(personalSalud);
             }
 
-        } catch (RuntimeException | SQLException e) {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Error Al Obtener Los Registros De Personal Salud");
-            msg.setHeaderText("Error.");
-            msg.show();
-            e.printStackTrace();
-
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return personas;
     } // Fin del método listarPersonalSalud()
+
+
+
 
 
     public int agregarPersonal2(PersonalSalud personalSalud) {//Funcion para agregar  registros de la tabla personal_salud de la BBDD
@@ -80,7 +82,7 @@ public class PersonalSaludDao {
             conn = ConexionRoot.getConexion();
             //conn.setAutoCommit(false);
             String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2," +
-                    " sexo, telefono, email, idTipoDocumento, cargo, estado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " sexo, telefono, email, idTipoDocumento, idCargo, estado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             personal = conn.prepareStatement(sql);
             personal.setString(1, personalSalud.getIdPersonal());
             personal.setString(2, personalSalud.getNombre1());
@@ -97,30 +99,27 @@ public class PersonalSaludDao {
 
             return 1;
 
-        } catch (SQLException ex) {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Error Al Agregar El Registro");
-            msg.setHeaderText("Error.");
-            msg.show();
-            ex.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 0;
     } // Fin del método agregar()
 
 
-
-
     public int agregarPersonal(PersonalSalud personalSalud, List<PsDto> titulos) {//funcion para agregar los registros de personal_salud y
         //los registros de personal_salud_titulo a la BBDD por medio de una transaccion SQL
-        PreparedStatement personal,pertitu;
+        PreparedStatement personal, pertitu;
 
         try {
 
             conn = ConexionRoot.getConexion();
             conn.setAutoCommit(false);
             String sql = "insert into personal_salud(idPersonal, nombre1, nombre2, apellido1, apellido2," +
-                    " sexo, telefono, email, idTipoDocumento, cargo, estado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " sexo, telefono, email, idTipoDocumento, idCargo, estado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             personal = conn.prepareStatement(sql);
             personal.setString(1, personalSalud.getIdPersonal());
             personal.setString(2, personalSalud.getNombre1());
@@ -141,7 +140,7 @@ public class PersonalSaludDao {
                 pertitu.setString(1, title.getIdPersonal());
                 pertitu.setString(2, title.getIdTipoTitu());
                 pertitu.setString(3, title.getIdInstitucion());
-                pertitu.setDate(4,title.getFechaTitulacion());
+                pertitu.setDate(4, title.getFechaTitulacion());
                 pertitu.setBoolean(5, title.isEstado());
                 pertitu.addBatch();
             }
@@ -169,40 +168,38 @@ public class PersonalSaludDao {
     } // Fin del método agregar()
 
 
-
     public boolean agregarPsdto(PsDto psDto) {//Funcion para agregar los registros de personal_salud_titulo a la BBDDD
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into personal_salud_titulo(idPs, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion, estado) values(?, ?, ?, ?, ?, ?)";
+            String sql = "insert into personal_salud_titulo(idPst, idPersonal, idTipoTitu, idInstitucion, fechaTitulacion, estado) values(?, ?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, psDto.getId());
-                stmt.setString(2, psDto.getIdPersonal());
-                stmt.setString(3, psDto.getIdTipoTitu());
-                stmt.setString(4, psDto.getIdInstitucion());
-                stmt.setDate(5,psDto.getFechaTitulacion());
-                stmt.setBoolean(6, psDto.isEstado());
+            stmt.setInt(1, psDto.getId());
+            stmt.setString(2, psDto.getIdPersonal());
+            stmt.setString(3, psDto.getIdTipoTitu());
+            stmt.setString(4, psDto.getIdInstitucion());
+            stmt.setDate(5, psDto.getFechaTitulacion());
+            stmt.setBoolean(6, psDto.isEstado());
 
             stmt.executeUpdate();
             return true;
-        } catch (SQLException | RuntimeException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
             return false;
         }
     }
 
-
-
-
-
-
     public int modificarPersonal(PersonalSalud personalSalud, List<PsDto> titulos) {//Funcion para modificar los registros de la tabla personal-salud
         //y personal-salud-titulo
-        PreparedStatement personal,pertitu;
+        PreparedStatement personal, pertitu;
         try {
             conn = ConexionRoot.getConexion();
 
             String sql = "update personal_salud set nombre1 = ?, nombre2 = ?, apellido1 = ?, apellido2 = ?, sexo = ?," +
-                    " telefono = ?, email = ?, idTipoDocumento = ?, cargo = ?  where idPersonal = ?";
+                    " telefono = ?, email = ?, idTipoDocumento = ?, idCargo = ?  where idPersonal = ?";
             personal = conn.prepareStatement(sql);
             personal.setString(1, personalSalud.getNombre1());
             personal.setString(2, personalSalud.getNombre2());
@@ -217,14 +214,14 @@ public class PersonalSaludDao {
             personal.setString(10, personalSalud.getIdPersonal());
             personal.executeUpdate();
 
-            String sql1 = "update personal_salud_titulo set idPersonal = ?, idTipoTitu = ? , idInstitucion = ?, fechatitulacion = ? where idPs = ?";
+            String sql1 = "update personal_salud_titulo set idPersonal = ?, idTipoTitu = ? , idInstitucion = ?, fechatitulacion = ? where idPst = ?";
             pertitu = conn.prepareStatement(sql1);
 
             for (PsDto title : titulos) {
                 pertitu.setString(1, title.getIdPersonal());
                 pertitu.setString(2, title.getIdTipoTitu());
                 pertitu.setString(3, title.getIdInstitucion());
-                pertitu.setDate(4,title.getFechaTitulacion());
+                pertitu.setDate(4, title.getFechaTitulacion());
                 pertitu.setInt(5, title.getId());
 
                 pertitu.addBatch();
@@ -233,32 +230,29 @@ public class PersonalSaludDao {
             System.out.println(titulos.toString());
             pertitu.executeBatch();
 
-        } catch (SQLException | RuntimeException e) {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Error Al Modificar");
-            msg.setHeaderText("Exito!");
-            msg.show();
-            e.printStackTrace();
-            return 0;
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 1;
     } // Fin del método modificar()
 
-    public BusquedaDePersonal buscarPersonalPorId(String idPersonal){//funcion que permite la busqueda de un personal de salud, junto con los
+    public BusquedaDePersonal buscarPersonalPorId(String idPersonal) {//funcion que permite la busqueda de un personal de salud, junto con los
         //registros que le pertenezcan en la tabla personal-salud-titulo.
         PsDto psDto;
-        List<PsDto>listaTitulos = null;
+        List<PsDto> listaTitulos = null;
         PersonalSalud personalSalud = null;
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from personal_salud where idPersonal=?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1,idPersonal);
+            stmt.setString(1, idPersonal);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
+            if (rset.next()) {
                 personalSalud = new PersonalSalud();
                 personalSalud.setIdPersonal(rset.getString("idPersonal"));
                 personalSalud.setNombre1(rset.getString("nombre1"));
@@ -269,19 +263,19 @@ public class PersonalSaludDao {
                 personalSalud.setTelefono(rset.getString("telefono"));
                 personalSalud.setEmail(rset.getString("email"));
                 personalSalud.setTipoDocumento(rset.getString("idTipoDocumento"));
-                personalSalud.setCargo(rset.getString("cargo"));
+                personalSalud.setCargo(rset.getString("idCargo"));
                 personalSalud.setEstado(rset.getBoolean("estado"));
             }
 
             String sql2 = "select * from personal_salud_titulo where idPersonal=?";
             stmt = conn.prepareStatement(sql2);
-            stmt.setString(1,idPersonal);
+            stmt.setString(1, idPersonal);
             rset = stmt.executeQuery();
 
             listaTitulos = new ArrayList<>();
-            while (rset.next()){
+            while (rset.next()) {
                 psDto = new PsDto();
-                psDto.setId(rset.getInt("idPs"));
+                psDto.setId(rset.getInt("idPst"));
                 psDto.setIdPersonal(rset.getString("idPersonal"));
                 psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
                 psDto.setIdInstitucion(rset.getString("idInstitucion"));
@@ -292,10 +286,14 @@ public class PersonalSaludDao {
             }
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }  catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
-            return new BusquedaDePersonal(listaTitulos,personalSalud);
+        return new BusquedaDePersonal(listaTitulos, personalSalud);
     }
 
 
@@ -306,15 +304,15 @@ public class PersonalSaludDao {
         try {
             conn = ConexionRoot.getConexion();
             //Con este query buscamos si existen registros que coincidan entre la tabla personal_salud y personal_salud_titulo por medio del idPersonal
-            String sql = "SELECT p.idPersonal, ps.idPs as relacion from personal_salud AS p " +
+            String sql = "SELECT p.idPersonal, ps.idPst as relacion from personal_salud AS p " +
                     "INNER JOIN personal_salud_titulo AS ps ON p.idPersonal=ps.idPersonal where p.idPersonal = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, idPersonal);
             rset = stmt.executeQuery();
 
-            if (rset.next()){//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
+            if (rset.next()) {//Si se encuentra al menos una coincidencia, el usuario no podra inactivar el registro
                 yes = true;
-            }else{//Si el Id que se envía como parametro no tiene registros dependientes, actualiza el estado a false = inactivo en la BBDD
+            } else {//Si el Id que se envía como parametro no tiene registros dependientes, actualiza el estado a false = inactivo en la BBDD
                 String sql1 = "update personal_salud set estado = ? where idPersonal= ?";
                 stmt = conn.prepareStatement(sql1);
                 stmt.setBoolean(1, false);
@@ -329,20 +327,23 @@ public class PersonalSaludDao {
         return yes;
     }
 
-    public boolean inhabilitarPsdto(int idPs, boolean estado){//Funcion para inhabilitar un registro de la tabla personal_salud_titulo de la BBDD, cambiando su
+    public boolean inhabilitarPsdto(int idPs, boolean estado) {//Funcion para inhabilitar un registro de la tabla personal_salud_titulo de la BBDD, cambiando su
         //estado de activo a inactivo
-        try{
+        try {
             conn = ConexionRoot.getConexion();
-            String sql = "update personal_salud_titulo set estado = ? where idPs= ?";
+            String sql = "update personal_salud_titulo set estado = ? where idPst= ?";
             stmt = conn.prepareStatement(sql);
             stmt.setBoolean(1, estado);
             stmt.setInt(2, idPs);
             stmt.executeUpdate();
 
 
-        } catch (SQLException | RuntimeException e) {
-            e.printStackTrace();
-            return false;
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
 
         }
         return true;
@@ -355,27 +356,32 @@ public class PersonalSaludDao {
             conn = ConexionRoot.getConexion();
             String sql = "select * from personal_salud where idPersonal = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1,idPersonal);
+            stmt.setString(1, idPersonal);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
+            if (rset.next()) {
                 trpta = true;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return trpta;
     }
+
     public PersonalSalud buscarPorIdPersonal(String idPersonal) {//Funcion para realizar la busqueda de un personal de salud por medio de su perimary key
         PersonalSalud personalSalud = null;
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from personal_salud where idPersonal = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1,idPersonal);
+            stmt.setString(1, idPersonal);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
+            if (rset.next()) {
                 personalSalud = new PersonalSalud();
                 personalSalud.setIdPersonal(rset.getString("idPersonal"));
                 personalSalud.setNombre1(rset.getString("nombre1"));
@@ -386,11 +392,15 @@ public class PersonalSaludDao {
                 personalSalud.setTelefono(rset.getString("telefono"));
                 personalSalud.setEmail(rset.getString("email"));
                 personalSalud.setTipoDocumento(rset.getString("idTipoDocumento"));
-                personalSalud.setCargo(rset.getString("cargo"));
+                personalSalud.setCargo(rset.getString("idCargo"));
                 personalSalud.setEstado(rset.getBoolean("estado"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }  catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return personalSalud;
     }
@@ -398,22 +408,26 @@ public class PersonalSaludDao {
     public PsDto buscarPsdto(int idPs) {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from personal_salud_titulo where idPs = ?";
+            String sql = "select * from personal_salud_titulo where idPst = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,idPs);
+            stmt.setInt(1, idPs);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
-                PsDto psDto= new PsDto();
-                psDto.setId(rset.getInt("idPs"));
+            if (rset.next()) {
+                PsDto psDto = new PsDto();
+                psDto.setId(rset.getInt("idPst"));
                 psDto.setIdPersonal(rset.getString("idPersonal"));
                 psDto.setIdTipoTitu(rset.getString("idTipoTitu"));
                 psDto.setIdInstitucion(rset.getString("idInstitucion"));
                 psDto.setFechaTitulacion(rset.getDate("fechaTitulacion"));
                 psDto.setEstado(rset.getBoolean("estado"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return psDto;
     }
@@ -424,7 +438,7 @@ public class PersonalSaludDao {
             conn = ConexionRoot.getConexion();
 
             String sql = "update personal_salud set nombre1 = ?, nombre2 = ?, apellido1 = ?, apellido2 = ?, sexo = ?," +
-                    " telefono = ?, email = ?, idTipoDocumento = ?, cargo = ?, estado = ?  where idPersonal = ?";
+                    " telefono = ?, email = ?, idTipoDocumento = ?, idCargo = ?, estado = ?  where idPersonal = ?";
             personal = conn.prepareStatement(sql);
             personal.setString(1, personalSalud.getNombre1());
             personal.setString(2, personalSalud.getNombre2());
@@ -440,15 +454,12 @@ public class PersonalSaludDao {
             personal.setString(11, personalSalud.getIdPersonal());
             personal.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Error Al Modificar");
-            msg.setHeaderText("Exito!");
-            msg.show();
-            e.printStackTrace();
-            return 0;
+        }  catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 1;
     } // Fin del método modificarPersonal2()
@@ -458,26 +469,23 @@ public class PersonalSaludDao {
         try {
             conn = ConexionRoot.getConexion();
 
-            String sql = "update personal_salud_titulo set idPersonal = ?, idTipoTitu = ?, idInstitucion = ?, fechaTitulacion = ?, estado = ? where idPs = ?";
+            String sql = "update personal_salud_titulo set idPersonal = ?, idTipoTitu = ?, idInstitucion = ?, fechaTitulacion = ?, estado = ? where idPst = ?";
             psdto = conn.prepareStatement(sql);
 
-            psdto.setString(1,psDto.getIdPersonal());
+            psdto.setString(1, psDto.getIdPersonal());
             psdto.setString(2, psDto.getIdTipoTitu());
             psdto.setString(3, psDto.getIdInstitucion());
-            psdto.setDate(4,psDto.getFechaTitulacion());
+            psdto.setDate(4, psDto.getFechaTitulacion());
             psdto.setBoolean(5, psDto.isEstado());
 
             psdto.setInt(6, psDto.getId());
             psdto.executeUpdate();
-        } catch (SQLException | RuntimeException e) {
-
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Personal Salud");
-            msg.setContentText("Error Al Modificar");
-            msg.setHeaderText("Exito!");
-            msg.show();
-            e.printStackTrace();
-            return 0;
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 1;
     }

@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ControladorCargo extends Component implements Initializable {
+public class ControladorCargo implements Initializable {
     FacadeCargo facadeCargo = new FacadeCargo();
     @FXML
     private TableView<Cargo> tblCargos;
@@ -117,9 +117,6 @@ public class ControladorCargo extends Component implements Initializable {
                     txtId.setText("");
                     txtDescripcion.setText("");
                     txtId.requestFocus();
-
-
-
 
                 }else{
 

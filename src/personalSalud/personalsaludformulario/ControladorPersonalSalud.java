@@ -474,9 +474,6 @@ public class ControladorPersonalSalud implements Initializable {
                 cmb_cargo.requestFocus();
             }else{
 
-
-
-
             int res = personalSaludFacade.modificarPersonal2(crearPersonalSalud());
 
             if (res == 1) {
@@ -509,9 +506,8 @@ public class ControladorPersonalSalud implements Initializable {
     }
     @FXML
     public void textAction(KeyEvent e){
+
         if (valor ==0){
-
-
             if(e.getCode().equals(KeyCode.ENTER))
                 consultarPersonalTitulo();
         }

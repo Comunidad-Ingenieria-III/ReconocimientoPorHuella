@@ -153,12 +153,7 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
             msg.show();
         }
 
-
-
     }
-
-
-
 
     @FXML
     public void limpiar() {

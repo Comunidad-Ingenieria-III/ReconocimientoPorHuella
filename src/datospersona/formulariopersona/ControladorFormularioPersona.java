@@ -59,6 +59,8 @@ import java.util.ResourceBundle;
 public class ControladorFormularioPersona implements Initializable {
 
     Persona persona = new Persona();
+    Per_Fami_Dto per_fami_dto = new Per_Fami_Dto();
+    Familiar familiar = new Familiar();
     FacadePersona facadepersona = new FacadePersona();
     FacadeTipoDocumento facadeTipoDocumento = new FacadeTipoDocumento();
     FacadeEps facadeEps = new FacadeEps();
@@ -131,7 +133,7 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private Button bt_inhabilitarfamiliar;
 
-    private int valor = 1;
+    private int valor = 0;
 
     private ObservableList<Per_Fami_Dto> familiares;
 
@@ -162,7 +164,7 @@ public class ControladorFormularioPersona implements Initializable {
         iniciarDocumentoPersona();
         manejarEventosTablaFamiliares();
         colocarImagenBotones();
-        consultarEnter();
+        buscarPersona();
 
     }
 
@@ -351,7 +353,7 @@ public class ControladorFormularioPersona implements Initializable {
         featuresverificacion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
 
         // Comprobar la calidad de la muestra de la huella y lo añade a su reclutador si es bueno
-        if (featuresinscripcion != null)
+        if (featuresinscripcion != null) {
             try {
                 System.out.println("Las Caracteristicas de la Huella han sido creada");
                 try {
@@ -387,6 +389,14 @@ public class ControladorFormularioPersona implements Initializable {
                         break;
                 }
             }
+        } else {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Persona");
+            msg.setContentText("No ha capturado la huella");
+            msg.setHeaderText("Debes capturar la huella");
+            msg.show();
+
+        }
     }
 
     @FXML
@@ -394,14 +404,14 @@ public class ControladorFormularioPersona implements Initializable {
 
         boolean documento = buscarDocumentos(tf_idpersona.getText());
         if (!documento) {
-            
+
             if (cbxtipodocumento.getSelectionModel().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.WARNING);
                 msg.setTitle("Gestiones - Registro Persona");
                 msg.setContentText("Campo tipo documento requerido");
-                msg.setHeaderText("Debes llenar el tipo de documento");
+                msg.setHeaderText("Debes llenar el campo tipo de documento");
                 msg.show();
-                cbxtipodocumento.setStyle("-fx-border-color: red;");
+                cbxtipodocumento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 cbxtipodocumento.requestFocus();
 
             } else if (tf_idpersona.getText().isEmpty()) {
@@ -410,7 +420,7 @@ public class ControladorFormularioPersona implements Initializable {
                 msg.setContentText("Campo número documento requerido");
                 msg.setHeaderText("Debes llenar el campo número de documento");
                 msg.show();
-                tf_idpersona.setStyle("-fx-border-color: red;");
+                tf_idpersona.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 tf_idpersona.requestFocus();
 
             } else if (tf_primerNombre.getText().isEmpty()) {
@@ -419,7 +429,7 @@ public class ControladorFormularioPersona implements Initializable {
                 msg.setContentText("Campo primer nombre requerido");
                 msg.setHeaderText("Debes llenar el campo primer nombre");
                 msg.show();
-                tf_primerNombre.setStyle("-fx-border-color: red;");
+                tf_primerNombre.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 tf_primerNombre.requestFocus();
 
             } else if (tf_primerApellido.getText().isEmpty()) {
@@ -428,8 +438,17 @@ public class ControladorFormularioPersona implements Initializable {
                 msg.setContentText("Campo primer apellido requerido");
                 msg.setHeaderText("Debes llenar el campo primer apellido");
                 msg.show();
-                tf_primerApellido.setStyle("-fx-border-color: red;");
+                tf_primerApellido.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 tf_primerApellido.requestFocus();
+
+            } else if (dp_fechaNacimiento.getValue() == null) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo fecha de nacimiento requerido");
+                msg.setHeaderText("Debes llenar el campo fecha de nacimiento");
+                msg.show();
+                dp_fechaNacimiento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                dp_fechaNacimiento.requestFocus();
 
             } else if (tf_direccion.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.WARNING);
@@ -437,7 +456,7 @@ public class ControladorFormularioPersona implements Initializable {
                 msg.setContentText("Campo dirección requerido");
                 msg.setHeaderText("Debes llenar el campo dirección");
                 msg.show();
-                tf_direccion.setStyle("-fx-border-color: red;");
+                tf_direccion.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 tf_direccion.requestFocus();
 
             } else if (cbxsexo.getSelectionModel().isEmpty()) {
@@ -446,7 +465,7 @@ public class ControladorFormularioPersona implements Initializable {
                 msg.setContentText("Campo sexo requerido");
                 msg.setHeaderText("Debes llenar el campo sexo");
                 msg.show();
-                cbxsexo.setStyle("-fx-border-color: red;");
+                cbxsexo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 cbxsexo.requestFocus();
 
             } else if (cbxtipoeps.getSelectionModel().isEmpty()) {
@@ -455,7 +474,7 @@ public class ControladorFormularioPersona implements Initializable {
                 msg.setContentText("Campo EPS requerido");
                 msg.setHeaderText("Debes llenar el campo EPS");
                 msg.show();
-                cbxtipoeps.setStyle("-fx-border-color: red;");
+                cbxtipoeps.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 cbxtipoeps.requestFocus();
 
             } else if (ta_alergicoA.getText().isEmpty()) {
@@ -484,7 +503,6 @@ public class ControladorFormularioPersona implements Initializable {
                 msg.show();
                 txtArea.setStyle("-fx-border-color: red;");
                 bt_hulla.requestFocus();
-
 
             } else {
 
@@ -532,46 +550,138 @@ public class ControladorFormularioPersona implements Initializable {
 
                         try {
                             guardarPersona();
+
                         } catch (RuntimeException ex) {
-                            //throw new RuntimeException("Error SQL - Buscar Primary Key()!");
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error");
-                            alert.setHeaderText("Ocurrio el Error:");
+                            alert.setHeaderText("Ocurrio el Error SQL:");
                             alert.setContentText(ex.getLocalizedMessage());
                         }
                     }
                 } catch (SQLException | RuntimeException ex) {
-                    //throw new RuntimeException("Error SQL - Buscar Primary Key()!");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
-                    alert.setHeaderText("Ocurrio el Error:");
+                    alert.setHeaderText("Ocurrio el Error SQL:");
                     alert.setContentText(ex.getLocalizedMessage());
                 }
+
             }
         } else {
-            int res = facadepersona.modificarPersona(modificarPersona());
-            if (res == 1) {
-                iniciarCbxid_persona();
-                Alert msg1 = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
-                msg1.setTitle("Gestiones - Persona");
-                msg1.setContentText("Registro Agregado Correctamente\n \n" + "Desea Modificar su Familiar ?");
-                msg1.setHeaderText("Información");
-                Optional<ButtonType> action = msg1.showAndWait();
 
-                if (action.get() == ButtonType.YES) {
-                    tb_familiar.setDisable(false);
-                    cbx_documentopersona.setDisable(false);
-                    cbx_documentofamiliar.setDisable(false);
-                    dp_ingresofamiliar.setDisable(false);
-                    bt_agregarfamiliar.setDisable(false);
-                    cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
-                    bt_crear.setDisable(false);
-                } else if (action.get() == ButtonType.NO) {
-                    deshabilitarCampos();
-                    deshabilitarBotones();
-                    limpiar();
+            if (cbxtipodocumento == null) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo tipo documento requerido");
+                msg.setHeaderText("Debes llenar el tipo de documento");
+                msg.show();
+                cbxtipodocumento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                cbxtipodocumento.requestFocus();
+
+            } else if (tf_idpersona.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo número documento requerido");
+                msg.setHeaderText("Debes llenar el campo número de documento");
+                msg.show();
+                tf_idpersona.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_idpersona.requestFocus();
+
+            } else if (tf_primerNombre.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo primer nombre requerido");
+                msg.setHeaderText("Debes llenar el campo primer nombre");
+                msg.show();
+                tf_primerNombre.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_primerNombre.requestFocus();
+
+            } else if (tf_primerApellido.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo primer apellido requerido");
+                msg.setHeaderText("Debes llenar el campo primer apellido");
+                msg.show();
+                tf_primerApellido.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_primerApellido.requestFocus();
+
+            } else if (dp_fechaNacimiento.getValue() == null) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo fecha de nacimiento requerido");
+                msg.setHeaderText("Debes llenar el campo fecha de nacimiento");
+                msg.show();
+                dp_fechaNacimiento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                dp_fechaNacimiento.requestFocus();
+
+            } else if (tf_direccion.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo dirección requerido");
+                msg.setHeaderText("Debes llenar el campo dirección");
+                msg.show();
+                tf_direccion.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_direccion.requestFocus();
+
+            } else if (cbxsexo.getSelectionModel().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo sexo requerido");
+                msg.setHeaderText("Debes llenar el campo sexo");
+                msg.show();
+                cbxsexo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                cbxsexo.requestFocus();
+
+            } else if (cbxtipoeps.getSelectionModel().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo EPS requerido");
+                msg.setHeaderText("Debes llenar el campo EPS");
+                msg.show();
+                cbxtipoeps.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                cbxtipoeps.requestFocus();
+
+            } else if (ta_alergicoA.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo alergico  requerido");
+                msg.setHeaderText("Debes llenar el campo alergico");
+                msg.show();
+                ta_alergicoA.setStyle("-fx-border-color: red;");
+                ta_alergicoA.requestFocus();
+
+            } else if (ta_enfermedadSufre.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Campo enfermedad que sufre requerido");
+                msg.setHeaderText("Debes llenar el campo enfermedad que sufre");
+                msg.show();
+                ta_enfermedadSufre.setStyle("-fx-border-color: red;");
+                ta_enfermedadSufre.requestFocus();
+
+            } else {
+
+                int res = facadepersona.modificarPersona(modificarPersona());
+                if (res == 1) {
+                    iniciarCbxid_persona();
+                    Alert msg1 = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+                    msg1.setTitle("Gestiones - Persona");
+                    msg1.setContentText("Registro modificado correctamente\n \n" + "Desea Modificar su Familiar ?");
+                    msg1.setHeaderText("Información");
+
+                    Optional<ButtonType> action = msg1.showAndWait();
+
+                    if (action.get() == ButtonType.YES) {
+                        tb_familiar.setDisable(false);
+                        cbx_documentopersona.setDisable(true);
+                        cbx_documentofamiliar.setDisable(false);
+                        dp_ingresofamiliar.setDisable(false);
+                        bt_agregarfamiliar.setDisable(false);
+                        cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
+                        bt_crear.setDisable(false);
+                    } else if (action.get() == ButtonType.NO) {
+                        cancelar();
+                    }
                 }
-                cancelar();
             }
         }
     }
@@ -621,13 +731,21 @@ public class ControladorFormularioPersona implements Initializable {
         if (res == 1) {
             Alert msg1 = new Alert(Alert.AlertType.INFORMATION);
             msg1.setTitle("Gestiones - Persona");
-            msg1.setContentText("Registro Agregado Correctamente");
-            msg1.setHeaderText("Información");
+            msg1.setContentText("Debes ingresar el familiar");
+            msg1.setHeaderText("Registro Agregado Correctamente");
             msg1.show();
             iniciarCbxid_persona();
             cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
             bt_crear.setDisable(false);
-            cancelar();
+            cbx_documentofamiliar.requestFocus();
+            cbx_documentofamiliar.setDisable(false);
+            cbx_documentopersona.setDisable(true);
+            dp_ingresofamiliar.setDisable(false);
+            bt_agregarfamiliar.setDisable(false);
+            bt_modificarfamiliar.setDisable(true);
+            bt_inhabilitarfamiliar.setDisable(true);
+
+            //cancelar();
         } else {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Persona");
@@ -679,6 +797,8 @@ public class ControladorFormularioPersona implements Initializable {
             cbx_documentopersona.setDisable(true);
             cbx_documentofamiliar.setDisable(true);
             dp_ingresofamiliar.setDisable(true);
+            tb_familiar.setDisable(true);
+            bt_agregarfamiliar.setDisable(true);
             valor = 0;
         } else {
 
@@ -688,7 +808,7 @@ public class ControladorFormularioPersona implements Initializable {
             if (persona == null) {
                 Alert msg = new Alert(Alert.AlertType.WARNING);
                 msg.setTitle("Gestiones - Persona");
-                msg.setContentText("El registro ya existe ");
+                msg.setContentText("El registro no se encuentra registrado ");
                 msg.setHeaderText("Información.");
                 msg.show();
                 tf_idpersona.setText("");
@@ -698,14 +818,15 @@ public class ControladorFormularioPersona implements Initializable {
                 // que se acaba de recuperar esta en estado inactivo en la BBDD
                 Alert msg = new Alert(Alert.AlertType.WARNING);
                 msg.setTitle("Gestiones - Persona");
-                msg.setContentText("El Registro Nro: " + persona.getIdpersona() + " Se encuentra inactivo \n"
-                        + "Comuniquese con el adminsitrador para activar de nuevo este registro");
+                msg.setContentText("El Registro Nro: " + persona.getIdpersona() + "\n"
+                        + "Se encuentra inactivo \n" + "Comuniquese con el adminsitrador para activar de nuevo este registro");
                 msg.setHeaderText("Información.");
                 msg.show();
                 tf_idpersona.setText("");
                 tf_idpersona.requestFocus();
 
             } else {
+                
                 cbxtipodocumento.setValue(facadeTipoDocumento.obtenerPorId(persona.getTipoDocumento()));
                 tf_primerNombre.setText(persona.getPrimerNombre());
                 tf_segundoNombre.setText(persona.getSegundoNombre());
@@ -718,15 +839,15 @@ public class ControladorFormularioPersona implements Initializable {
                 ta_enfermedadSufre.setText(persona.getEnfermedadSufre());
                 ta_observaciones.setText(persona.getObservaciones());
                 cbxtipoeps.setValue(facadeEps.obtenerPorId(persona.getIdEps()));
-                cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
+                cbx_documentopersona.setValue(facadepersona.buscarIdPersona(persona.getIdpersona()));
 
-                ObservableList<Per_Fami_Dto>familiaresActivos;//Lista para recibir los familiares desde la BBDD
-                familiaresActivos= FXCollections.observableArrayList(busqueda.getListafamiliar());
+                ObservableList<Per_Fami_Dto> familiaresActivos;//Lista para recibir los familiares desde la BBDD
+                familiaresActivos = FXCollections.observableArrayList(busqueda.getListafamiliar());
 
-                for (int i = 0; i<familiaresActivos.size(); i++){//Ciclo para recorrer la lista de objetos de personal_familiar, para agregar a la lista que estara
+                for (int i = 0; i < familiaresActivos.size(); i++) {//Ciclo para recorrer la lista de objetos de personal_familiar, para agregar a la lista que estara
                     //enlazada con tb_familiar solamente los se encuentres en estado activo.
-                    if(familiaresActivos.get(i).isEstado()){
-                       familiares.add(familiaresActivos.get(i));
+                    if (familiaresActivos.get(i).isEstado()) {
+                        familiares.add(familiaresActivos.get(i));
                     }
                 }
                 tb_familiar.setItems(familiares);
@@ -743,30 +864,33 @@ public class ControladorFormularioPersona implements Initializable {
 
     @FXML
     public void modificar() {//Metodo que se ejecuta al presionar el boton modificar
-        cbxtipodocumento.setDisable(false);
-        tf_idpersona.setDisable(true);
-        tf_primerNombre.setDisable(false);
-        tf_segundoNombre.setDisable(false);
-        tf_primerApellido.setDisable(false);
-        tf_segundoApellido.setDisable(false);
-        dp_fechaNacimiento.setDisable(false);
-        tf_direccion.setDisable(false);
-        cbxsexo.setDisable(false);
-        cbxtipoeps.setDisable(false);
-        ta_alergicoA.setDisable(false);
-        ta_enfermedadSufre.setDisable(false);
-        ta_observaciones.setDisable(false);
-        tf_primerNombre.requestFocus();
-        valor = 0;            //Ingreso una variable Jose Martin campo
-        bt_modificar.setDisable(true);
-        bt_guardar.setDisable(false);
-        bt_hulla.setDisable(false);
-        cbx_documentopersona.setDisable(true);
-        cbx_documentofamiliar.setDisable(false);
-        dp_ingresofamiliar.setDisable(false);
-        bt_agregarfamiliar.setDisable(false);
-        tb_familiar.setDisable(false);
-        //---------------------------------
+
+            cbxtipodocumento.setDisable(false);
+            tf_idpersona.setDisable(true);
+            tf_primerNombre.setDisable(false);
+            tf_segundoNombre.setDisable(false);
+            tf_primerApellido.setDisable(false);
+            tf_segundoApellido.setDisable(false);
+            dp_fechaNacimiento.setDisable(false);
+            tf_direccion.setDisable(false);
+            cbxsexo.setDisable(false);
+            cbxtipoeps.setDisable(false);
+            ta_alergicoA.setDisable(false);
+            ta_enfermedadSufre.setDisable(false);
+            ta_observaciones.setDisable(false);
+            tf_primerNombre.requestFocus();
+            valor = 0;            //Ingreso una variable Jose Martin campo
+            bt_modificar.setDisable(false);
+            bt_guardar.setDisable(false);
+            bt_hulla.setDisable(true);
+            cbx_documentopersona.setDisable(true);
+            cbx_documentofamiliar.setDisable(false);
+            dp_ingresofamiliar.setDisable(false);
+            bt_agregarfamiliar.setDisable(false);
+            bt_modificarfamiliar.setDisable(false);
+            tb_familiar.setDisable(false);
+            //---------------------------------
+
     }
 
     @FXML
@@ -810,18 +934,43 @@ public class ControladorFormularioPersona implements Initializable {
     public void validarE() {
         if (valor == 1) {
 
-            boolean busqueda = buscarDocumento(tf_idpersona.getText());
-            if (busqueda) {
-                Alert msg = new Alert(Alert.AlertType.WARNING);
-                msg.setTitle("Gestiones - Persona");
-                msg.setContentText("Ya Existe Una Persona Con El Documento Nro:\n" + tf_idpersona.getText() + " Asignado");
-                msg.setHeaderText("Información.");
-                msg.show();
-                tf_idpersona.setText("");
-                tf_primerNombre.setText("");
-                tf_idpersona.requestFocus();
+            boolean primary = buscarDocumentos(tf_idpersona.getText());
+            if (primary) {
+                boolean busqueda = buscarDocumento(tf_idpersona.getText());
+                if (busqueda) {
+                    Alert msg = new Alert(Alert.AlertType.WARNING);
+                    msg.setTitle("Gestiones - Persona");
+                    msg.setContentText("El Documento Nro: " + tf_idpersona.getText() + "\n" + "Se escuentra registrado, mas su estado es inhabilitado. Contacte el administrador");
+                    msg.setHeaderText("Información.");
+                    msg.show();
+                    tf_idpersona.setText("");
+                    tf_primerNombre.setText("");
+                    tf_idpersona.requestFocus();
+                } else {
+                    Alert msg = new Alert(Alert.AlertType.WARNING);
+                    msg.setTitle("Gestiones - Persona");
+                    msg.setContentText("El Documento Nro:" + tf_idpersona.getText() + "\n" + "Ya se encuentra registrado");
+                    msg.setHeaderText("Información.");
+                    msg.show();
+                    tf_idpersona.setText("");
+                    tf_primerNombre.setText("");
+                    tf_idpersona.requestFocus();
+                }
             }
         }
+    }
+
+    @FXML
+    public void buscarPersona() {
+        tf_idpersona.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (valor == 0) {
+                    if (event.getCode() == KeyCode.ENTER)
+                        consultarPersonaFamiliar();
+                }
+            }
+        });
     }
 
     @FXML
@@ -837,8 +986,14 @@ public class ControladorFormularioPersona implements Initializable {
                 bt_consultar.setDisable(true);
 
                 cbxtipodocumento.requestFocus();
+                cbx_documentofamiliar.setDisable(true);
+                cbx_documentopersona.setDisable(true);
+                dp_ingresofamiliar.setDisable(true);
+                bt_agregarfamiliar.setDisable(true);
+                bt_modificarfamiliar.setDisable(true);
+                bt_inhabilitarfamiliar.setDisable(true);
                 familiares.clear();
-                //valor = 1;
+                valor = 1;
             }
         });
     }
@@ -849,13 +1004,10 @@ public class ControladorFormularioPersona implements Initializable {
             @Override
             public void handle(KeyEvent event) {
                 char car = event.getCharacter().charAt(0);
-
                 if (!Character.isDigit(car)) {
                     event.consume();
                 }
-
             }
-
         });
     }
 
@@ -872,6 +1024,7 @@ public class ControladorFormularioPersona implements Initializable {
         tf_primerApellido.setStyle(null);
         tf_segundoApellido.setText("");
         dp_fechaNacimiento.setValue(null);
+        dp_fechaNacimiento.setStyle(null);
         tf_direccion.setText("");
         tf_direccion.setStyle(null);
         ta_alergicoA.setText("");
@@ -904,7 +1057,7 @@ public class ControladorFormularioPersona implements Initializable {
         tf_segundoNombre.setText("");
         tf_primerApellido.setText("");
         tf_segundoApellido.setText("");
-        //dp_fechaNacimiento.setValue(null);
+        dp_fechaNacimiento.setValue(null);
         tf_direccion.setText("");
         ta_alergicoA.setText("");
         ta_enfermedadSufre.setText("");
@@ -1026,7 +1179,7 @@ public class ControladorFormularioPersona implements Initializable {
 
     @FXML
     public boolean buscarDocumento(String idpersona) {//Metodo que valida si el número de documento que se esta ingresando esxiste en la BBDD
-        boolean documento = per_fami_facade.buscarPorId(idpersona);
+        boolean documento = facadepersona.buscarIdEstado(idpersona);
         boolean resultado;
         if (documento) {
             resultado = true;
@@ -1040,6 +1193,7 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     public void agregarFamiliar() {//Metodo para agregar titulos a la tabla personal-salud-titulo de la BBDD
         // y a la tabla del formulario previamente validados para evitar registros dulicados
+
         if (cbx_documentofamiliar.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Título");
@@ -1047,16 +1201,14 @@ public class ControladorFormularioPersona implements Initializable {
             msg.show();
             cbx_documentofamiliar.requestFocus();
         } else if (dp_ingresofamiliar.getValue() == null) {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Gestiones - Título");
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Persona");
             msg.setContentText("Debe seleccionar una fecha");
             msg.show();
             cbx_documentofamiliar.requestFocus();
         } else {
 
-
             Per_Fami_Dto per_fami_dto = new Per_Fami_Dto(
-
                     cbx_documentopersona.getSelectionModel().getSelectedItem().getIdpersona(),
                     cbx_documentofamiliar.getSelectionModel().getSelectedItem().getIdFamiliar(),
                     Date.valueOf(dp_ingresofamiliar.getValue()),
@@ -1067,50 +1219,33 @@ public class ControladorFormularioPersona implements Initializable {
             String convertido = fechaHora.format(per_fami_dto.getFechaIngreso());//Formatear una fecha Date a String
 
 
-        if (per_fami_dto.getFechaIngreso().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
-            Alert msg = new Alert(Alert.AlertType.ERROR);
-            msg.setTitle("Fecha Ingreso - Familiar");
-            msg.setContentText("Debe ingresar una fecha valida: \n" + "La fecha: " + convertido + " es superior a la fecha de hoy");
-            msg.show();
-            dp_ingresofamiliar.requestFocus();
-        } else {
-            per_fami_facade.agregar(per_fami_dto);
-            familiares.add(per_fami_dto);
-            Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
-            msg.setTitle("Fecha Ingreso - Familiar");
-            msg.setContentText("Se ha registrado el familiar");
-            msg.setHeaderText("Información");
-            msg.show();
+            if (per_fami_dto.getFechaIngreso().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Agregar Familiar");
+                msg.setContentText("Debe ingresar una fecha valida: \n" + "La fecha: " + convertido + " es superior a la fecha de hoy");
+                msg.show();
+                dp_ingresofamiliar.requestFocus();
+            } else {
 
+                per_fami_facade.agregar(per_fami_dto);
+                familiares.add(per_fami_dto);
+                Alert msg1 = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+                msg1.setTitle("Gestiones - Persona");
+                msg1.setContentText("Familiar Agregado Correctamente\n \n" + "Desea agregar mas Familiares ?");
+                msg1.setHeaderText("Información");
+                Optional<ButtonType> action = msg1.showAndWait();
 
-            if (familiares.isEmpty()) {
-                boolean res = buscarDocumento(per_fami_dto.getIdPersona());
-                if (res) {
-                    per_fami_facade.agregar(per_fami_dto);
-                    familiares.add(per_fami_dto);
-                    //limpiarComponentes();
-                } else {
-                    Alert msge = new Alert(Alert.AlertType.ERROR);
-                    msge.setTitle("Gestiones - Persona");
-                    msge.setContentText("El documento Nro. " + per_fami_dto.getIdPersona() + " no se encuentra registrado!\n" +
-                            "Debe registrarlo para poder asignarle familiar");
-                    msge.show();
+                if (action.get() == ButtonType.YES) {
+                    tb_familiar.setDisable(false);
+                    cbx_documentopersona.setDisable(true);
+                    cbx_documentofamiliar.setDisable(false);
+                    dp_ingresofamiliar.setDisable(false);
+                    bt_agregarfamiliar.setDisable(false);
+                    cbx_documentopersona.setValue(facadepersona.buscarIdPersona(tf_idpersona.getText()));
+                    bt_crear.setDisable(true);
+                } else if (action.get() == ButtonType.NO) {
 
-                }
-           
-                } else {
-                    boolean resultado = recorrerTablaTitulos(familiares, per_fami_dto);
-                    if (resultado) {
-                        Alert msg1 = new Alert(Alert.AlertType.ERROR);
-                        msg1.setTitle("Gestiones - Persona");
-                        msg1.setContentText("El Registro Ya Existe ");
-                        msg1.show();
-                    } else {
-                        per_fami_facade.agregar(per_fami_dto);
-                        familiares.add(per_fami_dto);
-                        //limpiarComponentes();
-                    }
-
+                    cancelar();
                 }
             }
         }
@@ -1144,14 +1279,12 @@ public class ControladorFormularioPersona implements Initializable {
             } else {
                 per_fami_facade.modificar(per_fami_dto);
                 familiares.set(tb_familiar.getSelectionModel().getSelectedIndex(), per_fami_dto);
+                Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+                msg.setTitle("Gestiones - Persona");
+                msg.setContentText("Has modificado tu familiar");
+                msg.show();
                 cancelar();
-                cbx_documentopersona.setValue(null);
-                bt_agregarfamiliar.setDisable(false);
-                bt_modificarfamiliar.setDisable(true);
-                bt_inhabilitarfamiliar.setDisable(true);
-
             }
-
         }
     }
 
@@ -1159,21 +1292,25 @@ public class ControladorFormularioPersona implements Initializable {
     public void eliminarFamiliares() {//Metodo para eliminar el registro seleccionado en la tabla
         String idPs = tb_familiar.getSelectionModel().getSelectedItem().getIdPersona();//Extraemos en id del psDto, desde la fila seleccionada en la tabla
         boolean estado = false;
-        per_fami_facade.eliminar(idPs, estado);
-        familiares.remove(tb_familiar.getSelectionModel().getFocusedIndex());
-        //cancelar();
-    }
 
-    @FXML
-    public void consultarEnter() {
-        tf_idpersona.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    consultarPersonaFamiliar();
-                }
-            }
-        });
+        Alert msg1 = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+        msg1.setTitle("Gestiones - Persona");
+        msg1.setContentText("Estas seguro de eliminar el familiar");
+        msg1.setHeaderText("Información");
+        Optional<ButtonType> action = msg1.showAndWait();
+
+        if (action.get() == ButtonType.YES) {
+
+            per_fami_facade.eliminar(idPs, estado);
+            familiares.remove(tb_familiar.getSelectionModel().getFocusedIndex());
+
+            Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+            msg.setTitle("Gestiones - Persona");
+            msg.setContentText("Has eliminado tu familiar");
+            cancelar();
+        } else if (action.get() == ButtonType.NO) {
+            cancelar();
+        }
     }
 
     @FXML

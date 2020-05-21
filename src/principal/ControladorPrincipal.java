@@ -1,5 +1,6 @@
 package principal;
 
+import Informes.InformesPacientes.controllerP.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -15,6 +16,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import login.dtousuario.Usuario;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 
 import java.io.IOException;
 import java.lang.management.MemoryNotificationInfo;
@@ -117,7 +123,6 @@ public class ControladorPrincipal implements Initializable {
         }
 
     }
-
 
     @FXML
     public void permisosUsuario(){//Funcion para retringir acciones al usuario
@@ -598,6 +603,17 @@ public class ControladorPrincipal implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void generarReporte(ActionEvent event) throws JRException {
+        JasperPrint reporteLleno = Controller.generarReportePersonal();
+        //JasperExportManager.exportReportToPdfFile(reporteLleno, "reporteEmpleados.pdf");
+       JasperViewer viewer = new JasperViewer(reporteLleno);
+        viewer.setVisible(true);
+
+    }
+
+
 
 
     @FXML
