@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/DigitalPersona/Bin/Java/dpfpenrollment.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Program Files/DigitalPersona/Bin/Java/dpfpenrollment.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,7 +19,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/DigitalPersona/Bin/Java/dpfpverification.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Program Files/DigitalPersona/Bin/Java/dpfpverification.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -28,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/DigitalPersona/Bin/Java/dpotapi.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Program Files/DigitalPersona/Bin/Java/dpotapi.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,17 +37,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/DigitalPersona/Bin/Java/dpotjni.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Program Files/DigitalPersona/Bin/Java/dpotjni.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mysql-connector-java-5.1.47-bin" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="com.lowagie.text-2.1.7" level="project" />
     <orderEntry type="library" name="commons-beanutils-1.9.3" level="project" />
     <orderEntry type="library" name="commons-collections-3.2.2" level="project" />
+    <orderEntry type="library" name="com.lowagie.text-2.1.7" level="project" />
     <orderEntry type="library" name="commons-digester-2.1" level="project" />
     <orderEntry type="library" name="commons-logging-1.2" level="project" />
     <orderEntry type="library" name="jasperreports-6.3.1" level="project" />
@@ -57,5 +55,6 @@
     <orderEntry type="library" name="jcommon-xml-1.0.23" level="project" />
     <orderEntry type="library" name="jfreechart-1.0.19" level="project" />
     <orderEntry type="library" name="joda-time-2.9.9" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.49-bin" level="project" />
   </component>
 </module>
