@@ -13,6 +13,7 @@ import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import conexionBD.ConexionRoot;
 import datosFamiliar.dtofamiliar.Familiar;
 import datospersona.dto.Persona;
+import datospersona.facade.FacadePersona;
 import eps.dto.DtoEps;
 import institucionreferencia.dto.InstitucionReferencia;
 import institucionreferencia.facade.FacadeInstitucionReferencia;
@@ -75,6 +76,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     private ResultSet rset;
 
     RegistroDto registroDto = new RegistroDto();
+    FacadePersona facadePersona = new FacadePersona();
     RegistroFacade registroFacade = new RegistroFacade();
     FacadeMedicamento facadeMedicamento = new FacadeMedicamento();
     PersonalSaludFacade personalSaludFacade = new PersonalSaludFacade();
@@ -506,10 +508,15 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 }
             }
             //Si no encuentra alguna huella que coincida lo indica con un mensaje
+
             JOptionPane.showMessageDialog(null, "No existe ningún registro que coincida con la huella.");
-        } catch (SQLException e) {
-            System.out.println("Se produjo el siguiente error: " + e.getMessage());
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            //throw new RuntimeException("Error SQL - Buscar Codigo Remision()!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción SQL");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         /*finally{
         con.desconectar();
@@ -518,8 +525,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     @FXML
     private RegistroDto crearRegistro() {
-        Date fechaAtencionPaciente = Date.valueOf(tf_fechaAtencionPaciente.getText());//Date.valueOf(dp_fechaAtencionPaciente.getValue());
-        Time horaAtencionPaciente = Time.valueOf(tf_horaAtencionPaciente.getText());//Date.valueOf(dp_horaAtencionPaciente.getValue());
+        Date fechaAtencionPaciente = Date.valueOf(tf_fechaAtencionPaciente.getText());
+        Time horaAtencionPaciente = Time.valueOf(tf_horaAtencionPaciente.getText());
         String condicionPaciente = cbx_estadoPaciente.getValue();
         String glasgow = cbx_gasglowPaciente.getValue();
         String signosVitales = cbx_signosVitalesPaciente.getValue();
@@ -744,47 +751,58 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     public void buscarRegistros() {
 
-        conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rset = null;
+        boolean documento = buscarIdPaciente(tf_idpersonadps.getText());
+        if (documento) {
 
-        try {
-            conn = ConexionRoot.getConexion();
-            stmt = conn.prepareStatement("SELECT p.idpersona, p.primerNombre, p.primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones, p.huella,\n" +
-                    "ep.nombreEps AS nombreEps,\n" +
-                    "f.nombre1, f.telefono as telefono \n" +
-                    "FROM persona_familiar AS pf\n" +
-                    "INNER JOIN datos_persona AS p ON p.idpersona = pf.idpersona\n" +
-                    "INNER JOIN familiar_paciente AS f ON f.idFamiliar = pf.idFamiliar\n" +
-                    "INNER JOIN eps AS ep ON p.idEps = ep.idEps\n" +
-                    "WHERE p.idpersona = ?");
+            conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rset = null;
 
-            stmt.setString(1, tf_idpersonadps.getText());
-            rset = stmt.executeQuery();
+            try {
+                conn = ConexionRoot.getConexion();
+                stmt = conn.prepareStatement("SELECT p.idpersona, p.primerNombre, p.primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones, p.huella,\n" +
+                        "ep.nombreEps AS nombreEps,\n" +
+                        "f.nombre1, f.telefono as telefono \n" +
+                        "FROM persona_familiar AS pf\n" +
+                        "INNER JOIN datos_persona AS p ON p.idpersona = pf.idpersona\n" +
+                        "INNER JOIN familiar_paciente AS f ON f.idFamiliar = pf.idFamiliar\n" +
+                        "INNER JOIN eps AS ep ON p.idEps = ep.idEps\n" +
+                        "WHERE p.idpersona = ?");
 
-            if (rset.next()) {
+                stmt.setString(1, tf_idpersonadps.getText());
+                rset = stmt.executeQuery();
 
-                tf_idpersonadps.setText(rset.getString("idpersona"));
-                tf_idpersonadpsc.setText(rset.getString("idpersona"));
-                tf_primerNombredps.setText(rset.getString("primerNombre"));
-                tf_primerNombredpsc.setText(rset.getString("primerNombre"));
-                tf_primerApellidodps.setText(rset.getString("primerApellido"));
-                tf_primerApellidodpsc.setText(rset.getString("primerApellido"));
-                tf_fechaNacimiento.setText(rset.getString("fechaNacimiento"));
-                tf_nombreeps.setText(rset.getString("nombreEps"));
-                tf_nombrefamiliar.setText(rset.getString("nombre1"));
-                tf_numerotelefonicofamiliar.setText(rset.getString("telefono"));
-                ta_alergicoA.setText(rset.getString("alergicoA"));
-                ta_enfermedadSufre.setText(rset.getString("enfermedadSufre"));
-                ta_observaciones.setText(rset.getString("observaciones"));
+                if (rset.next()) {
 
+                    tf_idpersonadps.setText(rset.getString("idpersona"));
+                    tf_idpersonadpsc.setText(rset.getString("idpersona"));
+                    tf_primerNombredps.setText(rset.getString("primerNombre"));
+                    tf_primerNombredpsc.setText(rset.getString("primerNombre"));
+                    tf_primerApellidodps.setText(rset.getString("primerApellido"));
+                    tf_primerApellidodpsc.setText(rset.getString("primerApellido"));
+                    tf_fechaNacimiento.setText(rset.getString("fechaNacimiento"));
+                    tf_nombreeps.setText(rset.getString("nombreEps"));
+                    tf_nombrefamiliar.setText(rset.getString("nombre1"));
+                    tf_numerotelefonicofamiliar.setText(rset.getString("telefono"));
+                    ta_alergicoA.setText(rset.getString("alergicoA"));
+                    ta_enfermedadSufre.setText(rset.getString("enfermedadSufre"));
+                    ta_observaciones.setText(rset.getString("observaciones"));
+
+                }
+            } catch (SQLException | RuntimeException ex) {
+                //throw new RuntimeException("Error SQL - buscarRegistros()!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Excepción SQL");
+                alert.setHeaderText("Ocurrio el Error:");
+                alert.setContentText(ex.getLocalizedMessage());
+                alert.show();
             }
-        } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - buscarRegistros()!");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Ocurrio el Error:");
-            alert.setContentText(ex.getLocalizedMessage());
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Gestiones - Registro Atención Paciente");
+            alert.setHeaderText("Información");
+            alert.setContentText("El Documento: "+ tf_idpersonadps.getText() +"\n" + "No se encuentra registrado en la base de datos");
+            alert.show();
         }
     }
 
@@ -798,6 +816,19 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 }
             }
         });
+    }
+
+    @FXML
+    public boolean buscarIdPaciente(String idPaciente) {//Metodo que valida si el número de documento que se esta ingresando esxiste en la BBDD
+        boolean documento = facadePersona.buscarPersonaPrimaryKey(idPaciente);
+        boolean resultado;
+        if (documento) {
+            resultado = true;
+        } else {
+            resultado = false;
+
+        }
+        return resultado;
     }
 
     @FXML

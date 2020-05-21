@@ -1,11 +1,8 @@
 package registroAtencionPaciente.daoregistro;
 
 import conexionBD.ConexionRoot;
-import datospersona.dto.Persona;
 import javafx.scene.control.Alert;
 import registroAtencionPaciente.dtoregistro.RegistroDto;
-
-import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +24,7 @@ public class RegistroDao {
     public List<RegistroDto> cargarRegistroAtencion() {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select * from registro_atencion_paciente ";
+            String sql = "select * from registro_atencion_pacientes ";
             stmt = conn.prepareStatement(sql);//preparar consulta
             rset = stmt.executeQuery();//ejecutar la consulta y guardarla en la variabble rset
 
@@ -55,13 +52,12 @@ public class RegistroDao {
 
                 registrosAtencion.add(registroDto);
             }
-
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Agregar()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return registrosAtencion;
     }
@@ -69,7 +65,7 @@ public class RegistroDao {
     public int agregarRegistroAtencion(RegistroDto registroDto) throws RuntimeException {
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "insert into registro_atencion_paciente(fechaAtencionPaciente, horaAtencionPaciente, condicionPaciente," +
+            String sql = "insert into registro_atencion_pacientes(fechaAtencionPaciente, horaAtencionPaciente, condicionPaciente," +
                     "glasgow, signosVitales, lugarAccidente, idMedicamento, dosis, idPersonal, idInstiRefe," +
                     "codigoRemision, idpersona, nombrePaciente, apellidoPaciente, estado)"
                     + " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -94,11 +90,11 @@ public class RegistroDao {
             stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Agregar()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 1;
     }
@@ -108,7 +104,7 @@ public class RegistroDao {
         RegistroDto registroDto = null;
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select codigoRemision from registro_atencion_paciente where codigoRemision = ?";
+            String sql = "select codigoRemision from registro_atencion_pacientes where codigoRemision = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, codigoRemision);
             rset = stmt.executeQuery();
@@ -119,13 +115,12 @@ public class RegistroDao {
                 registroDto.setCodigoRemision(rset.getString("codigoRemision"));
 
             }
-
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Buscar Codigo Remision()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return registroDto;
     }
@@ -134,7 +129,7 @@ public class RegistroDao {
         boolean trpta = false;
         try {
             conn = ConexionRoot.getConexion();
-            String sql = "select codigoRemision from registro_atencion_paciente where codigoRemision = ?";
+            String sql = "select codigoRemision from registro_atencion_pacientes where codigoRemision = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, codigoRemision);
             rset = stmt.executeQuery();
@@ -146,9 +141,10 @@ public class RegistroDao {
         } catch (SQLException | RuntimeException ex) {
             //throw new RuntimeException("Error SQL - Buscar Primary Key()!");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error:");
             alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return trpta;
     }

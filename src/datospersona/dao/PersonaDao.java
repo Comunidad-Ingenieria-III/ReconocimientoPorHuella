@@ -69,7 +69,7 @@ public class PersonaDao {
 
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -113,7 +113,7 @@ public class PersonaDao {
             }
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -174,7 +174,7 @@ public class PersonaDao {
 
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -216,7 +216,7 @@ public class PersonaDao {
 
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -239,7 +239,7 @@ public class PersonaDao {
 
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -261,7 +261,7 @@ public class PersonaDao {
             }
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -296,7 +296,7 @@ public class PersonaDao {
             }
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -333,7 +333,7 @@ public class PersonaDao {
 
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -365,7 +365,7 @@ public class PersonaDao {
 
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -384,7 +384,7 @@ public class PersonaDao {
 
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
@@ -418,7 +418,7 @@ public class PersonaDao {
 
         } catch (SQLException | RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+            alert.setTitle("Excepción");
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
