@@ -1,6 +1,7 @@
 package principal;
 
 import Informes.InformesPacientes.controllerP.Controller;
+import consultas.pacientesatendidos.PacientesAtendidos;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -551,6 +552,15 @@ public class ControladorPrincipal implements Initializable{
         JasperPrint reporteLleno = Controller.generarReportePersonal();
         //JasperExportManager.exportReportToPdfFile(reporteLleno, "reporteEmpleados.pdf");
        JasperViewer viewer = new JasperViewer(reporteLleno);
+        viewer.setVisible(true);
+
+    }
+
+    @FXML
+    private void generarListaPacientes(ActionEvent event) throws JRException {
+        JasperPrint reporteLleno = PacientesAtendidos.generarReportePersonal();
+        //JasperExportManager.exportReportToPdfFile(reporteLleno, "reporteEmpleados.pdf");
+        JasperViewer viewer = new JasperViewer(reporteLleno);
         viewer.setVisible(true);
 
     }
