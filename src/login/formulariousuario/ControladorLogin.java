@@ -17,6 +17,7 @@ import javafx.stage.WindowEvent;
 import login.daousuario.DaoUsuario;
 import login.dtousuario.Usuario;
 import login.facadeusuario.FacadeUsuario;
+import principal.ControladorPrincipal;
 
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -123,8 +124,11 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
         if (usuario.getUsername().equals(tf_Usuario.getText()) && usuario.getContrasena().equals(tf_Contrasena.getText())){
 
             Stage stage = new Stage();
+            ControladorPrincipal controladorPrincipal = new ControladorPrincipal();
+            controladorPrincipal.setUsuario(usuario);
             Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
             Scene scene = new Scene(formulario_principal, 1200, 650);
+            stage.setMaximized(true);
             stage.setResizable(false);
             stage.centerOnScreen();
             stage.getIcons().add(new Image("estrella_vida.jpg"));

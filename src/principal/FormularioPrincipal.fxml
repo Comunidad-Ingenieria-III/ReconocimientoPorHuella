@@ -54,7 +54,7 @@
                   <MenuItem mnemonicParsing="false" text="Ubicación Paciente" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Herramientas">
+          <Menu fx:id="mnuHeramientas" mnemonicParsing="false" text="Herramientas">
             <items>
               <MenuItem mnemonicParsing="false" text="Usario Y Contraseña" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -91,7 +91,19 @@
       <AnchorPane id="panel_derecha" prefHeight="546.0" prefWidth="250.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <AnchorPane id="panel_principal" fx:id="FormularioPrincipal" prefHeight="563.0" prefWidth="846.0" styleClass="panel_login" BorderPane.alignment="CENTER" />
+      <AnchorPane id="panel_principal" fx:id="FormularioPrincipal" prefHeight="563.0" prefWidth="846.0" styleClass="panel_login" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="60.0" layoutY="22.0" text="Usuario activo: " textFill="#eeeded">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblUsuario" layoutX="199.0" layoutY="22.0" prefHeight="27.0" prefWidth="234.0" textFill="#eeeded">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
    </center>
    <left>
       <AnchorPane id="panel_izquierdo" prefHeight="546.0" prefWidth="250.0" styleClass="panel_izquierdo" BorderPane.alignment="CENTER" />

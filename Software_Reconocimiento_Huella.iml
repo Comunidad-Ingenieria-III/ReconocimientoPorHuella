@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Program Files/DigitalPersona/Bin/Java/dpfpenrollment.jar!/" />
+          <root url="jar://C:/Program Files/DigitalPersona/Bin/Java/dpfpenrollment.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,7 +19,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Program Files/DigitalPersona/Bin/Java/dpfpverification.jar!/" />
+          <root url="jar://C:/Program Files/DigitalPersona/Bin/Java/dpfpverification.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -28,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Program Files/DigitalPersona/Bin/Java/dpotapi.jar!/" />
+          <root url="jar://C:/Program Files/DigitalPersona/Bin/Java/dpotapi.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,7 +37,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Program Files/DigitalPersona/Bin/Java/dpotjni.jar!/" />
+          <root url="jar://C:/Program Files/DigitalPersona/Bin/Java/dpotjni.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
