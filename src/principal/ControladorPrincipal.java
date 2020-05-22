@@ -116,9 +116,12 @@ public class ControladorPrincipal implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lblUsuario.setText(usuario.getPrimerNombre() + " " +  usuario.getPrimerApellido());//Asignamos el nombre y apellido del usuario a un label
-        // en la pantalla principal del sistema.
+        // en la pantalla principal del sistema
 
-        if (usuario.getPerfil().getNombre().equals("APH")){//Validamos que tipo de perfil tiene el usuario logueado, con el fin de restringir los permisos
+        if(usuario.getPerfil() == null){
+            System.out.println("Usuarion sin perfil asignado");
+        }
+        else if (usuario.getPerfil().getNombre().equals("APH")){//Validamos que tipo de perfil tiene el usuario logueado, con el fin de restringir los permisos
             permisosUsuario();
         }
 
