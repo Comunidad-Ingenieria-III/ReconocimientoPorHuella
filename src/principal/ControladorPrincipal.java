@@ -99,7 +99,9 @@ public class ControladorPrincipal implements Initializable {
     private Menu mnuHeramientas;
     @FXML
     private Label lblUsuario;
-
+    private Controller controllerFormularios = new Controller();
+    @FXML
+    private TextField tf_identificacion;
 
     public static Usuario usuario;//Creamos una variable static esto significa que NO depende de la clase para poder mantener la sesion del usuario
     //que este logeado
@@ -573,7 +575,7 @@ public class ControladorPrincipal implements Initializable {
     private void abrirNovedadTitulosAcademicos(ActionEvent event) throws IOException {
 
         try {
-            Parent formulario_informe_titulos_academicos = FXMLLoader.load(getClass().getClassLoader().getResource("Informes/novedadtitulos/FormularioNovedadTitulosAcademicos.fxml"));
+            Parent formulario_informe_titulos_academicos = FXMLLoader.load(getClass().getClassLoader().getResource("Informes/novedadtitulos/InformePacientes.fxml"));
             Stage stage = new Stage();
             stage.setTitle("AP_Humana(Gestión Informe Titulos Académicos)");
             stage.setScene(new Scene(formulario_informe_titulos_academicos));
@@ -608,14 +610,15 @@ public class ControladorPrincipal implements Initializable {
     }
 
     @FXML
-    private void generarReporte(ActionEvent event) throws JRException {
-        JasperPrint reporteLleno = Controller.generarReportePersonal();
-        //JasperExportManager.exportReportToPdfFile(reporteLleno, "reporteEmpleados.pdf");
-       JasperViewer viewer = new JasperViewer(reporteLleno);
-        viewer.setVisible(true);
+    private void generarReportePersonal(ActionEvent event) throws JRException {
+        controllerFormularios.generarReporteEmpleados();
 
     }
+    @FXML
+    private void generarReportePacientes(ActionEvent event) throws JRException {
+        controllerFormularios.generarReportePacientes(tf_identificacion.getText());
 
+    }
 
 
 

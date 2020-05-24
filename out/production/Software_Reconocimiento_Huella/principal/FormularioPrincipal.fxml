@@ -39,19 +39,13 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Salidas">
             <items>
-              <MenuItem mnemonicParsing="false" text="Consultar Pacientes Atendidos" />
+              <MenuItem mnemonicParsing="false" text="Consultar Pacientes" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#generarReporte" text="Consultar Personal APH" />
+                  <MenuItem mnemonicParsing="false" onAction="#generarReportePersonal" text="Consultar Personal" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Consular Personal que Recibe el Paciente" />
+                  <MenuItem mnemonicParsing="false" text="Informe Empleados" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Consultar HIstoria de Atención" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Informe Novedad Paciente" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Informe Títulos Académicos Obtenidos" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Ubicación Paciente" />
+                  <MenuItem mnemonicParsing="false" text="Informe Pacientes" />
             </items>
           </Menu>
           <Menu fx:id="mnuHeramientas" mnemonicParsing="false" text="Herramientas">
