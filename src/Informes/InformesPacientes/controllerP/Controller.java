@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 public class Controller {
     public static final String REPORTE_EMPLEADOS ="ReportePaciente.jasper";
+    public static final String REPORTE_PACIENTESINDIVIDUAL ="src/Informes/InformesPacientes/ControllerP/reporteIndividual.jasper";
+
     public static JasperPrint generarReportePersonal(){
         try {
             JasperPrint reportePersonalLeno = JasperFillManager.fillReport(REPORTE_EMPLEADOS,new HashMap<>(), ConexionRoot.getConexion());
@@ -23,11 +25,21 @@ public class Controller {
         }
         return null;
     }
+    public static JasperPrint reportePacientes(String identificacion){
+        HashMap<String, Object> parametros = new HashMap<>();
+        parametros.put("identificacion",identificacion);
+        try {
+            JasperPrint reporteEmpleadoLleno= JasperFillManager.fillReport(REPORTE_PACIENTESINDIVIDUAL,parametros, ConexionRoot.getConexion());
+            return reporteEmpleadoLleno;
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-   /* public  void  generarReporte() throws JRException {
-        JasperPrint reporteLleno = generarReportePersonal();
+    public  void  generarReportePacientes(String identificacion) throws JRException {
+        JasperPrint reporteLleno = reportePacientes(identificacion);
         JasperViewer viewer = new JasperViewer(reporteLleno);
         viewer.setVisible(true);
-    }*/
-
+    }
 }

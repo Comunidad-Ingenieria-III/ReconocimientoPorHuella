@@ -14,6 +14,7 @@ public class Usuario {
     private SimpleStringProperty contrasena = new SimpleStringProperty();
     private SimpleStringProperty idperfil = new SimpleStringProperty();
     private SimpleBooleanProperty estado = new SimpleBooleanProperty();
+    private SimpleStringProperty permitir= new SimpleStringProperty();
     private PerfilDto perfil;
 
     public Usuario(String username, String contrasena) {
@@ -22,7 +23,7 @@ public class Usuario {
     }
 
     public Usuario(String idUsuario, String primerNombre, String segundoNombre, String primerApellido,
-                   String segundoApellido, String username, String contrasena, String idperfil, boolean estado) {
+                   String segundoApellido, String username, String contrasena, String idperfil, boolean estado, String permitir) {
         this.idUsuario.set(idUsuario);
         this.primerNombre.set(primerNombre);
         this.segundoNombre.set(segundoNombre);
@@ -32,10 +33,11 @@ public class Usuario {
         this.contrasena.set(contrasena);
         this.idperfil.set(idperfil);
         this.estado.set(estado);
+        this.permitir.set(permitir);
     }
 
     public Usuario() {
-        this("", "", "", "", "", "", "", "", Boolean.parseBoolean(""));
+        this("", "", "", "", "", "", "", "", Boolean.parseBoolean(""),"");
     }
 
     public String getIdUsuario() {
@@ -154,6 +156,18 @@ public class Usuario {
         this.perfil = perfil;
     }
 
+    public String getPermitir() {
+        return permitir.get();
+    }
+
+    public SimpleStringProperty permitirProperty() {
+        return permitir;
+    }
+
+    public void setPermitir(String permitir) {
+        this.permitir.set(permitir);
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -164,7 +178,10 @@ public class Usuario {
                 ", segundoApellido=" + segundoApellido +
                 ", username=" + username +
                 ", contrasena=" + contrasena +
+                ", idperfil=" + idperfil +
                 ", estado=" + estado +
+                ", permitir=" + permitir +
+                ", perfil=" + perfil +
                 '}';
     }
 }

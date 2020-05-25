@@ -58,9 +58,12 @@ public class ContraladorUsuario implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
-
+    private String permitir;
     @FXML
     private RadioButton cb_estado;
+
+    @FXML
+    private CheckBox bloqueado;
 
     ObservableList<PerfilDto> listaPerfiles;
     int valor=0;
@@ -96,8 +99,8 @@ public class ContraladorUsuario implements Initializable {
             if(usuario !=null){
                 int i=0;
                     Alert msg = new Alert(Alert.AlertType.ERROR);
-                    msg.setTitle("Gestiones - Tipo de título académico");
-                    msg.setContentText("El Tipo de título: " + tf_idUsuario.getText() + " se escuentra registrado ");
+                    msg.setTitle("Gestiones - Usuario");
+                    msg.setContentText("El usuario: " + tf_idUsuario.getText() + " se escuentra registrado ");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     tf_idUsuario.setText("");
@@ -140,7 +143,12 @@ public class ContraladorUsuario implements Initializable {
         String contrasena = tf_Contrasena.getText();
         String idperfil = cmb_perfil.getSelectionModel().getSelectedItem().getIdperfil();
         Boolean estado = cb_estado.isSelected();
-        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena, idperfil, estado);
+        if(bloqueado.isSelected()){
+            permitir="DENEGAR";
+        }else{
+            permitir="PERMITIR";
+        }
+        Usuario usuario = new Usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, nombreUsuario, contrasena, idperfil, estado,permitir);
         return usuario;
 
     }
@@ -309,7 +317,7 @@ public class ContraladorUsuario implements Initializable {
     @FXML
     public void consultarUsuario(){//Función para consultar un usuario por medio de su id
 
-        if (tf_idUsuario.getText().isEmpty()){
+        if (tf_idUsuario.getText().isEmpty() ){
             tf_idUsuario.setDisable(false);
             tf_idUsuario.requestFocus();
             cb_estado.setDisable(true);
@@ -322,6 +330,7 @@ public class ContraladorUsuario implements Initializable {
             tf_Contrasena.setDisable(true);
             bt_guardar.setDisable(true);
             valor=0;
+            bloqueado.setDisable(true);
 
         }else {
 
@@ -334,12 +343,18 @@ public class ContraladorUsuario implements Initializable {
                 msg.show();
                 tf_idUsuario.requestFocus();
             } else {
+                permitir=usuario.getPermitir();
                 cmb_perfil.setValue(perfilFacade.obtenerPorId(usuario.getIdperfil()));
 
                 if (usuario.isEstado()) {
                     cb_estado.setSelected(true);
                 } else {
                     cb_estado.setSelected(false);
+                }
+                if(usuario.getPermitir().equals("DENEGAR")){
+                    bloqueado.setSelected(true);
+                }else{
+                    bloqueado.setSelected(false);
                 }
                 tf_idUsuario.setText(usuario.getIdUsuario());
                 tf_primerNombre.setText(usuario.getPrimerNombre());
@@ -372,6 +387,7 @@ public class ContraladorUsuario implements Initializable {
         tf_primerNombre.requestFocus();
         bt_modificar.setDisable(true);
         valor=0;
+        bloqueado.setDisable(false);
     }
 
     @FXML
@@ -419,6 +435,7 @@ public class ContraladorUsuario implements Initializable {
         tf_Usuario.setDisable(false);
         tf_Contrasena.setDisable(false);
         tf_idUsuario.requestFocus();
+        bloqueado.setDisable(false);
     }
 
     @FXML
@@ -432,7 +449,7 @@ public class ContraladorUsuario implements Initializable {
         tf_Contrasena.setDisable(true);
         cmb_perfil.setDisable(true);
         cb_estado.setDisable(true);
-
+        bloqueado.setDisable(true);
     }
 
     @FXML
@@ -450,6 +467,7 @@ public class ContraladorUsuario implements Initializable {
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         bt_consultar.setDisable(false);
+        bloqueado.setDisable(true);
     }
 
     @FXML

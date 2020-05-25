@@ -11,40 +11,45 @@
         <menus>
             <Menu fx:id="mnuGestiones" mnemonicParsing="false" text="Gestiones">
               <items>
-                <MenuItem fx:id="mi_tipo_documeto" mnemonicParsing="false" onAction="#abrirTipoDocumento" text="Tipo Documento" />
+                <MenuItem fx:id="mi_tipo_documeto" mnemonicParsing="false" onAction="#abrirTipoDocumento" text="Tipo documento" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mi_datos_persona" mnemonicParsing="false" onAction="#abrirDatosPersona" text="Datos Persona" />
+                  <MenuItem fx:id="mi_datos_persona" mnemonicParsing="false" onAction="#abrirDatosPersona" text="Datos persona" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mi_DatosFamiliar" mnemonicParsing="false" onAction="#abrirDatosFamiliar" text="Datos Familiar" />
+                  <MenuItem fx:id="mi_DatosFamiliar" mnemonicParsing="false" onAction="#abrirDatosFamiliar" text="Datos familiar" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="mi_eps" mnemonicParsing="false" onAction="#abrirEps" text="EPS" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#abriTipoTituloAcademico" text="Tipo Título Académico" />
+                  <MenuItem mnemonicParsing="false" onAction="#abriTipoTituloAcademico" text="Tipo título académico" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mi_InstitucionAcademica" mnemonicParsing="false" onAction="#ventanaInstitucionAcademica" text="Institución Académica" />
+                  <MenuItem fx:id="mi_InstitucionAcademica" mnemonicParsing="false" onAction="#ventanaInstitucionAcademica" text="Institución académica" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="mi_Cargo" mnemonicParsing="false" onAction="#ventanaCargos" text="Cargo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mi_datos_personal_salud" mnemonicParsing="false" onAction="#abrirPersonalSalud" text="Personal Salud" />
+                  <MenuItem fx:id="mi_datos_personal_salud" mnemonicParsing="false" onAction="#abrirPersonalSalud" text="Personal salud" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mi_InstitucionReferencia" mnemonicParsing="false" onAction="#ventanaInstitucionReferencia" text="Institución de Referencia" />
+                  <MenuItem fx:id="mi_InstitucionReferencia" mnemonicParsing="false" onAction="#ventanaInstitucionReferencia" text="Institución de referencia" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirMedicamentos" text="Medicamentos" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Procesos">
             <items>
-              <MenuItem fx:id="mi_regisgtro_atencion" mnemonicParsing="false" onAction="#abrirRegistroAtencionPaciente" text="Registro de Atención" />
+              <MenuItem fx:id="mi_regisgtro_atencion" mnemonicParsing="false" onAction="#abrirRegistroAtencionPaciente" text="Registro de atención" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Salidas">
             <items>
+<<<<<<< HEAD
               <MenuItem mnemonicParsing="false" onAction="#generarListaPacientes" text="Consultar Pacientes Atendidos" />
+=======
+              <MenuItem mnemonicParsing="false" text="Consultar Pacientes" />
+>>>>>>> origin/master
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#generarReporte" text="Consultar Personal APH" />
+                  <MenuItem mnemonicParsing="false" onAction="#generarReportePersonal" text="Consultar Personal" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Consular Personal que Recibe el Paciente" />
+                  <MenuItem mnemonicParsing="false" text="Informe Empleados" />
                   <SeparatorMenuItem mnemonicParsing="false" />
+<<<<<<< HEAD
                   <MenuItem mnemonicParsing="false" onAction="#generarListaP" text="Consultar HIstoria de Atención" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Informe Novedad Paciente" />
@@ -52,22 +57,23 @@
                   <MenuItem mnemonicParsing="false" text="Informe Títulos Académicos Obtenidos" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Ubicación Paciente" />
+=======
+                  <MenuItem mnemonicParsing="false" text="Informe Pacientes" />
+>>>>>>> origin/master
             </items>
           </Menu>
           <Menu fx:id="mnuHeramientas" mnemonicParsing="false" text="Herramientas">
             <items>
-              <MenuItem mnemonicParsing="false" text="Usario Y Contraseña" />
+                  <MenuItem fx:id="mi_perfil" mnemonicParsing="false" onAction="#abrirPerfil" text="Administración perfil" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mi_perfil" mnemonicParsing="false" onAction="#abrirPerfil" text="Administración Perfil" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="mi_usario" mnemonicParsing="false" onAction="#abrirUsuario" text="Administración Usuario" />
+                  <MenuItem fx:id="mi_usario" mnemonicParsing="false" onAction="#abrirUsuario" text="Administración usuario" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Ayudas">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#abrirFormularioAcercaDe" text="Acerca de" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Manual de Usuario" />
+                  <MenuItem mnemonicParsing="false" text="Manual de usuario" />
               </items>
             </Menu>
         </menus>

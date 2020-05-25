@@ -48,9 +48,10 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
     @FXML
     private Button btnSalir;
     @FXML
-    private Label lblContraseña;
+    private Label lblContraseña, mensajeSesion;
     @FXML
     private Label lblUsuario;
+    private int contador=0;
 
     KeyListener escuchaTeclado = new KeyListener() {
         @Override
@@ -78,19 +79,14 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
     public void validarcampos() {
 
         if (tf_Usuario.getText().isEmpty()) {
-            lblUsuario.setText("Campo Requerido");
-        } else if (!tf_Usuario.getText().contains("@") || !tf_Usuario.getText().contains(".")) {
-            lblUsuario.setText("Usuario invalido");
-        } else {
-            lblUsuario.setText("");
-        }
+            lblUsuario.setText("Requerido");
 
 
-        if (tf_Contrasena.getText().isEmpty()) {
-            lblContraseña.setText("Campo Requerido");
-        } else {
-            lblContraseña.setText("");
+        }else if(tf_Contrasena.getText().isEmpty()){
+            lblContraseña.setText("Requerido");
+
         }
+
         if (tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty()) {
             btnEntrar.setDisable(true);
         } else {
@@ -120,45 +116,136 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
     }
 
 
+
+
     @FXML
     public void validarCredenciales() throws IOException {
-
+        //Busca el usuario y contraseña
         Usuario usuario = facadeUsuario.validarUsuario(tf_Usuario.getText(),tf_Contrasena.getText());
+        //Busca que le username exista
+        Usuario usuario1= facadeUsuario.obtenerUsuario(tf_Usuario.getText());
 
-        if (usuario.getUsername().equals(tf_Usuario.getText()) && usuario.getContrasena().equals(tf_Contrasena.getText())){
+        String cadena="DENEGAR";
 
-            Stage stage = new Stage();
-            ControladorPrincipal controladorPrincipal = new ControladorPrincipal();
-            controladorPrincipal.setUsuario(usuario);
-            Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
-            Scene scene = new Scene(formulario_principal, 1200, 650);
-            stage.setMaximized(true);
-            stage.setResizable(false);
-            stage.centerOnScreen();
-            stage.getIcons().add(new Image("estrella_vida.jpg"));
-            stage.setTitle("AP_Humana Menú Principal");
-            stage.getIcons().add(new Image("estrella_vida.jpg"));
-            stage.setScene(scene);
-            stage.show();
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent e) {
-                    Platform.exit();
-                    System.exit(0);
-                }
-            });
-
-            this.cerrarLogin();
-        } else {
+        if(usuario1==null) {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             Toolkit.getDefaultToolkit().beep();
             msg.setTitle("AP_Humana - Ingreso al Sistema");
             msg.setContentText("Usuario Y/O contraseña incorrecta.");
             msg.setHeaderText("Verifica tus datos");
             msg.show();
+            tf_Usuario.setText("");
+            tf_Contrasena.setText("");
+            tf_Usuario.requestFocus();
+
+
+        } else if(usuario==null){
+
+            if(usuario1.getPermitir().equals("PERMITIR")){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("AP_Humana - Ingreso al Sistema");
+                msg.setContentText("Usuario Y/O contraseña incorrecta.");
+                msg.setHeaderText("Verifica tus datos");
+                msg.show();
+                tf_Contrasena.setText("");
+                tf_Usuario.requestFocus();
+                facadeUsuario.bloquear(tf_Usuario.getText(),"UNO");
+                mensajeSesion.setText("Quedan cuatro intentos de sesión");
+
+            } else if(usuario1.getPermitir().equals("UNO")){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("AP_Humana - Ingreso al Sistema");
+                msg.setContentText("Usuario Y/O contraseña incorrecta.");
+                msg.setHeaderText("Verifica tus datos");
+                msg.show();
+                tf_Contrasena.setText("");
+                tf_Usuario.requestFocus();
+                facadeUsuario.bloquear(tf_Usuario.getText(),"DOS");
+                mensajeSesion.setText("Quedan tres intentos de sesión");
+            }else if(usuario1.getPermitir().equals("DOS")){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("AP_Humana - Ingreso al Sistema");
+                msg.setContentText("Usuario Y/O contraseña incorrecta.");
+                msg.setHeaderText("Verifica tus datos");
+                msg.show();
+                tf_Contrasena.setText("");
+                tf_Usuario.requestFocus();
+                facadeUsuario.bloquear(tf_Usuario.getText(),"TRES");
+                mensajeSesion.setText("Quedan dos intentos de sesión");
+            }else if(usuario1.getPermitir().equals("TRES")){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("AP_Humana - Ingreso al Sistema");
+                msg.setContentText("Usuario Y/O contraseña incorrecta.");
+                msg.setHeaderText("Verifica tus datos");
+                msg.show();
+                tf_Contrasena.setText("");
+                tf_Usuario.requestFocus();
+                facadeUsuario.bloquear(tf_Usuario.getText(),"CUATRO");
+                mensajeSesion.setText("Quedan un intento de sesión");
+                Alert msgs= new Alert(Alert.AlertType.ERROR);
+                msgs.setTitle("AP_Humana - Ingreso al Sistema");
+                msgs.setContentText("¡Queda un intento de sesión! En caso de errar, " +
+                        "su usuario será bloqueado!");
+                msgs.setHeaderText("Verifica tus datos");
+                msgs.show();
+            }else if(usuario1.getPermitir().equals("CUATRO")){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("AP_Humana - Ingreso al Sistema");
+                msg.setContentText("Usuario Y/O contraseña incorrecta.");
+                msg.setHeaderText("Verifica tus datos");
+                msg.show();
+                tf_Contrasena.setText("");
+                tf_Usuario.requestFocus();
+                facadeUsuario.bloquear(tf_Usuario.getText(),"DENEGAR");
+                mensajeSesion.setText(" Usuario: " + tf_Usuario.getText() + " bloqueado");
+            }
+
+
+        }else if (usuario.getUsername().equals(tf_Usuario.getText()) && usuario.getContrasena().equals(tf_Contrasena.getText())){
+
+            if(usuario.getPermitir().equals(cadena)){
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("AP_Humana - Ingreso al Sistema");
+                msg.setContentText("Usuario bloqueado");
+                msg.setHeaderText("Contacte al administrador");
+                msg.show();
+                tf_Contrasena.setText("");
+                tf_Usuario.requestFocus();
+            }else{
+                facadeUsuario.bloquear(tf_Usuario.getText(),"PERMITIR");
+                Stage stage = new Stage();
+                ControladorPrincipal controladorPrincipal = new ControladorPrincipal();
+                controladorPrincipal.setUsuario(usuario);
+                Parent formulario_principal = FXMLLoader.load(getClass().getResource("/principal/FormularioPrincipal.fxml"));
+                Scene scene = new Scene(formulario_principal, 1200, 650);
+                stage.setMaximized(true);
+                stage.setResizable(false);
+                stage.centerOnScreen();
+                stage.getIcons().add(new Image("estrella_vida.jpg"));
+                stage.setTitle("AP_Humana Menú Principal");
+                stage.getIcons().add(new Image("estrella_vida.jpg"));
+                stage.setScene(scene);
+                stage.show();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent e) {
+                        Platform.exit();
+                        System.exit(0);
+                    }
+                });
+
+                this.cerrarLogin();
+
+            }
+
+
         }
 
+
     }
+
+
+
 
     @FXML
     public void limpiar() {

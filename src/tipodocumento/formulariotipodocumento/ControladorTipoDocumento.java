@@ -61,8 +61,13 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
     private List<DtoTipoDocumento> tiposdeDocumento;
     @FXML
     int valor = 0;
-
     private ObservableList<DtoTipoDocumento> tipoDocumentos;
+
+
+
+
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -125,7 +130,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                 if (tiposdeDocumento.get(0).getEstado().equals("0")) {
 
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                    msg.setTitle("Gestiones - Tipo de titulo académico");
+                    msg.setTitle("Gestiones - Tipo de documento");
                     msg.setContentText("El Tipo de documento: " + tf_Tipo.getText() + " se escuentra registrado, mas su estado es inhabilitado. Contacte a su administrador");
                     msg.setHeaderText("Resultado");
                     msg.show();
@@ -138,8 +143,8 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
 
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
-                    msg.setTitle("Gestiones - Tipo de titulo académico");
-                    msg.setContentText("Código: " + tf_Tipo.getText() + " existente no es posible agregar");
+                    msg.setTitle("Gestiones - Tipo de documento");
+                    msg.setContentText("Código: " + tf_Tipo.getText() + " existente, no es posible agregar");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     tf_Tipo.setText("");
@@ -203,7 +208,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
             }
         } else {
             if ( tf_nombre1.getText().isEmpty()) {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
+                Alert msg = new Alert(Alert.AlertType.WARNING);
                 msg.setTitle("Gestiones - Tipo de documento");
                 msg.setContentText("Campos  requerido");
                 msg.setHeaderText("Resultado");
@@ -260,7 +265,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                 msge.setTitle("Gestiones - Tipo de Documento");
                 msge.setContentText("Error al eliminar! \n" + "El tipo de documento tiene registros dependientes!\n"
                         + "Asegurese de eliminar los registros que dependen de este.");
-                msge.setHeaderText("Error.");
+                msge.setHeaderText("Resultado.");
                 msge.show();
                 limpiarFormulario();
                 cancelar();
@@ -384,7 +389,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
     @FXML
     public void validarCamposVacios() {
         if (tf_Tipo.getText().isEmpty()) {
-            Alert msg = new Alert(Alert.AlertType.ERROR);
+            Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Tipo de Documento");
             msg.setContentText("Debe ingresar todos los campos");
             msg.setHeaderText("Resultado");
