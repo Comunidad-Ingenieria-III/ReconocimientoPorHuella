@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="datospersona.formulariopersona.ControladorFormularioPersona">
    <center>
       <AnchorPane prefHeight="470.0" prefWidth="721.0" styleClass="panel_login" BorderPane.alignment="CENTER">
          <children>
@@ -207,6 +208,8 @@
                   <Font name="System Bold Italic" size="11.0" />
                </font>
             </Label>
+            <Label layoutX="90.0" layoutY="329.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#d70c0c" />
+            <Label layoutX="182.0" layoutY="372.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#d70c0c" />
          </children>
       </AnchorPane>
    </left>

@@ -162,6 +162,7 @@ public class ControladorFormularioPersona implements Initializable {
         manejarEventosTablaFamiliares();
         colocarImagenBotones();
         buscarPersona();
+        reiniciarStilosCamposRequeridos();
 
     }
 
@@ -1007,8 +1008,74 @@ public class ControladorFormularioPersona implements Initializable {
                 if (!Character.isDigit(car)) {
                     event.consume();
                 }
+                tf_idpersona.setStyle(null);
             }
         });
+    }
+
+    @FXML
+    public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
+
+        cbxtipodocumento.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                    cbxtipodocumento.setStyle(null);
+            }
+        });
+        tf_primerNombre.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+               tf_primerNombre.setStyle(null);
+            }
+        });
+        tf_primerApellido.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_primerApellido.setStyle(null);
+            }
+        });
+        dp_fechaNacimiento.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                dp_fechaNacimiento.setStyle(null);
+            }
+        });
+        tf_direccion.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_direccion.setStyle(null);
+            }
+        });
+        cbxsexo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbxsexo.setStyle(null);
+            }
+        });
+        cbxtipoeps.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbxtipoeps.setStyle(null);
+            }
+        });
+        ta_alergicoA.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                ta_alergicoA.setStyle(null);
+            }
+        });
+        ta_enfermedadSufre.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                ta_enfermedadSufre.setStyle(null);
+            }
+        });
+        txtArea.setOnKeyTyped(new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            txtArea.setStyle(null);
+        }
+    });
     }
 
     @FXML
