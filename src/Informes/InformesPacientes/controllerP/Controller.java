@@ -6,8 +6,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
-
-import java.sql.SQLException;
 import java.util.HashMap;
 
 public class Controller {
@@ -37,15 +35,6 @@ public class Controller {
             e.printStackTrace();
         }
         return null;
-    }
-
-
-
-
-    public  void  generarReporteEmpleados() throws JRException {
-        JasperPrint reporteLleno = generarReportePersonal();
-        JasperViewer viewer = new JasperViewer(reporteLleno);
-        viewer.setVisible(true);
     }
 
     public  void  generarReportePacientes(String identificacion) throws JRException {

@@ -2,6 +2,7 @@ package login.daousuario;
 
 import conexionBD.ConexionRoot;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import login.dtousuario.Usuario;
 import perfil.dtoperfil.PerfilDto;
 import perfil.facadeperfil.PerfilFacade;
@@ -24,8 +25,9 @@ public class DaoUsuario {
     private ResultSet rset;
 
 
-    public Usuario validarIngreso(String usuario, String contrasena){
-        user =null;
+    public Usuario validarIngreso(String usuario, String contrasena) {
+        user = null;
+
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from usuario where username = ? and contrasena = ?";
@@ -34,8 +36,9 @@ public class DaoUsuario {
             stmt.setString(2, contrasena);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
+            if (rset.next()) {
                 user = new Usuario();
+
                 user.setIdUsuario(rset.getString("idUsuario"));
                 user.setPrimerNombre(rset.getString("primerNombre"));
                 user.setSegundoNombre(rset.getString("segundoNombre"));
@@ -49,23 +52,26 @@ public class DaoUsuario {
                 user.setPerfil(perfilFacade.obtenerPorId(user.getIdperfil()));
             }
 
-
-        } catch (SQLException | RuntimeException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return user;
     }
 
     public Usuario buscarUsuario(String username) {
-        user= null;
+        user = null;
         try {
             conn = ConexionRoot.getConexion();
             String query = "select * from usuario where username=?";
             stmt = conn.prepareStatement(query);
-            stmt.setString(1,username);
+            stmt.setString(1, username);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
+            if (rset.next()) {
                 user = new Usuario();
                 user.setIdUsuario(rset.getString("idUsuario"));
                 user.setPrimerNombre(rset.getString("primerNombre"));
@@ -84,8 +90,6 @@ public class DaoUsuario {
         }
         return user;
     }
-
-
 
 
     public List<Usuario> obtenerTodosLosUsuarios() {
@@ -113,12 +117,15 @@ public class DaoUsuario {
                 usuarios.add(user);
             }
 
-        } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Error SQL - obtenerTodos");
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return usuarios;
     }//Fin del metodo obtenerTodos
-
 
 
     public int agregarUsuario(Usuario usuario) throws RuntimeException {
@@ -141,8 +148,12 @@ public class DaoUsuario {
             stmt.setString(10, usuario.getPermitir());
             stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error SQL - Agregar()!");
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 1;
     }
@@ -160,7 +171,7 @@ public class DaoUsuario {
             stmt.setString(3, user.getPrimerApellido());
             stmt.setString(4, user.getSegundoApellido());
             stmt.setString(5, user.getUsername());
-            stmt.setString(6,user.getContrasena());
+            stmt.setString(6, user.getContrasena());
             stmt.setString(7, user.getIdperfil());
             stmt.setBoolean(8, user.isEstado());
             stmt.setString(9, user.getPermitir());
@@ -168,12 +179,17 @@ public class DaoUsuario {
 
             return stmt.executeUpdate();
 
-        } catch (SQLException | RuntimeException e) {
-            System.out.println(e.toString());
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return 0;
     }
-    public String bloquear(String username, String cadena){
+
+    public String bloquear(String username, String cadena) {
 
         try {
             conn = ConexionRoot.getConexion();
@@ -183,44 +199,45 @@ public class DaoUsuario {
             stmt.setString(2, username);
             stmt.executeUpdate();
 
-
-        } catch (SQLException  | RuntimeException e) {
+        } catch (SQLException | RuntimeException e) {
             e.printStackTrace();
         }
-       return cadena;
+        return cadena;
     }
-
 
     public boolean eliminar(String idUsuario) {//Funcion que inhabilita un registro en la tabla usuario de la BBDD
 
         boolean yes = false;
         try {
-                conn = ConexionRoot.getConexion();
-                String sql = "update usuario set estado = ? where idusuario = ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setBoolean(1, false);
-                stmt.setString(2, idUsuario);
-                stmt.executeUpdate();
-                yes = true;
+            conn = ConexionRoot.getConexion();
+            String sql = "update usuario set estado = ? where idusuario = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setBoolean(1, false);
+            stmt.setString(2, idUsuario);
+            stmt.executeUpdate();
+            yes = true;
 
-            } catch (SQLException  | RuntimeException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
+
         }
         return yes;
     }
 
-
-
     public Usuario buscarPorIdUsuario(String idUsuario) {
-            user = null;
+        user = null;
         try {
             conn = ConexionRoot.getConexion();
             String query = "select * from usuario where idUsuario=?";
             stmt = conn.prepareStatement(query);
-            stmt.setString(1,idUsuario);
+            stmt.setString(1, idUsuario);
             rset = stmt.executeQuery();
 
-            if (rset.next()){
+            if (rset.next()) {
                 user = new Usuario();
                 user.setIdUsuario(rset.getString("idUsuario"));
                 user.setPrimerNombre(rset.getString("primerNombre"));
@@ -235,8 +252,12 @@ public class DaoUsuario {
 
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
         return user;
     }

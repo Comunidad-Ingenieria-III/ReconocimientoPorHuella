@@ -23,10 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -34,19 +31,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import persona_familiar.per_fami_dto.Per_Fami_Dto;
 import persona_familiar.per_fami_facade.Per_Fami_Facade;
-import personalSalud.personalsaluddto.BusquedaDePersonal;
-import personalSalud.personalsaluddto.PersonalSalud;
-import personal_salud_titulo.psdto.PsDto;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
 
+import javax.jws.HandlerChain;
 import javax.swing.*;
+import java.awt.image.ImageProducer;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
@@ -132,6 +126,10 @@ public class ControladorFormularioPersona implements Initializable {
     private Button bt_modificarfamiliar;
     @FXML
     private Button bt_inhabilitarfamiliar;
+    @FXML
+    private Label lb_huella;
+
+   private JLabel lblImagenHuella;
 
     private int valor = 0;
 
@@ -140,7 +138,6 @@ public class ControladorFormularioPersona implements Initializable {
     private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rset;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -298,50 +295,6 @@ public class ControladorFormularioPersona implements Initializable {
         });
     }
 
-    public void EnviarTexto(String string) {
-        txtArea.appendText(string + "\n");
-    }
-
-    public void EstadoHuellas() {
-        EnviarTexto("Muestra de Huellas Restantes para Guardar " + Reclutador.getFeaturesNeeded());
-    }
-
-    public void start() {
-        Lector.startCapture();
-        EnviarTexto("Utilizando el Lector de Huella Dactilar ");
-    }
-
-    public void stop() {
-        Lector.stopCapture();
-        EnviarTexto("No se está usando el Lector de Huella Dactilar ");
-    }
-
-    public DPFPTemplate getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(DPFPTemplate template) {
-        DPFPTemplate old = this.template;
-        this.template = template;
-    }
-
-    public void DibujarHuella(java.awt.Image image) {
-
-    }
-
-    public java.awt.Image CrearImagenHuella(DPFPSample sample) {
-        return DPFPGlobal.getSampleConversionFactory().createImage(sample);
-    }
-
-    public DPFPFeatureSet extraerCaracteristicas(DPFPSample sample, DPFPDataPurpose purpose) {
-        DPFPFeatureExtraction extractor = DPFPGlobal.getFeatureExtractionFactory().createFeatureExtraction();
-        try {
-            return extractor.createFeatureSet(sample, purpose);
-        } catch (DPFPImageQualityException e) {
-            return null;
-        }
-    }
-
     public DPFPFeatureSet featuresinscripcion;
     public DPFPFeatureSet featuresverificacion;
 
@@ -358,16 +311,13 @@ public class ControladorFormularioPersona implements Initializable {
                 System.out.println("Las Caracteristicas de la Huella han sido creada");
                 try {
                     Reclutador.addFeatures(featuresinscripcion);// Agregar las caracteristicas de la huella a la plantilla a crear
+                    // Dibuja la huella dactilar capturada.
+                    java.awt.Image image = CrearImagenHuella(sample);
+                    DibujarHuella(image);
+
                 } catch (DPFPImageQualityException e) {
                     e.printStackTrace();
                 }
-
-                // Dibuja la huella dactilar capturada.
-                java.awt.Image image = CrearImagenHuella(sample);
-                DibujarHuella(image);
-
-                //btnVerificar.setEnabled(true);
-                //btnIdentificar.setEnabled(true);
 
             } finally {
                 EstadoHuellas();
@@ -397,6 +347,54 @@ public class ControladorFormularioPersona implements Initializable {
             msg.show();
 
         }
+    }
+
+
+    public DPFPFeatureSet extraerCaracteristicas(DPFPSample sample, DPFPDataPurpose purpose) {
+        DPFPFeatureExtraction extractor = DPFPGlobal.getFeatureExtractionFactory().createFeatureExtraction();
+        try {
+            return extractor.createFeatureSet(sample, purpose);
+        } catch (DPFPImageQualityException e) {
+            return null;
+        }
+    }
+
+
+    public void EnviarTexto(String string) {
+        txtArea.appendText(string + "\n");
+    }
+
+    public void EstadoHuellas() {
+        EnviarTexto("Muestra de Huellas Restantes para Guardar " + Reclutador.getFeaturesNeeded());
+    }
+
+    public void start() {
+        Lector.startCapture();
+        EnviarTexto("Utilizando el Lector de Huella Dactilar ");
+    }
+
+    public void stop() {
+        Lector.stopCapture();
+        EnviarTexto("No se está usando el Lector de Huella Dactilar ");
+    }
+
+    public DPFPTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(DPFPTemplate template) {
+        DPFPTemplate old = this.template;
+        this.template = template;
+    }
+
+    public void DibujarHuella(java.awt.Image image) {
+        lblImagenHuella.setIcon(new ImageIcon(
+                image.getScaledInstance(lblImagenHuella.getWidth(), lblImagenHuella.getHeight(), java.awt.Image.SCALE_DEFAULT)));
+        lblImagenHuella.repaint();
+    }
+
+    public java.awt.Image CrearImagenHuella(DPFPSample sample) {
+        return DPFPGlobal.getSampleConversionFactory().createImage(sample);
     }
 
     @FXML
@@ -550,6 +548,8 @@ public class ControladorFormularioPersona implements Initializable {
 
                         try {
                             guardarPersona();
+                            stop();
+                            Reclutador.clear();
 
                         } catch (RuntimeException ex) {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -826,7 +826,7 @@ public class ControladorFormularioPersona implements Initializable {
                 tf_idpersona.requestFocus();
 
             } else {
-                
+
                 cbxtipodocumento.setValue(facadeTipoDocumento.obtenerPorId(persona.getTipoDocumento()));
                 tf_primerNombre.setText(persona.getPrimerNombre());
                 tf_segundoNombre.setText(persona.getSegundoNombre());
@@ -865,31 +865,31 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     public void modificar() {//Metodo que se ejecuta al presionar el boton modificar
 
-            cbxtipodocumento.setDisable(false);
-            tf_idpersona.setDisable(true);
-            tf_primerNombre.setDisable(false);
-            tf_segundoNombre.setDisable(false);
-            tf_primerApellido.setDisable(false);
-            tf_segundoApellido.setDisable(false);
-            dp_fechaNacimiento.setDisable(false);
-            tf_direccion.setDisable(false);
-            cbxsexo.setDisable(false);
-            cbxtipoeps.setDisable(false);
-            ta_alergicoA.setDisable(false);
-            ta_enfermedadSufre.setDisable(false);
-            ta_observaciones.setDisable(false);
-            tf_primerNombre.requestFocus();
-            valor = 0;            //Ingreso una variable Jose Martin campo
-            bt_modificar.setDisable(false);
-            bt_guardar.setDisable(false);
-            bt_hulla.setDisable(true);
-            cbx_documentopersona.setDisable(true);
-            cbx_documentofamiliar.setDisable(false);
-            dp_ingresofamiliar.setDisable(false);
-            bt_agregarfamiliar.setDisable(false);
-            bt_modificarfamiliar.setDisable(false);
-            tb_familiar.setDisable(false);
-            //---------------------------------
+        cbxtipodocumento.setDisable(false);
+        tf_idpersona.setDisable(true);
+        tf_primerNombre.setDisable(false);
+        tf_segundoNombre.setDisable(false);
+        tf_primerApellido.setDisable(false);
+        tf_segundoApellido.setDisable(false);
+        dp_fechaNacimiento.setDisable(false);
+        tf_direccion.setDisable(false);
+        cbxsexo.setDisable(false);
+        cbxtipoeps.setDisable(false);
+        ta_alergicoA.setDisable(false);
+        ta_enfermedadSufre.setDisable(false);
+        ta_observaciones.setDisable(false);
+        tf_primerNombre.requestFocus();
+        valor = 0;            //Ingreso una variable Jose Martin campo
+        bt_modificar.setDisable(false);
+        bt_guardar.setDisable(false);
+        bt_hulla.setDisable(true);
+        cbx_documentopersona.setDisable(true);
+        cbx_documentofamiliar.setDisable(false);
+        dp_ingresofamiliar.setDisable(false);
+        bt_agregarfamiliar.setDisable(false);
+        bt_modificarfamiliar.setDisable(false);
+        tb_familiar.setDisable(false);
+        //---------------------------------
 
     }
 
@@ -1045,6 +1045,7 @@ public class ControladorFormularioPersona implements Initializable {
         colIdFamiliar.setText("");
         familiares.clear();
         colFechaIngreso.setText("");
+        setTemplate(null);
         deshabilitarBotones();
         deshabilitarCampos();
     }

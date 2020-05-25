@@ -1,12 +1,15 @@
 package principal;
 
 import Informes.InformesPacientes.controllerP.Controller;
+import consultas.historiaatencion.HistoriaAtencion;
+import consultas.pacientesatendidos.PacientesAtendidos;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,6 +28,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.io.IOException;
 import java.lang.management.MemoryNotificationInfo;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ControladorPrincipal implements Initializable {
@@ -245,8 +249,12 @@ public class ControladorPrincipal implements Initializable {
             stage.show();
             //Hide this current window (if this is what you want)
             //((Node) (event.getSource())).getScene().getWindow().hide();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (  RuntimeException | IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
 
         //ocultar la ventana de Login
@@ -272,8 +280,12 @@ public class ControladorPrincipal implements Initializable {
             //Hide this current window (if this is what you want)
             //((Node) (event.getSource())).getScene().getWindow().hide();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (  RuntimeException | IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
         }
     }
 
@@ -610,17 +622,66 @@ public class ControladorPrincipal implements Initializable {
     }
 
     @FXML
-    private void generarReportePersonal(ActionEvent event) throws JRException {
-        controllerFormularios.generarReporteEmpleados();
+
+    private void abrirFormularioAcercaDe(ActionEvent event) throws IOException {
+
+        try {
+            Parent formulario_Acerca_De = FXMLLoader.load(getClass().getClassLoader().getResource("acercade/FormularioAcercaDe.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("AP_Humana(Acerca De)");
+            stage.setScene(new Scene(formulario_Acerca_De));
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            stage.initStyle(StageStyle.DECORATED);
+            stage.show();
+
+        } catch (RuntimeException | IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
+        }
 
     }
+
+
+    @FXML
+    private void generarReporte(ActionEvent event) throws JRException {
+        JasperPrint reporteLleno = Controller.generarReportePersonal();
+        //JasperExportManager.exportReportToPdfFile(reporteLleno, "reporteEmpleados.pdf");
+        JasperViewer viewer = new JasperViewer(reporteLleno, false);
+        viewer.setVisible(true);
+    }
+
+
     @FXML
     private void generarReportePacientes(ActionEvent event) throws JRException {
         controllerFormularios.generarReportePacientes(tf_identificacion.getText());
+    }
+
+    @FXML
+    private void generarListaPacientes(ActionEvent event) throws JRException {
+
+
+        JasperPrint listaAtendidos = PacientesAtendidos.generarListaAtendidos();
+        JasperViewer viewer = new JasperViewer(listaAtendidos, false);
+        viewer.setTitle("Lista de Atendidos");
+        viewer.setLocationRelativeTo(null);
+        viewer.setVisible(true);
 
     }
 
+    @FXML
+    private void generarListaP(ActionEvent event) throws JRException {
 
+        JasperPrint listap = HistoriaAtencion.generarListaP();
+        JasperViewer viewer = new JasperViewer(listap, false);
+        viewer.setTitle("Lista de Atendidos");
+        viewer.setLocationRelativeTo(null);
+        viewer.setVisible(true);
+
+    }
 
     @FXML
     private void handleExit() {

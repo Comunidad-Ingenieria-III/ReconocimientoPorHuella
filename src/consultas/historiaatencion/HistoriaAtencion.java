@@ -1,29 +1,39 @@
 package consultas.historiaatencion;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import conexionBD.ConexionRoot;
+import javafx.scene.control.Alert;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import javax.swing.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class HistoriaAtencion implements Initializable {
-
-    @FXML
-    private Button bt_salir;
+public class HistoriaAtencion {
 
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
+    public static JasperPrint generarListaP(){
+
+        try {
+
+            Map parametros = new HashMap();
+            String numero = JOptionPane.showInputDialog(null,"Ingrese el numero del documento que requiere");
+            parametros.put("id_persona", numero);
+
+            JasperReport report = JasperCompileManager.compileReport("src/consultas/historiaatencion/historialPaciente.jrxml");
+            JasperPrint listaP = JasperFillManager.fillReport(report, parametros, ConexionRoot.getConexion());
+            return listaP;
+
+        }  catch (RuntimeException | JRException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error SQL:");
+            alert.setContentText(ex.getLocalizedMessage());
+            alert.show();
+        }
+        return null;
     }
 
-    @FXML
-    private void cerrarConsultaHistiriaPaciente(ActionEvent event) {
-        Stage stage = (Stage) bt_salir.getScene().getWindow();
-        stage.close();
-    }
 }
 

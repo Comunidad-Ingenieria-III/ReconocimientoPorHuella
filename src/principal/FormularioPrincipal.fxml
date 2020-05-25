@@ -39,13 +39,17 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Salidas">
             <items>
+
               <MenuItem mnemonicParsing="false" text="Consultar Pacientes" />
+
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#generarReportePersonal" text="Consultar Personal" />
+                  <MenuItem mnemonicParsing="false" text="Consultar Personal" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Informe Empleados" />
                   <SeparatorMenuItem mnemonicParsing="false" />
+
                   <MenuItem mnemonicParsing="false" text="Informe Pacientes" />
+
             </items>
           </Menu>
           <Menu fx:id="mnuHeramientas" mnemonicParsing="false" text="Herramientas">
@@ -57,7 +61,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Ayudas">
               <items>
-                <MenuItem mnemonicParsing="false" text="Acerca de" />
+                <MenuItem mnemonicParsing="false" onAction="#abrirFormularioAcercaDe" text="Acerca de" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Manual de usuario" />
               </items>
