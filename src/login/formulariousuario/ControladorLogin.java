@@ -85,6 +85,9 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
         }else if(tf_Contrasena.getText().isEmpty()){
             lblContraseña.setText("Requerido");
 
+        }else{
+            lblContraseña.setText("");
+            lblUsuario.setText("");
         }
 
         if (tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty()) {
@@ -197,6 +200,8 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
                 tf_Contrasena.setText("");
                 tf_Usuario.requestFocus();
                 facadeUsuario.bloquear(tf_Usuario.getText(),"DENEGAR");
+                mensajeSesion.setText(" Usuario: " + tf_Usuario.getText() + " bloqueado");
+            }else if(usuario1.getPermitir().equals("DENEGAR")){
                 mensajeSesion.setText(" Usuario: " + tf_Usuario.getText() + " bloqueado");
             }
 
