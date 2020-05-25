@@ -58,9 +58,8 @@ public class DaoUsuario {
             alert.setHeaderText("Ocurrio el Error SQL:");
             alert.setContentText(ex.getLocalizedMessage());
             alert.show();
-            return user;
         }
-        return null;
+        return user;
     }
 
     public Usuario buscarUsuario(String username) {
