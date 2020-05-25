@@ -34,5 +34,9 @@ public class FacadeUsuario {
         return daousuario.buscarPorIdUsuario(idUsuario);
     }
 
+    public String bloquear(String idUsuario, String cadena){return daousuario.bloquear(idUsuario, cadena);}
 
+    public Usuario obtenerUsuario(String usuario){
+        return daousuario.buscarUsuario(usuario);
+    }
 }

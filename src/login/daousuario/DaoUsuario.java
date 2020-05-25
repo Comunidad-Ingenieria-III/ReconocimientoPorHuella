@@ -25,7 +25,7 @@ public class DaoUsuario {
 
 
     public Usuario validarIngreso(String usuario, String contrasena){
-
+        user =null;
         try {
             conn = ConexionRoot.getConexion();
             String sql = "select * from usuario where username = ? and contrasena = ?";
@@ -35,6 +35,7 @@ public class DaoUsuario {
             rset = stmt.executeQuery();
 
             if (rset.next()){
+                user = new Usuario();
                 user.setIdUsuario(rset.getString("idUsuario"));
                 user.setPrimerNombre(rset.getString("primerNombre"));
                 user.setSegundoNombre(rset.getString("segundoNombre"));
@@ -44,15 +45,46 @@ public class DaoUsuario {
                 user.setContrasena(rset.getString("contrasena"));
                 user.setIdperfil(rset.getString("idperfil"));
                 user.setEstado(rset.getBoolean("estado"));
-
+                user.setPermitir(rset.getString("permitir"));
                 user.setPerfil(perfilFacade.obtenerPorId(user.getIdperfil()));
             }
+
 
         } catch (SQLException | RuntimeException e) {
             e.printStackTrace();
         }
         return user;
     }
+
+    public Usuario buscarUsuario(String username) {
+        user= null;
+        try {
+            conn = ConexionRoot.getConexion();
+            String query = "select * from usuario where username=?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1,username);
+            rset = stmt.executeQuery();
+
+            if (rset.next()){
+                user = new Usuario();
+                user.setIdUsuario(rset.getString("idUsuario"));
+                user.setPrimerNombre(rset.getString("primerNombre"));
+                user.setSegundoNombre(rset.getString("segundoNombre"));
+                user.setPrimerApellido(rset.getString("primerApellido"));
+                user.setSegundoApellido(rset.getString("segundoApellido"));
+                user.setUsername(rset.getString("username"));
+                user.setContrasena(rset.getString("contrasena"));
+                user.setIdperfil(rset.getString("idperfil"));
+                user.setEstado(rset.getBoolean("estado"));
+                user.setPermitir(rset.getString("permitir"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
 
 
 
@@ -77,7 +109,7 @@ public class DaoUsuario {
                 user.setContrasena(rset.getString("contrasena"));
                 user.setIdperfil(rset.getString("idperfil"));
                 user.setEstado(rset.getBoolean("estado"));
-
+                user.setPermitir(rset.getString("permitir"));
                 usuarios.add(user);
             }
 
@@ -93,7 +125,7 @@ public class DaoUsuario {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "insert into usuario(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido," +
-                    " username, contrasena, idperfil, estado) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " username, contrasena, idperfil, estado, permitir) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             stmt = conn.prepareStatement(sql);//compilo y paso parametros
 
@@ -106,7 +138,7 @@ public class DaoUsuario {
             stmt.setString(7, usuario.getContrasena());
             stmt.setString(8, usuario.getIdperfil());
             stmt.setBoolean(9, usuario.isEstado());
-
+            stmt.setString(10, usuario.getPermitir());
             stmt.executeUpdate();
 
         } catch (SQLException | RuntimeException e) {
@@ -120,7 +152,7 @@ public class DaoUsuario {
         try {
             conn = ConexionRoot.getConexion();
             String sql = "update usuario set primerNombre = ?, segundoNombre = ?, primerApellido = ?, segundoApellido = ?, username = ?," +
-                    "contrasena = ?, idperfil = ?, estado = ? where idUsuario = ? ";
+                    "contrasena = ?, idperfil = ?, estado = ?, permitir = ? where idUsuario = ? ";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, user.getPrimerNombre());
@@ -131,9 +163,8 @@ public class DaoUsuario {
             stmt.setString(6,user.getContrasena());
             stmt.setString(7, user.getIdperfil());
             stmt.setBoolean(8, user.isEstado());
-
-            stmt.setString(9, user.getIdUsuario());
-
+            stmt.setString(9, user.getPermitir());
+            stmt.setString(10, user.getIdUsuario());
 
             return stmt.executeUpdate();
 
@@ -142,7 +173,22 @@ public class DaoUsuario {
         }
         return 0;
     }
+    public String bloquear(String username, String cadena){
 
+        try {
+            conn = ConexionRoot.getConexion();
+            String sql = "update usuario set permitir = ? where username = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, cadena);
+            stmt.setString(2, username);
+            stmt.executeUpdate();
+
+
+        } catch (SQLException  | RuntimeException e) {
+            e.printStackTrace();
+        }
+       return cadena;
+    }
 
 
     public boolean eliminar(String idUsuario) {//Funcion que inhabilita un registro en la tabla usuario de la BBDD
@@ -185,6 +231,8 @@ public class DaoUsuario {
                 user.setContrasena(rset.getString("contrasena"));
                 user.setIdperfil(rset.getString("idperfil"));
                 user.setEstado(rset.getBoolean("estado"));
+                user.setPermitir(rset.getString("permitir"));
+
             }
 
         } catch (SQLException e) {

@@ -10,7 +10,7 @@
    <children>
       <AnchorPane prefHeight="371.0" prefWidth="553.0" styleClass="panel_login" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-              <TextField fx:id="tf_Usuario" layoutX="218.0" layoutY="110.0" onKeyReleased="#validar" prefHeight="30.0" prefWidth="170.0" promptText="Usuario" />
+              <TextField fx:id="tf_Usuario" layoutX="218.0" layoutY="110.0" prefHeight="30.0" prefWidth="170.0" promptText="Usuario" />
             <PasswordField fx:id="tf_Contrasena" layoutX="218.0" layoutY="187.0" onKeyPressed="#textAction" onKeyReleased="#validar" prefHeight="30.0" prefWidth="170.0" promptText="Contraseña" />
             <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="122.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -59,6 +59,7 @@
                </font>
             </Label>
             <Label layoutX="334.0" layoutY="325.0" prefHeight="17.0" prefWidth="205.0" text="Software Reconocimiento por Huella" textFill="WHITE" />
+            <Label fx:id="mensajeSesion" layoutX="66.0" layoutY="240.0" prefHeight="17.0" prefWidth="430.0" textFill="#b92020" />
          </children>
       </AnchorPane>
    </children>
