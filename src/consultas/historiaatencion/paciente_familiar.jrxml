@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paciente_familiar" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d6db01e5-42b0-4bb2-9c07-5c6f857bcb9c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Datos por Huella"/>
+	<parameter name="id_persona" class="java.lang.String">
+		<parameterDescription><![CDATA[codigo_persona]]></parameterDescription>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT p.idpersona, p.primerNombre, p.primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones,
+ep.nombreEps AS nombreEps,
+f.nombre1, f.telefono as telefono 
+FROM persona_familiar AS pf
+INNER JOIN datos_persona AS p ON p.idpersona = pf.idpersona
+INNER JOIN familiar_paciente AS f ON f.idFamiliar = pf.idFamiliar
+INNER JOIN eps AS ep ON p.idEps = ep.idEps
+WHERE p.idpersona = $P{id_persona}]]>
+	</queryString>
+	<field name="idpersona" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="idpersona"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="datos_persona"/>
+	</field>
+	<field name="primerNombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="primerNombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="datos_persona"/>
+	</field>
+	<field name="primerApellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="primerApellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="datos_persona"/>
+	</field>
+	<field name="fechaNacimiento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fechaNacimiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="datos_persona"/>
+	</field>
+	<field name="alergicoA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="alergicoA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="datos_persona"/>
+	</field>
+	<field name="enfermedadSufre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="enfermedadSufre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="datos_persona"/>
+	</field>
+	<field name="observaciones" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="datos_persona"/>
+	</field>
+	<field name="nombreEps" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombreEps"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="eps"/>
+	</field>
+	<field name="nombre1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="familiar_paciente"/>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefono"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="familiar_paciente"/>
+	</field>
+	<group name="idpersona">
+		<groupExpression><![CDATA[$F{idpersona}]]></groupExpression>
+	</group>
+	<group name="primerNombre">
+		<groupExpression><![CDATA[$F{primerNombre}]]></groupExpression>
+	</group>
+	<group name="primerApellido">
+		<groupExpression><![CDATA[$F{primerApellido}]]></groupExpression>
+	</group>
+	<group name="fechaNacimiento">
+		<groupExpression><![CDATA[$F{fechaNacimiento}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="26" width="180" height="30" uuid="dee432a1-4597-43f5-b7d1-a2e7c10b44d4"/>
+				<textFieldExpression><![CDATA[$P{id_persona}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="30" uuid="b613a406-57c3-4e9c-a5eb-d14f0f8dd0eb"/>
+				<textFieldExpression><![CDATA[$F{primerNombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="100" height="30" uuid="2a50f0d2-3db1-43a3-a6db-6c9e0964f6c7"/>
+				<textFieldExpression><![CDATA[$F{fechaNacimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="100" height="30" uuid="8d25111c-0dd6-49b0-bc68-c8ab7b981fb5"/>
+				<textFieldExpression><![CDATA[$F{nombreEps}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="30" uuid="dff44d1b-9067-4611-b31a-62b6fbdc83e5"/>
+				<textFieldExpression><![CDATA[$F{nombre1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="100" height="30" uuid="d32068dd-f626-495a-865e-bab5ac5741d3"/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="0" width="100" height="30" uuid="642cdf86-f08c-4914-bc3e-1ae49fde3e81"/>
+				<textFieldExpression><![CDATA[$F{alergicoA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="100" height="30" uuid="c96bb27f-6f48-4523-a459-b0e3c0b75d5a"/>
+				<textFieldExpression><![CDATA[$F{primerApellido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="31" width="100" height="30" uuid="1f74ca55-2b28-44b3-9882-5c7734a23bb6"/>
+				<textFieldExpression><![CDATA[$F{enfermedadSufre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="31" width="100" height="30" uuid="6085dd42-4b7f-4b68-b060-4539aa0db490"/>
+				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

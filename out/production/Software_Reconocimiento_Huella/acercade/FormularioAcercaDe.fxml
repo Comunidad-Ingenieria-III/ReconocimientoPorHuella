@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="panel_login" stylesheets="@../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" layoutY="37.0" prefHeight="53.0" prefWidth="602.0" text="AP_Humana" textFill="#fcfafa">
+         <font>
+            <Font name="System Bold Italic" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="341.0" layoutY="82.0" prefHeight="17.0" prefWidth="152.0" text="Versión 1.0 2020" textFill="#f8f7f7" />
+      <ImageView fitHeight="41.0" fitWidth="117.0" layoutX="144.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/cruzVida.jpg" />
+         </image>
+      </ImageView>
+      <TextArea editable="false" layoutX="113.0" layoutY="101.0" prefHeight="254.0" prefWidth="383.0" text="Producto Versión.&#10;AP_Humana  Versión 1.0&#10;&#10;Software para el reconocimiento de personas en estado de &#10;Inconsciencia.&#10;&#10;Elaborado en colaboración con:&#10;Carlos Milciades Vera&#10;José Martin Campo Campo.&#10;Nelson Giovanni Salazar Roldan.&#10;&#10;Para la materia ingeniería del software.&#10;Orientada por la docente Piedad Metaute.&#10;                                                                           Una idea de negisaro." wrapText="true" />
+   </children>
+</AnchorPane>

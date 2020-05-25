@@ -45,7 +45,7 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Consular Personal que Recibe el Paciente" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Consultar HIstoria de Atención" />
+                  <MenuItem mnemonicParsing="false" onAction="#generarListaP" text="Consultar HIstoria de Atención" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Informe Novedad Paciente" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -65,7 +65,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Ayudas">
               <items>
-                <MenuItem mnemonicParsing="false" text="Acerca de" />
+                <MenuItem mnemonicParsing="false" onAction="#abrirFormularioAcercaDe" text="Acerca de" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Manual de Usuario" />
               </items>

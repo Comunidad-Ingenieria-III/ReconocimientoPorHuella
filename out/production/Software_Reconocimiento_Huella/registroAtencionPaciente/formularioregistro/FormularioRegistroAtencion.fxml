@@ -87,7 +87,7 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab text="Atención Paciente">
+      <Tab text="Atención del Paciente">
          <content>
             <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="panel_login">
                <children>
@@ -208,7 +208,7 @@
             </AnchorPane>
          </content>
       </Tab>
-      <Tab fx:id="tp_datosReferencia" text="Documento Referencia">
+      <Tab fx:id="tp_datosReferencia" text="Documento de Entrega">
          <content>
             <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="panel_login">
                <children>

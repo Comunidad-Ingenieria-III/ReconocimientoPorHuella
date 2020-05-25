@@ -9,6 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -19,6 +22,7 @@ import login.dtousuario.Usuario;
 import login.facadeusuario.FacadeUsuario;
 import principal.ControladorPrincipal;
 
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URL;
@@ -147,6 +151,7 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
             this.cerrarLogin();
         } else {
             Alert msg = new Alert(Alert.AlertType.ERROR);
+            Toolkit.getDefaultToolkit().beep();
             msg.setTitle("AP_Humana - Ingreso al Sistema");
             msg.setContentText("Usuario Y/O contraseña incorrecta.");
             msg.setHeaderText("Verifica tus datos");
