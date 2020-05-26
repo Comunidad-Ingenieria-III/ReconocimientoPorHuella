@@ -136,7 +136,7 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
-                  <Label layoutX="29.0" layoutY="52.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+                  <Label layoutX="29.0" layoutY="52.0" text="Los campos con * Son obligatorios" textFill="#ff8181">
                      <font>
                         <Font name="System Bold Italic" size="10.0" />
                      </font>

@@ -10,10 +10,10 @@
       <TableView fx:id="tblFamiliares" layoutY="331.0" prefHeight="264.0" prefWidth="800.0" tableMenuButtonVisible="true">
         <columns>
           <TableColumn fx:id="colId" prefWidth="83.0" resizable="false" text="Documento" />
-          <TableColumn fx:id="colNombre1" prefWidth="127.0" resizable="false" text="Primer Nombre" />
-            <TableColumn fx:id="colNombre2" prefWidth="115.0" resizable="false" text="Segundo Nombre" />
-            <TableColumn fx:id="colApellido1" prefWidth="119.0" resizable="false" text="Primer Apellido" />
-            <TableColumn fx:id="colApellido2" prefWidth="117.0" resizable="false" text="Segundo Apellido" />
+          <TableColumn fx:id="colNombre1" prefWidth="127.0" resizable="false" text="Primer nombre" />
+            <TableColumn fx:id="colNombre2" prefWidth="115.0" resizable="false" text="Segundo nombre" />
+            <TableColumn fx:id="colApellido1" prefWidth="119.0" resizable="false" text="Primer apellido" />
+            <TableColumn fx:id="colApellido2" prefWidth="117.0" resizable="false" text="Segundo apellido" />
             <TableColumn fx:id="colDireccion" prefWidth="135.0" resizable="false" text="Dirección" />
             <TableColumn fx:id="colTelefono" prefWidth="92.0" resizable="false" text="Teléfono" />
         </columns>
@@ -21,44 +21,44 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label alignment="CENTER" prefHeight="50.0" prefWidth="800.0" styleClass="panel_login" text="Datos Familiar" textFill="#f2f2f2">
+      <Label alignment="CENTER" prefHeight="50.0" prefWidth="800.0" styleClass="panel_login" text="Datos familiar" textFill="#f2f2f2">
          <font>
             <Font name="System Bold Italic" size="19.0" />
          </font>
       </Label>
-      <Label layoutX="49.0" layoutY="81.0" prefHeight="25.0" prefWidth="198.0" styleClass="lbl-cuerpo" text="Documento De Identidad" textFill="#1e1d1d">
+      <Label layoutX="49.0" layoutY="81.0" prefHeight="25.0" prefWidth="198.0" styleClass="lbl-cuerpo" text="Documento de Identidad" textFill="#1e1d1d">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_idfamiliar" layoutX="256.0" layoutY="79.0" onKeyPressed="#textAction" onKeyReleased="#validarId" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="177.0" layoutY="132.0" text="*" textFill="#f80707" />
-      <Label layoutX="48.0" layoutY="129.0" prefHeight="25.0" prefWidth="198.0" styleClass="lbl-cuerpo" text="Primer Nombre">
+      <Label layoutX="48.0" layoutY="129.0" prefHeight="25.0" prefWidth="198.0" styleClass="lbl-cuerpo" text="Primer nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_nombre1" layoutX="256.0" layoutY="127.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="438.0" layoutY="129.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
+      <Label layoutX="438.0" layoutY="129.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_nombre2" layoutX="598.0" layoutY="127.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="50.0" layoutY="179.0" prefHeight="20.0" prefWidth="130.0" styleClass="lbl-cuerpo" text="Primer Apellido">
+      <Label layoutX="50.0" layoutY="179.0" prefHeight="20.0" prefWidth="130.0" styleClass="lbl-cuerpo" text="Primer apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <Label layoutX="179.0" layoutY="176.0" text="*" textFill="#f80707" />
       <TextField fx:id="tf_apellido1" layoutX="256.0" layoutY="177.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="438.0" layoutY="179.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo Apellido">
+      <Label layoutX="438.0" layoutY="179.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_apellido2" layoutX="598.0" layoutY="176.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="48.0" layoutY="226.0" prefHeight="25.0" prefWidth="191.0" styleClass="lbl-cuerpo" text="Numero Telefónico">
+      <Label layoutX="48.0" layoutY="226.0" prefHeight="25.0" prefWidth="191.0" styleClass="lbl-cuerpo" text="Numero telefónico">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -123,7 +123,7 @@
       </Button>
       <Label layoutX="244.0" layoutY="78.0" text="*" textFill="#f80707" />
       <Label layoutX="206.0" layoutY="227.0" text="*" textFill="#f80707" />
-      <Label layoutX="14.0" layoutY="56.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+      <Label layoutX="14.0" layoutY="56.0" text="Los campos con * Son obligatorios" textFill="#ff8181">
          <font>
             <Font name="System Bold Italic" size="10.0" />
          </font>

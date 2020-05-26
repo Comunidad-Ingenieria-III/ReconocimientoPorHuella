@@ -43,12 +43,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="120.0" prefHeight="25.0" prefWidth="147.0" styleClass="lbl-cuerpo" text="Código Perfil" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="120.0" prefHeight="25.0" prefWidth="147.0" styleClass="lbl-cuerpo" text="Código" wrapText="true">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="321.0" layoutY="120.0" prefHeight="25.0" prefWidth="147.0" styleClass="lbl-cuerpo" text="Nombre Perfil" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="321.0" layoutY="120.0" prefHeight="25.0" prefWidth="147.0" styleClass="lbl-cuerpo" text="Nombre " wrapText="true">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
