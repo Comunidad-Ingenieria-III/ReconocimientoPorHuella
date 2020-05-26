@@ -58,7 +58,7 @@
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="334.0" layoutY="325.0" prefHeight="17.0" prefWidth="205.0" text="Software Reconocimiento por Huella" textFill="WHITE" />
+            <Label layoutX="321.0" layoutY="325.0" prefHeight="17.0" prefWidth="218.0" text="Software de  reconocimiento por Huella" textFill="WHITE" />
             <Label fx:id="mensajeSesion" layoutX="66.0" layoutY="240.0" prefHeight="17.0" prefWidth="430.0" textFill="#b92020" />
          </children>
       </AnchorPane>

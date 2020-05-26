@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="498.0" prefWidth="619.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ContraladorUsuario">
    <children>
-      <Label alignment="CENTER" prefHeight="45.0" prefWidth="619.0" styleClass="panel_login" text="Administración Usuario" textFill="#f5f4f4">
+      <Label alignment="CENTER" prefHeight="45.0" prefWidth="619.0" styleClass="panel_login" text="Administración usuario" textFill="#f5f4f4">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
@@ -34,7 +34,7 @@
          </font>
       </Label>
       <RadioButton fx:id="cb_estado" layoutX="238.0" layoutY="107.0" mnemonicParsing="false" selected="true" text="Activo" textFill="WHITE" />
-      <Label layoutX="30.0" layoutY="75.0" styleClass="lbl-cuerpo" text="Número Documento">
+      <Label layoutX="30.0" layoutY="75.0" styleClass="lbl-cuerpo" text="Número documento">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -45,7 +45,7 @@
          </font>
       </Label>
       <TextField fx:id="tf_idUsuario" layoutX="238.0" layoutY="74.0" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="33.0" layoutY="137.0" styleClass="lbl-cuerpo" text="Primer Nombre">
+      <Label layoutX="33.0" layoutY="137.0" styleClass="lbl-cuerpo" text="Primer nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -56,7 +56,7 @@
          </font>
       </Label>
       <TextField fx:id="tf_primerNombre" layoutX="238.0" layoutY="137.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="33.0" layoutY="171.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
+      <Label layoutX="33.0" layoutY="171.0" styleClass="lbl-cuerpo" text="Segundo nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -67,13 +67,13 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="209.0" styleClass="lbl-cuerpo" text="Primer Apellido">
+      <Label layoutX="33.0" layoutY="209.0" styleClass="lbl-cuerpo" text="Primer apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="tf_primerApellido" layoutX="238.0" layoutY="209.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="33.0" layoutY="248.0" styleClass="lbl-cuerpo" text="Segundo Apellido">
+      <Label layoutX="33.0" layoutY="248.0" styleClass="lbl-cuerpo" text="Segundo apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

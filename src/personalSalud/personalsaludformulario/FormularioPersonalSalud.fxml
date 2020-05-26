@@ -7,7 +7,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <top>
-          <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1300.0" styleClass="panel_login" text="Personal Salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
+          <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1300.0" styleClass="panel_login" text="Personal de salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
               <font>
                   <Font name="System Bold Italic" size="19.0" />
               </font>
@@ -21,13 +21,13 @@
                           <ComboBox fx:id="cbx_idtipotitulo" layoutX="216.0" layoutY="70.0" prefHeight="25.0" prefWidth="219.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
                           <ComboBox fx:id="cbx_idinstitucion" layoutX="14.0" layoutY="145.0" prefHeight="25.0" prefWidth="207.0" promptText="Seleccione" styleClass="cbx-cuerpo" />
                           <DatePicker fx:id="dp_fechatitulacion" layoutX="249.0" layoutY="145.0" prefHeight="25.0" prefWidth="180.0" promptText="DD/MM/AAAA" styleClass="cbx-cuerpo" />
-                  <Label alignment="CENTER" layoutX="1.0" prefHeight="35.0" prefWidth="465.0" styleClass="panel_login" text="Titulos Acádemicos" textFill="#fcf6f6">
+                  <Label alignment="CENTER" layoutX="1.0" prefHeight="35.0" prefWidth="465.0" styleClass="panel_login" text="Titulos acádemicos" textFill="#fcf6f6">
                      <font>
                         <Font name="System Bold Italic" size="16.0" />
                      </font></Label>
-                  <Label layoutX="215.0" layoutY="40.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Titulo Acádemico" />
-                  <Label layoutX="13.0" layoutY="116.0" prefHeight="30.0" prefWidth="182.0" styleClass="lbl-cuerpo" text="Institución Acádemica" />
-                  <Label layoutX="249.0" layoutY="116.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Fecha de Titulación" />
+                  <Label layoutX="215.0" layoutY="40.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Título acádemico" />
+                  <Label layoutX="13.0" layoutY="116.0" prefHeight="30.0" prefWidth="182.0" styleClass="lbl-cuerpo" text="Institución académica" />
+                  <Label layoutX="249.0" layoutY="116.0" prefHeight="30.0" prefWidth="152.0" styleClass="lbl-cuerpo" text="Fecha de titulación" />
                   <Button fx:id="bt_agregar" layoutX="24.0" layoutY="208.0" mnemonicParsing="false" onAction="#agregarTitulos" prefWidth="80.0" />
                   <Button fx:id="bt_eliminarTabla" layoutX="204.0" layoutY="208.0" mnemonicParsing="false" onAction="#eliminarTitulos" prefWidth="80.0" />
                   <Button fx:id="bt_SalirTabla" layoutX="299.0" layoutY="208.0" mnemonicParsing="false" onAction="#limpiarComponentes" prefWidth="80.0" />
@@ -41,12 +41,12 @@
                     <TableView fx:id="tb_personal" layoutY="36.0" prefHeight="248.0" prefWidth="643.0" tableMenuButtonVisible="true">
                         <columns>
                             <TableColumn fx:id="colIdPersonal" minWidth="-1.0" prefWidth="118.0" text="Documento" />
-                              <TableColumn fx:id="colIdTipoTitu" minWidth="-1.0" prefWidth="152.0" text="Tipo Titulo" />
-                              <TableColumn fx:id="colIdIntitucion" minWidth="-1.0" prefWidth="176.0" text="Institución Academica" />
-                              <TableColumn fx:id="colFechaTitulacion" minWidth="-1.0" prefWidth="157.0" text="Fecha Titulación" />
+                              <TableColumn fx:id="colIdTipoTitu" minWidth="-1.0" prefWidth="152.0" text="Tipo título" />
+                              <TableColumn fx:id="colIdIntitucion" minWidth="-1.0" prefWidth="239.0" text="Institución académica" />
+                              <TableColumn fx:id="colFechaTitulacion" minWidth="-1.0" prefWidth="117.0" text="Fecha titulación" />
                         </columns>
                     </TableView>
-                  <Label alignment="CENTER" layoutY="-6.0" prefHeight="42.0" prefWidth="643.0" styleClass="panel_login" text="Tabla Titulos Acádemicos" textFill="#fcf6f6">
+                  <Label alignment="CENTER" layoutY="-6.0" prefHeight="42.0" prefWidth="643.0" styleClass="panel_login" text="Tabla titulos acádemicos" textFill="#fcf6f6">
                      <font>
                         <Font name="System Bold Italic" size="16.0" />
                      </font>
@@ -59,7 +59,7 @@
    <center>
         <AnchorPane prefHeight="320.0" prefWidth="1000.0" styleClass="panel_login" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="50.0" layoutY="30.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Tipo Documento">
+                <Label layoutX="50.0" layoutY="30.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Tipo documento">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -71,7 +71,7 @@
                         <Font name="System Bold Italic" size="12.0" />
                     </font>
                 </Label>
-                <Label layoutX="335.0" layoutY="30.0" prefHeight="25.0" prefWidth="77.0" styleClass="lbl-cuerpo" text="Numero " textFill="#1e1d1d">
+                <Label layoutX="335.0" layoutY="30.0" prefHeight="25.0" prefWidth="77.0" styleClass="lbl-cuerpo" text="Número " textFill="#1e1d1d">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -83,7 +83,7 @@
                     </font>
                 </Label>
                 <TextField fx:id="tf_numerodocumento" layoutX="407.0" layoutY="30.0" onKeyPressed="#textAction" prefHeight="25.0" prefWidth="135.0" />
-                <Label layoutX="52.0" layoutY="66.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer Nombre">
+                <Label layoutX="52.0" layoutY="66.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer nombre">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -95,13 +95,13 @@
                 </Label>
                 <Label layoutX="173.0" layoutY="68.0" text="*" textFill="#f80707" />
                 <TextField fx:id="tf_nombre1" layoutX="195.0" layoutY="66.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="346.0" />
-                <Label layoutX="51.0" layoutY="97.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
+                <Label layoutX="51.0" layoutY="97.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Segundo nombre">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
                 <TextField fx:id="tf_nombre2" layoutX="196.0" layoutY="97.0" prefHeight="25.0" prefWidth="344.0" />
-                <Label layoutX="50.0" layoutY="127.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer Apellido">
+                <Label layoutX="50.0" layoutY="127.0" prefHeight="25.0" prefWidth="145.0" styleClass="lbl-cuerpo" text="Primer apellido">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -113,7 +113,7 @@
                 </Label>
                 <Label layoutX="170.0" layoutY="128.0" text="*" textFill="#f80707" />
                 <TextField fx:id="tf_apellido1" layoutX="195.0" layoutY="127.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="347.0" />
-                <Label layoutX="50.0" layoutY="158.0" prefHeight="25.0" prefWidth="146.0" styleClass="lbl-cuerpo" text="Segundo Apellido">
+                <Label layoutX="50.0" layoutY="158.0" prefHeight="25.0" prefWidth="146.0" styleClass="lbl-cuerpo" text="Segundo apellido">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -131,7 +131,7 @@
                     </font>
                 </Label>
                 <ComboBox fx:id="cmb_sexo" layoutX="736.0" layoutY="30.0" prefHeight="25.0" prefWidth="237.0" promptText="Seleccione" />
-                <Label layoutX="576.0" layoutY="68.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Número Telefónico">
+                <Label layoutX="576.0" layoutY="68.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Número telefónico">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -142,7 +142,7 @@
                     </font>
                 </Label>
                 <TextField fx:id="tf_numtelefono" layoutX="736.0" layoutY="64.0" prefHeight="25.0" prefWidth="238.0" />
-                <Label layoutX="576.0" layoutY="98.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Correo Electrónico">
+                <Label layoutX="576.0" layoutY="98.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Correo electrónico">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
@@ -229,6 +229,7 @@
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Label>
+            <Label layoutX="709.0" layoutY="102.0" text="*" textFill="#cd1a1a" />
             </children>
         </AnchorPane>
    </center>

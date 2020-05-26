@@ -207,8 +207,11 @@
                   <Font name="System Bold Italic" size="11.0" />
                </font>
             </Label>
+
             <Label layoutX="99.0" layoutY="332.0" text="*" textFill="#d02222" />
             <Label layoutX="183.0" layoutY="374.0" text="*" textFill="#c62e2e" />
+            <Label layoutX="182.0" layoutY="372.0" prefHeight="17.0" prefWidth="12.0" text="*" textFill="#d70c0c" />
+
          </children>
       </AnchorPane>
    </left>

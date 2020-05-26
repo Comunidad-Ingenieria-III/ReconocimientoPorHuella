@@ -13,7 +13,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="748.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css">
                     <children>
 
-                          <Label alignment="CENTER" prefHeight="50.0" prefWidth="748.0" styleClass="lblTitulo2" text="Tipo Título Académico ">
+                          <Label alignment="CENTER" prefHeight="50.0" prefWidth="748.0" styleClass="lblTitulo2" text="Tipo título académico ">
                               <font>
                                   <Font name="System Bold Italic" size="20.0" />
                               </font>
@@ -116,7 +116,7 @@
                                   <Cursor fx:constant="HAND" />
                               </cursor>
                           </Button>
-                  <Label layoutX="8.0" layoutY="48.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+                  <Label layoutX="8.0" layoutY="48.0" text="Los campos con * Son obligatorios" textFill="#ff8181">
                      <font>
                         <Font name="System Bold Italic" size="10.0" />
                      </font>

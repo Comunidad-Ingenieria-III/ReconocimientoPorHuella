@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="documento_entrega.documetoentregaformulario.ControladorDocumentoEntrega">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="panel_login" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="documento_entrega.documetoentregaformulario.ControladorDocumentoEntrega">
    <children>
       <TableView fx:id="tblFamiliares" layoutY="331.0" prefHeight="264.0" prefWidth="800.0" tableMenuButtonVisible="true">
         <columns>
@@ -23,12 +22,12 @@
          </columnResizePolicy>
       </TableView>
       <ComboBox fx:id="cbx_tipoDocumento" layoutX="185.0" layoutY="84.0" prefWidth="150.0" />
-      <Label alignment="CENTER" prefHeight="50.0" prefWidth="800.0" styleClass="panel_login" text="Personal Referencia" textFill="#f2f2f2">
+      <Label alignment="CENTER" prefHeight="50.0" prefWidth="800.0" styleClass="panel_login" text="Personal referencia" textFill="#f2f2f2">
          <font>
             <Font name="System Bold Italic" size="19.0" />
          </font>
       </Label>
-      <Label layoutX="352.0" layoutY="84.0" prefHeight="25.0" prefWidth="198.0" styleClass="lbl-cuerpo" text="Documento De Identidad" textFill="#1e1d1d">
+      <Label layoutX="352.0" layoutY="84.0" prefHeight="25.0" prefWidth="198.0" styleClass="lbl-cuerpo" text="Documento de Identidad" textFill="#1e1d1d">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -41,7 +40,7 @@
          </font>
       </Label>
       <TextField fx:id="tf_primerNombreRecibe" layoutX="256.0" layoutY="127.0" onKeyTyped="#validarExistente" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="438.0" layoutY="129.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo Nombre">
+      <Label layoutX="438.0" layoutY="129.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo nombre">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -54,7 +53,7 @@
       </Label>
       <Label layoutX="179.0" layoutY="176.0" text="*" textFill="#f80707" />
       <TextField fx:id="tf_primerApellidoRecibe" layoutX="256.0" layoutY="177.0" prefHeight="25.0" prefWidth="166.0" />
-      <Label layoutX="438.0" layoutY="179.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo Apellido">
+      <Label layoutX="438.0" layoutY="179.0" prefHeight="25.0" prefWidth="157.0" styleClass="lbl-cuerpo" text="Segundo apellido">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

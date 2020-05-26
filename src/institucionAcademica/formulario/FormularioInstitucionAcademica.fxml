@@ -118,7 +118,7 @@
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Button>
-                        <Label alignment="CENTER" prefHeight="45.0" prefWidth="800.0" styleClass="lblTitulo2" text="Institución Académica" />
+                        <Label alignment="CENTER" prefHeight="45.0" prefWidth="800.0" styleClass="lblTitulo2" text="Institución académica" />
                         <Label fx:id="lblCodigo" layoutX="157.0" layoutY="104.0" textFill="#8a1515">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
@@ -141,7 +141,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Label layoutX="36.0" layoutY="45.0" text="Los campos con * Son Obligatorios" textFill="#ff8181">
+                  <Label layoutX="36.0" layoutY="45.0" text="Los campos con * Son obligatorios" textFill="#ff8181">
                      <font>
                         <Font name="System Bold Italic" size="10.0" />
                      </font>
