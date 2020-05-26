@@ -4,6 +4,7 @@ import Informes.InformesPacientes.controllerP.Controller;
 import consultas.historiaatencion.HistoriaAtencion;
 import consultas.pacientesatendidos.PacientesAtendidos;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -135,35 +136,12 @@ public class ControladorPrincipal implements Initializable {
 
     @FXML
     public void permisosUsuario(){//Funcion para retringir acciones al usuario
+        mnuGestiones.setDisable(true);
+        mnuHeramientas.setDisable(true);
 
-        mi_perfil.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Acceso denegado");
-                alert.setContentText("No tiene permisos para relalizar esta acción");
-                alert.show();
-            }
-        });
-        mi_usario.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Acceso denegado");
-                alert.setContentText("No tiene permisos para realizar esta acción");
-                alert.show();
-            }
-        });
+        mnuGestiones.setStyle("-fx-border-color: white ; -fx-border-radius: 8px;");
+        mnuHeramientas.setStyle("-fx-border-color: white ; -fx-border-radius: 8px;");
 
-        mi_datos_persona.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Acceso denegado");
-                alert.setContentText("No tiene permisos para realizar esta acción");
-                alert.show();
-            }
-        });
     }
 
 
