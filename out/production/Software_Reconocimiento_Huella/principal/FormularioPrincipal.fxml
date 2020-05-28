@@ -43,12 +43,12 @@
               <MenuItem mnemonicParsing="false" text="Consultar Pacientes" />
 
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Consultar Personal" />
+                  <MenuItem mnemonicParsing="false" onAction="#generarConsultaPersonal" text="Consultar Personal" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Informe Empleados" />
                   <SeparatorMenuItem mnemonicParsing="false" />
 
-                  <MenuItem mnemonicParsing="false" text="Informe Pacientes" />
+                  <MenuItem mnemonicParsing="false" onAction="#generarReportePacientes" text="Informe Pacientes" />
 
             </items>
           </Menu>
