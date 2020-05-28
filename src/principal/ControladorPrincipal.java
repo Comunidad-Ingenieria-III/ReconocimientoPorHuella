@@ -32,6 +32,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import static Informes.InformesPacientes.controllerP.Controller.reportePacientes;
+
 public class ControladorPrincipal implements Initializable {
 
     @FXML
@@ -560,16 +562,17 @@ public class ControladorPrincipal implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @FXML
-    private void abrirNovedadTitulosAcademicos(ActionEvent event) throws IOException {
+    private void abrirInformePacientes(ActionEvent event) throws IOException {
 
         try {
-            Parent formulario_informe_titulos_academicos = FXMLLoader.load(getClass().getClassLoader().getResource("Informes/novedadtitulos/InformePacientes.fxml"));
+            Parent formulario_informe_pacientes = FXMLLoader.load(getClass().getClassLoader().getResource("Informes/InformesPacientes/controllerP/InformePacientes.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("AP_Humana(Gestión Informe Titulos Académicos)");
-            stage.setScene(new Scene(formulario_informe_titulos_academicos));
+            stage.setTitle("AP_Humana(Gestión Informe Pacientes)");
+            stage.setScene(new Scene(formulario_informe_pacientes));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
             //stage.initStyle(StageStyle.UNDECORATED);
@@ -623,26 +626,23 @@ public class ControladorPrincipal implements Initializable {
         }
 
     }
+//--------------------------------------REPORTES--------------------------------------------------------------------
 
+               //---------------------------------Consultas-----------------------
 
+    //OK
     @FXML
-    private void generarReporte(ActionEvent event) throws JRException {
+    private void generarConsultaPersonal(ActionEvent event) throws JRException {
         JasperPrint reporteLleno = Controller.generarReportePersonal();
         //JasperExportManager.exportReportToPdfFile(reporteLleno, "reporteEmpleados.pdf");
         JasperViewer viewer = new JasperViewer(reporteLleno, false);
+        viewer.setTitle("Listado de personal");
         viewer.setVisible(true);
     }
 
-
+    //Incompleto
     @FXML
-    private void generarReportePacientes(ActionEvent event) throws JRException {
-        controllerFormularios.generarReportePacientes(tf_identificacion.getText());
-    }
-
-    @FXML
-    private void generarListaPacientes(ActionEvent event) throws JRException {
-
-
+    private void generarConsultaPacientes(ActionEvent event) throws JRException {
         JasperPrint listaAtendidos = PacientesAtendidos.generarListaAtendidos();
         JasperViewer viewer = new JasperViewer(listaAtendidos, false);
         viewer.setTitle("Lista de Atendidos");
@@ -651,16 +651,45 @@ public class ControladorPrincipal implements Initializable {
 
     }
 
+
+
+
+            //--------------------------------Reportes-----------------------------------
+
+
+    //OK
     @FXML
-    private void generarListaP(ActionEvent event) throws JRException {
-
-        JasperPrint listap = HistoriaAtencion.generarListaP();
-        JasperViewer viewer = new JasperViewer(listap, false);
-        viewer.setTitle("Lista de Atendidos");
-        viewer.setLocationRelativeTo(null);
+    public  void  generarReportePacientes(ActionEvent event) throws JRException {
+        JasperPrint reporteLleno = Controller.informePacientesRegistrados();
+        JasperViewer viewer = new JasperViewer(reporteLleno,false);
+        viewer.setTitle("Informe de pacientes registrados");
         viewer.setVisible(true);
-
     }
+
+    // Incompleto
+    @FXML
+    public  void  generarReporteEmpleados(ActionEvent event) throws JRException {
+        JasperPrint reporteLleno = Controller.informePacientesRegistrados();
+        JasperViewer viewer = new JasperViewer(reporteLleno,false);
+        viewer.setTitle("Lista de Pacientes");
+        viewer.setVisible(true);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @FXML
     private void handleExit() {

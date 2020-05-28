@@ -1,13 +1,18 @@
 package Informes.ubicacionpaciente;
 
+import Informes.InformesPacientes.controllerP.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class ControladorUbicacionPaciente implements Initializable {
 
@@ -24,4 +29,9 @@ public class ControladorUbicacionPaciente implements Initializable {
         Stage stage = (Stage) bt_salir.getScene().getWindow();
         stage.close();
     }
+
+
+
+
+
 }
