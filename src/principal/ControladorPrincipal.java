@@ -172,11 +172,11 @@ public class ControladorPrincipal implements Initializable {
             formulario_Usuario = FXMLLoader.load(getClass().getClassLoader().getResource("login/formulariousuario/AdministracionUsuario.fxml"));
             //FormularioPrincipal.getChildren().setAll(formulario_tipo_documento);
             Stage stage = new Stage();
-            stage.setTitle("AP_Humana (Gestión Perfil)");
+            stage.setTitle("AP_Humana (Gestión Usuario)");
             stage.setScene(new Scene(formulario_Usuario));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
-            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.DECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
             //((Node) (event.getSource())).getScene().getWindow().hide();
@@ -298,7 +298,7 @@ public class ControladorPrincipal implements Initializable {
             stage.setScene(new Scene(formulario_Personal_salud));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
-            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.DECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
             //((Node) (event.getSource())).getScene().getWindow().hide();
@@ -320,8 +320,7 @@ public class ControladorPrincipal implements Initializable {
             stage.setScene(new Scene(formulario_Tipo_Titulo_Academico));
             stage.setResizable(false);
             stage.getIcons().add(new Image("estrella_vida.jpg"));
-            //stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.DECORATED);
             stage.show();
             //Hide this current window (if this is what you want)
             //((Node) (event.getSource())).getScene().getWindow().hide();
@@ -339,9 +338,10 @@ public class ControladorPrincipal implements Initializable {
             Stage stage = new Stage();
             //institucion_Academica.getStylesheets().add("Resources/Style.css");
             stage.setScene(new Scene(institucion_Academica));
-            stage.setTitle("MODULO INSTITUCIÓN ACADEMICA");
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            stage.setTitle("AP_Humana (Gestión Institución Académica)");
             stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
             stage.show();
         } catch (IOException e) {
             System.out.println(e.toString());
@@ -356,10 +356,10 @@ public class ControladorPrincipal implements Initializable {
             //FormularioPrincipal.getChildren().setAll(cargo);
             Stage stage = new Stage();
             stage.setScene(new Scene(cargo));
-            stage.setTitle("MODULO DE CARGOS");
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            stage.setTitle("AP_Humana (Gestión Cargo)");
             stage.setResizable(false);
-            stage.initStyle(StageStyle.UNDECORATED);
-            //stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
             stage.show();
         } catch (IOException e) {
             System.out.println(e.toString());
@@ -374,9 +374,10 @@ public class ControladorPrincipal implements Initializable {
             //FormularioPrincipal.getChildren().setAll(institucion_referencia);
             Stage stage = new Stage();
             stage.setScene(new Scene(institucion_referencia));
-            stage.setTitle("MODULO INSTITUCIÓN REFERENCIA");
+            stage.getIcons().add(new Image("estrella_vida.jpg"));
+            stage.setTitle("AP_Humana (Gestión Institución Referencia)");
             stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
             stage.show();
         } catch (IOException e) {
             System.out.println(e.toString());

@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import login.daousuario.DaoUsuario;
@@ -80,14 +81,20 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
 
         if (tf_Usuario.getText().isEmpty()) {
             lblUsuario.setText("Requerido");
+            tf_Usuario.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            //tf_Usuario.requestFocus();
 
 
         }else if(tf_Contrasena.getText().isEmpty()){
             lblContraseña.setText("Requerido");
+            tf_Contrasena.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            //tf_Contrasena.requestFocus();
 
         }else{
             lblContraseña.setText("");
             lblUsuario.setText("");
+            tf_Contrasena.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+            //tf_Contrasena.requestFocus();
         }
 
         if (tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty()) {
@@ -95,6 +102,24 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
         } else {
             btnEntrar.setDisable(false);
         }
+        reiniciarStilosCamposRequeridos();
+    }
+
+    @FXML
+    public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
+
+        tf_Usuario.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_Usuario.setStyle(null);
+            }
+        });
+        tf_Contrasena.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_Contrasena.setStyle(null);
+            }
+        });
     }
 
     @FXML

@@ -17,13 +17,13 @@
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="36.0" layoutY="59.0" prefHeight="25.0" prefWidth="263.0" styleClass="lbl-cuerpo" text="Documento de Identidad">
+                  <Label layoutX="36.0" layoutY="59.0" prefHeight="25.0" prefWidth="263.0" styleClass="lbl-cuerpo" text="Identificación">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
                   <TextField fx:id="tf_idpersonadps" layoutX="35.0" layoutY="85.0" prefHeight="25.0" prefWidth="232.0" />
-                  <Label layoutX="322.0" layoutY="60.0" prefHeight="20.0" prefWidth="174.0" styleClass="lbl-cuerpo" text="Nombre paciente">
+                  <Label layoutX="322.0" layoutY="60.0" prefHeight="20.0" prefWidth="174.0" styleClass="lbl-cuerpo" text="Nombres">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -46,7 +46,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="205.0" layoutY="129.0" prefHeight="20.0" prefWidth="188.0" styleClass="lbl-cuerpo" text="Fecha nacimiento paciente">
+                  <Label layoutX="205.0" layoutY="129.0" prefHeight="20.0" prefWidth="188.0" styleClass="lbl-cuerpo" text="Fecha nacimiento">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
@@ -77,7 +77,7 @@
                      </font>
                   </Label>
                   <TextArea fx:id="ta_huella" editable="false" layoutX="414.0" layoutY="237.0" prefHeight="182.0" prefWidth="360.0" />
-                  <Label layoutX="593.0" layoutY="60.0" prefHeight="20.0" prefWidth="175.0" styleClass="lbl-cuerpo" text="Apellido paciente">
+                  <Label layoutX="593.0" layoutY="60.0" prefHeight="20.0" prefWidth="175.0" styleClass="lbl-cuerpo" text="Apellido">
                      <font>
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
