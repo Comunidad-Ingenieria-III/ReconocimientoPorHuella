@@ -1,38 +1,27 @@
 package principal;
 
-import Informes.InformesPacientes.controllerP.Controller;
-import consultas.historiaatencion.HistoriaAtencion;
+import Informes.controllerP.Controller;
 import consultas.pacientesatendidos.PacientesAtendidos;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import login.dtousuario.Usuario;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
 
 import java.io.IOException;
-import java.lang.management.MemoryNotificationInfo;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-import static Informes.InformesPacientes.controllerP.Controller.reportePacientes;
 
 public class ControladorPrincipal implements Initializable {
 

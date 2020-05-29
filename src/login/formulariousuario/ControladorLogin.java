@@ -81,20 +81,17 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
 
         if (tf_Usuario.getText().isEmpty()) {
             lblUsuario.setText("Requerido");
-            tf_Usuario.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
-            //tf_Usuario.requestFocus();
+            tf_Usuario.requestFocus();
 
 
         }else if(tf_Contrasena.getText().isEmpty()){
             lblContraseña.setText("Requerido");
-            tf_Contrasena.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
-            //tf_Contrasena.requestFocus();
+            tf_Contrasena.requestFocus();
 
         }else{
             lblContraseña.setText("");
             lblUsuario.setText("");
-            tf_Contrasena.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
-            //tf_Contrasena.requestFocus();
+            tf_Contrasena.requestFocus();
         }
 
         if (tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty()) {

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
+<BorderPane prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
    <top>
       <MenuBar prefHeight="50.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
         <menus>
@@ -41,12 +40,12 @@
           <Menu mnemonicParsing="false" text="Salidas">
             <items>
 
-              <MenuItem mnemonicParsing="false" text="Consultar Pacientes" />
+              <MenuItem mnemonicParsing="false" onAction="#generarConsultaPacientes" text="Consultar Pacientes" />
 
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#generarConsultaPersonal" text="Consultar Personal" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Informe Empleados" />
+                  <MenuItem mnemonicParsing="false" onAction="#generarReporteEmpleados" text="Informe Empleados" />
                   <SeparatorMenuItem mnemonicParsing="false" />
 
                   <MenuItem mnemonicParsing="false" onAction="#generarReportePacientes" text="Informe Pacientes" />

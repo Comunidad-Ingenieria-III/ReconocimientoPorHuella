@@ -1,6 +1,6 @@
-package Informes.InformesPacientes.dtoP;
+package Informes.dtoP;
 
-import Informes.InformesPacientes.daoPa.DaoP;
+import Informes.daoPa.DaoP;
 
 import java.io.InputStream;
 

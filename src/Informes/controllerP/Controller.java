@@ -1,4 +1,4 @@
-package Informes.InformesPacientes.controllerP;
+package Informes.controllerP;
 
 import conexionBD.ConexionRoot;
 import javafx.scene.control.Alert;
@@ -9,9 +9,9 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.util.HashMap;
 
 public class Controller {
-    public static final String REPORTE_EMPLEADOS ="ReportePaciente.jasper";
-    public static final String REPORTE_PACIENTESINDIVIDUAL ="reporteIndividual.jasper";
-    public static final String REPORTE_PACIENTESTOTALES="ConsultaPacientes.jasper";
+    public static final String REPORTE_EMPLEADOS ="src/Informes/reportepaciente/ReportePersonalSalud.jasper";
+    public static final String REPORTE_PACIENTESINDIVIDUAL ="src/Informes/reporteindividual/reporteIndividual.jasper";
+    public static final String REPORTE_PACIENTESTOTALES="src/Informes/consultapaciente/ConsultaPacientes.jasper";
 
 
 

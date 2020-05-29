@@ -1,4 +1,4 @@
-package Informes.InformesPacientes.daoPa;
+package Informes.daoPa;
 
 import conexionBD.ConexionRoot;
 import javafx.scene.control.Alert;
