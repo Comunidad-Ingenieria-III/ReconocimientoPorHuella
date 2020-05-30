@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ControladorTipoDocumento extends  Component implements Initializable,  KeyListener {
+public class ControladorTipoDocumento extends Component implements Initializable, KeyListener {
 
     FacadeTipoDocumento facadeTipoDocumento = new FacadeTipoDocumento();
 
@@ -63,12 +63,6 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
     int valor = 0;
     private ObservableList<DtoTipoDocumento> tipoDocumentos;
 
-
-
-
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -82,10 +76,8 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
         bt_guardar.setDisable(true);
         deshabilitarCampos();
         manejarEventos();
-
-
+        reiniciarStilosCamposRequeridos();
     }
-
 
     @FXML
     public void manejarEventos() {
@@ -113,17 +105,14 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
             @Override
             public void handle(KeyEvent event) {
                 validarE();
+                tf_nombre1.setStyle(null);
             }
         });
     }
 
-
     public void validarE() {
         if (valor == 1) {
-
-
             tiposdeDocumento = facadeTipoDocumento.buscar(tf_Tipo.getText());
-
             if (tiposdeDocumento.size() >= 1) {
                 int i = 0;
 
@@ -137,11 +126,8 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                     tf_Tipo.setText("");
                     tf_nombre1.setText("");
                     tf_Tipo.requestFocus();
-
                 }
                 if (tiposdeDocumento.get(0).getEstado().equals("1")) {
-
-
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Tipo de documento");
                     msg.setContentText("Código: " + tf_Tipo.getText() + " existente, no es posible agregar");
@@ -150,18 +136,10 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                     tf_Tipo.setText("");
                     tf_nombre1.setText("");
                     tf_Tipo.requestFocus();
-
-
                 }
-
-
             }
-
         }
-
-
     }
-
 
     @FXML
     public void botonGuardar() {
@@ -171,19 +149,23 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                 tf_nombre1.getText(), estado
         );
         if (tiposdeDocumento.isEmpty()) {
-            if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Tipo de documento");
-                msg.setContentText("Campos requeridos");
-                msg.setHeaderText("Resultado");
+            if (tf_Tipo.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Tipo de Documento");
+                msg.setContentText("Debe ingresar un código ");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
-                if(tf_Tipo.getText().isEmpty()){
-                    tf_Tipo.requestFocus();
+                tf_Tipo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_Tipo.requestFocus();
 
-                } else if(tf_nombre1.getText().isEmpty()){
-                    tf_nombre1.requestFocus();
-                }
-
+            } else if (tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Tipo de Documento");
+                msg.setContentText("Debe ingresar el nombre del tipo de documento");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_nombre1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_nombre1.requestFocus();
 
             } else {
                 int res = facadeTipoDocumento.insertarTipoDocumento(dtoTipoDocumento);
@@ -198,7 +180,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
 
                 } else {
 
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.WARNING);
                     msg.setTitle("Gestiones - Tipo de Documento");
                     msg.setContentText("No se ha podido agregar el tipo de documento");
                     msg.setHeaderText("Resultado");
@@ -207,18 +189,19 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
 
             }
         } else {
-            if ( tf_nombre1.getText().isEmpty()) {
+            if (tf_nombre1.getText().isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.WARNING);
-                msg.setTitle("Gestiones - Tipo de documento");
-                msg.setContentText("Campos  requerido");
-                msg.setHeaderText("Resultado");
+                msg.setTitle("Gestiones - Tipo de Documento");
+                msg.setContentText("Debe ingresar el nombre del tipo de documento");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
+                tf_nombre1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 tf_nombre1.requestFocus();
 
             } else {
                 int res = facadeTipoDocumento.modificarTipoDocumeto(dtoTipoDocumento);
                 if (res == 1) {
-                   // tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), dtoTipoDocumento);
+                    // tipoDocumentos.set(tb_tipoDocumento.getSelectionModel().getSelectedIndex(), dtoTipoDocumento);
 
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Tipo de Documento");
@@ -227,7 +210,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                     msg.show();
                     cancelar();
                 } else {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.WARNING);
                     msg.setTitle("Gestiones - Tipo de Documento");
                     msg.setContentText("No se ha podido modificar el tipo de documento");
                     msg.setHeaderText("Resultado");
@@ -235,6 +218,18 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                 }
             }
         }
+    }
+
+    @FXML
+    public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
+
+        tf_Tipo.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_Tipo.setStyle(null);
+            }
+        });
+
     }
 
     @FXML
@@ -287,42 +282,29 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
 
     }
 
-
-
-
     @FXML
-    public void buttonPressed(KeyEvent e)
-    {
-        if(e.getCode().toString().equals("ENTER"))
-        {
+    public void buttonPressed(KeyEvent e) {
+        if (e.getCode().toString().equals("ENTER")) {
             //do something
         }
     }
 
-
-
     @FXML
-    public void textAction(KeyEvent e){
-        if (valor ==0){
+    public void textAction(KeyEvent e) {
+        if (valor == 0) {
 
 
-        if(e.getCode().equals(KeyCode.ENTER))
-            consultarTDocuemnto();
+            if (e.getCode().equals(KeyCode.ENTER))
+                consultarTDocuemnto();
         }
     }
 
     @FXML
-    public void textESC(KeyEvent e){
+    public void textESC(KeyEvent e) {
 
-        if(e.getCode().equals(KeyCode.ESCAPE))
+        if (e.getCode().equals(KeyCode.ESCAPE))
             cancelar();
     }
-
-
-
-
-
-
 
     @FXML
     private void consultarTDocuemnto() {
@@ -334,7 +316,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
             bt_crear.setDisable(true);
             bt_guardar.setDisable(true);
             tb_tipoDocumento.setEditable(false);
-            valor=0;
+            valor = 0;
         } else {
             int i = 0;
             tipoDocumentos = FXCollections.observableArrayList(facadeTipoDocumento.buscar(tf_Tipo.getText()));
@@ -346,7 +328,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                 msg.show();
                 tf_Tipo.requestFocus();
                 tf_Tipo.setText("");
-            }else{
+            } else {
 
 
                 if (tipoDocumentos.get(i).getEstado().equals("1")) {
@@ -372,19 +354,9 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
                     tf_Tipo.setText("");
 
                 }
-
-
             }
-
-
         }
-
     }
-
-
-
-
-
 
     @FXML
     public void validarCamposVacios() {
@@ -394,7 +366,6 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
             msg.setContentText("Debe ingresar todos los campos");
             msg.setHeaderText("Resultado");
             msg.show();
-
         }
     }
 
@@ -417,7 +388,7 @@ public class ControladorTipoDocumento extends  Component implements Initializabl
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         habilitarCampos();
-        valor=1;
+        valor = 1;
     }
 
     @FXML

@@ -557,6 +557,7 @@ public class ControladorFormularioPersona implements Initializable {
                             alert.setTitle("Error");
                             alert.setHeaderText("Ocurrio el Error SQL:");
                             alert.setContentText(ex.getLocalizedMessage());
+                            alert.show();
                         }
                     }
                 } catch (SQLException | RuntimeException ex) {

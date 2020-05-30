@@ -664,23 +664,6 @@ public class ControladorPrincipal implements Initializable {
         viewer.setVisible(true);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @FXML
     private void handleExit() {
         System.exit(0);
     }

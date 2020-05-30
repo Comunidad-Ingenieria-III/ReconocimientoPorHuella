@@ -54,69 +54,28 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
     private Label lblUsuario;
     private int contador=0;
 
-    KeyListener escuchaTeclado = new KeyListener() {
-        @Override
-        public void keyTyped(java.awt.event.KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyPressed(java.awt.event.KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyReleased(java.awt.event.KeyEvent e) {
-
-        }
-    };
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btnEntrar.setDisable(true);
+
     }
 
     public void validarcampos() {
 
         if (tf_Usuario.getText().isEmpty()) {
             lblUsuario.setText("Requerido");
-            tf_Usuario.requestFocus();
 
-
-        }else if(tf_Contrasena.getText().isEmpty()){
+        }else if (tf_Contrasena.getText().isEmpty()) {
             lblContraseña.setText("Requerido");
-            tf_Contrasena.requestFocus();
-
-        }else{
+        } else {
             lblContraseña.setText("");
             lblUsuario.setText("");
-            tf_Contrasena.requestFocus();
         }
-
         if (tf_Usuario.getText().isEmpty() || tf_Contrasena.getText().isEmpty()) {
             btnEntrar.setDisable(true);
         } else {
             btnEntrar.setDisable(false);
         }
-        reiniciarStilosCamposRequeridos();
-    }
-
-    @FXML
-    public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
-
-        tf_Usuario.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                tf_Usuario.setStyle(null);
-            }
-        });
-        tf_Contrasena.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                tf_Contrasena.setStyle(null);
-            }
-        });
     }
 
     @FXML
@@ -127,7 +86,6 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
                 validarcampos();
 
             }
-
         });
         tf_Contrasena.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -135,13 +93,8 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
                 validarcampos();
 
             }
-
         });
-
     }
-
-
-
 
     @FXML
     public void validarCredenciales() throws IOException {
@@ -270,9 +223,6 @@ public class ControladorLogin<escuchaTeclado> implements Initializable {
 
 
     }
-
-
-
 
     @FXML
     public void limpiar() {

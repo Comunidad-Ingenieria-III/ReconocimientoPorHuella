@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54a16ce1-4995-4b3a-a412-48dd73a1750a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_persona" class="java.lang.String">
+		<parameterDescription><![CDATA[codigo_persona]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.idpersona, p.primerNombre, p.primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones, 
+ep.nombreEps AS nombreEps,
+f.nombre1, f.telefono as telefono 
+FROM persona_familiar AS pf
+INNER JOIN datos_persona AS p ON p.idpersona = pf.idpersona
+INNER JOIN familiar_paciente AS f ON f.idFamiliar = pf.idFamiliar
+INNER JOIN eps AS ep ON p.idEps = ep.idEps
+WHERE p.idpersona = $P{id_persona}]]>
+	</queryString>
+	<field name="idpersona" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="primerNombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="primerApellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaNacimiento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alergicoA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="enfermedadSufre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreEps" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="idpersona">
+		<groupExpression><![CDATA[$F{idpersona}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="213" y="14" width="539" height="46" uuid="36a55d25-a6f5-4d57-9ea1-4ac4a811af5b"/>
+				<textElement textAlignment="Center">
+					<font size="36"/>
+				</textElement>
+				<text><![CDATA[Lista de Pacientes Atendidos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="32" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="5" width="802" height="20" backcolor="#6666FF" uuid="66b2ca24-644e-4ddb-87d0-4922307e3523"/>
+			</frame>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="26" width="132" height="20" uuid="eb6e937f-d6bd-4245-99d9-87b4f5b35c0f"/>
+				<textFieldExpression><![CDATA[$F{idpersona}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="46" width="802" height="1" uuid="d623e037-31e9-481c-96f2-dd962920e82e"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="132" height="20" uuid="8e0c211a-bb33-48a1-8727-77eb37823ac6"/>
+				<text><![CDATA[Documento de Identidadd]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="55" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="20" width="100" height="20" uuid="93694f00-7b71-4694-a2ad-9b82b89127a3"/>
+				<textFieldExpression><![CDATA[$F{primerNombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="7456659c-c5fc-4ea9-b317-f839a7508da5"/>
+				<text><![CDATA[primerNombre]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="20" width="100" height="20" uuid="588043b3-89f2-4050-978e-e9d649ebb0da"/>
+				<textFieldExpression><![CDATA[$F{primerApellido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="c8b6279c-d8b7-4daa-8e72-b368ac98821e"/>
+				<text><![CDATA[primerApellido]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="20" width="100" height="20" uuid="2ecfd1d8-f462-4bb4-a865-74d84f2bea9b"/>
+				<textFieldExpression><![CDATA[$F{fechaNacimiento}.toLocalDate()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="dbe1bbf9-07e0-42e2-8ab0-a6962ac10e8d"/>
+				<text><![CDATA[fechaNacimiento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="300" y="20" width="100" height="20" uuid="7fd4058f-4758-492f-aa45-0422e0ecf476"/>
+				<textFieldExpression><![CDATA[$F{alergicoA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="20" width="100" height="20" uuid="28688476-d9a6-4493-adb4-69441c313b30"/>
+				<textFieldExpression><![CDATA[$F{enfermedadSufre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="20" width="100" height="20" uuid="4c45d98c-a031-4797-a477-e0023d749ce8"/>
+				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="500" y="0" width="100" height="20" uuid="c022a1e4-6988-40ec-b68c-c0013a7fef4c"/>
+				<text><![CDATA[observaciones]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="600" y="20" width="100" height="20" uuid="4034a668-3a1c-483d-81c5-b06af43fcc61"/>
+				<textFieldExpression><![CDATA[$F{nombreEps}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="600" y="0" width="100" height="20" uuid="85555318-52a9-4f74-9de1-1af6c467394a"/>
+				<text><![CDATA[nombreEps]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="0b1bff2f-0f75-4002-b0da-bb34cbce16af"/>
+				<text><![CDATA[alergicoA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20" uuid="02d40055-4003-4f0e-bc80-7fe1dbe007be"/>
+				<text><![CDATA[enfermedadSufre]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="702" y="20" width="100" height="20" uuid="455bbef4-0efa-43d8-bbc8-d18e97a72211"/>
+				<textFieldExpression><![CDATA[$F{nombre1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="702" y="0" width="100" height="20" uuid="0a7bf962-a6e3-4c37-923c-db175605dce6"/>
+				<text><![CDATA[Nombre Familiar]]></text>
+			</staticText>
+		</band>
+		<band height="50">
+			<textField>
+				<reportElement x="0" y="20" width="100" height="20" uuid="67f5ead8-335a-4a6e-a78d-c8a7c5e184e2"/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="a717c744-b55f-465a-8933-4b04390427ba"/>
+				<text><![CDATA[telefono]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

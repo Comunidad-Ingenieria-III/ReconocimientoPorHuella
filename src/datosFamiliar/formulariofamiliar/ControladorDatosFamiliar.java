@@ -16,7 +16,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.nio.file.Watchable;
 import java.util.List;
@@ -74,14 +76,12 @@ public class ControladorDatosFamiliar implements Initializable {
     private Button bt_modificar;
     @FXML
     private Button bt_inhabilitar;
-    private String estado="1";
+    private String estado = "1";
     private ObservableList<Familiar> familiares;
     @FXML
     private List<Familiar> listaFamiliares;
     @FXML
-    int valor=0;
-
-
+    int valor = 0;
 
 
     @Override
@@ -99,19 +99,19 @@ public class ControladorDatosFamiliar implements Initializable {
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telFamiliar"));
 
 
-
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         bt_guardar.setDisable(true);
         deshabilitarCampos();
         manejarEventos();
+        reiniciarStilosCamposRequeridos();
     }
 
     public void manejarEventos() {
         tblFamiliares.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Familiar>() {
             @Override
             public void changed(ObservableValue<? extends Familiar> observable, Familiar oldValue, Familiar newValue) {
-                if (newValue != null ){
+                if (newValue != null) {
                     tf_idfamiliar.setText(newValue.getIdFamiliar() + "");
                     tf_nombre1.setText(newValue.getPrimerNombre());
                     tf_nombre2.setText(newValue.getSegundoNombre());
@@ -129,27 +129,27 @@ public class ControladorDatosFamiliar implements Initializable {
                 }
             }
 
-            
 
         });//FIN DEL LISTENER
     }
 
-    public void validarExistente(){
+    public void validarExistente() {
 
         tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarE();
+                tf_nombre1.setStyle(null);
             }
         });
     }
 
-    public void validarE(){
-        if(valor==1){
+    public void validarE() {
+        if (valor == 1) {
 
-            listaFamiliares=facade.buscar(tf_idfamiliar.getText());
-            if(listaFamiliares.size()>=1){
-                int i=0;
+            listaFamiliares = facade.buscar(tf_idfamiliar.getText());
+            if (listaFamiliares.size() >= 1) {
+                int i = 0;
 
                 if (listaFamiliares.get(0).getEstado().equals("0")) {
 
@@ -163,11 +163,11 @@ public class ControladorDatosFamiliar implements Initializable {
                     tf_idfamiliar.requestFocus();
 
                 }
-                if(listaFamiliares.get(0).getEstado().equals("1")){
+                if (listaFamiliares.get(0).getEstado().equals("1")) {
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Familiar Paciente");
-                    msg.setContentText("Familiar: " + tf_idfamiliar.getText() +" existente no es posible agregar" );
+                    msg.setContentText("Familiar: " + tf_idfamiliar.getText() + " existente no es posible agregar");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     tf_idfamiliar.setText("");
@@ -188,6 +188,7 @@ public class ControladorDatosFamiliar implements Initializable {
                 if (!Character.isDigit(car)) {
                     event.consume();
                 }
+                tf_idfamiliar.setStyle(null);
 
             }
 
@@ -196,87 +197,137 @@ public class ControladorDatosFamiliar implements Initializable {
             @Override
             public void handle(KeyEvent event) {
                 char car = event.getCharacter().charAt(0);
-
                 if (!Character.isDigit(car)) {
                     event.consume();
                 }
-
+                tf_numtelefono.setStyle(null);
             }
-
         });
     }
 
     @FXML
     public void guardarFamiliar() {
-        listaFamiliares=facade.buscar(tf_idfamiliar.getText());
-        Familiar familiar= new Familiar(tf_idfamiliar.getText(), tf_nombre1.getText(), tf_nombre2.getText(), tf_apellido1.getText(),
+        listaFamiliares = facade.buscar(tf_idfamiliar.getText());
+        Familiar familiar = new Familiar(tf_idfamiliar.getText(), tf_nombre1.getText(), tf_nombre2.getText(), tf_apellido1.getText(),
                 tf_apellido2.getText(), tf_direccion.getText(), tf_numtelefono.getText(), estado);
         if (listaFamiliares.isEmpty()) {
-            if (tf_idfamiliar.getText().isEmpty() || tf_nombre1.getText().isEmpty() || tf_apellido1.getText().isEmpty() || tf_direccion.getText().isEmpty() || tf_numtelefono.getText().isEmpty()) {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Familiar Paciente");
-                msg.setContentText("Campos requeridos");
-                msg.setHeaderText("Resultado");
+
+            if (tf_idfamiliar.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Número de documento ");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
-                if(tf_idfamiliar.getText().isEmpty()){
-                    tf_idfamiliar.requestFocus();
-                }else if(tf_nombre1.getText().isEmpty()){
-                    tf_nombre1.requestFocus();
+                tf_idfamiliar.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_idfamiliar.requestFocus();
 
-                }else if(tf_apellido1.getText().isEmpty()){
-                    tf_apellido1.requestFocus();
-                }else if(tf_numtelefono.getText().isEmpty()){
-                    tf_numtelefono.requestFocus();
-                }else if(tf_direccion.getText().isEmpty()){
-                    tf_direccion.requestFocus();
-                }
+            } else if (tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Primer nombre");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_nombre1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_nombre1.requestFocus();
 
-            }else{
+            } else if (tf_apellido1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Primer apellido");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_apellido1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_apellido1.requestFocus();
+
+            } else if (tf_direccion.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Dirección");
+                msg.setHeaderText("Campos requeridos");
+                msg.show();
+                tf_direccion.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_direccion.requestFocus();
+
+            } else if (tf_numtelefono.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Número telefónico");
+                msg.setHeaderText("Campos requeridos");
+                msg.show();
+                tf_numtelefono.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_numtelefono.requestFocus();
+
+            } else {
                 int res = facade.agregarFamiliar(familiar);
 
-                    if (res == 1) {
+                if (res == 1) {
 
-                        familiares.add(familiar);//Cada que se agrege un objeto a se actualiza la observable(el modelo de la tableView
-                         Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                         msg.setTitle("Gestiones - Familiar Paciente");
-                         msg.setContentText("El familiar ha sido agregado correctamente");
-                         msg.setHeaderText("Resultado");
-                         msg.show();
-                        cancelar();
+                    familiares.add(familiar);//Cada que se agrege un objeto a se actualiza la observable(el modelo de la tableView
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Familiar Paciente");
+                    msg.setContentText("El familiar ha sido agregado correctamente");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
 
-                    } else {
+                } else {
 
-                        Alert msg = new Alert(Alert.AlertType.ERROR);
-                        msg.setTitle("Gestiones - Familiar Paciente");
-                        msg.setContentText("El familiar. NO ha sido agregado correctamente");
-                        msg.setHeaderText("REsult");
-                        msg.show();
-                        cancelar();
-                     }
+                    Alert msg = new Alert(Alert.AlertType.WARNING);
+                    msg.setTitle("Gestiones - Familiar Paciente");
+                    msg.setContentText("El familiar. no ha sido agregado correctamente");
+                    msg.setHeaderText("Algo salio mal");
+                    msg.show();
+                    cancelar();
+                }
+            }
 
-
-                 }
-
-        } else{
-            if ( tf_nombre1.getText().isEmpty() || tf_apellido1.getText().isEmpty() || tf_direccion.getText().isEmpty() || tf_numtelefono.getText().isEmpty()) {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Familiar Paciente");
-                msg.setContentText("Campos requeridos");
-                msg.setHeaderText("Resultado");
+        } else {
+            if (tf_idfamiliar.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Número de documento ");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
-                 if(tf_nombre1.getText().isEmpty()){
-                    tf_nombre1.requestFocus();
+                tf_idfamiliar.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_idfamiliar.requestFocus();
 
-                }else if(tf_apellido1.getText().isEmpty()){
-                    tf_apellido1.requestFocus();
-                }else if(tf_numtelefono.getText().isEmpty()){
-                    tf_numtelefono.requestFocus();
-                }else if(tf_direccion.getText().isEmpty()){
-                     tf_direccion.requestFocus();
-                 }
+            } else if (tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Primer nombre");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_nombre1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_nombre1.requestFocus();
 
+            } else if (tf_apellido1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Primer apellido");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_apellido1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_apellido1.requestFocus();
 
-            }else{
+            } else if (tf_direccion.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Dirección");
+                msg.setHeaderText("Campos requeridos");
+                msg.show();
+                tf_direccion.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_direccion.requestFocus();
+
+            } else if (tf_numtelefono.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Familiar");
+                msg.setContentText("Número telefónico");
+                msg.setHeaderText("Campos requeridos");
+                msg.show();
+                tf_numtelefono.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_numtelefono.requestFocus();
+
+            } else {
                 int res = facade.modificarFamiliar(familiar);
                 if (res == 1) {
                     //familiares.set(tblFamiliares.getSelectionModel().getSelectedIndex(), familiar);
@@ -286,8 +337,8 @@ public class ControladorDatosFamiliar implements Initializable {
                     msg.setHeaderText("Resultado");
                     msg.show();
                     cancelar();
-                }else{
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                } else {
+                    Alert msg = new Alert(Alert.AlertType.WARNING);
                     msg.setTitle("Gestiones - Familiar Paciente");
                     msg.setContentText("El familiar No ha sido modificada");
                     msg.setHeaderText("Resultado");
@@ -300,28 +351,43 @@ public class ControladorDatosFamiliar implements Initializable {
     }
 
     @FXML
-    public void textAction(KeyEvent e){
-        if (valor ==0){
+    public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
 
 
-            if(e.getCode().equals(KeyCode.ENTER))
+        tf_apellido1.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_apellido1.setStyle(null);
+            }
+        });
+        tf_direccion.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_direccion.setStyle(null);
+            }
+        });
+    }
+
+    @FXML
+    public void textAction(KeyEvent e) {
+        if (valor == 0) {
+
+
+            if (e.getCode().equals(KeyCode.ENTER))
                 consultar();
         }
     }
 
     @FXML
-    public void textESC(KeyEvent e){
+    public void textESC(KeyEvent e) {
 
-        if(e.getCode().equals(KeyCode.ESCAPE))
+        if (e.getCode().equals(KeyCode.ESCAPE))
             cancelar();
     }
 
 
-
-
-
     @FXML
-    public void modificar(){
+    public void modificar() {
         tf_idfamiliar.setDisable(true);
         tf_nombre1.setDisable(false);
         tf_nombre2.setDisable(false);
@@ -332,7 +398,7 @@ public class ControladorDatosFamiliar implements Initializable {
         tf_nombre1.requestFocus();
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        valor =0;
+        valor = 0;
         bt_guardar.setDisable(false);
     }
 
@@ -344,7 +410,7 @@ public class ControladorDatosFamiliar implements Initializable {
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta =facade.eliminarFamiliar(tf_idfamiliar.getText());
+            boolean respuesta = facade.eliminarFamiliar(tf_idfamiliar.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -370,7 +436,6 @@ public class ControladorDatosFamiliar implements Initializable {
         }
         limpiarFormulario();
         cancelar();
-
     }
 
     @FXML
@@ -387,7 +452,7 @@ public class ControladorDatosFamiliar implements Initializable {
             bt_crear.setDisable(true);
             bt_guardar.setDisable(true);
             tblFamiliares.setEditable(false);
-            valor=0;
+            valor = 0;
         } else {
             int i = 0;
             familiares = FXCollections.observableArrayList(facade.buscar(tf_idfamiliar.getText()));
@@ -400,7 +465,7 @@ public class ControladorDatosFamiliar implements Initializable {
                 msg.show();
                 tf_idfamiliar.requestFocus();
                 tf_idfamiliar.setText("");
-            }else{
+            } else {
                 if (familiares.get(i).getEstado().equals("1")) {
                     tblFamiliares.setItems(familiares);
                     colId.setCellValueFactory(new PropertyValueFactory<>("idFamiliar"));
@@ -441,7 +506,6 @@ public class ControladorDatosFamiliar implements Initializable {
     }
 
 
-
     @FXML
     public void limpiarFormulario() {//Este metodo deja vacios los campos del formulario
         tf_idfamiliar.setText("");
@@ -466,7 +530,7 @@ public class ControladorDatosFamiliar implements Initializable {
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         habilitarCampos();
-        valor=1;
+        valor = 1;
 
     }
 
@@ -524,6 +588,7 @@ public class ControladorDatosFamiliar implements Initializable {
         colApellido2.setCellValueFactory(new PropertyValueFactory<>("segundoApellido"));
         colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telFamiliar"));
+        reiniciarStilosCamposRequeridos();
 
     }
 
@@ -532,7 +597,6 @@ public class ControladorDatosFamiliar implements Initializable {
         Stage stage = (Stage) bt_salir.getScene().getWindow();
         stage.close();
     }
-
 
 
 }
