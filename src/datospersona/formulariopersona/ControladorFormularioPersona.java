@@ -129,7 +129,7 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private Label lb_huella;
 
-   private JLabel lblImagenHuella;
+    private JLabel lblImagenHuella;
 
     private int valor = 0;
 
@@ -503,6 +503,15 @@ public class ControladorFormularioPersona implements Initializable {
                 txtArea.setStyle("-fx-border-color: red;");
                 bt_hulla.requestFocus();
 
+            } else if (Reclutador.getTemplate().equals(null)) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Persona");
+                msg.setContentText("Debes capturar la huella dactilar");
+                msg.setHeaderText("Campo Requerido");
+                msg.show();
+                txtArea.setStyle("-fx-border-color: red;");
+                bt_hulla.requestFocus();
+
             } else {
 
                 int resultado;
@@ -619,7 +628,8 @@ public class ControladorFormularioPersona implements Initializable {
                 Alert msg = new Alert(Alert.AlertType.WARNING);
                 msg.setTitle("Gestiones - Registro Persona");
                 msg.setContentText("Dirección");
-                msg.setHeaderText("Campos requeridos");;
+                msg.setHeaderText("Campos requeridos");
+                ;
                 msg.show();
                 tf_direccion.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 tf_direccion.requestFocus();
@@ -867,58 +877,76 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     public void modificar() {//Metodo que se ejecuta al presionar el boton modificar
 
-        cbxtipodocumento.setDisable(false);
-        tf_idpersona.setDisable(true);
-        tf_primerNombre.setDisable(false);
-        tf_segundoNombre.setDisable(false);
-        tf_primerApellido.setDisable(false);
-        tf_segundoApellido.setDisable(false);
-        dp_fechaNacimiento.setDisable(false);
-        tf_direccion.setDisable(false);
-        cbxsexo.setDisable(false);
-        cbxtipoeps.setDisable(false);
-        ta_alergicoA.setDisable(false);
-        ta_enfermedadSufre.setDisable(false);
-        ta_observaciones.setDisable(false);
-        tf_primerNombre.requestFocus();
-        valor = 0;            //Ingreso una variable Jose Martin campo
-        bt_modificar.setDisable(false);
-        bt_guardar.setDisable(false);
-        bt_hulla.setDisable(true);
-        cbx_documentopersona.setDisable(true);
-        cbx_documentofamiliar.setDisable(false);
-        dp_ingresofamiliar.setDisable(false);
-        bt_agregarfamiliar.setDisable(false);
-        bt_modificarfamiliar.setDisable(false);
-        tb_familiar.setDisable(false);
-        //---------------------------------
-
+        if (tf_idpersona.getText().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Persona");
+            msg.setContentText("No hay registro para eliminar");
+            msg.setHeaderText("Algo salio mal");
+            msg.show();
+        } else {
+            cbxtipodocumento.setDisable(false);
+            tf_idpersona.setDisable(true);
+            tf_primerNombre.setDisable(false);
+            tf_segundoNombre.setDisable(false);
+            tf_primerApellido.setDisable(false);
+            tf_segundoApellido.setDisable(false);
+            dp_fechaNacimiento.setDisable(false);
+            tf_direccion.setDisable(false);
+            cbxsexo.setDisable(false);
+            cbxtipoeps.setDisable(false);
+            ta_alergicoA.setDisable(false);
+            ta_enfermedadSufre.setDisable(false);
+            ta_observaciones.setDisable(false);
+            tf_primerNombre.requestFocus();
+            valor = 0;            //Ingreso una variable Jose Martin campo
+            bt_modificar.setDisable(false);
+            bt_guardar.setDisable(false);
+            bt_hulla.setDisable(true);
+            cbx_documentopersona.setDisable(true);
+            cbx_documentofamiliar.setDisable(false);
+            dp_ingresofamiliar.setDisable(false);
+            bt_agregarfamiliar.setDisable(false);
+            bt_modificarfamiliar.setDisable(false);
+            tb_familiar.setDisable(false);
+            //---------------------------------
+        }
     }
 
     @FXML
     public void eliminarPersona() {
-        Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
-        msg.setTitle("Gestiones - Persona");
-        msg.setContentText("¿Está seguro de eliminar la Persona?");
-        msg.setHeaderText("Información");
-        Optional<ButtonType> action = msg.showAndWait();
-        if (action.get() == ButtonType.OK) {
-            boolean respuesta = facadepersona.eliminarPersonal(tf_idpersona.getText());
-            if (respuesta) {
-                Alert msge = new Alert(Alert.AlertType.WARNING);
-                msge.setTitle("Gestiones - Persona ");
-                msge.setContentText("No puedes eliminar! \n" + "El documento tiene registros dependientes!\n"
-                        + "Asegurese de eliminar los registros que dependen de este.");
-                msge.setHeaderText("Información.");
-                msge.show();
-                cancelar();
-            } else {
-                Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
-                msg2.setTitle("Gestiones - Persona");
-                msg2.setContentText("Registro eliminado correctamente");
-                msg2.setHeaderText("Información.");
-                msg2.show();
-                cancelar();
+
+        if (tf_idpersona.getText().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.ERROR);
+            msg.setTitle("Gestiones - Persona");
+            msg.setContentText("No hay registro para eliminar");
+            msg.setHeaderText("Algo salio mal");
+            msg.show();
+
+        } else {
+
+            Alert msg = new Alert(Alert.AlertType.CONFIRMATION);
+            msg.setTitle("Gestiones - Persona");
+            msg.setContentText("¿Está seguro de eliminar la Persona?");
+            msg.setHeaderText("Información");
+            Optional<ButtonType> action = msg.showAndWait();
+            if (action.get() == ButtonType.OK) {
+                boolean respuesta = facadepersona.eliminarPersonal(tf_idpersona.getText());
+                if (respuesta) {
+                    Alert msge = new Alert(Alert.AlertType.WARNING);
+                    msge.setTitle("Gestiones - Persona ");
+                    msge.setContentText("No puedes eliminar! \n" + "El documento tiene registros dependientes!\n"
+                            + "Asegurese de eliminar los registros que dependen de este.");
+                    msge.setHeaderText("Información.");
+                    msge.show();
+                    cancelar();
+                } else {
+                    Alert msg2 = new Alert(Alert.AlertType.INFORMATION);
+                    msg2.setTitle("Gestiones - Persona");
+                    msg2.setContentText("Registro eliminado correctamente");
+                    msg2.setHeaderText("Información.");
+                    msg2.show();
+                    cancelar();
+                }
             }
         }
     }
@@ -929,6 +957,7 @@ public class ControladorFormularioPersona implements Initializable {
             @Override
             public void handle(KeyEvent event) {
                 validarE();
+                tf_primerNombre.setStyle(null);
             }
         });
     }
@@ -949,7 +978,7 @@ public class ControladorFormularioPersona implements Initializable {
                     tf_primerNombre.setText("");
                     tf_idpersona.requestFocus();
                 } else {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    Alert msg = new Alert(Alert.AlertType.WARNING);
                     msg.setTitle("Gestiones - Persona");
                     msg.setContentText("El Documento :" + tf_idpersona.getText() + "\n" + "existente, no es posible agregar");
                     msg.setHeaderText("Información.");
@@ -1020,13 +1049,7 @@ public class ControladorFormularioPersona implements Initializable {
         cbxtipodocumento.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                    cbxtipodocumento.setStyle(null);
-            }
-        });
-        tf_primerNombre.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-               tf_primerNombre.setStyle(null);
+                cbxtipodocumento.setStyle(null);
             }
         });
         tf_primerApellido.setOnKeyTyped(new EventHandler<KeyEvent>() {
@@ -1072,11 +1095,11 @@ public class ControladorFormularioPersona implements Initializable {
             }
         });
         txtArea.setOnKeyTyped(new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            txtArea.setStyle(null);
-        }
-    });
+            @Override
+            public void handle(KeyEvent event) {
+                txtArea.setStyle(null);
+            }
+        });
     }
 
     @FXML

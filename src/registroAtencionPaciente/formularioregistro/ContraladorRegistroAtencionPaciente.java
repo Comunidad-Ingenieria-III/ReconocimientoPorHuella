@@ -90,9 +90,9 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private TabPane registroPacientes;
     @FXML
-    private Tab tp_datosPaciente;
+    private Tab tp_datosPaciente = new Tab();
     @FXML
-    private Tab tp_atencionPaciente;
+    private Tab tp_atencionPaciente = new Tab();
     @FXML
     private Tab tp_datosReferencia;
 
@@ -237,6 +237,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         horaAtencion();
         fechaAtencion();
         validarId();
+        reiniciarStilosCamposRequeridos();
+
 
     }
 
@@ -548,7 +550,14 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private void guardarRegistro() {
 
-        if (tf_direccionAccidente.getText().isEmpty()) {
+        if (tf_idpersonadpsc.getText().isEmpty()) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Atención Paciente");
+            msg.setContentText("Debes registrar los datos del paciente. \n" + "Antes de la atención ");
+            msg.setHeaderText("Información");
+            msg.show();
+
+        } else if (tf_direccionAccidente.getText().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
             msg.setContentText("Campo dirección accidente requerido");
@@ -640,7 +649,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                     msg.show();
                     iniciarCbxRemision();
                     cbx_codigoRemision.setValue(registroFacade.buscarCodigoRemision(tf_codigoRemision.getText()));
-                    cbx_codigoRemision.setDisable(true);
+
                 } else {
 
                     Alert msg = new Alert(Alert.AlertType.WARNING);
@@ -660,7 +669,15 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private void guardarDocumentoReferencia() {
 
-        if (cbx_tipoDocumento.getSelectionModel().isEmpty()) {
+        if (cbx_codigoRemision.getValue()==null) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Entrega");
+            msg.setContentText("Debes registrar la atención del paciente \n" + "Antes del documento de entrega");
+            msg.setHeaderText("Información");
+            msg.show();
+
+
+        } else if (cbx_tipoDocumento.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Entrega");
             msg.setContentText("Campo tipo documento requerido");
@@ -726,6 +743,83 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 msg.show();
             }
         }
+    }
+
+    @FXML
+    public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
+
+        tf_direccionAccidente.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_direccionAccidente.setStyle(null);
+            }
+        });
+        cbx_signosVitalesPaciente.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbx_signosVitalesPaciente.setStyle(null);
+            }
+        });
+        cbx_estadoPaciente.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbx_estadoPaciente.setStyle(null);
+            }
+        });
+        cbx_gasglowPaciente.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbx_gasglowPaciente.setStyle(null);
+            }
+        });
+        cbx_medicamentoSuministrado.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbx_medicamentoSuministrado.setStyle(null);
+            }
+        });
+        cbx_documentoAPH.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbx_documentoAPH.setStyle(null);
+            }
+        });
+        cbx_institucionReferencia.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbx_institucionReferencia.setStyle(null);
+            }
+        });
+        cbx_tipoDocumento.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbx_tipoDocumento.setStyle(null);
+            }
+        });
+        tf_idPersonalRecibe.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_idPersonalRecibe.setStyle(null);
+            }
+        });
+        tf_primerNombreRecibe.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_primerNombreRecibe.setStyle(null);
+            }
+        });
+        tf_primerApellidoRecibe.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_primerApellidoRecibe.setStyle(null);
+            }
+        });
+        cbx_idCargo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cbx_idCargo.setStyle(null);
+            }
+        });
     }
 
     @FXML
@@ -797,11 +891,11 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                 alert.setContentText(ex.getLocalizedMessage());
                 alert.show();
             }
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Gestiones - Registro Atención Paciente");
             alert.setHeaderText("Información");
-            alert.setContentText("El Documento: "+ tf_idpersonadps.getText() +"\n" + "No se encuentra registrado en la base de datos");
+            alert.setContentText("El Documento: " + tf_idpersonadps.getText() + "\n" + "No se encuentra registrado en la base de datos");
             alert.show();
         }
     }
@@ -859,26 +953,27 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     public void validarExistente() {
 
-        tf_codigoRemision.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        cbx_institucionReferencia.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarE();
+                tf_codigoRemision.setStyle(null);
             }
         });
     }
 
     public void validarE() {
 
-            boolean busqueda = buscarDocumento(tf_codigoRemision.getText());
-            if (busqueda) {
-                Alert msg = new Alert(Alert.AlertType.WARNING);
-                msg.setTitle("Gestiones - Registro Atención Paciente");
-                msg.setContentText("Ya existe un paciente con código de remisión Nro:\n" + tf_codigoRemision.getText() + " Asignado");
-                msg.setHeaderText("Información.");
-                msg.show();
-                tf_codigoRemision.setText("");
-                tf_codigoRemision.requestFocus();
-            }
+        boolean busqueda = buscarDocumento(tf_codigoRemision.getText());
+        if (busqueda) {
+            Alert msg = new Alert(Alert.AlertType.WARNING);
+            msg.setTitle("Gestiones - Registro Atención Paciente");
+            msg.setContentText("Ya existe un paciente con código de remisión Nro:\n" + tf_codigoRemision.getText() + " Asignado");
+            msg.setHeaderText("Información.");
+            msg.show();
+            tf_codigoRemision.setText("");
+            tf_codigoRemision.requestFocus();
+        }
     }
 
     @FXML

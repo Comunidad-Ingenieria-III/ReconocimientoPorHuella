@@ -66,8 +66,8 @@ public class EPS extends Component implements Initializable {
         deshabilitarCampos();
         manejarEventos();
         reiniciarStilosCamposRequeridos();
+        validarDigitosTelefono();
     }
-
 
     @FXML
     public void mostrarPersonal() {
@@ -229,6 +229,20 @@ public class EPS extends Component implements Initializable {
         }
     }
 
+    public void validarDigitosTelefono() {
+
+        tf_Telefono.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+                tf_Telefono.setStyle(null);
+            }
+        });
+    }
+
     @FXML
     public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
 
@@ -242,12 +256,6 @@ public class EPS extends Component implements Initializable {
             @Override
             public void handle(KeyEvent event) {
                 tf_Direccion.setStyle(null);
-            }
-        });
-        tf_Telefono.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                tf_Telefono.setStyle(null);
             }
         });
     }

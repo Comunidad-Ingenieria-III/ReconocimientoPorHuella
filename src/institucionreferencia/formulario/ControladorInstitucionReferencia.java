@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ControladorInstitucionReferencia extends Component implements Initializable  {
+public class ControladorInstitucionReferencia extends Component implements Initializable {
     FacadeInstitucionReferencia facadeInstitucionReferencia = new FacadeInstitucionReferencia();
 
     @FXML
@@ -43,18 +43,17 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     private TableColumn<InstitucionReferencia, String> colTelefono;
 
 
+    @FXML
+    private TextField txtId, txtNombre, txtDireccion, txtTelefono;
 
     @FXML
-    private TextField txtId,txtNombre,txtDireccion,txtTelefono;
-
-    @FXML
-    private Button btnCrear,btnConsultar,btnCancelar,btnSalir,btnGuardar,btnModificar,btnInhabilitar;
+    private Button btnCrear, btnConsultar, btnCancelar, btnSalir, btnGuardar, btnModificar, btnInhabilitar;
     @FXML
     private ObservableList<InstitucionReferencia> institucionReferencias;
     @FXML
     private List<InstitucionReferencia> institucionesReferencias;
-    private String estado="1";
-    int valor=0;
+    private String estado = "1";
+    int valor = 0;
 
 
     @Override
@@ -73,31 +72,44 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         btnGuardar.setDisable(true);
         deshabilitarCampos();
         manejarEventos();
+        reiniciarStilosCamposRequeridos();
 
     }
 
-    public void validar(){
+    public void validar() {
         txtTelefono.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarCamposVacios();
             }
         });
+        txtTelefono.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+                txtTelefono.setStyle(null);
+            }
+        });
     }
+
     @FXML
-    public void validarCamposVacios(){
-        if (txtId.getText().isEmpty()){
+    public void validarCamposVacios() {
+        if (txtId.getText().isEmpty()) {
             //validarTt.setText("Campo requerido");
             btnGuardar.setDisable(true);
 
-        }else{
+        } else {
             //validarTt.setText("");
             btnGuardar.setDisable(false);
         }
-        if(txtTelefono.getText().isEmpty()){
+        if (txtTelefono.getText().isEmpty()) {
             btnGuardar.setDisable(true);
             // validarNombre.setText("Campo requerido");
-        }else{
+        } else {
             //validarNombre.setText("");
             btnGuardar.setDisable(false);
 
@@ -106,21 +118,23 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     }
 
     @FXML
-    public void validarExistente(){
+    public void validarExistente() {
 
         txtNombre.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarE();
+                txtNombre.setStyle(null);
             }
         });
     }
-    public void validarE(){
-        if(valor==1){
+
+    public void validarE() {
+        if (valor == 1) {
             institucionesReferencias = facadeInstitucionReferencia.buscar(txtId.getText());
 
-            if(institucionesReferencias.size()>=1){
-                int i=0;
+            if (institucionesReferencias.size() >= 1) {
+                int i = 0;
 
                 if (institucionesReferencias.get(0).getEstado().equals("0")) {
 
@@ -132,41 +146,45 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                     txtId.setText("");
                     txtNombre.setText("");
                     txtId.requestFocus();
-
                 }
-                if(institucionesReferencias.get(0).getEstado().equals("1")){
-
+                if (institucionesReferencias.get(0).getEstado().equals("1")) {
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Institución de Referencia");
-                    msg.setContentText("Código: " + txtId.getText() +" existente no es posible agregar" );
+                    msg.setContentText("Código: " + txtId.getText() + " existente no es posible agregar");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     txtId.setText("");
                     txtNombre.setText("");
                     txtId.requestFocus();
-
-
                 }
-
-
-
-
             }
-
         }
-
-
     }
 
+    @FXML
+    public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
 
+        txtId.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                txtId.setStyle(null);
+            }
+        });
+        txtDireccion.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                txtDireccion.setStyle(null);
+            }
+        });
+    }
 
     @FXML
-    public void manejarEventos(){
+    public void manejarEventos() {
         tblInstitucionReferencia.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<InstitucionReferencia>() {
             @Override
             public void changed(ObservableValue<? extends InstitucionReferencia> observable, InstitucionReferencia oldValue, InstitucionReferencia newValue) {
-                if (newValue != null){
+                if (newValue != null) {
                     txtId.setText(newValue.getIdInstitucion());
                     txtNombre.setText(newValue.getNombre());
                     txtDireccion.setText(newValue.getDireccion());
@@ -184,7 +202,8 @@ public class ControladorInstitucionReferencia extends Component implements Initi
             }
         });
     }
-    private void alerta(){
+
+    private void alerta() {
         Alert msg = new Alert(Alert.AlertType.ERROR);
         msg.setTitle("Gestiones - Institución de referencia");
         msg.setContentText("Campos requeridos");
@@ -194,22 +213,21 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     }
 
     @FXML
-    public void textAction(KeyEvent e){
-        if (valor ==0){
+    public void textAction(KeyEvent e) {
+        if (valor == 0) {
 
 
-            if(e.getCode().equals(KeyCode.ENTER))
+            if (e.getCode().equals(KeyCode.ENTER))
                 consultarInsReferencia();
         }
     }
 
     @FXML
-    public void textESC(KeyEvent e){
+    public void textESC(KeyEvent e) {
 
-        if(e.getCode().equals(KeyCode.ESCAPE))
+        if (e.getCode().equals(KeyCode.ESCAPE))
             cancelar();
     }
-
 
 
     @FXML
@@ -220,27 +238,46 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                 txtId.getText(),
                 txtNombre.getText(),
                 txtDireccion.getText(),
-                txtTelefono.getText(),estado
+                txtTelefono.getText(), estado
         );
         if (institucionesReferencias.isEmpty()) {
-            if (txtId.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
-                alerta();
-                if(txtId.getText().isEmpty()){
-                    txtId.requestFocus();
-                }else if(txtNombre.getText().isEmpty()){
-                    txtNombre.requestFocus();
+            if (txtId.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Institución de Referencia");
+                msg.setContentText("Código Institución de Referencia");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                txtId.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                txtId.requestFocus();
 
-                }else if(txtDireccion.getText().isEmpty()){
-                    txtDireccion.requestFocus();
+            } else if (txtNombre.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Institución de Referencia");
+                msg.setContentText("Nombre Institución de Referencia");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                txtNombre.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                txtNombre.requestFocus();
 
-                }else if(txtTelefono.getText().isEmpty()){
-                    txtTelefono.requestFocus();
+            } else if (txtDireccion.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Institución de Referencia");
+                msg.setContentText("Dirección Institución de Referencia");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                txtDireccion.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                txtDireccion.requestFocus();
 
-                }
+            } else if (txtTelefono.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Institución de Referencia");
+                msg.setContentText("Teléfono v");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                txtTelefono.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                txtTelefono.requestFocus();
 
             } else {
-
-
                 int res = facadeInstitucionReferencia.agregarInstitucionReferencia(institucionReferencia);
                 if (res == 1) {
                     btnGuardar.setDisable(true);
@@ -263,51 +300,65 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                 }
             }
 
-            } else{
-                if (txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
-                    alerta();
-                    if(txtNombre.getText().isEmpty()){
-                        txtNombre.requestFocus();
+        } else {
+            if (txtId.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Institución de Referencia");
+                msg.setContentText("Código Institución de Referencia");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                txtId.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                txtId.requestFocus();
 
-                    }else if(txtDireccion.getText().isEmpty()){
-                        txtDireccion.requestFocus();
+            } else if (txtNombre.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Institución de Referencia");
+                msg.setContentText("Nombre Institución de Referencia");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                txtNombre.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                txtNombre.requestFocus();
 
-                    }else if(txtTelefono.getText().isEmpty()){
-                        txtTelefono.requestFocus();
+            } else if (txtDireccion.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Institución de Referencia");
+                msg.setContentText("Dirección Institución de Referencia");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                txtDireccion.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                txtDireccion.requestFocus();
 
-                    }
+            } else if (txtTelefono.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Institución de Referencia");
+                msg.setContentText("Teléfono v");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                txtTelefono.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                txtTelefono.requestFocus();
 
+            } else {
+                int res = facadeInstitucionReferencia.modificarInstitucionReferencia(institucionReferencia);
+                if (res == 1) {
+                    // institucionReferencias.set(tblInstitucionReferencia.getSelectionModel().getSelectedIndex(), institucionReferencia);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Institución Referencia");
+                    msg.setContentText("La Referencia se ha modificado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
                 } else {
-
-
-                    int res = facadeInstitucionReferencia.modificarInstitucionReferencia(institucionReferencia);
-                    if (res == 1) {
-                       // institucionReferencias.set(tblInstitucionReferencia.getSelectionModel().getSelectedIndex(), institucionReferencia);
-                        Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                        msg.setTitle("Gestiones - Institución Referencia");
-                        msg.setContentText("La Referencia se ha modificado");
-                        msg.setHeaderText("Resultado");
-                        msg.show();
-                        cancelar();
-                    } else {
-                        btnGuardar.setDisable(true);
-                        Alert msg = new Alert(Alert.AlertType.ERROR);
-                        msg.setTitle("Gestiones - Institución Referencia");
-                        msg.setContentText("La Referencia , No ha sido modificada");
-                        msg.setHeaderText("Resultado");
-                        msg.show();
-                        cancelar();
-                    }
-
+                    btnGuardar.setDisable(true);
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Institución Referencia");
+                    msg.setContentText("La Referencia , No ha sido modificada");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
                 }
             }
-
-
-
-
+        }
     }
-
-
 
     @FXML
     public void eliminarInstitucionReferencia() {
@@ -317,7 +368,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta=facadeInstitucionReferencia.eliminarInstitucionReferencia(txtId.getText());
+            boolean respuesta = facadeInstitucionReferencia.eliminarInstitucionReferencia(txtId.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -347,8 +398,6 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     }
 
 
-
-
     @FXML
     public void limpiar() {
         txtId.setText("");
@@ -356,6 +405,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         txtDireccion.setText("");
         txtTelefono.setText("");
     }
+
     @FXML
     private void consultarInsReferencia() {
         if (txtId.getText().isEmpty()) {
@@ -367,14 +417,14 @@ public class ControladorInstitucionReferencia extends Component implements Initi
             btnCrear.setDisable(true);
             btnGuardar.setDisable(true);
             tblInstitucionReferencia.setEditable(false);
-            valor=0;
+            valor = 0;
         } else {
             int i = 0;
             institucionReferencias = FXCollections.observableArrayList(facadeInstitucionReferencia.buscar(txtId.getText()));
             if (institucionReferencias.isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
                 msg.setTitle("Gestiones - Institución de Referencia");
-                msg.setContentText("Código " + txtId.getText() +" de referencia no encontrado");
+                msg.setContentText("Código " + txtId.getText() + " de referencia no encontrado");
                 msg.setHeaderText("Resultado");
                 msg.show();
                 txtId.setText("");
@@ -403,7 +453,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
                 if (institucionReferencias.get(i).getEstado().equals("0")) {
                     Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Institución de Referencia");
-                    msg.setContentText("Código " + txtId.getText() +" de referencia no encontrado");
+                    msg.setContentText("Código " + txtId.getText() + " de referencia no encontrado");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     txtId.setText("");
@@ -416,7 +466,6 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         }
 
     }
-
 
 
     @FXML
@@ -459,7 +508,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
     }
 
     @FXML
-    public void modificar(){
+    public void modificar() {
         txtId.setDisable(true);
         txtNombre.setDisable(false);
         txtDireccion.setDisable(false);
@@ -467,7 +516,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         txtNombre.requestFocus();
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
-        valor =0;
+        valor = 0;
         btnGuardar.setDisable(false);
     }
 
@@ -481,7 +530,7 @@ public class ControladorInstitucionReferencia extends Component implements Initi
         btnModificar.setDisable(true);
         btnInhabilitar.setDisable(true);
         habilitarCampos();
-        valor=1;
+        valor = 1;
     }
 
     @FXML

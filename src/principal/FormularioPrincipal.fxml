@@ -99,6 +99,14 @@
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
+            <Label fx:id="lb_reloj" alignment="CENTER" layoutX="229.0" layoutY="227.0" prefHeight="92.0" prefWidth="243.0" styleClass="panel_login" textFill="#fcfafa" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font></Label>
+            <Label fx:id="lb_fecha" layoutX="229.0" layoutY="344.0" prefHeight="49.0" prefWidth="246.0" textFill="#fcf7f7">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
          </children></AnchorPane>
    </center>
    <left>

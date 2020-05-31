@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="553.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ControladorLogin">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="553.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.formulariousuario.ControladorLogin">
    <children>
       <AnchorPane prefHeight="371.0" prefWidth="553.0" styleClass="panel_login" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-              <TextField fx:id="tf_Usuario" layoutX="218.0" layoutY="110.0" prefHeight="30.0" prefWidth="170.0" promptText="Usuario" />
-            <PasswordField fx:id="tf_Contrasena" layoutX="218.0" layoutY="187.0" onKeyPressed="#textAction" onKeyReleased="#validar" prefHeight="30.0" prefWidth="170.0" promptText="Contraseña" />
-            <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="122.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+              <TextField fx:id="tf_Usuario" layoutX="188.0" layoutY="110.0" prefHeight="30.0" prefWidth="200.0" promptText="Usuario">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></TextField>
+            <PasswordField fx:id="tf_Contrasena" layoutX="188.0" layoutY="187.0" onKeyPressed="#textAction" onKeyReleased="#validar" prefHeight="30.0" prefWidth="200.0" promptText="Contraseña">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></PasswordField>
+            <ImageView fitHeight="68.0" fitWidth="70.0" layoutX="98.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../imagenes/group.png" />
                </image>
@@ -22,7 +29,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="46.0" fitWidth="68.0" layoutX="133.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="46.0" fitWidth="68.0" layoutX="109.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../imagenes/user-15.png" />
                </image>

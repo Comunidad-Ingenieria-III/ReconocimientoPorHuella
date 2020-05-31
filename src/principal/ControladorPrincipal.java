@@ -2,6 +2,9 @@ package principal;
 
 import Informes.controllerP.Controller;
 import consultas.pacientesatendidos.PacientesAtendidos;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import login.dtousuario.Usuario;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -21,6 +25,8 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class ControladorPrincipal implements Initializable {
@@ -94,6 +100,10 @@ public class ControladorPrincipal implements Initializable {
     @FXML
     private Menu mnuHeramientas;
     @FXML
+    private Label lb_reloj;
+    @FXML
+    private Label lb_fecha;
+    @FXML
     private Label lblUsuario;
     private Controller controllerFormularios = new Controller();
     @FXML
@@ -122,6 +132,8 @@ public class ControladorPrincipal implements Initializable {
         else if (usuario.getPerfil().getNombre().equals("APH")){//Validamos que tipo de perfil tiene el usuario logueado, con el fin de restringir los permisos
             permisosUsuario();
         }
+        horaPrincipal();
+        fechaPrincipal();
 
     }
 
@@ -662,6 +674,28 @@ public class ControladorPrincipal implements Initializable {
         JasperViewer viewer = new JasperViewer(reporteLleno,false);
         viewer.setTitle("Lista de Pacientes");
         viewer.setVisible(true);
+    }
+
+    private void horaPrincipal() {
+
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            //lb_fecha.setText(LocalDateTime.now().format(formatter));
+            lb_reloj.setText(LocalDateTime.now().format(formatter));
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
+    }
+
+    private void fechaPrincipal() {
+
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            lb_fecha.setText(LocalDateTime.now().format(formatter));
+            //lb_reloj.setText(LocalDateTime.now().format(formatter));
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 
     private void handleExit() {
