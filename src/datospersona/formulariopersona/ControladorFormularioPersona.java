@@ -26,20 +26,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import persona_familiar.per_fami_dto.Per_Fami_Dto;
 import persona_familiar.per_fami_facade.Per_Fami_Facade;
 import tipodocumento.dtotipodocumento.DtoTipoDocumento;
 import tipodocumento.facadetipodocumento.FacadeTipoDocumento;
-
-import javax.jws.HandlerChain;
 import javax.swing.*;
-import java.awt.image.ImageProducer;
 import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.sql.*;
@@ -127,9 +125,9 @@ public class ControladorFormularioPersona implements Initializable {
     @FXML
     private Button bt_inhabilitarfamiliar;
     @FXML
-    private Label lb_huella;
-
-    private JLabel lblImagenHuella;
+    private  Label lb_huella;
+    @FXML
+    private Label lblImagenHuella;
 
     private int valor = 0;
 
@@ -313,7 +311,7 @@ public class ControladorFormularioPersona implements Initializable {
                 try {
                     Reclutador.addFeatures(featuresinscripcion);// Agregar las caracteristicas de la huella a la plantilla a crear
                     // Dibuja la huella dactilar capturada.
-                    java.awt.Image image = CrearImagenHuella(sample);
+                    Image image = CrearImagenHuella(sample);
                     DibujarHuella(image);
 
                 } catch (DPFPImageQualityException e) {
@@ -388,14 +386,13 @@ public class ControladorFormularioPersona implements Initializable {
         this.template = template;
     }
 
-    public void DibujarHuella(java.awt.Image image) {
-        lblImagenHuella.setIcon(new ImageIcon(
-                image.getScaledInstance(lblImagenHuella.getWidth(), lblImagenHuella.getHeight(), java.awt.Image.SCALE_DEFAULT)));
-        lblImagenHuella.repaint();
+    public void DibujarHuella(Image image) {
+        ImageView imagen = new ImageView(image);
+        lblImagenHuella.setGraphic(imagen);
     }
 
-    public java.awt.Image CrearImagenHuella(DPFPSample sample) {
-        return DPFPGlobal.getSampleConversionFactory().createImage(sample);
+    public Image CrearImagenHuella(DPFPSample sample) {
+        return Image.impl_fromPlatformImage(DPFPGlobal.getSampleConversionFactory().createImage(sample));
     }
 
     @FXML

@@ -233,8 +233,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         iniciarCbxCargo();
         iniciarCbxRemision();
         buscarR();
-        //metodoFechaHora();
-        horaAtencion();
+        metodoFechaHora();
+        //horaAtencion();
         fechaAtencion();
         validarId();
         reiniciarStilosCamposRequeridos();
@@ -267,25 +267,14 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     public void metodoFechaHora() {
 
-        Thread clock = new Thread(() -> {
-            while (true) {
-                //SimpleDateFormat simpli = new SimpleDateFormat("HH:mm:ss");
-                Calendar cal = Calendar.getInstance();
-                int second = cal.get(Calendar.SECOND);
-                int minute = cal.get(Calendar.MINUTE);
-                int hour = cal.get(Calendar.HOUR);
+        Calendar cal = Calendar.getInstance();
+        int second = cal.get(Calendar.SECOND);
+        int minute = cal.get(Calendar.MINUTE);
+        int hour = cal.get(Calendar.HOUR);
 
-                Platform.runLater(() -> {
-                    tf_horaRecepcionPaciente.setText(hour + ":" + (minute) + ":" + second);
-                });
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    //...
-                }
-            }
-        });
-        clock.start();
+        tf_horaAtencionPaciente.setText(hour + ":" + (minute) + ":" + second);
+        tf_horaRecepcionPaciente.setText(hour + ":" + (minute) + ":" + second);
+
     }
 
     protected void Iniciar() {
@@ -449,23 +438,25 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
                         break;
                 }
             }
+
     }
 
     @FXML
-    public void identificarHuella() throws IOException {
+    public void identificarHuella() {
 
         try {
             //Establece los valores para la sentencia SQL
             conn = ConexionRoot.getConexion();
 
             //Obtiene todas las huellas de la bd
-            PreparedStatement identificarStmt = conn.prepareStatement("SELECT p.idpersona, p.primerNombre, p.primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones, p.huella, \n" +
-                    "ep.nombreEps AS nombreEps, \n" +
+            PreparedStatement identificarStmt = conn.prepareStatement("SELECT p.idpersona, concat_ws(' ',p.primerNombre, p.segundoNombre) as primerNombre, \n" +
+                    "concat_ws(' ', p.primerApellido, p.segundoApellido) as primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones, p.huella, \n" +
+                    "ep.nombreEps AS nombreEps,\n" +
                     "f.nombre1, f.telefono as telefono \n" +
                     "FROM persona_familiar AS pf\n" +
                     "INNER JOIN datos_persona AS p ON p.idpersona = pf.idpersona\n" +
                     "INNER JOIN familiar_paciente AS f ON f.idFamiliar = pf.idFamiliar\n" +
-                    "INNER JOIN eps AS ep ON p.idEps = ep.idEps");
+                    "INNER JOIN eps AS ep ON p.idEps = ep.idEps\n");
             //Obtiene todas las huellas de la bd
             ResultSet rsIdentificar = identificarStmt.executeQuery();
 
@@ -513,12 +504,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
             JOptionPane.showMessageDialog(null, "No existe ningún registro que coincida con la huella.");
         } catch (SQLException | RuntimeException ex) {
-            //throw new RuntimeException("Error SQL - Buscar Codigo Remision()!");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Excepción SQL");
-            alert.setHeaderText("Ocurrio el Error:");
-            alert.setContentText(ex.getLocalizedMessage());
-            alert.show();
+            throw new RuntimeException("Error SQL - identificarHuella()!");
+
         }
         /*finally{
         con.desconectar();
@@ -527,24 +514,34 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     @FXML
     private RegistroDto crearRegistro() {
-        Date fechaAtencionPaciente = Date.valueOf(tf_fechaAtencionPaciente.getText());
-        Time horaAtencionPaciente = Time.valueOf(tf_horaAtencionPaciente.getText());
-        String condicionPaciente = cbx_estadoPaciente.getValue();
-        String glasgow = cbx_gasglowPaciente.getValue();
-        String signosVitales = cbx_signosVitalesPaciente.getValue();
-        String lugarAccidente = tf_direccionAccidente.getText();
-        String idMedicamento = cbx_medicamentoSuministrado.getSelectionModel().getSelectedItem().getIdMedicamento();
-        String dosis = tf_dosisMedicamento.getText();
-        String idPersonal = cbx_documentoAPH.getSelectionModel().getSelectedItem().getIdPersonal();
-        String idInstiRefe = cbx_institucionReferencia.getSelectionModel().getSelectedItem().getIdInstitucion();
-        String codigoAutorizacion = tf_codigoRemision.getText();
-        String idpersona = tf_idpersonadpsc.getText();
-        String nombrePaciente = tf_primerNombredpsc.getText();
-        String apellidoPaciente = tf_primerApellidodpsc.getText();
 
-        RegistroDto registroDto = new RegistroDto(fechaAtencionPaciente, horaAtencionPaciente, condicionPaciente, glasgow, signosVitales,
-                lugarAccidente, idMedicamento, dosis, idPersonal, idInstiRefe, codigoAutorizacion, idpersona, nombrePaciente, apellidoPaciente, estado);
-        return registroDto;
+        try {
+            Date fechaAtencionPaciente = Date.valueOf(tf_fechaAtencionPaciente.getText());
+            Time horaAtencionPaciente = Time.valueOf(tf_horaAtencionPaciente.getText());
+            String condicionPaciente = cbx_estadoPaciente.getValue();
+            String glasgow = cbx_gasglowPaciente.getValue();
+            String signosVitales = cbx_signosVitalesPaciente.getValue();
+            String lugarAccidente = tf_direccionAccidente.getText();
+            String idMedicamento = cbx_medicamentoSuministrado.getSelectionModel().getSelectedItem().getIdMedicamento();
+            String dosis = tf_dosisMedicamento.getText();
+            String idPersonal = cbx_documentoAPH.getSelectionModel().getSelectedItem().getIdPersonal();
+            String idInstiRefe = cbx_institucionReferencia.getSelectionModel().getSelectedItem().getIdInstitucion();
+            String codigoAutorizacion = tf_codigoRemision.getText();
+            String idpersona = tf_idpersonadpsc.getText();
+            String nombrePaciente = tf_primerNombredpsc.getText();
+            String apellidoPaciente = tf_primerApellidodpsc.getText();
+
+            RegistroDto registroDto = new RegistroDto(fechaAtencionPaciente, horaAtencionPaciente, condicionPaciente, glasgow, signosVitales,
+                    lugarAccidente, idMedicamento, dosis, idPersonal, idInstiRefe, codigoAutorizacion, idpersona, nombrePaciente, apellidoPaciente, estado);
+            return registroDto;
+        } catch (RuntimeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Excepción");
+            alert.setHeaderText("Ocurrio el Error:");
+            alert.setContentText(ex.fillInStackTrace().toString());
+            alert.show();
+        }
+        return null;
     }
 
     @FXML
@@ -560,8 +557,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (tf_direccionAccidente.getText().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo dirección accidente requerido");
-            msg.setHeaderText("Debes llenar el campo dirección del accidente");
+            msg.setContentText("Dirección accidente");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             tf_direccionAccidente.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             tf_direccionAccidente.requestFocus();
@@ -569,8 +566,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (cbx_signosVitalesPaciente.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo signos vitales requerido");
-            msg.setHeaderText("Debes llenar el campo signos vitales");
+            msg.setContentText("Signos vitales ");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             cbx_signosVitalesPaciente.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_signosVitalesPaciente.requestFocus();
@@ -578,8 +575,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (cbx_estadoPaciente.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo condición del paciente requerido");
-            msg.setHeaderText("Debes llenar el campo condición del paciente");
+            msg.setContentText("Condición del paciente");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             cbx_estadoPaciente.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_estadoPaciente.requestFocus();
@@ -587,8 +584,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (cbx_gasglowPaciente.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo glasgow requerido");
-            msg.setHeaderText("Debes llenar el campo glasgow");
+            msg.setContentText("Glasgow");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             cbx_gasglowPaciente.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_gasglowPaciente.requestFocus();
@@ -596,8 +593,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (cbx_medicamentoSuministrado.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo medicamento suministrado requerido");
-            msg.setHeaderText("Debes llenar el campo medicamento suministrado");
+            msg.setContentText("Medicamento suministrado");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             cbx_medicamentoSuministrado.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_medicamentoSuministrado.requestFocus();
@@ -605,8 +602,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (cbx_documentoAPH.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo documento personal APH requerido");
-            msg.setHeaderText("Debes llenar el Campo personal APH");
+            msg.setContentText("Documento personal APH");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             cbx_documentoAPH.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_documentoAPH.requestFocus();
@@ -614,8 +611,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (tf_codigoRemision.getText().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo código remisión requerido");
-            msg.setHeaderText("Debes llenar el campo código remisión");
+            msg.setContentText("Código remisión");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             tf_codigoRemision.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             tf_codigoRemision.requestFocus();
@@ -623,8 +620,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (cbx_institucionReferencia.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Atención Paciente");
-            msg.setContentText("Campo Institución de Referencia requerido");
-            msg.setHeaderText("Debes llenar el campo institución de referencia");
+            msg.setContentText("Institución de Referencia");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             cbx_institucionReferencia.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_institucionReferencia.requestFocus();
@@ -634,7 +631,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
             alert.setTitle("Gestiones - Registro Atención Paciente");
             alert.setHeaderText("Esta seguro de guardar el registro");
-            alert.setContentText("Este no puede ser modificado después de guardarlo");
+            alert.setContentText("Este no puede ser modificado después de ser guardado");
             Optional<ButtonType> action = alert.showAndWait();
 
             if (action.get() == ButtonType.YES) {
@@ -669,7 +666,7 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
     @FXML
     private void guardarDocumentoReferencia() {
 
-        if (cbx_codigoRemision.getValue()==null) {
+        if (cbx_codigoRemision.getValue() == null) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Entrega");
             msg.setContentText("Debes registrar la atención del paciente \n" + "Antes del documento de entrega");
@@ -680,8 +677,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (cbx_tipoDocumento.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Entrega");
-            msg.setContentText("Campo tipo documento requerido");
-            msg.setHeaderText("Debes llenar el campo tipo de documento");
+            msg.setContentText("Tipo documento");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             cbx_tipoDocumento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_tipoDocumento.requestFocus();
@@ -689,8 +686,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (tf_idPersonalRecibe.getText().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Entrega");
-            msg.setContentText("Campo número documento requerido");
-            msg.setHeaderText("Debes llenar el campo número de documento");
+            msg.setContentText("Número documento");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             tf_idPersonalRecibe.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             tf_idPersonalRecibe.requestFocus();
@@ -698,8 +695,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (tf_primerNombreRecibe.getText().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Entrega");
-            msg.setContentText("Campo primer nombre requerido");
-            msg.setHeaderText("Debes llenar el campo primer nombre");
+            msg.setContentText("Primer nombre");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             tf_primerNombreRecibe.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             tf_primerNombreRecibe.requestFocus();
@@ -707,8 +704,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (tf_primerApellidoRecibe.getText().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Entrega");
-            msg.setContentText("Campo primer apellido requerido");
-            msg.setHeaderText("Debes llenar el campo primer apellido");
+            msg.setContentText("Primer apellido");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             tf_primerApellidoRecibe.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             tf_primerApellidoRecibe.requestFocus();
@@ -716,8 +713,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
         } else if (cbx_idCargo.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.WARNING);
             msg.setTitle("Gestiones - Registro Entrega");
-            msg.setContentText("Campo cargo requerido");
-            msg.setHeaderText("Debes llenar el campo cargo");
+            msg.setContentText("Cargo");
+            msg.setHeaderText("Campo requerido");
             msg.show();
             cbx_idCargo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
             cbx_idCargo.requestFocus();
@@ -854,7 +851,8 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
             try {
                 conn = ConexionRoot.getConexion();
-                stmt = conn.prepareStatement("SELECT p.idpersona, p.primerNombre, p.primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones, p.huella,\n" +
+                stmt = conn.prepareStatement("SELECT p.idpersona, concat_ws(' ',p.primerNombre, p.segundoNombre) as primerNombre, \n" +
+                        "concat_ws(' ', p.primerApellido, p.segundoApellido) as primerApellido, p.fechaNacimiento, p.alergicoA, p.enfermedadSufre, p.observaciones,\n" +
                         "ep.nombreEps AS nombreEps,\n" +
                         "f.nombre1, f.telefono as telefono \n" +
                         "FROM persona_familiar AS pf\n" +
@@ -884,7 +882,6 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
                 }
             } catch (SQLException | RuntimeException ex) {
-                //throw new RuntimeException("Error SQL - buscarRegistros()!");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Excepción SQL");
                 alert.setHeaderText("Ocurrio el Error:");
@@ -953,9 +950,9 @@ public class ContraladorRegistroAtencionPaciente implements Initializable {
 
     public void validarExistente() {
 
-        cbx_institucionReferencia.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        cbx_institucionReferencia.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(KeyEvent event) {
+            public void handle(MouseEvent event) {
                 validarE();
                 tf_codigoRemision.setStyle(null);
             }
