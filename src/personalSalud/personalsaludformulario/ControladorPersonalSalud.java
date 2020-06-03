@@ -55,7 +55,7 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private ComboBox<DtoTipoDocumento> cmb_tipodocumento;
     @FXML
-    private TextField tf_numerodocumento,tf_nombre1,tf_nombre2,tf_apellido1,tf_apellido2,tf_numtelefono,tf_correoelectronico;
+    private TextField tf_numerodocumento, tf_nombre1, tf_nombre2, tf_apellido1, tf_apellido2, tf_numtelefono, tf_correoelectronico;
     @FXML
     private ComboBox<String> cmb_sexo;
     @FXML
@@ -78,23 +78,23 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     private TableColumn<PsDto, Integer> colIdPst;
     @FXML
-    private TableColumn<PsDto, String> colIdPersonal,colIdTipoTitu,colIdIntitucion;
+    private TableColumn<PsDto, String> colIdPersonal, colIdTipoTitu, colIdIntitucion;
     @FXML
     private TableColumn<PsDto, Date> colFechaTitulacion;
 
     //---------------------------------------------------------------------------
 
     @FXML
-    private Button bt_crear,bt_consultar,bt_cancelar,bt_salir,bt_guardar,bt_modificar,bt_inhabilitar;
+    private Button bt_crear, bt_consultar, bt_cancelar, bt_salir, bt_guardar, bt_modificar, bt_inhabilitar;
 
     //----------------------------------
     //Botones que pertenecen a la tabla personal_salud_titulo
     @FXML
-    private Button bt_agregar,bt_ModificarTabla,bt_eliminarTabla,bt_SalirTabla;
+    private Button bt_agregar, bt_ModificarTabla, bt_eliminarTabla, bt_SalirTabla;
     //----------------------------------
 
     @FXML
-    private Label lbl_tipoDocumeto,lblDocumento,lbl_correo,lbl_nombre1,lbl_apellido1,lbl_sexo,lbl_numtelefono;
+    private Label lbl_tipoDocumeto, lblDocumento, lbl_correo, lbl_nombre1, lbl_apellido1, lbl_sexo, lbl_numtelefono;
     @FXML
     private int valor = 1;
 
@@ -116,6 +116,7 @@ public class ControladorPersonalSalud implements Initializable {
         iniciarInstitucion();
         validarId();
         colocarImagenBotones();
+        reiniciarStilosCamposRequeridos();
 
     }
 
@@ -131,13 +132,13 @@ public class ControladorPersonalSalud implements Initializable {
     @FXML
     public void modificarRegistroDeTabla() {//Metodo que permite editar los registros de la tabla y asi poder actualizar en la base de datos
         //if(dp_fechatitulacion.getValue() == null || cbx_idtipotitulo.getSelectionModel().isEmpty() || cbx_idinstitucion.getSelectionModel().isEmpty() ){
-           // Alert msg = new Alert(Alert.AlertType.ERROR);
-            //msg.setTitle("Gestiones - Personal Salud");
-            //msg.setContentText("Debe seleccionar un registro de la tabla ");
-           // msg.show();
+        // Alert msg = new Alert(Alert.AlertType.ERROR);
+        //msg.setTitle("Gestiones - Personal Salud");
+        //msg.setContentText("Debe seleccionar un registro de la tabla ");
+        // msg.show();
 
 
-       // }else{
+        // }else{
 
 
         PsDto psDto = new PsDto(
@@ -178,7 +179,7 @@ public class ControladorPersonalSalud implements Initializable {
             }
 
         }
-    //    }
+        //    }
     }
 
 
@@ -186,21 +187,21 @@ public class ControladorPersonalSalud implements Initializable {
     public void agregarTitulos() {//Metodo para agregar titulos a la tabla personal-salud-titulo de la BBDD
         // y a la tabla del formulario previamente validados para evitar registros dulicados
 
-         if(cbx_idtipotitulo.getSelectionModel().isEmpty()){
+        if (cbx_idtipotitulo.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Personal Salud");
             msg.setContentText("Debe seleccionar una tipo de título");
             msg.show();
             cbx_idtipotitulo.requestFocus();
 
-        }else if(cbx_idinstitucion.getSelectionModel().isEmpty()){
+        } else if (cbx_idinstitucion.getSelectionModel().isEmpty()) {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Personal Salud");
             msg.setContentText("Debe seleccionar una institución");
             msg.show();
             cbx_idinstitucion.requestFocus();
 
-         } else if(dp_fechatitulacion.getValue() == null){
+        } else if (dp_fechatitulacion.getValue() == null) {
             Alert msg = new Alert(Alert.AlertType.ERROR);
             msg.setTitle("Gestiones - Personal Salud");
             msg.setContentText("Debe seleccionar una fecha");
@@ -209,56 +210,55 @@ public class ControladorPersonalSalud implements Initializable {
 
         } else {
 
-             PsDto psDto = new PsDto(
-                     0,
-                     cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal(),
-                     cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
-                     cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
-                     //java.sql.Date.valueOf(dp_fechatitulacion.getValue())
-                     Date.valueOf(dp_fechatitulacion.getValue()),
-                     estado
-             );
+            PsDto psDto = new PsDto(
+                    0,
+                    cbx_idpersona.getSelectionModel().getSelectedItem().getIdPersonal(),
+                    cbx_idtipotitulo.getSelectionModel().getSelectedItem().getIdTipoTituloAcademico(),
+                    cbx_idinstitucion.getSelectionModel().getSelectedItem().getIdInstitucion(),
+                    //java.sql.Date.valueOf(dp_fechatitulacion.getValue())
+                    Date.valueOf(dp_fechatitulacion.getValue()),
+                    estado
+            );
 
-             DateFormat date = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
-             String dateConverted = date.format(psDto.getFechaTitulacion());//Formatear una fecha Date a String
+            DateFormat date = new SimpleDateFormat("dd-MM-yyyy");//Formato de fecha para mostrarle al usuario.
+            String dateConverted = date.format(psDto.getFechaTitulacion());//Formatear una fecha Date a String
 
-             if (psDto.getFechaTitulacion().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
-                 Alert msg = new Alert(Alert.AlertType.ERROR);
-                 msg.setTitle("Gestiones - Personal Salud");
-                 msg.setContentText("Debe ingresar una fecha valida: \n" + "La fecha: " + dateConverted + " es superior a la fecha de hoy");
-                 msg.show();
-                 dp_fechatitulacion.requestFocus();
-             } else {
+            if (psDto.getFechaTitulacion().after(new java.util.Date())) {//Condicional que verifica si la fecha seleccionada es superior a la actual
+                Alert msg = new Alert(Alert.AlertType.ERROR);
+                msg.setTitle("Gestiones - Personal Salud");
+                msg.setContentText("Debe ingresar una fecha valida: \n" + "La fecha: " + dateConverted + " es superior a la fecha de hoy");
+                msg.show();
+                dp_fechatitulacion.requestFocus();
+            } else {
 
 
-                 if (titulos.isEmpty()) {
-                     //Validamos si la lista que esta asignada a la tabla, esta vacia
-                     boolean res = buscarDocumento(psDto.getIdPersonal());
-                     if (res) {
-                         personalSaludFacade.agregarPsdto(psDto);
-                         titulos.add(psDto);
-                         limpiarComponentes();
-                     }
+                if (titulos.isEmpty()) {
+                    //Validamos si la lista que esta asignada a la tabla, esta vacia
+                    boolean res = buscarDocumento(psDto.getIdPersonal());
+                    if (res) {
+                        personalSaludFacade.agregarPsdto(psDto);
+                        titulos.add(psDto);
+                        limpiarComponentes();
+                    }
 
-                 } else {
-                     boolean resultado = recorrerTablaTitulos(titulos, psDto);
-                     if (resultado) {
-                         Alert msg = new Alert(Alert.AlertType.ERROR);
-                         msg.setTitle("Gestiones - Personal Salud");
-                         msg.setContentText("El registro ya existe ");
-                         msg.show();
-                     } else {
-                         personalSaludFacade.agregarPsdto(psDto);
-                         titulos.add(psDto);
-                         limpiarComponentes();
+                } else {
+                    boolean resultado = recorrerTablaTitulos(titulos, psDto);
+                    if (resultado) {
+                        Alert msg = new Alert(Alert.AlertType.ERROR);
+                        msg.setTitle("Gestiones - Personal Salud");
+                        msg.setContentText("El registro ya existe ");
+                        msg.show();
+                    } else {
+                        personalSaludFacade.agregarPsdto(psDto);
+                        titulos.add(psDto);
+                        limpiarComponentes();
 
-                     }
+                    }
 
-                 }
-             }
-         }
+                }
+            }
+        }
     }
-
 
 
     public boolean recorrerTablaTitulos(List<PsDto> titulos, PsDto psDto) {//Método para recorrer la tabla con el fin de no ingresar registros duplicados
@@ -281,7 +281,7 @@ public class ControladorPersonalSalud implements Initializable {
         personalSaludFacade.eliminarPsdto(idPs, estado);
         titulos.remove(tb_personal.getSelectionModel().getFocusedIndex());
 
-        if (titulos.isEmpty()){
+        if (titulos.isEmpty()) {
             bt_agregar.setDisable(false);
             bt_ModificarTabla.setDisable(true);
             bt_eliminarTabla.setDisable(true);
@@ -339,164 +339,242 @@ public class ControladorPersonalSalud implements Initializable {
 
         //De esto depende si se agrega o se modifica el registro
         if (!documento) {//Esta condición se cumple solo si el registro no existe en la BBDD, asi se podra guardar
-            if(tf_numerodocumento.getText().isEmpty() || tf_nombre1.getText().isEmpty() || tf_apellido1.getText().isEmpty() || tf_numtelefono.getText().isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Campos requeridos");
-                msg.setHeaderText("Resultado");
+            if (cmb_tipodocumento.getSelectionModel().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Tipo de documento");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
-
-                if(tf_numerodocumento.getText().isEmpty()){
-                    tf_numerodocumento.requestFocus();
-
-                } else if(tf_nombre1.getText().isEmpty()){
-                    tf_nombre1.requestFocus();
-                } else if(tf_apellido1.getText().isEmpty()){
-                    tf_apellido1.requestFocus();
-                }else if(tf_numtelefono.getText().isEmpty()){
-                    tf_numtelefono.requestFocus();
-
-                }
-
-
-            } else if(cmb_tipodocumento.getSelectionModel().isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Debe seleccionar un tipo de documento");
-                msg.setHeaderText("Resultado");
-                msg.show();
+                cmb_tipodocumento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 cmb_tipodocumento.requestFocus();
 
-            }else if(cmb_sexo.getSelectionModel().isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Debe seleccionar un sexo");
-                msg.setHeaderText("Resultado");
+            } else if (tf_numerodocumento.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Número de documento");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
+                tf_numerodocumento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_numerodocumento.requestFocus();
+
+            } else if (tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Primer nombre");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_nombre1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_nombre1.requestFocus();
+
+            } else if (tf_apellido1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Primer apellido");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_apellido1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_apellido1.requestFocus();
+
+            } else if (cmb_sexo.getSelectionModel().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Sexo");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                cmb_sexo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 cmb_sexo.requestFocus();
 
-            }else if(cmb_cargo.getSelectionModel().isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Debe seleccionar un cargo");
-                msg.setHeaderText("Resultado");
+            } else if (tf_numtelefono.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Número teléfonico");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
+                tf_numtelefono.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_numtelefono.requestFocus();
+
+            } else if (tf_correoelectronico.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Correo electrónico");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_correoelectronico.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_correoelectronico.requestFocus();
+
+            } else if (!tf_correoelectronico.getText().contains("@") || !tf_correoelectronico.getText().contains(".")) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Debes ingresar una dirección de correo valida");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_correoelectronico.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_correoelectronico.requestFocus();
+
+            } else if (cmb_cargo.getSelectionModel().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Cargo");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                cmb_cargo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 cmb_cargo.requestFocus();
-            }
 
-            else{
-
-
-            int res = personalSaludFacade.agregarPersonal2(crearPersonalSalud());
-            if (res == 1) {
-
-                iniciarCbxid_persona();
-                tf_numerodocumento.setDisable(true);
-                tf_nombre1.setDisable(true);
-                tf_nombre2.setDisable(true);
-                tf_apellido1.setDisable(true);
-                tf_apellido2.setDisable(true);
-                cmb_sexo.setDisable(true);
-                tf_numtelefono.setDisable(true);
-                tf_correoelectronico.setDisable(true);
-                cmb_tipodocumento.setDisable(true);
-                cmb_cargo.setDisable(true);
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
-                alert.setTitle("Gestiones - Personal Salud");
-                alert.setHeaderText("Elija una opción");
-                alert.setContentText("Registro agregado correctamente\n \n" + "Desea ingresar títulos académicos ?");
-                Optional<ButtonType> action = alert.showAndWait();
-
-                if (action.get() == ButtonType.YES) {
-                    tb_personal.setDisable(false);
-                    cbx_idpersona.setDisable(false);
-                    cbx_idtipotitulo.setDisable(false);
-                    cbx_idinstitucion.setDisable(false);
-                    dp_fechatitulacion.setDisable(false);
-                    bt_agregar.setDisable(false);
-                    bt_SalirTabla.setDisable(false);
-                    cbx_idpersona.setValue(personalSaludFacade.buscarPorIdPersonal(tf_numerodocumento.getText()));
-                    cbx_idpersona.setDisable(true);
-                } else if (action.get() == ButtonType.NO) {
-                    deshabilitarCampos();
-                    deshabilitarBotones();
-                    limpiar();
-                }
             } else {
 
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("No fue posible agregar el registro");
-                msg.setHeaderText("Error.");
-                msg.show();
+
+                int res = personalSaludFacade.agregarPersonal2(crearPersonalSalud());
+                if (res == 1) {
+
+                    iniciarCbxid_persona();
+                    tf_numerodocumento.setDisable(true);
+                    tf_nombre1.setDisable(true);
+                    tf_nombre2.setDisable(true);
+                    tf_apellido1.setDisable(true);
+                    tf_apellido2.setDisable(true);
+                    cmb_sexo.setDisable(true);
+                    tf_numtelefono.setDisable(true);
+                    tf_correoelectronico.setDisable(true);
+                    cmb_tipodocumento.setDisable(true);
+                    cmb_cargo.setDisable(true);
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+                    alert.setTitle("Gestiones - Personal Salud");
+                    alert.setHeaderText("Elija una opción");
+                    alert.setContentText("Registro agregado correctamente\n \n" + "Desea ingresar títulos académicos ?");
+                    Optional<ButtonType> action = alert.showAndWait();
+
+                    if (action.get() == ButtonType.YES) {
+                        tb_personal.setDisable(false);
+                        cbx_idpersona.setDisable(false);
+                        cbx_idtipotitulo.setDisable(false);
+                        cbx_idinstitucion.setDisable(false);
+                        dp_fechatitulacion.setDisable(false);
+                        bt_agregar.setDisable(false);
+                        bt_SalirTabla.setDisable(false);
+                        cbx_idpersona.setValue(personalSaludFacade.buscarPorIdPersonal(tf_numerodocumento.getText()));
+                        cbx_idpersona.setDisable(true);
+                    } else if (action.get() == ButtonType.NO) {
+                        deshabilitarCampos();
+                        deshabilitarBotones();
+                        limpiar();
+                    }
+                } else {
+
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Personal Salud");
+                    msg.setContentText("No fue posible agregar el registro");
+                    msg.setHeaderText("Error.");
+                    msg.show();
                 }
             }
 
         } else {//Condicional para modificar si el registro ya esta creado
-            if(tf_numerodocumento.getText().isEmpty() || tf_nombre1.getText().isEmpty() || tf_apellido1.getText().isEmpty() || tf_numtelefono.getText().isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Campos requeridos");
-                msg.setHeaderText("Resultado");
+            if (cmb_tipodocumento == null) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Tipo de documento");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
+                cmb_tipodocumento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                cmb_tipodocumento.requestFocus();
 
-                if(tf_nombre1.getText().isEmpty()){
-                    tf_nombre1.requestFocus();
-                } else if(tf_apellido1.getText().isEmpty()){
-                    tf_apellido1.requestFocus();
-                }else if(tf_numtelefono.getText().isEmpty()){
-                    tf_numtelefono.requestFocus();
-
-                }
-
-            } else if(cmb_tipodocumento.getSelectionModel().isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Debe seleccionar un tipo de documento");
-                msg.setHeaderText("Resultado");
+            } else if (tf_numerodocumento.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Número de documento");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
+                tf_numerodocumento.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_numerodocumento.requestFocus();
+
+            } else if (tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Primer nombre");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_nombre1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_nombre1.requestFocus();
+
+            } else if (tf_apellido1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Primer apellido");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_apellido1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_apellido1.requestFocus();
+
+            } else if (cmb_sexo==null) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Sexo");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                cmb_sexo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 cmb_sexo.requestFocus();
 
-            }else if(cmb_sexo.getSelectionModel().isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Debe seleccionar un sexo");
-                msg.setHeaderText("Resultado");
+            } else if (tf_numtelefono.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Número teléfonico");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
-                cmb_sexo.requestFocus();
+                tf_numtelefono.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_numtelefono.requestFocus();
 
-            }else if(cmb_cargo.getSelectionModel().isEmpty()){
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Debe seleccionar un cargo");
-                msg.setHeaderText("Resultado");
+            } else if (tf_correoelectronico.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Correo electrónico");
+                msg.setHeaderText("Campo requerido");
                 msg.show();
+                tf_correoelectronico.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_correoelectronico.requestFocus();
+
+            } else if (!tf_correoelectronico.getText().contains("@") || !tf_correoelectronico.getText().contains(".")) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Debes ingresar una dirección de correo valida");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_correoelectronico.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_correoelectronico.requestFocus();
+
+            } else if (cmb_cargo==null) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Registro Personal Salud");
+                msg.setContentText("Cargo");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                cmb_cargo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
                 cmb_cargo.requestFocus();
-            }else{
 
-            int res = personalSaludFacade.modificarPersonal2(crearPersonalSalud());
-
-            if (res == 1) {
-                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("Registro modificado correctamente");
-                msg.setHeaderText("Exito.");
-                msg.show();
-
-                titulos.clear();
-                deshabilitarCampos();
-                deshabilitarBotones();
-                limpiarComponentes();
-                tb_personal.setDisable(false);
-                cbx_idpersona.setValue(null);
-                limpiar();
             } else {
-                Alert msg = new Alert(Alert.AlertType.ERROR);
-                msg.setTitle("Gestiones - Personal Salud");
-                msg.setContentText("No fue posible modificar el registro ");
-                msg.setHeaderText("Error.");
-                msg.show();
-            }
+
+                int res = personalSaludFacade.modificarPersonal2(crearPersonalSalud());
+
+                if (res == 1) {
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Personal Salud");
+                    msg.setContentText("Registro modificado correctamente");
+                    msg.setHeaderText("Exito.");
+                    msg.show();
+
+                    titulos.clear();
+                    deshabilitarCampos();
+                    deshabilitarBotones();
+                    limpiarComponentes();
+                    tb_personal.setDisable(false);
+                    cbx_idpersona.setValue(null);
+                    limpiar();
+                } else {
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Personal Salud");
+                    msg.setContentText("No fue posible modificar el registro ");
+                    msg.setHeaderText("Error.");
+                    msg.show();
+                }
 
             }
 
@@ -504,22 +582,57 @@ public class ControladorPersonalSalud implements Initializable {
 
 
     }
-    @FXML
-    public void textAction(KeyEvent e){
 
-        if (valor ==0){
-            if(e.getCode().equals(KeyCode.ENTER))
+    @FXML
+    public void reiniciarStilosCamposRequeridos() {//Metodo para reiniciar los estilos de las validaciones
+
+        cmb_tipodocumento.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cmb_tipodocumento.setStyle(null);
+            }
+        });
+        tf_apellido1.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_apellido1.setStyle(null);
+            }
+        });
+        cmb_sexo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cmb_sexo.setStyle(null);
+            }
+        });
+        tf_correoelectronico.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                tf_correoelectronico.setStyle(null);
+            }
+        });
+        cmb_cargo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cmb_cargo.setStyle(null);
+            }
+        });
+    }
+
+    @FXML
+    public void textAction(KeyEvent e) {
+
+        if (valor == 0) {
+            if (e.getCode().equals(KeyCode.ENTER))
                 consultarPersonalTitulo();
         }
     }
 
     @FXML
-    public void textESC(KeyEvent e){
+    public void textESC(KeyEvent e) {
 
-        if(e.getCode().equals(KeyCode.ESCAPE))
+        if (e.getCode().equals(KeyCode.ESCAPE))
             cancelar();
     }
-
 
 
     @FXML
@@ -541,7 +654,7 @@ public class ControladorPersonalSalud implements Initializable {
             cbx_idtipotitulo.setDisable(true);
             cbx_idinstitucion.setDisable(true);
             dp_fechatitulacion.setDisable(true);
-            valor=0;
+            valor = 0;
 
         } else {
             //Variable que almacena el resultado de la busqueda de un personal salud por medio de su clave primaria
@@ -590,7 +703,7 @@ public class ControladorPersonalSalud implements Initializable {
 
                     tb_personal.setItems(titulos);
 
-                    if (titulos.isEmpty()){
+                    if (titulos.isEmpty()) {
                         Alert msg = new Alert(Alert.AlertType.INFORMATION);
                         msg.setTitle("Gestiones - Personal Salud");
                         msg.setContentText("Esta persona no tiene titulos asignados o se encuentran inactivos.");
@@ -674,7 +787,7 @@ public class ControladorPersonalSalud implements Initializable {
                 if (!Character.isDigit(car)) {
                     event.consume();
                 }
-
+                tf_numerodocumento.setStyle(null);
             }
 
         });
@@ -686,13 +799,12 @@ public class ControladorPersonalSalud implements Initializable {
                 if (!Character.isDigit(car)) {
                     event.consume();
                 }
-
+                tf_numtelefono.setStyle(null);
             }
-
         });
     }
 
-    @FXML
+    /*@FXML
     private void validarCamposVacios() {
         validarCampoCorreo();
 
@@ -701,7 +813,7 @@ public class ControladorPersonalSalud implements Initializable {
             System.out.println("por aqui voy");
         } else {
             lbl_tipoDocumeto.setText("");
-        }*/
+        }
 
         if (tf_numerodocumento.getText().isEmpty()) {
             lblDocumento.setText("Ingresa solo Números");
@@ -729,13 +841,13 @@ public class ControladorPersonalSalud implements Initializable {
             lbl_sexo.setText("Campo Requerido");
         } else {
             lbl_sexo.setText("");
-        }*/
+        }
         if (tf_numerodocumento.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
             bt_guardar.setDisable(true);
         } else {
             bt_guardar.setDisable(false);
         }
-    }
+    }*/
 
     @FXML
     private void validarCampoCorreo() {
@@ -765,8 +877,7 @@ public class ControladorPersonalSalud implements Initializable {
             }
         });
     }
-
-
+    /*
     @FXML
     public void validar() {
 
@@ -826,7 +937,7 @@ public class ControladorPersonalSalud implements Initializable {
             }
         });
 
-    }
+    }*/
 
 
     @FXML
@@ -1011,6 +1122,7 @@ public class ControladorPersonalSalud implements Initializable {
             @Override
             public void handle(KeyEvent event) {
                 validarE();
+                tf_nombre1.setStyle(null);
             }
         });
     }
@@ -1056,23 +1168,24 @@ public class ControladorPersonalSalud implements Initializable {
             }
         });
     }
-    public void colocarImagenBotones(){
+
+    public void colocarImagenBotones() {
 
         URL linkbt_guardar = getClass().getResource("/imagenes/disquete.png");
         URL linkbt_modificar = getClass().getResource("/imagenes/btGuardar.png");
         URL linkbt_inhabilitar = getClass().getResource("/imagenes/eliminar.png");
         URL linkbt_refrescar = getClass().getResource("/imagenes/refrescar.png");
 
-        Image imagenGuardar = new Image(linkbt_guardar.toString(),25,25,false,true);
+        Image imagenGuardar = new Image(linkbt_guardar.toString(), 25, 25, false, true);
         bt_agregar.setGraphic(new ImageView(imagenGuardar));
 
-        Image imagenModificar = new Image(linkbt_modificar.toString(),25,25,false,true);
+        Image imagenModificar = new Image(linkbt_modificar.toString(), 25, 25, false, true);
         bt_ModificarTabla.setGraphic(new ImageView(imagenModificar));
 
-        Image imagenInhabilitar = new Image(linkbt_inhabilitar.toString(),25,25,false,true);
+        Image imagenInhabilitar = new Image(linkbt_inhabilitar.toString(), 25, 25, false, true);
         bt_eliminarTabla.setGraphic(new ImageView(imagenInhabilitar));
 
-        Image imagenSalir = new Image(linkbt_refrescar.toString(),25, 25, false, true);
+        Image imagenSalir = new Image(linkbt_refrescar.toString(), 25, 25, false, true);
         bt_SalirTabla.setGraphic(new ImageView(imagenSalir));
 
 

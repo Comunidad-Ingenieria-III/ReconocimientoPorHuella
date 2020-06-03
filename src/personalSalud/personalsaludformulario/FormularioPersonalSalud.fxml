@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
+<BorderPane prefHeight="600.0" prefWidth="1117.0" stylesheets="@../../Resources/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="personalSalud.personalsaludformulario.ControladorPersonalSalud">
    <top>
           <Label id="lbl-titulo" alignment="CENTER" prefHeight="40.0" prefWidth="1300.0" styleClass="panel_login" text="Personal de salud" textFill="#f2f2f2" BorderPane.alignment="CENTER">
               <font>
@@ -112,7 +113,7 @@
                     </font>
                 </Label>
                 <Label layoutX="170.0" layoutY="128.0" text="*" textFill="#f80707" />
-                <TextField fx:id="tf_apellido1" layoutX="195.0" layoutY="127.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="347.0" />
+                <TextField fx:id="tf_apellido1" layoutX="195.0" layoutY="127.0" prefHeight="25.0" prefWidth="347.0" />
                 <Label layoutX="50.0" layoutY="158.0" prefHeight="25.0" prefWidth="146.0" styleClass="lbl-cuerpo" text="Segundo apellido">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
@@ -125,20 +126,10 @@
                     </font>
                 </Label>
                 <Label layoutX="618.0" layoutY="32.0" text="*" textFill="#f80707" />
-                <Label fx:id="lbl_sexo" layoutX="880.0" layoutY="64.0" onMouseReleased="#validar" prefHeight="18.0" prefWidth="16.0" textFill="#eb0707">
-                    <font>
-                        <Font name="System Bold Italic" size="12.0" />
-                    </font>
-                </Label>
                 <ComboBox fx:id="cmb_sexo" layoutX="736.0" layoutY="30.0" prefHeight="25.0" prefWidth="237.0" promptText="Seleccione" />
                 <Label layoutX="576.0" layoutY="68.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Número telefónico">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="lbl_numtelefono" layoutX="915.0" layoutY="101.0" prefHeight="18.0" prefWidth="24.0" textFill="#f20404">
-                    <font>
-                        <Font name="System Bold Italic" size="12.0" />
                     </font>
                 </Label>
                 <TextField fx:id="tf_numtelefono" layoutX="736.0" layoutY="64.0" prefHeight="25.0" prefWidth="238.0" />
@@ -147,24 +138,14 @@
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
-                <Label fx:id="lbl_apellido1" layoutX="915.0" layoutY="128.0" prefHeight="18.0" prefWidth="64.0" textFill="#eb0707">
-                    <font>
-                        <Font name="System Bold Italic" size="12.0" />
-                    </font>
-                </Label>
                 <Label layoutX="723.0" layoutY="74.0" text="*" textFill="#f80707" />
-                <TextField fx:id="tf_correoelectronico" layoutX="736.0" layoutY="98.0" onKeyReleased="#validar" prefHeight="25.0" prefWidth="238.0" />
+                <TextField fx:id="tf_correoelectronico" layoutX="736.0" layoutY="98.0" prefHeight="25.0" prefWidth="238.0" />
                 <Label layoutX="576.0" layoutY="133.0" prefHeight="25.0" prefWidth="150.0" styleClass="lbl-cuerpo" text="Cargo">
                     <font>
                         <Font name="System Bold Italic" size="14.0" />
                     </font>
                 </Label>
                 <Label layoutX="624.0" layoutY="138.0" text="*" textFill="#f80707" />
-                <Label fx:id="lbl_correo" layoutX="907.0" layoutY="161.0" prefHeight="18.0" prefWidth="41.0" textFill="#eb0707">
-                    <font>
-                        <Font name="System Bold Italic" size="12.0" />
-                    </font>
-                </Label>
                 <ComboBox fx:id="cmb_cargo" layoutX="736.0" layoutY="134.0" prefHeight="25.0" prefWidth="237.0" promptText="Seleccione " />
                 <Button fx:id="bt_crear" layoutX="111.0" layoutY="219.0" mnemonicParsing="false" onAction="#eventoCrear" prefHeight="20.0" prefWidth="80.0" text="Crear" textFill="WHITE">
                     <font>

@@ -29,7 +29,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implements Initializable {
-    FacadeTtAcademico facade =  new FacadeTtAcademico();
+    FacadeTtAcademico facade = new FacadeTtAcademico();
     @FXML
     private TableView<TtAcademico> tb_tituloAcademico;
     @FXML
@@ -40,42 +40,42 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
     @FXML
     private TextField tf_Tipo, tf_nombre1;
     @FXML
-    private Label validarTt,validarNombre;
+    private Label validarTt, validarNombre;
     @FXML
-    private Button bt_crear,bt_consultar,bt_cancelar,bt_salir,bt_guardar,bt_modificar,bt_inhabilitar;
+    private Button bt_crear, bt_consultar, bt_cancelar, bt_salir, bt_guardar, bt_modificar, bt_inhabilitar;
     @FXML
     private ObservableList<TtAcademico> ttAcademicos;
     @FXML
     private List<TtAcademico> titulosAcademicos;
     @FXML
-    int valor=0;
-    private String estado ="1";
+    int valor = 0;
+    private String estado = "1";
 
 
-
-    public void validar(){
+    public void validar() {
         tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarCamposVacios();
+
             }
         });
     }
 
     @FXML
-    public void validarCamposVacios(){
-        if (tf_Tipo.getText().isEmpty()){
+    public void validarCamposVacios() {
+        if (tf_Tipo.getText().isEmpty()) {
             validarTt.setText("Campo requerido");
             bt_guardar.setDisable(true);
 
-        }else{
+        } else {
             validarTt.setText("");
             bt_guardar.setDisable(false);
         }
-        if(tf_nombre1.getText().isEmpty()){
+        if (tf_nombre1.getText().isEmpty()) {
             bt_guardar.setDisable(true);
             // validarNombre.setText("Campo requerido");
-        }else{
+        } else {
             validarNombre.setText("");
             bt_guardar.setDisable(false);
 
@@ -83,23 +83,24 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
 
     }
 
-    public void validarExistente(){
+    public void validarExistente() {
 
         tf_nombre1.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 validarE();
+                tf_nombre1.setStyle(null);
             }
         });
     }
 
-    public void validarE(){
-        if(valor==1){
+    public void validarE() {
+        if (valor == 1) {
 
-            titulosAcademicos=facade.buscar(tf_Tipo.getText());
+            titulosAcademicos = facade.buscar(tf_Tipo.getText());
 
-            if(titulosAcademicos.size()>=1){
-                int i=0;
+            if (titulosAcademicos.size() >= 1) {
+                int i = 0;
 
                 if (titulosAcademicos.get(0).getEstado().equals("0")) {
 
@@ -112,13 +113,13 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                     tf_nombre1.setText("");
                     tf_Tipo.requestFocus();
 
-                     }
-                if(titulosAcademicos.get(0).getEstado().equals("1")){
+                }
+                if (titulosAcademicos.get(0).getEstado().equals("1")) {
 
 
                     Alert msg = new Alert(Alert.AlertType.ERROR);
                     msg.setTitle("Gestiones - Tipo de título académico");
-                    msg.setContentText("Código: " + tf_Tipo.getText() +" existente no es posible agregar" );
+                    msg.setContentText("Código: " + tf_Tipo.getText() + " existente no es posible agregar");
                     msg.setHeaderText("Resultado");
                     msg.show();
                     tf_Tipo.setText("");
@@ -129,15 +130,12 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                 }
 
 
-
-
             }
 
         }
 
 
     }
-
 
 
     @Override
@@ -152,6 +150,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         bt_guardar.setDisable(true);
         deshabilitarCampos();
         manejarEventos();
+        validarNumero();
     }
 
     public void manejarEventos() {
@@ -172,117 +171,135 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         });//FIN DEL LISTENER
     }
 
+    public void validarNumero() {//Metodo para validar que el Id del cargo solo sean numeros
+        tf_Tipo.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                char car = event.getCharacter().charAt(0);
+
+                if (!Character.isDigit(car)) {
+                    event.consume();
+                }
+                tf_Tipo.setStyle(null);
+            }
+        });
+    }
+
+
     @FXML
-    public void textAction(KeyEvent e){
-        if (valor ==0){
+    public void textAction(KeyEvent e) {
+        if (valor == 0) {
 
 
-            if(e.getCode().equals(KeyCode.ENTER))
+            if (e.getCode().equals(KeyCode.ENTER))
                 consultarTitulo();
         }
     }
 
     @FXML
-    public void textESC(KeyEvent e){
+    public void textESC(KeyEvent e) {
 
-        if(e.getCode().equals(KeyCode.ESCAPE))
+        if (e.getCode().equals(KeyCode.ESCAPE))
             cancelar();
     }
 
 
     @FXML
-    public void botonGuardar(){
-        titulosAcademicos= facade.buscar(tf_Tipo.getText());
-        TtAcademico ttAcademico= new TtAcademico(
+    public void botonGuardar() {
+        titulosAcademicos = facade.buscar(tf_Tipo.getText());
+        TtAcademico ttAcademico = new TtAcademico(
                 tf_Tipo.getText(),
-                tf_nombre1.getText(),estado
+                tf_nombre1.getText(), estado
         );
-            if (titulosAcademicos.isEmpty()) {
+        if (titulosAcademicos.isEmpty()) {
+            if (tf_Tipo.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Tipo título académico");
+                msg.setContentText("Código del Tipo título académico");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_Tipo.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_Tipo.requestFocus();
 
+            } else if (tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Tipo título académico");
+                msg.setContentText("Nombre del Tipo título académico");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_nombre1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_nombre1.requestFocus();
 
-                if (tf_Tipo.getText().isEmpty() || tf_nombre1.getText().isEmpty()) {
-                   // cancelar();
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
-                    msg.setTitle("Gestiones - Tipo de título académico");
-                    msg.setContentText("Campos requeridos");
-                    msg.setHeaderText("Resultado");
-                    msg.show();
-                    if(tf_Tipo.getText().isEmpty()){
-                        tf_Tipo.requestFocus();
-                    } else if(tf_nombre1.getText().isEmpty()){
-                        tf_nombre1.requestFocus();
-
-                    }
-
-                    } else {
-
-                            int res = facade.agregar(ttAcademico);
-                            if (res == 1) {
-                                bt_guardar.setDisable(true);
-                                ttAcademicos.add(ttAcademico);
-                                Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                                msg.setTitle("Gestiones - Tipo de título académico");
-                                msg.setContentText("El Tipo de título   se ha agregado");
-                                msg.setHeaderText("Resultado");
-                                msg.show();
-                                cancelar();
-
-
-                            } else {
-                                cancelar();
-                                Alert msg = new Alert(Alert.AlertType.ERROR);
-                                msg.setTitle("Gestiones - Tipo de título académico");
-                                msg.setContentText("No se ha podido agregar el Tipo de título");
-                                msg.setHeaderText("Resultado");
-                                 msg.show();
-                            }
-
-
-                    }
             } else {
 
-                if (tf_nombre1.getText().isEmpty()) {
-                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                int res = facade.agregar(ttAcademico);
+                if (res == 1) {
+                    bt_guardar.setDisable(true);
+                    ttAcademicos.add(ttAcademico);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
                     msg.setTitle("Gestiones - Tipo de título académico");
-                    msg.setContentText("Campos requeridos");
+                    msg.setContentText("El Tipo de título   se ha agregado");
                     msg.setHeaderText("Resultado");
                     msg.show();
-                    tf_nombre1.requestFocus();
+                    cancelar();
+
 
                 } else {
+                    cancelar();
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Tipo de título académico");
+                    msg.setContentText("No se ha podido agregar el Tipo de título");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                }
 
 
-                    int res = facade.modificar(ttAcademico);
-                    if (res == 1) {
-                        bt_guardar.setDisable(true);
-                       // ttAcademicos.set(tb_tituloAcademico.getSelectionModel().getSelectedIndex(), ttAcademico);
-                        Alert msg = new Alert(Alert.AlertType.INFORMATION);
-                        msg.setTitle("Gestiones - Tipo de título académico");
-                        msg.setContentText("El tipo de título  se ha modificado");
-                        msg.setHeaderText("Resultado");
-                        msg.show();
-                        cancelar();
-                    } else {
-                        bt_guardar.setDisable(true);
-                        Alert msg = new Alert(Alert.AlertType.ERROR);
-                        msg.setTitle("Gestiones - Tipo de título académico");
-                        msg.setContentText("El Tipo de título , No ha sido modificada");
-                        msg.setHeaderText("Resultado");
-                        msg.show();
-                        cancelar();
-                    }
+            }
+        } else {
+
+            if (tf_nombre1.getText().isEmpty()) {
+                Alert msg = new Alert(Alert.AlertType.WARNING);
+                msg.setTitle("Gestiones - Tipo título académico");
+                msg.setContentText("Nombre del Tipo título académico");
+                msg.setHeaderText("Campo requerido");
+                msg.show();
+                tf_nombre1.setStyle("-fx-border-color: red ; -fx-border-radius: 8px;");
+                tf_nombre1.requestFocus();
+
+            } else {
+
+
+                int res = facade.modificar(ttAcademico);
+                if (res == 1) {
+                    bt_guardar.setDisable(true);
+                    // ttAcademicos.set(tb_tituloAcademico.getSelectionModel().getSelectedIndex(), ttAcademico);
+                    Alert msg = new Alert(Alert.AlertType.INFORMATION);
+                    msg.setTitle("Gestiones - Tipo de título académico");
+                    msg.setContentText("El tipo de título  se ha modificado");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
+                } else {
+                    bt_guardar.setDisable(true);
+                    Alert msg = new Alert(Alert.AlertType.ERROR);
+                    msg.setTitle("Gestiones - Tipo de título académico");
+                    msg.setContentText("El Tipo de título , No ha sido modificada");
+                    msg.setHeaderText("Resultado");
+                    msg.show();
+                    cancelar();
                 }
             }
+        }
     }
 
     @FXML
-    public void modificar(){
+    public void modificar() {
         tf_Tipo.setDisable(true);
         tf_nombre1.setDisable(false);
         tf_nombre1.requestFocus();
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
-        valor =0;
+        valor = 0;
         bt_guardar.setDisable(false);
     }
 
@@ -295,7 +312,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         msg.setHeaderText("Resultado");
         Optional<ButtonType> action = msg.showAndWait();
         if (action.get() == ButtonType.OK) {
-            boolean respuesta  = facade.eliminar(tf_Tipo.getText());
+            boolean respuesta = facade.eliminar(tf_Tipo.getText());
             if (respuesta) {
 
                 Alert msge = new Alert(Alert.AlertType.ERROR);
@@ -325,20 +342,18 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
     }
 
 
-
-
     @FXML
     private void consultarTitulo() {
-        if(tf_Tipo.getText().isEmpty()){
+        if (tf_Tipo.getText().isEmpty()) {
             tf_Tipo.setDisable(false);
             tf_nombre1.setDisable(true);
             tf_Tipo.requestFocus();
             bt_crear.setDisable(true);
             bt_guardar.setDisable(true);
             tb_tituloAcademico.setEditable(false);
-            valor=0;
-        }else{
-            int i=0;
+            valor = 0;
+        } else {
+            int i = 0;
             ttAcademicos = FXCollections.observableArrayList(facade.buscar(tf_Tipo.getText()));
             if (ttAcademicos.isEmpty()) {
                 Alert msg = new Alert(Alert.AlertType.INFORMATION);
@@ -348,7 +363,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
                 msg.show();
                 tf_Tipo.requestFocus();
                 tf_Tipo.setText("");
-            }else {
+            } else {
 
 
                 if (ttAcademicos.get(i).getEstado().equals("1")) {
@@ -399,7 +414,7 @@ public class ContraladorTipoTituloAcademico<tf_nombre1> extends Component implem
         bt_modificar.setDisable(true);
         bt_inhabilitar.setDisable(true);
         habilitarCampos();
-        valor=1;
+        valor = 1;
     }
 
     @FXML

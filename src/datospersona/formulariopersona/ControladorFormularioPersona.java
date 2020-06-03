@@ -311,7 +311,7 @@ public class ControladorFormularioPersona implements Initializable {
                 try {
                     Reclutador.addFeatures(featuresinscripcion);// Agregar las caracteristicas de la huella a la plantilla a crear
                     // Dibuja la huella dactilar capturada.
-                    Image image = CrearImagenHuella(sample);
+                    java.awt.Image image = CrearImagenHuella(sample);
                     DibujarHuella(image);
 
                 } catch (DPFPImageQualityException e) {
@@ -386,13 +386,12 @@ public class ControladorFormularioPersona implements Initializable {
         this.template = template;
     }
 
-    public void DibujarHuella(Image image) {
-        ImageView imagen = new ImageView(image);
-        lblImagenHuella.setGraphic(imagen);
+    public void DibujarHuella(java.awt.Image image) {
+
     }
 
-    public Image CrearImagenHuella(DPFPSample sample) {
-        return Image.impl_fromPlatformImage(DPFPGlobal.getSampleConversionFactory().createImage(sample));
+    public java.awt.Image CrearImagenHuella(DPFPSample sample) {
+        return (DPFPGlobal.getSampleConversionFactory().createImage(sample));
     }
 
     @FXML
